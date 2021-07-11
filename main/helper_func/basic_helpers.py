@@ -241,4 +241,4 @@ async def edit_or_send_as_file(
             os.remove(file_names)
         return
     else:
-        return await message.edit(text, parse_mode=parse_mode
+        return await message.edit(text, parse_mode=parse_mode)
