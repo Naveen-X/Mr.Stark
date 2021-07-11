@@ -2,7 +2,7 @@ import asyncio
 import io
 import sys
 import traceback
-
+from typing import Tuple
 import requests
 
 from pyrogram import Client, filters
