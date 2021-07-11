@@ -242,12 +242,3 @@ async def edit_or_send_as_file(
         return
     else:
         return await message.edit(text, parse_mode=parse_mode
-
-
-async def iter_chats(client):
-    """Iter Your All Chats"""
-    chats = []
-    async for dialog in client.iter_dialogs():
-        if dialog.chat.type in ["supergroup", "channel"]:
-            chats.append(dialog.chat.id)
-    return chats
