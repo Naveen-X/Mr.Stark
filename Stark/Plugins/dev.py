@@ -6,7 +6,7 @@ import traceback
 import requests
 
 from pyrogram import Client, filters
-from main.helper_func.basic_helpers edit_or_send_as_file
+from main.helper_func.basic_helpers import edit_or_send_as_file
 
 
 
