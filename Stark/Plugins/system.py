@@ -14,7 +14,11 @@ from main.helper_func.basic_helpers import (
      humanbytes
 )
 from pyrogram import __version__
-from Stark import assistant_version
+
+
+start_time = time.time()
+assistant_version = "V1.0"
+
 
 @Client.on_message(filters.command(["ping"]))
 async def ping(_, message):
