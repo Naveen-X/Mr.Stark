@@ -8,8 +8,6 @@ from Stark.config import Config
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
-start_time = time.time()
-assistant_version = "V1.0"
 
 if __name__ == "__main__" :
 
