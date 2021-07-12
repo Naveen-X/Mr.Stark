@@ -14,7 +14,7 @@ from main.helper_func.basic_helpers import (
      humanbytes
 )
 from pyrogram import __version__
-
+from Stark import assistant_version
 
 @Client.on_message(filters.command(["ping"]))
 async def ping(_, message):
@@ -36,9 +36,17 @@ async def alive(_, message):
   ms = (end - start).microseconds / 1000  
   du = psutil.disk_usage(client.workdir)
   disk = f"{humanbytes(du.used)} / {humanbytes(du.total)} " f"({du.percent}%)"
+  LOL = (f"**ᴀssɪsᴛᴀɴᴛ ɪs ᴀʟɪᴠᴇ 🔥**\n")
+  LOL += (f"**ᴜᴘᴛɪᴍᴇ :** {uptime}\n")
+  LOL += (f"**sᴘᴇᴇᴅ :** {round(ms)}ms \n")
+  LOL += (f"**ᴀssɪsᴛᴀɴᴛ ᴠᴇʀsɪᴏɴ**  : __{assistant_version}__\n")
+  LOL += (f"ᴘʏʀᴏɢʀᴀᴍ ᴠᴇʀsɪᴏɴ :** {version__}__\n")
+  LOL += (f"**ᴘʏᴛʜᴏɴ ᴠᴇʀsɪᴏɴn:** {platform.python_version()}\n")
+  LOL += (f"**ᴏs :**__{platform.system()}__\n")
+  LOL += (f"**ᴄᴘᴜ :** {len(psutil.Process().cpu_affinity())}\n")
+  LOL += (f"**ᴅɪsᴋ ᴜsᴀɢᴇ :** {disk}")
   
-  await message.reply_text(f"**ᴀssɪsᴛᴀɴᴛ ɪs ᴀʟɪᴠᴇ 🔥**\n**ᴜᴘᴛɪᴍᴇ :** __{uptime}__\n**sᴘᴇᴇᴅ :** __{round(ms)}ms__ \n**ᴘʏʀᴏɢʀᴀᴍ ᴠᴇʀsɪᴏɴ :** __{}__\n**ᴘʏᴛʜᴏɴ ᴠᴇʀsɪᴏɴn:** __{}__\n**ᴏs :**__{platform.system()}__\n**ᴄᴘᴜ :** __{len(psutil.Process().cpu_affinity())}__\n**ᴅɪsᴋ ᴜsᴀɢᴇ :** __{disk}__")
-  
+  await message.reply_text(LOL)
 
 @Client.on_message(filters.command(["restart"]))
 async def restart(_, message):
