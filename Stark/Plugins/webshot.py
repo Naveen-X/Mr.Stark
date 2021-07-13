@@ -6,7 +6,7 @@ import aiohttp
 import urllib
 import validators
 from pyrogram import Client, filters
-from Stark import Config
+from Stark.config import Config
 from main.helper_func.basic_helpers import humanbytes
 from main.helper_func.startup_helpers import run_cmd
 
