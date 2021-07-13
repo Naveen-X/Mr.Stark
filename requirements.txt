@@ -1,5 +1,6 @@
 pyrogram
 telethon
+validators
 filesplit
 wget>=3.2
 CairoSVG>=2.5.2
