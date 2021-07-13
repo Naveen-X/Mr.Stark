@@ -2,7 +2,7 @@ import asyncio
 import glob
 import importlib
 import logging
-from main_startup import Config
+from Stark.config import Config
 import ntpath
 import shlex
 from typing import Tuple
