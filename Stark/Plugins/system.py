@@ -8,7 +8,6 @@ import uuid
 from datetime import datetime
 from os import environ, execle, path, remove
 from pyrogram import Client, filters
-from Stark import start_time, assistant_version
 from main.helper_func.basic_helpers import (
      get_readable_time, 
      humanbytes
