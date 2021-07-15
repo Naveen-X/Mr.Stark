@@ -27,7 +27,7 @@ async def ping(_, message):
     end = datetime.now()
     ms = (end - start).microseconds / 1000
     await lol.edit(
-        f"**ᴘɪɴɢ ᴘᴏɴɢ**\n**➥sᴘᴇᴇᴅ:** `round(ms)}ms` \n**➥ʙᴏᴛ's ᴜᴘᴛɪᴍᴇ:** `{uptime}`"
+        f"**ᴘɪɴɢ ᴘᴏɴɢ**\n**➥sᴘᴇᴇᴅ:** `{round(ms)}ms` \n**➥ʙᴏᴛ's ᴜᴘᴛɪᴍᴇ:** `{uptime}`"
     )
 
 
@@ -42,7 +42,7 @@ async def alive(_, message):
   LOL += (f"**ᴜᴘᴛɪᴍᴇ :** {uptime}\n")
   LOL += (f"**sᴘᴇᴇᴅ :** {round(ms)}ms \n")
   LOL += (f"**ᴀssɪsᴛᴀɴᴛ ᴠᴇʀsɪᴏɴ**  : __{assistant_version}__\n")
-  LOL += (f"ᴘʏʀᴏɢʀᴀᴍ ᴠᴇʀsɪᴏɴ :** {version__}__\n")
+  LOL += (f"ᴘʏʀᴏɢʀᴀᴍ ᴠᴇʀsɪᴏɴ :** {__version__}__\n")
   LOL += (f"**ᴘʏᴛʜᴏɴ ᴠᴇʀsɪᴏɴn:** {platform.python_version()}\n")
   LOL += (f"**ᴏs :**__{platform.system()}__\n")
   LOL += (f"**ᴄᴘᴜ :** {len(psutil.Process().cpu_affinity())}\n")
