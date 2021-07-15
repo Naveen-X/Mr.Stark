@@ -21,12 +21,12 @@ assistant_version = "V1.0"
 
 @Client.on_message(filters.command(["ping"]))
 async def ping(_, message):
-    await message.reply_text(f"`Pong!`")
+    lol = await message.reply_text(f"`Pong!`")
     start = datetime.now()
     uptime = get_readable_time((time.time() - start_time))
     end = datetime.now()
     ms = (end - start).microseconds / 1000
-    await message.edit(
+    await lol.edit(
         f"**ᴘɪɴɢ ᴘᴏɴɢ**\n**➥sᴘᴇᴇᴅ:** `{round(ms)}ms` \n**➥ʙᴏᴛ's ᴜᴘᴛɪᴍᴇ:** `{uptime}`"
     )
 
