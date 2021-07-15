@@ -28,8 +28,8 @@ async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
 EVAL = "**➥ ᴄᴏᴅᴇ:** \n`{code}` \n\n**➥ ᴏᴜᴛᴘᴜᴛ:** \n`{result}`"
 
 @Client.on_message(filters.command(["eval", "e"]))
-async def eval(_, message):
-    stark = message.reply_text(f"`ʀᴜɴɴɪɴɢ ᴄᴏᴅᴇ... ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ!`")
+async def eval(bot, message):
+    stark = await message.reply_text(f"`ʀᴜɴɴɪɴɢ ᴄᴏᴅᴇ... ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ!`")
     cmd = message.text.split(None, 1)[1]
     if not cmd:
         await stark.edit(
@@ -77,8 +77,8 @@ async def aexec(code, client, message):
 
 
 @Client.on_message(filters.command(["bash"]))
-async def terminal(client, message):
-    stark = await edit_or_reply(message, "`Please Wait!`")
+async def terminal(bot, message):
+    stark = await message.reply_text("`Please Wait!`")
     cmd = message.text.split(None, 1)[1]
     if not cmd:
         await stark.edit(
@@ -92,7 +92,7 @@ async def terminal(client, message):
     pid, err, out, ret = await run_command(cmd)
     if not out:
         out = "No OutPut!"
-    friday = f"""**➥ ᴄᴍᴅ :**
+    lol = f"""**➥ ᴄᴍᴅ :**
 `{cmd}`
 
 **➥ ᴘɪᴅ :**
@@ -107,7 +107,7 @@ async def terminal(client, message):
 **➥ ʀᴇᴛᴜʀɴ ᴄᴏᴅᴇ :** 
 `{ret}`
 """
-    await edit_or_send_as_file(friday, stark, client, cmd, "bash-result")
+    await edit_or_send_as_file(lol, stark, client, cmd, "bash-result")
 
 
 async def run_command(cmd):
