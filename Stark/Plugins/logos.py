@@ -1,3 +1,4 @@
+import os
 from pyrogram import Client, filters
 from PIL import Image, ImageDraw, ImageFont
 
