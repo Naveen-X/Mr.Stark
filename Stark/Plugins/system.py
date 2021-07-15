@@ -37,8 +37,7 @@ async def alive(_, message):
   uptime = get_readable_time((time.time() - start_time))
   end = datetime.now()
   ms = (end - start).microseconds / 1000  
-  du = psutil.disk_usage(client.workdir)
-  disk = f"{humanbytes(du.used)} / {humanbytes(du.total)} " f"({du.percent}%)"
+  
   LOL = (f"**ᴀssɪsᴛᴀɴᴛ ɪs ᴀʟɪᴠᴇ 🔥**\n")
   LOL += (f"**ᴜᴘᴛɪᴍᴇ :** {uptime}\n")
   LOL += (f"**sᴘᴇᴇᴅ :** {round(ms)}ms \n")
@@ -47,7 +46,6 @@ async def alive(_, message):
   LOL += (f"**ᴘʏᴛʜᴏɴ ᴠᴇʀsɪᴏɴn:** {platform.python_version()}\n")
   LOL += (f"**ᴏs :**__{platform.system()}__\n")
   LOL += (f"**ᴄᴘᴜ :** {len(psutil.Process().cpu_affinity())}\n")
-  LOL += (f"**ᴅɪsᴋ ᴜsᴀɢᴇ :** {disk}")
   
   await message.reply_text(LOL)
 
