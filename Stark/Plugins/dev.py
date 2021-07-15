@@ -65,7 +65,7 @@ async def eval(bot, message):
         capt = "Eval Result!"
     else:
         capt = cmd
-    await edit_or_send_as_file(final_output, stark, client, capt, "Eval-result")
+    await edit_or_send_as_file(final_output, stark, bot, capt, "Eval-result")
 
 
 async def aexec(code, client, message):
@@ -107,7 +107,7 @@ async def terminal(bot, message):
 **➥ ʀᴇᴛᴜʀɴ ᴄᴏᴅᴇ :** 
 `{ret}`
 """
-    await edit_or_send_as_file(lol, stark, client, cmd, "bash-result")
+    await edit_or_send_as_file(lol, stark, bot, cmd, "bash-result")
 
 
 async def run_command(cmd):
