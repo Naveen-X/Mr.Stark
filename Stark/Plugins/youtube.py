@@ -11,14 +11,14 @@ from main.helper_func.basic_helpers import progress, humanbytes
 
 
 @Client.on_message(filters.command(["yts"]))
-async def yt_search(_, message):
+async def yt_search(bot, message):
    stark_result = await message.reply_text(f"`Fectching Result this May Take Time.`")
    query = message.text.split(None, 1)[1]
    if not query:
        await stark_result.edit(f"``Give something to search!``")
        return
 
-   results = YoutubeSearch(f"{query}", max_results=8).to_dict()
+   results = YoutubeSearch(f"{query}", max_results=6).to_dict()
    noob = "<b>YOUTUBE SEARCH</b> \n\n"
    for moon in results:
        hmm = moon["id"]
@@ -28,17 +28,17 @@ async def yt_search(_, message):
        total_stark = moon["duration"]
        stark_views = moon["views"]
        noob += (
-                f"<b><u>VIDEO-TITLE</u></b> ➥ <code>{stark_name}</code> \n"
-                f"<b><u>LINK</u></b> ➥ <code>{kek}</code> \n"
-                f"<b><u>CHANNEL</u></b> ➥ <code>{stark_chnnl}</code> \n"
-                f"<b><u>DURATION</u></b> ➥ <code>{total_stark}</code> \n"
-                f"<b><u>TOTAL-VIEWS</u></b> ➥ <code>{stark_views}</code> \n\n"
+                f"<b>➥<u>VIDEO-TITLE</u></b> <code>{stark_name}</code> \n"
+                f"<b>➥<u>LINK</u></b> <code>{kek}</code> \n"
+                f"<b>➥<u>CHANNEL</u></b> <code>{stark_chnnl}</code> \n"
+                f"<b>➥<u>DURATION</u></b> <code>{total_stark}</code> \n"
+                f"<b>➥<u>TOTAL-VIEWS</u></b> <code>{stark_views}</code> \n\n"
                 )
        await stark_result.edit(noob, parse_mode="HTML")
        
        
 @Client.on_message(filters.command(["ytv"]))
-async def yt_vid(_, message):
+async def yt_vid(bot, message):
     input_str = message.text.split(None, 1)[1]
     pablo = await message.reply_text(f"`Processing...`")
     if not input_str:
@@ -101,7 +101,7 @@ async def yt_vid(_, message):
 
 
 @Client.on_message(filters.command(["ytdl"]))
-async def yt_dl(_, message):
+async def yt_dl(bot, message):
     input_str = message.text.split(None, 1)[1]
     pablo = await message.reply_text(f"`Processing...`")
     if not input_str:
@@ -154,7 +154,7 @@ async def yt_dl(_, message):
 
 
 @Client.on_message(filters.command(["ytmusic"]))
-async def yt_music(_, message):
+async def yt_music(bot, message):
     input_str = message.text.split(None, 1)[1]
     pablo = await message.reply_text(f"`Getting {input_str} From Youtube Servers. Please Wait.`"
     )
