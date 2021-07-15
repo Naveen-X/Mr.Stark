@@ -1,5 +1,6 @@
 import asyncio
 import io
+import os
 import sys
 import traceback
 from typing import Tuple
@@ -44,7 +45,7 @@ async def eval(bot, message):
     redirected_error = sys.stderr = io.StringIO()
     stdout, stderr, exc = None, None, None
     try:
-        await aexec(cmd, client, message)
+        await aexec(cmd, bot, message)
     except Exception:
         exc = traceback.format_exc()
     stdout = redirected_output.getvalue()
