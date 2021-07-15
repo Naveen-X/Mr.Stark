@@ -11,7 +11,7 @@ from main.helper_func.gmdl import googleimagesdownload
 
 
 @Client.on_message(filters.command(["gs", "google"]))
-async def google(_, message):
+async def google(bot, message):
     pablo = await message.reply_text("`Processing..`")
     query = message.text.split(None, 1)[1]
     if not query:
@@ -62,7 +62,7 @@ async def google(_, message):
 
 
 @Client.on_message(filters.command(["img"]))
-async def image(_, message):
+async def image(bot, message):
     pablo = await message.reply_text("`ᴘʀᴏᴄᴇssɪɴɢ...`")
     query = message.text.split(None, 1)[1]
     if not query:
@@ -71,7 +71,7 @@ async def image(_, message):
     if "|" in query:
         lim = query.split("|")[1] if (query.split("|")[1]).isdigit() else 5
     else:
-        lim = 5
+        lim = 6
     response = googleimagesdownload()
     arguments = {
         "keywords": query,
