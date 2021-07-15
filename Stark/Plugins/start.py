@@ -23,7 +23,7 @@ async def start(bot, message):
                     [
                          InlineKeyboardButton(
                             "Add Me to Group 👥",
-                            url=f"t.me/{Mr_StarkBot}?startgroup=true"
+                            url=f"t.me/Mr_StarkBot?startgroup=true"
                         )
                     ],
                 ]
