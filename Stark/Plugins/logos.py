@@ -43,7 +43,7 @@ async def black_logo(bot, message):
     fonts = random.choice(FONTS)
     img = Image.open("./resources/images/black_blank_image.jpg")
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("{fonts}", 220)
+    font = ImageFont.truetype(fonts, 220)
     image_widthz, image_heightz = img.size
     w, h = draw.textsize(text, font=font)
     h += int(h * 0.21)
