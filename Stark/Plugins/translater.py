@@ -10,6 +10,8 @@ async def translate_me(_, message):
         lang = "en"
 
   text = message.reply_to_message.text
+  if not text:
+      await lol.edit("`Reply to a message to translate it`")
 
   kk = Translator()
   text = await kk.translate(text, targetlang=lang)
