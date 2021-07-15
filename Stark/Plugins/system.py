@@ -26,7 +26,7 @@ async def ping(_, message):
     uptime = get_readable_time((time.time() - start_time))
     end = datetime.now()
     ms = (end - start).microseconds / 1000
-    await hmm.edit(
+    await message.edit(
         f"**ᴘɪɴɢ ᴘᴏɴɢ**\n**➥sᴘᴇᴇᴅ:** `{round(ms)}ms` \n**➥ʙᴏᴛ's ᴜᴘᴛɪᴍᴇ:** `{uptime}`"
     )
 
