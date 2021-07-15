@@ -2,7 +2,7 @@ from pyrogram import Client, filters
 from PIL import Image, ImageDraw, ImageFont
 
 @Client.on_message(filters.command(["alogo"]))
-async def black_logo(_, message):
+async def black_logo(bot, message):
     event = await message.reply_text("`Processing.....`")
     text = message.text.split(None, 1)[1]
     if not text:
