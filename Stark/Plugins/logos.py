@@ -30,6 +30,15 @@ FONTS = [
    "./resources/Fonts/Voice In My Head.otf",
  ]
  
+
+COLORS = [
+   "(255, 0, 0)",
+   "(255, 255, 255)",
+   "(0, 0, 255)",
+   "(0, 255, 0)",
+   "(0, 255, 255)",
+ ]
+ 
        
 @Client.on_message(filters.command(["alogo"]))
 async def black_logo(bot, message):
@@ -41,6 +50,7 @@ async def black_logo(bot, message):
         )
         return
     fonts = random.choice(FONTS)
+    color = random.choice(COLORS)
     img = Image.open("./resources/images/black_blank_image.jpg")
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype(fonts, 220)
@@ -51,7 +61,7 @@ async def black_logo(bot, message):
         ((image_widthz - w) / 2, (image_heightz - h) / 2),
         text,
         font=font,
-        fill=(0, 255, 255),
+        fill=color,
     )
     file_name = "LogoBy@Mr_StarkBot.png"
     await bot.send_chat_action(message.chat.id, "upload_photo")
@@ -60,12 +70,12 @@ async def black_logo(bot, message):
         await bot.send_photo(
             message.chat.id,
             photo=file_name,
-            caption="Made Using Stark Bot",
+            caption="Made Using @Mr_StarkBot",
             reply_to_message_id=message.reply_to_message.message_id,
         )
     else:
         await bot.send_photo(
-            message.chat.id, photo=file_name, caption="Made Using Stark Bot"
+            message.chat.id, photo=file_name, caption="Made Using @Mr_StarkBot"
         )
     await bot.send_chat_action(message.chat.id, "cancel")
     await event.delete()
