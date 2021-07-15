@@ -4,7 +4,7 @@ from gpytranslate import Translator
 
 @Client.on_message(filters.command(["tr", "translate"]))
 async def translate_me(_, message):
-  await message.reply_text(f"`Translating please wait!`")
+  lol = await message.reply_text(f"`Translating please wait!`")
   lang = message.text.split(None, 1)[1]
   if not lang:
         lang = "en"
@@ -14,7 +14,7 @@ async def translate_me(_, message):
   kk = Translator()
   text = await kk.translate(text, targetlang=lang)
   result = text.text
-  await message.edit(f"**➥Translated successfully:**\n\n➥`{text.text}`")
+  await lol.edit(f"**➥Translated successfully:**\n\n➥`{text.text}`")
   
 __help__ = """
 <b>Translater </b>
