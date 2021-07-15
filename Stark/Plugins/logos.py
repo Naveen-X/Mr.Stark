@@ -5,7 +5,7 @@ from pyrogram import Client, filters
 from PIL import Image, ImageDraw, ImageFont
 
 
-AVATARS = [
+FONTS = [
    "./resources/Fonts/aAsianNinja.otf",
    "./resources/Fonts/aAsianNinja.ttf",
    "./resources/Fonts/Dash-Horizon-Demo.otf",
