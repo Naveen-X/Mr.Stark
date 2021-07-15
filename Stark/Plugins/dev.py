@@ -68,12 +68,12 @@ async def eval(bot, message):
     await edit_or_send_as_file(final_output, stark, bot, capt, "Eval-result")
 
 
-async def aexec(code, client, message):
+async def aexec(code, bot, message):
     exec(
-        f"async def __aexec(client, message): "
+        f"async def __aexec(bot, message): "
         + "".join(f"\n {l}" for l in code.split("\n"))
     )
-    return await locals()["__aexec"](client, message)
+    return await locals()["__aexec"](bot, message)
 
 
 @Client.on_message(filters.command(["bash"]))
