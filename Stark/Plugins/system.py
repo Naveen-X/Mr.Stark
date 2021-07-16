@@ -33,21 +33,7 @@ async def ping(_, message):
 
 @Client.on_message(filters.command(["alive"]))
 async def alive(_, message):
-  start = datetime.now()
-  uptime = get_readable_time((time.time() - start_time))
-  end = datetime.now()
-  ms = (end - start).microseconds / 1000  
-  
-  LOL = (f"**ᴀssɪsᴛᴀɴᴛ ɪs ᴀʟɪᴠᴇ 🔥**\n")
-  LOL += (f"**ᴜᴘᴛɪᴍᴇ :** {uptime}\n")
-  LOL += (f"**sᴘᴇᴇᴅ :** {round(ms)}ms \n")
-  LOL += (f"**ᴀssɪsᴛᴀɴᴛ ᴠᴇʀsɪᴏɴ**  : __{assistant_version}__\n")
-  LOL += (f"ᴘʏʀᴏɢʀᴀᴍ ᴠᴇʀsɪᴏɴ :** {__version__}__\n")
-  LOL += (f"**ᴘʏᴛʜᴏɴ ᴠᴇʀsɪᴏɴn:** {platform.python_version()}\n")
-  LOL += (f"**ᴏs :**__{platform.system()}__\n")
-  LOL += (f"**ᴄᴘᴜ :** {len(psutil.Process().cpu_affinity())}\n")
-  
-  await message.reply_text(LOL)
+  await message.reply_text(f"**ᴀssɪsᴛᴀɴᴛ ɪs ᴀʟɪᴠᴇ 🔥**")
 
 @Client.on_message(filters.command(["restart"]))
 async def restart(_, message):
