@@ -51,7 +51,7 @@ async def black_logo(bot, message):
         ((image_widthz - w) / 2, (image_heightz - h) / 2),
         text,
         font=font,
-        fill=(0, 255, 255),
+        fill=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)),
     )
     file_name = "LogoBy@Mr_StarkBot.png"
     await bot.send_chat_action(message.chat.id, "upload_photo")
