@@ -6,7 +6,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 @Client.on_message(filters.command(["start"]))
 async def start(bot, message):
     firstname = message.from_user.first_name
-    text=f"__Hello, {firstname} !\nNice To Meet You, Well I Am A Powerfull Assistant bot For My Master!`. \nMade By [Naveen](https://t.me/sniper_sd)"
+    text=f"__Hello, {firstname} !\nNice To Meet You, Well I Am A Powerfull Assistant bot For My Master!`. \nMade By [Naveen](https://t.me/sniper_xd)"
     stark="https://telegra.ph//file/17d0306972cdc7350abc3.jpg"
     parse_mode=ParseMode.MARKDOWN
     await bot.send_photo(
@@ -18,7 +18,7 @@ async def start(bot, message):
                     [
                         InlineKeyboardButton(
                             "Dev",
-                            url="t.me/Sinper_xd",
+                            url="https://t.me/Sinper_xd",
                         )
                     ],
                     [
