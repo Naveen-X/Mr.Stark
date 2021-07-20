@@ -7,7 +7,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 @Client.on_message(filters.command(["paste"]))
 async def paste(bot, message):
   pablo = await message.reply_text("`Pasting to NekoBin`")
-  text = message.text.split(None, 1)[0]
+  text = message.text.split(None, 1)[1]
   message_s = text
   if not text:
       if not message.reply_to_message:
