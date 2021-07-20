@@ -1,35 +1,10 @@
 import os
+import glob
 import random
 
 from pyrogram import Client, filters
 from PIL import Image, ImageDraw, ImageFont
 
-
-FONTS = [
-   "./resources/Fonts/aAsianNinja.otf",
-   "./resources/Fonts/aAsianNinja.ttf",
-   "./resources/Fonts/Dash-Horizon-Demo.otf",
-   "./resources/Fonts/Daughter of a Glitch.otf",
-   "./resources/Fonts/Deadly Advance Italic.otf",
-   "./resources/Fonts/Deadly Advance Italic.ttf",
-   "./resources/Fonts/Deadly Advance.otf",
-   "./resources/Fonts/Deadly Advance.ttf",
-   "./resources/Fonts/Doctor Glitch.otf",
-   "./resources/Fonts/Fast Hand.otf",
-   "./resources/Fonts/impact.ttf",
-   "./resources/Fonts/Long_Shot.ttf",
-   "./resources/Fonts/Space Rave Italic.otf",
-   "./resources/Fonts/Space Rave Italic.ttf",
-   "./resources/Fonts/Space Rave.otf",
-   "./resources/Fonts/Space Rave.ttf",
-   "./resources/Fonts/Trailer Park Girl.otf",
-   "./resources/Fonts/Vampire Wars Italic.otf",
-   "./resources/Fonts/Vampire Wars Italic.ttf",
-   "./resources/Fonts/Vampire Wars.otf",
-   "./resources/Fonts/Vampire Wars.ttf",
-   "./resources/Fonts/Voice In My Head.otf",
- ]
- 
 
 @Client.on_message(filters.command(["alogo"]))
 async def black_logo(bot, message):
@@ -40,10 +15,11 @@ async def black_logo(bot, message):
             "`Please Give Me A text to make a logo!`"
         )
         return
-    fonts = random.choice(FONTS)
+    fpath = glob.glob("resources/Fonts/*")
+    font = random.choice(fpath)
     img = Image.open("./resources/images/black_blank_image.jpg")
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype(fonts, 220)
+    font = ImageFont.truetype(font, 220)
     image_widthz, image_heightz = img.size
     w, h = draw.textsize(text, font=font)
     h += int(h * 0.21)
