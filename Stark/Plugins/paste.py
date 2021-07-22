@@ -41,7 +41,7 @@ async def paste(bot, message):
           ],
       ]
   )
-  await bot.send_message(message.chat.id, "`Pasted Successfully`",
+  await pablo.edit("`Pasted Successfully`",
     reply_markup=keyboard,
     disable_web_page_preview=True)
-  await pablo.delete()
+    
