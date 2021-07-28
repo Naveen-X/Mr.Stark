@@ -74,23 +74,23 @@ async def slogo(bot, message):
   )
   x = (image_widthz - w) / 2
   y = (image_heightz - h) / 2
-  await client.send_chat_action(message.chat.id, "upload_photo")
+  await bot.send_chat_action(message.chat.id, "upload_photo")
   draw.text(
       (x, y), text, font=font, fill="white", stroke_width=60, stroke_fill="black"
   )
   fname2 = "LogoBy@FRIDAYOT.png"
   img.save(fname2, "png")
-  await client.send_chat_action(message.chat.id, "cancel")
+  await bot.send_chat_action(message.chat.id, "cancel")
   if message.reply_to_message:
-    await client.send_photo(
+    await bot.send_photo(
         message.chat.id,
         photo=fname2,
         caption="Made Using @Mr_StarkBot",
         reply_to_message_id=message.reply_to_message.message_id,
     )
   else:
-      await client.send_photo(
-          message.chat.id, photo=fname2, caption="Made Using FridayUserBot"
+      await bot.send_photo(
+          message.chat.id, photo=fname2, caption="Made Using @Mr_StarkBot"
       )
   await event.delete()
   if os.path.exists(fname2):
@@ -100,6 +100,7 @@ async def slogo(bot, message):
 __help__ = """
 <b>Logos</b>
 ➥ /alogo <text> - makes logo with given text
+➥ /slogo <text> - makes a cool logo with given text
 """
 
 __mod_name__ = "Logos" 
