@@ -268,8 +268,8 @@ async def yt_music(bot, message):
         "postprocessors": [
             {
                 "key": "FFmpegExtractAudio",
-                "preferredcodec": "FLAC",
-                "preferredquality": "720",
+                "preferredcodec": "flac",
+                "preferredquality": "320",
             }
         ],
         "outtmpl": "%(id)s.flac",
