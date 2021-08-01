@@ -62,7 +62,7 @@ async def slogo(bot, message):
   font = random.choice(fpath)
   img = Image.open("./resources/images/yellow_bg_for_logo.jpg")
   draw = ImageDraw.Draw(img)
-  font = ImageFont.truetype(font, 220)
+  font = ImageFont.truetype(font, 600)
   image_widthz, image_heightz = img.size
   w, h = draw.textsize(text, font=font)
   h += int(h * 0.21)
