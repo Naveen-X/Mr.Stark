@@ -230,12 +230,89 @@ async def yt_music(bot, message):
             os.remove(files)       
 
 
+@Client.on_message(filters.command(["flac"]))
+async def yt_music(bot, message):
+    input_str = message.text.split(None, 1)[1]
+    pablo = await message.reply_text(f"`Getting {input_str} From Youtube Servers. Please Wait.`"
+    )
+    if not input_str:
+        await pablo.edit(
+            "`Please Give Me A Valid Song name to download!`"
+        )
+        return
+    search = SearchVideos(str(input_str), offset=1, mode="dict", max_results=1)
+    rt = search.result()
+    try:
+        result_s = rt["search_result"]
+    except:
+        await pablo.edit(
+            f"Song Not Found With Name {input_str}, Please Try Giving Some Other Name."
+        )
+        return
+    url = result_s[0]["link"]
+    result_s[0]["duration"]
+    vid_title = result_s[0]["title"]
+    yt_id = result_s[0]["id"]
+    uploade_r = result_s[0]["channel"]
+    thumb_url = f"https://img.youtube.com/vi/{yt_id}/hqdefault.jpg"
+    await asyncio.sleep(0.6)
+    downloaded_thumb = wget.download(thumb_url)
+    opts = {
+        "format": "bestaudio",
+        "addmetadata": True,
+        "key": "FFmpegMetadata",
+        "writethumbnail": True,
+        "prefer_ffmpeg": True,
+        "geo_bypass": True,
+        "nocheckcertificate": True,
+        "postprocessors": [
+            {
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "FLAC",
+                "preferredquality": "720",
+            }
+        ],
+        "outtmpl": "%(id)s.flac",
+        "quiet": True,
+        "logtostderr": False,
+    }
+    try:
+        with YoutubeDL(opts) as ytdl:
+            ytdl_data = ytdl.extract_info(url, download=True)
+    except Exception as e:
+        await pablo.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
+        return
+    c_time = time.time()
+    capy = f"**Song Name ➥** `{vid_title}` \n**Requested For ➥** `{input_str}` \n**Channel ➥** `{uploade_r}` \n**Link ➥** `{url}`"
+    file_stark = f"{ytdl_data['id']}.mp3"
+    await bot.send_audio(
+        message.chat.id,
+        audio=open(file_stark, "rb"),
+        duration=int(ytdl_data["duration"]),
+        title=str(ytdl_data["title"]),
+        performer=str(ytdl_data["uploader"]),
+        thumb=downloaded_thumb,
+        caption=capy,
+        progress=progress,
+        progress_args=(
+            pablo,
+            c_time,
+            f"`Uploading {input_str} Song From YouTube Music!`",
+            file_stark,
+        ),
+    )
+    await pablo.delete()
+    for files in (downloaded_thumb, file_stark):
+        if files and os.path.exists(files):
+            os.remove(files)       
+
 
 __help__ = """
 <b>Youtube</b>
 ➥ /ytv <query or link> - Downloads and sends an youtube video just with query
 ➥ /yts <query> - shows the youtube search result
 ➥ /ytmusic <song name or link> - uploads a song from yt
+➥ /flac <song name> - get song in FLAC format
 """
 
 __mod_name__ = "Youtube"  
