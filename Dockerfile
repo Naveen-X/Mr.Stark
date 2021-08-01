@@ -1,6 +1,7 @@
 FROM debian:latest
 FROM python:3.9.6-slim-buster
-RUN apt update && apt upgrade -y
+RUN apt update && apt upgrade -y /
+    git /
 COPY . /app
 WORKDIR /app
 RUN pip3 install -U pip
