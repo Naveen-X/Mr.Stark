@@ -1,2 +1,2 @@
 # Mr.Stark
-An assistant bot in Telegram
+An assistant bot in Telegram.
