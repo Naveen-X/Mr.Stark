@@ -43,7 +43,7 @@ async def download_img(url):
     return file_path
 
 
-@Client.on_message(filters.command(["webshot"]))
+@Client.on_message(filters.command(["webshot", "ws", "ss"]))
 async def webshot(bot, message):
     msg_ = await message.reply_text(f"<code>Please Wait Until I Capture This Clear Shot!</code>", parse_mode="html")
     url_ = message.text.split(None, 1)[1]

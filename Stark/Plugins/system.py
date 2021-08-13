@@ -19,9 +19,9 @@ start_time = time.time()
 assistant_version = "V1.0"
 
 
-@Client.on_message(filters.command(["ping"]))
+@Client.on_message(filters.command(["ping", "p"]))
 async def ping(_, message):
-    lol = await message.reply_text(f"`Pong!`")
+    lol = await message.reply_text(f"**Pong!**")
     start = datetime.now()
     uptime = get_readable_time((time.time() - start_time))
     end = datetime.now()

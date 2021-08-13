@@ -12,10 +12,11 @@ from main.helper_func.basic_helpers import progress, humanbytes
 
 @Client.on_message(filters.command(["yts"]))
 async def yt_search(bot, message):
-   stark_result = await message.reply_text(f"`Fectching Result this May Take Time.`")
    query = message.text.split(None, 1)[1]
+   stark_result = await message.reply_text(f"**Searching in Youtube for {query}**")
+   
    if not query:
-       await stark_result.edit(f"``Give something to search!``")
+       await stark_result.edit(f"**how Can I Search Nothing For You?")
        return
 
    results = YoutubeSearch(f"{query}", max_results=6).to_dict()
@@ -43,10 +44,10 @@ async def yt_vid(bot, message):
     pablo = await message.reply_text(f"`Processing...`")
     if not input_str:
         await pablo.edit(
-            "`Please Give Me A Valid video name or link to download`"
+            "**Gib Me Some Input To Download Idiot**"
         )
         return
-    await pablo.edit(f"`Getting {input_str} From Youtube Servers. Please Wait.`")
+    await pablo.edit(f"**Searching For {input_str} All over The Universe For you...**")
     search = SearchVideos(str(input_str), offset=1, mode="dict", max_results=1)
     rt = search.result()
     result_s = rt["search_result"]
@@ -73,11 +74,11 @@ async def yt_vid(bot, message):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url, download=True)
     except Exception as e:
-        await pablo.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
+        await pablo.edit(f"**Huff I Tried At my Almost End Bur Failed To Download** \n**Error is:** `{str(e)}`")
         return
     c_time = time.time()
     file_stark = f"{ytdl_data['id']}.mp4"
-    capy = f"**Video Name ➥** `{vid_title}` \n**Requested For ➥** `{input_str}` \n**Channel ➥** `{uploade_r}` \n**Link ➥** `{url}`"
+    capy = f"**Video Name ➥** `{vid_title}`\n**Channel ➥** `{uploade_r}` \n**Link ➥** `{url}`"
     await bot.send_video(
         message.chat.id,
         video=open(file_stark, "rb"),
@@ -90,7 +91,7 @@ async def yt_vid(bot, message):
         progress_args=(
             pablo,
             c_time,
-            f"`Uploading {input_str} Song From YouTube Music!`",
+            f"**Uploading {input_str} Song From YouTube Music!**",
             file_stark,
         ),
     )
@@ -103,13 +104,13 @@ async def yt_vid(bot, message):
 @Client.on_message(filters.command(["ytdl"]))
 async def yt_dl(bot, message):
     input_str = message.text.split(None, 1)[1]
-    pablo = await message.reply_text(f"`Processing...`")
+    pablo = await message.reply_text(f"**Getting Things Done For You**")
     if not input_str:
         await pablo.edit(
-            "`Please Give Me A Valid link to upload!`"
+            "**Please Give Me A Valid link to upload!**"
         )
         return
-    await pablo.edit(f"`Downloading Please Wait..`")
+    await pablo.edit(f"**Downloading..**")
     url = input_str
     opts = {
         "format": "best",
@@ -156,7 +157,7 @@ async def yt_dl(bot, message):
 @Client.on_message(filters.command(["ytmusic"]))
 async def yt_music(bot, message):
     input_str = message.text.split(None, 1)[1]
-    pablo = await message.reply_text(f"`Getting {input_str} From Youtube Servers. Please Wait.`"
+    pablo = await message.reply_text(f"**Searching For {input_str} All over The Universe For you...**"
     )
     if not input_str:
         await pablo.edit(
@@ -206,7 +207,7 @@ async def yt_music(bot, message):
         await pablo.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
         return
     c_time = time.time()
-    capy = f"**Song Name ➥** `{vid_title}` \n**Requested For ➥** `{input_str}` \n**Channel ➥** `{uploade_r}` \n**Link ➥** `{url}`"
+    capy = f"**Song Name ➥** `{vid_title}`\n**Channel ➥** `{uploade_r}` \n**Link ➥** `{url}`"
     file_stark = f"{ytdl_data['id']}.mp3"
     await bot.send_audio(
         message.chat.id,
@@ -233,7 +234,7 @@ async def yt_music(bot, message):
 @Client.on_message(filters.command(["flac"]))
 async def yt_music(bot, message):
     input_str = message.text.split(None, 1)[1]
-    pablo = await message.reply_text(f"`Getting {input_str} From Youtube Servers. Please Wait.`"
+    pablo = await message.reply_text(f"**Searching For {input_str} All over The Universe For you...**"
     )
     if not input_str:
         await pablo.edit(
@@ -283,7 +284,7 @@ async def yt_music(bot, message):
         await pablo.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
         return
     c_time = time.time()
-    capy = f"**Song Name ➥** `{vid_title}` \n**Requested For ➥** `{input_str}` \n**Channel ➥** `{uploade_r}` \n**Link ➥** `{url}`"
+    capy = f"**Song Name ➥** `{vid_title}`\n**Channel ➥** `{uploade_r}` \n**Link ➥** `{url}`"
     file_stark = f"{ytdl_data['id']}.mp3"
     await bot.send_audio(
         message.chat.id,

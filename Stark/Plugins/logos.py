@@ -8,11 +8,11 @@ from PIL import Image, ImageDraw, ImageFont
 
 @Client.on_message(filters.command(["alogo"]))
 async def black_logo(bot, message):
-    event = await message.reply_text("`Processing.....`")
+    event = await message.reply_text("**Painting A Logo For You Broh...**")
     text = message.text.split(None, 1)[1]
     if not text:
         await event.edit(
-            "`Please Give Me A text to make a logo!`"
+            "**Gib Some Text Bro!**"
         )
         return
     fpath = glob.glob("resources/Fonts/*")
@@ -41,7 +41,7 @@ async def black_logo(bot, message):
         )
     else:
         await bot.send_photo(
-            message.chat.id, photo=file_name, caption="Made Using @Mr_StarkBot"
+            message.chat.id, photo=file_name, caption="**@Mr_StarkBot** created A Logo For you "
         )
     await bot.send_chat_action(message.chat.id, "cancel")
     await event.delete()
@@ -56,7 +56,7 @@ async def slogo(bot, message):
   event = await message.reply_text("`Processing`")
   text = message.text.split(None, 1)[1]
   if not text:
-    await event.edit("`What logo should i make without text!`")
+    await event.edit("**I Dont want to Talk With You!**\n**Gib Some test to Make LOGO Bro!**")
     return
   fpath = glob.glob("resources/Fonts/*")
   font = random.choice(fpath)

@@ -1,3 +1,4 @@
+from logging import disable
 import os
 import re
 import shutil
@@ -60,7 +61,7 @@ async def google(bot, message):
 
     for tt, liek, d in zip(titles, clean_links, descriptions):
         msg += f"[{tt}]({liek})\n`{d}`\n\n"
-    await pablo.edit("**sᴇᴀʀᴄʜ ǫᴜᴇʀʏ:**\n`" + query + "`\n\n**ʀᴇsᴜʟᴛs:**\n" + msg)
+    await pablo.edit("**sᴇᴀʀᴄʜ ǫᴜᴇʀʏ:**\n`" + query + "`\n\n**ʀᴇsᴜʟᴛs:**\n" + msg, disable_web_page_preview=True)
 
 
 @Client.on_message(filters.command(["img"]))

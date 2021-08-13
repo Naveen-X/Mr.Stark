@@ -6,7 +6,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 @Client.on_message(filters.command(["paste"]))
 async def paste(bot, message):
-  pablo = await message.reply_text("`《 ᴘᴀsᴛɪɴɢ ᴛᴏ ɴᴇᴋᴏʙɪɴ... 》`")
+  pablo = await message.reply_text("**《 ᴘᴀsᴛɪɴɢ ᴛᴏ ɴᴇᴋᴏʙɪɴ... 》`")
   text = message.reply_to_message.text
   message_s = text
   if not text:
@@ -41,7 +41,7 @@ async def paste(bot, message):
           ],
       ]
   )
-  await pablo.edit("`Pasted Successfully`",
+  await pablo.edit("I Pasted Your Text Successfully",
     reply_markup=keyboard,
     disable_web_page_preview=True)
     
