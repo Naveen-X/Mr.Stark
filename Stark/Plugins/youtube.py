@@ -285,7 +285,7 @@ async def yt_music(bot, message):
         return
     c_time = time.time()
     capy = f"**Song Name ➥** `{vid_title}`\n**Channel ➥** `{uploade_r}` \n**Link ➥** `{url}`"
-    file_stark = f"{ytdl_data['id']}.mp3"
+    file_stark = f"{ytdl_data['id']}.flac"
     await bot.send_audio(
         message.chat.id,
         audio=open(file_stark, "rb"),
