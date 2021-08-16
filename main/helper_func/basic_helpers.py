@@ -231,7 +231,7 @@ async def edit_or_send_as_file(
     if not text:
         await message.edit("`Wait, What?`")
         return
-    if len(text) > 15000:
+    if len(text) > 4096:
         await message.edit("`OutPut is Too Large, Sending As File!`")
         file_names = f"{file_name}.text"
         open(file_names, "w").write(text)
