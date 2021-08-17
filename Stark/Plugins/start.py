@@ -41,7 +41,7 @@ async def start(bot, message):
                     [
                         InlineKeyboardButton(
                             "😎 About me 😎",
-                        callback_databack="about"
+                        callback_data="about"
                         )
                     ],
                     [
