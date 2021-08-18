@@ -6,8 +6,11 @@ from pyrogram import __version__
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 
+bot_start_time = time.time()
+assistant_version = "V1.0"
 
 async def bot_sys_stats():
+    version = assistant_version
     bot_uptime = int(time.time() - bot_start_time)
     cpu = psutil.cpu_percent()
     mem = psutil.virtual_memory().percent
@@ -16,6 +19,7 @@ async def bot_sys_stats():
     stats = f"""
 Sniper_xD@Mr.Stark
 --------------------------
+✘ VERSION: {version}
 ✘ UPTIME: {formatter.get_readable_time((bot_uptime))}
 ✘ BOT: {round(process.memory_info()[0] / 1024 ** 2)} MB
 ✘ CPU: {cpu}%
@@ -41,7 +45,7 @@ async def cb_handler(client, query):
             )
         )
     elif data == "back":
-        firstname = message.from_user.first_name
+        firstname = query.from_user.first_name
         await query.message.edit_text(
             text=f"<i>Hello, {firstname} !\nNice To Meet You, Well I Am A Powerfull Assistant bot For My Master!`\nMade by </i> <a href=tg://user?id=1246467977>༄ᶦᶰᵈ᭄☬Naveen☬ᴮᵒˢˢ</a>",
             reply_markup=keyboard,
