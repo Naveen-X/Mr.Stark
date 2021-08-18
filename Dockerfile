@@ -2,6 +2,9 @@ FROM debian:latest
 FROM python:3.9.6-slim-buster
 RUN apt update && apt upgrade -y git
 RUN apt-get install -y ffmpeg
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+RUN npm i -g npm
 COPY . /app
 WORKDIR /app
 RUN pip3 install -U pip
