@@ -42,7 +42,7 @@ async def cb_handler(client, query):
     elif data == "back":
         await query.message.edit_text(
             text=f"<I>Hello, {firstname} !\nNice To Meet You, Well I Am A Powerfull Assistant bot For My Master!`\nMade by </i> <a href=tg://user?id=1246467977>༄ᶦᶰᵈ᭄☬Naveen☬ᴮᵒˢˢ</a>"
-            reply_markup=keyboard
+            reply_markup=keyboard,
           )
           
     elif data == "sys_info":
