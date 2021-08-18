@@ -47,9 +47,7 @@ async def cb_handler(client, query):
           
     elif data == "sys_info":
         text = await bot_sys_stats()
-        await client.answer_callback_query(
-            query.id, text, show_alert=True
-          )
+        await query.answer(text, show_alert=True)
 
 
 keyboard = InlineKeyboardMarkup(
