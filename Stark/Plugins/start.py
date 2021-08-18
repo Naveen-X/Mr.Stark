@@ -6,6 +6,7 @@ from pyrogram import __version__
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 
+from main.helper_func.basic_helpers import get_readable_time
 bot_start_time = time.time()
 assistant_version = "V1.0"
 
@@ -20,7 +21,7 @@ async def bot_sys_stats():
 Sniper_xD@Mr.Stark
 --------------------------
 ✘ VERSION: {version}
-✘ UPTIME: {formatter.get_readable_time((bot_uptime))}
+✘ UPTIME: {get_readable_time((time.time() - bot_start_time))}
 ✘ BOT: {round(process.memory_info()[0] / 1024 ** 2)} MB
 ✘ CPU: {cpu}%
 ✘ RAM: {mem}%
