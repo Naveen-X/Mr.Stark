@@ -14,7 +14,7 @@ images = [
 BG_IMAGE = random.choice(images)
 
 response = requests.get(BG_IMAGE)
-file = open("./etc/foreground.png", "wb")
+file = open("./MusicBot/etc/foreground.png", "wb")
 file.write(response.content)
 file.close()
 
