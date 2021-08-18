@@ -53,4 +53,4 @@ pyjokes
 gpytranslate
 ffprobe
 python-arq
-speedtest
+speedtest-cli
