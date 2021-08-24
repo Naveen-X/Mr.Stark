@@ -18,7 +18,7 @@ async def bot_sys_stats():
     disk = psutil.disk_usage("/").percent
     process = psutil.Process(os.getpid())
     stats = f"""
-Sniper_xD@Mr.Stark
+Naveen_xD@Mr.Stark
 --------------------------
 ✘ VERSION: {version}
 ✘ UPTIME: {get_readable_time((time.time() - bot_start_time))}
@@ -34,7 +34,7 @@ async def cb_handler(client, query):
     data = query.data
     if data == "about":
         await query.message.edit_text(
-            text = f"<b>My name : <b/>Mr.Stark</i>\n<b>○ Creator : <a href='tg://user?id=1246467977'>Sniper xd</a>\n○ Language : <code>Python3</code>\n○ Library : <a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a></b>",
+            text = f"<b>My name : <b/>Mr.Stark</i>\n<b>○ Creator : <a href='tg://user?id=1246467977'>Naveen_xD</a>\n○ Language : <code>Python3</code>\n○ Library : <a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a></b>",
 
             disable_web_page_preview = True,
             reply_markup = InlineKeyboardMarkup(
@@ -81,7 +81,7 @@ keyboard = InlineKeyboardMarkup(
 @Client.on_message(filters.command(["start"]))
 async def start(bot, message):
     firstname = message.from_user.first_name
-    text=f"<i>Hello, {firstname} !\nNice To Meet You, Well I Am A Powerfull Assistant bot For My Master!`\nMade by </i> <a href=tg://user?id=1246467977>༄ᶦᶰᵈ᭄☬Naveen☬ᴮᵒˢˢ</a>"
+    text=f"<i>Hello, {firstname} !\nNice To Meet You, Well I Am A Powerfull Assistant bot For My Master!`\nMade by </i> <a href=tg://user?id=1246467977>Naveen_xD/a>"
     stark="https://telegra.ph//file/64465c22e5884d2d21ccd.jpg"
     parse_mode="html"
     await bot.send_photo(
