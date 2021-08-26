@@ -45,18 +45,18 @@ async def paste(bot, message):
 
   ext = "py"
   x = await s_paste(message_s, ext)
-  url = x["url"]
+  link = x["url"]
   raw = x["raw"]
   
   keyboard = InlineKeyboardMarkup(
       [
           [
               InlineKeyboardButton(ton
-                  text="Paste", url=f"{url}"
+                  text="Paste", url=link,
               ),
               InlineKeyboardButton(
                   text="Raw",
-                  url=f"{raw}",
+                  url=raw,
               ),
           ],
       ]
