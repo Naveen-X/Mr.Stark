@@ -52,11 +52,11 @@ async def paste(bot, message):
       [
           [
               InlineKeyboardButton(ton
-                  text="Paste", url=link,
+                  text="Paste", url="link",
               ),
               InlineKeyboardButton(
                   text="Raw",
-                  url=raw,
+                  url="raw",
               ),
           ],
       ]
