@@ -4,9 +4,31 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
+
+async def s_paste(message, extension="py"):
+    siteurl = "https://spaceb.in/api/v1/documents/"
+    try:
+        response = requests.post(
+            siteurl, data={"content": message, "extension": extension}
+        )
+    except Exception as e:
+        return {"error": str(e)}
+    if response.ok:
+        response = response.json()
+        if response["error"] != "" and response["status"] < 400:
+            return {"error": response["error"]}
+        return {
+            "url": f"https://spaceb.in/{response['payload']['id']}",
+            "raw": f"{siteurl}{response['payload']['id']}/raw",
+            "bin": "Spacebin",
+        }
+    return {"error": "Unable to reach spacebin."}
+
+
+
 @Client.on_message(filters.command(["paste"]))
 async def paste(bot, message):
-  pablo = await message.reply_text("**《 ᴘᴀsᴛɪɴɢ ᴛᴏ ɴᴇᴋᴏʙɪɴ... 》`")
+  pablo = await message.reply_text("**《 ᴘᴀsᴛɪɴɢ ᴛᴏsᴘᴀᴄᴇʙɪɴ... 》`")
   text = message.reply_to_message.text
   message_s = text
   if not text:
@@ -20,18 +42,16 @@ async def paste(bot, message):
           os.remove(file)
       elif message.reply_to_message.text:
           message_s = message.reply_to_message.text
-  key = (
-      requests.post("https://nekobin-production.up.railway.app/api/documents", json={"content": message_s})
-      .json()
-      .get("result")
-      .get("key")
-  )
-  url = f"https://nekobin-production.up.railway.app/{key}"
-  raw = f"https://nekobin-production.up.railway.app/raw/{key}"
+
+  ext = "py"
+  x = await s_paste(message_s, ext)
+  url = x["url"]
+  raw = x["raw"]
+  
   keyboard = InlineKeyboardMarkup(
       [
           [
-              InlineKeyboardButton(
+              InlineKeyboardButton(ton
                   text="Paste", url=f"{url}"
               ),
               InlineKeyboardButton(
@@ -41,7 +61,7 @@ async def paste(bot, message):
           ],
       ]
   )
-  await pablo.edit("I Pasted Your Text Successfully",
+  await pablo.edit("Pasted Your Text Successfully to Spacebin",
     reply_markup=keyboard,
     disable_web_page_preview=True)
     
