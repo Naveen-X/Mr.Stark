@@ -51,13 +51,13 @@ async def paste(bot, message):
   keyboard = InlineKeyboardMarkup(
       [
           [
-              InlineKeyboardButton(ton
+              InlineKeyboardButton(
                   text="Paste", 
-                  url="link",
+                  url=f"{link}",
               ),
               InlineKeyboardButton(
                   text="Raw",
-                  url="raw",
+                  url=f"{raw}",
               ),
           ],
       ]
