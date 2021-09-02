@@ -1,5 +1,5 @@
 pyrogram
-py-tgcalls
+pytgcalls[pyrogram]
 telethon
 validators
 filesplit
