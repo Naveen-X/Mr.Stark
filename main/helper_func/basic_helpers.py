@@ -135,6 +135,13 @@ def humanbytes(size):
         raised_to_pow += 1
     return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
 
+def run_in_exc(f):
+    @functools.wraps(f)
+    async def wrapper(*args, **kwargs):
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(exc_, lambda: f(*args, **kwargs))
+    return wrapper
+
 
 def time_formatter(milliseconds: int) -> str:
     """Time Formatter"""
