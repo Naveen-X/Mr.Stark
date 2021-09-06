@@ -2,7 +2,7 @@ import asyncio
 from pyrogram.handlers import InlineQueryHandler
 from pyrogram.types import InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram import Client, errors
-from config import Config
+from Stark.config import Config
 from youtubesearchpython import VideosSearch
 
 USERNAME = Config.BOT_TOKEN
