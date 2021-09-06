@@ -2,11 +2,7 @@ import asyncio
 from pyrogram.handlers import InlineQueryHandler
 from pyrogram.types import InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram import Client, errors
-from Stark.config import Config
 from youtubesearchpython import VideosSearch
-
-USERNAME = Config.BOT_TOKEN
-
 buttons = [
             [
                 InlineKeyboardButton("🤖contact me in pm 🤖", url="https://t.me/Mr_StarkBot"),
