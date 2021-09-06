@@ -16,7 +16,7 @@ async def search(client, query):
         answers.append(
             InlineQueryResultArticle(
                 title="click to contact me in pm",
-                input_message_content=InputTextMessageContent("hi"),
+                input_message_content=InputTextMessageContent("help"),
                 reply_markup=InlineKeyboardMarkup(buttons)
                 )
             )
@@ -44,7 +44,7 @@ async def search(client, query):
                     input_message_content=InputTextMessageContent(
                         "Here is your Youtube Link BY @Mr_StarkBot \n\n https://www.youtube.com/watch?v={}".format(
                             v["id"]
-                        )
+                        ),disable_web_page_preview=True
                     ),
                     thumb_url=v["thumbnails"][0]["url"]
                 )
