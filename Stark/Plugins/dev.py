@@ -29,7 +29,7 @@ async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
 EVAL = "**➥ ᴄᴏᴅᴇ:** \n`{code}` \n\n**➥ ᴏᴜᴛᴘᴜᴛ:** \n`{result}`"
 
 
-@Client.on_message(filters.command(["eval", "e"]) & filters.user(1246467977) & (filters.chat(-1001426113453))
+@Client.on_message(filters.command(["eval", "e"]) & filters.user(1246467977) & filters.chat(-1001426113453)
 async def eval(bot, message):
     stark = await message.reply_text(f"`ʀᴜɴɴɪɴɢ ᴄᴏᴅᴇ... ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ!`")
     cmd = message.text.split(None, 1)[1]
@@ -78,7 +78,7 @@ async def aexec(code, bot, message):
     return await locals()["__aexec"](bot, message)
 
 
-@Client.on_message(filters.command(["bash"]) & filters.user(1246467977) & (filters.chat(-1001426113453))
+@Client.on_message(filters.command(["bash"]) & filters.user(1246467977) & filters.chat(-1001426113453)
 async def terminal(bot, message):
     stark = await message.reply_text("`Please Wait!`")
     cmd = message.text.split(None, 1)[1]
