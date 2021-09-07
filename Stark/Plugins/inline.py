@@ -5,7 +5,7 @@ from pyrogram import Client, errors
 from youtubesearchpython import VideosSearch
 buttons = [
             [
-                InlineKeyboardButton("🤖contact me in pm 🤖", url="https://t.me/Mr_StarkBot"),
+                InlineKeyboardButton("🤖contact me in pm 🤖", url="https://t.me/Mr_StarkBot?start=start"),
             ]
          ]
 
