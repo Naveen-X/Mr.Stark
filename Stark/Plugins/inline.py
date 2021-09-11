@@ -5,7 +5,7 @@ from pyrogram import Client, errors
 from youtubesearchpython import VideosSearch
 buttons = [
             [
-                InlineKeyboardButton("🤖contact me in pm 🤖", url="https://t.me/Mr_StarkBot?start=start"),
+                InlineKeyboardButton("🤖Click here to contact me in pm 🤖", url="https://t.me/Mr_StarkBot?start=start"),
             ]
          ]
 
@@ -23,7 +23,7 @@ async def search(client, query):
         await query.answer(results=answers, cache_time=0)
         return
     string = query.query.lower().strip().rstrip()
-    if string == "":
+    if string == "yt":
         await client.answer_inline_query(
             query.id,
             results=answers,
