@@ -1,5 +1,5 @@
 pyrogram
-pytgcalls[pyrogram]
+pytgcalls==3.0.0.dev19
 telethon
 validators
 filesplit
