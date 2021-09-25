@@ -78,7 +78,7 @@ keyboard = InlineKeyboardMarkup(
                 ]
             )
             
-@Client.on_message(filters.command(["start", "s", f"start@Mr_StarkBot"]))
+@Client.on_message(filters.command(["start", "start@Mr_StarkBot"]))
 async def start(bot, message):
     firstname = message.from_user.first_name
     text=f"<i>Hello, {firstname} !\nNice To Meet You\nI Am An Assistant bot For My Master!`\nMade by </i> <a href=tg://user?id=1246467977>Naveen_xD</a>"
