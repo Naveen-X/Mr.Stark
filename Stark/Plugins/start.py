@@ -82,7 +82,7 @@ keyboard = InlineKeyboardMarkup(
 async def start(bot, message):
     firstname = message.from_user.first_name
     text=f"<i>Hello, {firstname} !\nNice To Meet You\nI Am An Assistant bot For My Master!`\nMade by </i> <a href=tg://user?id=1246467977>Naveen_xD</a>"
-    stark="http://ourclg.tech/img/stark.jpg"
+    stark="https://telegra.ph//file/1e499838cffa37711bfa2.jpg"
     parse_mode="html"
     await bot.send_photo(
             message.chat.id,
