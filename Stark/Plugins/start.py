@@ -48,7 +48,7 @@ async def cb_handler(client, query):
     elif data == "back":
         firstname = query.from_user.first_name
         await query.message.edit_text(
-            text=f"<i>Hello, {firstname} !\nNice To Meet You, Well I Am A Powerfull Assistant bot For My Master!`\nMade by </i> <a href=tg://user?id=1246467977>Naveen_xD</a>",
+            text=f"<i>Hello, {firstname} !\nNice To Meet You, Well I Am A Powerfull Assistant bot For My Master!`\nMade by </i>Naveen_xD",
             reply_markup=keyboard,
           )
           
@@ -81,7 +81,7 @@ keyboard = InlineKeyboardMarkup(
 @Client.on_message(filters.command(["start", "start@Mr_StarkBot"]))
 async def start(bot, message):
     firstname = message.from_user.first_name
-    text=f"<i>Hello, {firstname} !\nNice To Meet You\nI Am An Assistant bot For My Master!`\nMade by </i> <a href="https://telegram.dog/Naveen_xD">Naveen_xD</a>"
+    text=f"<i>Hello, {firstname} !\nNice To Meet You\nI Am An Assistant bot For My Master!`\nMade by </i> <a href="https://telegram.dog/Naveen_xD">Naveen_xD</a>
     stark="https://telegra.ph//file/1e499838cffa37711bfa2.jpg"
     parse_mode="html"
     await bot.send_photo(
