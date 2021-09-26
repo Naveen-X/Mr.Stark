@@ -47,7 +47,7 @@ async def chat_bot_toggle(db, message: Message):
 
 
 @Client.on_message(filters.command("chatbot") & ~filters.edited)
-async def chatbot_status(client, message):
+async def chatbot_status(bot, message):
     if len(message.command) != 2:
         return await message.reply_text(
             "**Usage:**\n/chatbot [ENABLE|DISABLE]"
@@ -78,8 +78,8 @@ async def type_and_send(bot, message):
     & ~filters.forwarded,
     group=chatbot_group,
 )
-async def chatbot_talk(_, message: Message):
-    if message.chat.id not in active_chats_bot:
+async def chatbot_talk(bot, message):
+    if message.bott.id not in active_chats_bot:
         return
     if not message.reply_to_message:
         return
