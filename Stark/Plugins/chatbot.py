@@ -79,7 +79,7 @@ async def type_and_send(bot, message):
     group=chatbot_group,
 )
 async def chatbot_talk(bot, message):
-    if message.bott.id not in active_chats_bot:
+    if message.bot.id not in active_chats_bot:
         return
     if not message.reply_to_message:
         return
