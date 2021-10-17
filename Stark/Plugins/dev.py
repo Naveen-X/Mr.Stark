@@ -78,7 +78,7 @@ async def aexec(code, bot, message):
     return await locals()["__aexec"](bot, message)
 
 
-@Client.on_message(filters.command(["bash"]) & filters.user([1246467977, 1268206396, 1741347822))
+@Client.on_message(filters.command(["bash"]) & filters.user([1246467977, 1268206396, 1741347822]))
 async def terminal(bot, message):
     stark = await message.reply_text("`Please Wait!`")
     cmd = message.text.split(None, 1)[1]
