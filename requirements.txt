@@ -1,5 +1,4 @@
 pyrogram
-pytgcalls==3.0.0.dev19
 telethon
 validators
 filesplit
@@ -10,7 +9,7 @@ html5lib
 langdetect>=1.0.8
 geopy>=2.1.0
 selenium>=3.141.0
-opencv-contrib-python>=4.5.1.48
+opencv-contrib-phon>=4.5.1.48
 fake_useragent>=0.1.11
 scipy>=1.6.1
 numpy>=1.20.1
@@ -23,7 +22,6 @@ psutil>=5.8.0
 python-dotenv>=0.15.0
 pymediainfo>=5.0.3
 motor>=2.3.1
-youtube-search-python==1.4.6
 dnspython>=2.1.0
 Markdown>=3.3.4
 gTTS>=2.2.2
@@ -42,7 +40,6 @@ TgCrypto>=1.2.2
 pytz>=2021.1
 apscheduler>=3.7.0
 requests>=2.25.1
-git+https://github.com/ytdl-org/youtube-dl
 Pillow
 pyshorteners>=1.0.1
 telegraph>=1.4.1
