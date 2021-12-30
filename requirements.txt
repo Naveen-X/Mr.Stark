@@ -9,7 +9,7 @@ html5lib
 langdetect>=1.0.8
 geopy>=2.1.0
 selenium>=3.141.0
-opencv-contrib-phon>=4.5.1.48
+opencv-contrib-python>=4.5.1.48
 fake_useragent>=0.1.11
 scipy>=1.6.1
 numpy>=1.20.1
