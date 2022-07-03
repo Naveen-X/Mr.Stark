@@ -12,14 +12,15 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 if __name__ == "__main__" :
 
     print("Starting Assistant...")
-    print(""""
+    print("""
   __  __             _____ _             _    
  |  \/  |           / ____| |           | |   
  | \  / |_ __      | (___ | |_ __ _ _ __| | __
  | |\/| | '__|      \___ \| __/ _` | '__| |/ /
  | |  | | |     _   ____) | || (_| | |  |   < 
  |_|  |_|_|    (_) |_____/ \__\__,_|_|  |_|\_\
-"""")
+""")
+
     plugins = dict(root="Stark/Plugins")
     app = pyrogram.Client(
         "Mr.stark",
