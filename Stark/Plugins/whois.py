@@ -60,7 +60,7 @@ async def whois(bot, message):
             chat_id=message.chat.id,
             photo=photo,
             caption="".join(ui_text),
-            reply_to_message_id=m.id,
+            reply_to_message_id=message.id,
         )
         if os.path.exists(photo):
             os.remove(photo)
