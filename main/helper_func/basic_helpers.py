@@ -232,7 +232,6 @@ async def edit_or_send_as_file(
     client: Client,
     caption: str = "`Result!`",
     file_name: str = "result",
-    parse_mode="md",
 ):
     """Send As File If Len Of Text Exceeds Tg Limit Else Edit Message"""
     if not text:
