@@ -1,4 +1,5 @@
 import os
+import asyncio
 from pyrogram import Client, filters
 
 bullets = {
@@ -23,8 +24,8 @@ dc_id = {
     5: "Singapore, SG",
 }
 
-@Client.on_message(filters.command(["info","whois","userinfo"]))
-async def(bot, message):
+@Client.on_message(filters.command(["info", "whois"]))
+async def whois(bot, message):
     msg = await message.reply_text("`Processing...`")
     if message.reply_to_message:
         user = message.reply_to_message.from_user.id
