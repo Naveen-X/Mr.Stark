@@ -57,7 +57,7 @@ async def whois(bot, message):
         await msg.delete()
         photo = await bot.download_media(pic)
         await bot.send_photo(
-            chat_id=m.chat.id,
+            chat_id=message.chat.id,
             photo=photo,
             caption="".join(ui_text),
             reply_to_message_id=m.id,
