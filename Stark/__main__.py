@@ -1,5 +1,6 @@
 import os
 import time
+import asyncio
 import pyrogram
 import logging
 
@@ -9,17 +10,7 @@ from Stark.config import Config
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
-
-if __name__ == "__main__" :
-    plugins = dict(root="Stark/Plugins")
-    app = pyrogram.Client(
-        "Mr.stark",
-        bot_token=Config.BOT_TOKEN,
-        api_id=Config.API_ID,
-        api_hash=Config.API_HASH,
-        plugins=plugins
-    )
-    app.start()
+async def startup():
     print("Starting Assistant...")
     print("""
   __  __             _____ _             _    
@@ -29,4 +20,19 @@ if __name__ == "__main__" :
  | |  | | |     _   ____) | || (_| | |  |   < 
  |_|  |_|_|    (_) |_____/ \__\__,_|_|  |_|\_\
 """)
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(startup())
+
+if __name__ == "__main__" :
+  
+    plugins = dict(root="Stark/Plugins")
+    app = pyrogram.Client(
+        "Mr.stark",
+        bot_token=Config.BOT_TOKEN,
+        api_id=Config.API_ID,
+        api_hash=Config.API_HASH,
+        plugins=plugins
+    )
+    app.start()
     idle()
