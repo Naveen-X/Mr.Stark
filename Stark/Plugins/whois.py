@@ -31,11 +31,11 @@ async def(c: Client, m: message):
     elif m.user_input:
         user = m.text.split(" ", 1)[1]
     else:
-        return await msg.edit_msg("`Give a username or reply to a user..`")
+        return await msg.edit("`Give a username or reply to a user..`")
     try:
         ui = await c.get_users(user)
     except Exception as e:
-        return await msg.edit_msg("`Failed to get user`")
+        return await msg.edit("`Failed to get user`")
     xio = f"{ui.dc_id} | {dc_id[ui.dc_id]}" if ui.dc_id else "Unknown"
     ui_text = [
         f"{b3} <b>User-info of <i>“{ui.mention}”</i> :</b>\n\n",
