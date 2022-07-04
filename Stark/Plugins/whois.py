@@ -24,16 +24,16 @@ dc_id = {
 }
 
 @Client.on_message(filters.command(["info","whois","userinfo"]))
-async def(c: Client, m: message):
-    msg = await m.reply_text("`Processing...`")
-    if m.reply_to_message:
-        user = m.reply_to_message.from_user.id
-    elif m.user_input:
-        user = m.text.split(" ", 1)[1]
+async def(bot, message):
+    msg = await message.reply_text("`Processing...`")
+    if message.reply_to_message:
+        user = message.reply_to_message.from_user.id
+    elif message.user_input:
+        user = message.text.split(" ", 1)[1]
     else:
         return await msg.edit("`Give a username or reply to a user..`")
     try:
-        ui = await c.get_users(user)
+        ui = await bot.get_users(user)
     except Exception as e:
         return await msg.edit("`Failed to get user`")
     xio = f"{ui.dc_id} | {dc_id[ui.dc_id]}" if ui.dc_id else "Unknown"
@@ -55,8 +55,8 @@ async def(c: Client, m: message):
     pic = ui.photo.big_file_id if ui.photo else None
     if pic is not None:
         await msg.delete()
-        photo = await c.download_media(pic)
-        await c.send_photo(
+        photo = await bot.download_media(pic)
+        await bot.send_photo(
             chat_id=m.chat.id,
             photo=photo,
             caption="".join(ui_text),
