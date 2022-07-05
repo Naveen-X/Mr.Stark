@@ -20,8 +20,6 @@ app = pyrogram.Client(
         plugins=plugins
     )
 
-with app:
-    app.send_message("-1001426113453", "𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
 app.start()
 print("Starting Assistant...")
 print("""
