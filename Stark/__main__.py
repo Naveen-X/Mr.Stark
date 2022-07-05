@@ -14,9 +14,9 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 plugins = dict(root="Stark/Plugins")
 app = pyrogram.Client(
         "Mr.stark",
-        bot_token=Config.BOT_TOKEN,
-        api_id=Config.API_ID,
-        api_hash=Config.API_HASH,
+        bot_token="1863795995:AAFrgmiZSE5xVWFyanI1qwDtVAiF2mrqDv0",
+        api_id=1612723,
+        api_hash="eb3bc0998f7a134318a6d5763e9d0d49",
         plugins=plugins
     )
 
