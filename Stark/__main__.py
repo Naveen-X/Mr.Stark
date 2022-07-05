@@ -36,3 +36,4 @@ app = pyrogram.Client(
     )
 
 app.start()
+idle()
