@@ -7,9 +7,24 @@ import logging
 from pyrogram import idle
 from Stark.config import Config
 
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.WARNING)
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s')
 
+banner = (
+    "\033[96m"
+    + r"""
+  __  __             _____ _             _    
+ |  \/  |           / ____| |           | |   
+ | \  / |_ __      | (___ | |_ __ _ _ __| | __
+ | |\/| | '__|      \___ \| __/ _` | '__| |/ /
+ | |  | | |     _   ____) | || (_| | |  |   < 
+ |_|  |_|_|    (_) |_____/ \__\__,_|_|  |_|\_\
+
+"""
+)
+
+logging.info("Starting Assistant...")
+logging.info(banner)
+logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
 
 plugins = dict(root="Stark/Plugins")
 app = pyrogram.Client(
@@ -21,14 +36,3 @@ app = pyrogram.Client(
     )
 
 app.start()
-print("Starting Assistant...")
-print("""
-  __  __             _____ _             _    
- |  \/  |           / ____| |           | |   
- | \  / |_ __      | (___ | |_ __ _ _ __| | __
- | |\/| | '__|      \___ \| __/ _` | '__| |/ /
- | |  | | |     _   ____) | || (_| | |  |   < 
- |_|  |_|_|    (_) |_____/ \__\__,_|_|  |_|\_\
-""")
-print("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
-idle()
