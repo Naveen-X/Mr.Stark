@@ -1,6 +1,7 @@
 import os
 import requests
 
+from pyrogram import Client, filters
 from telegraph import upload_file
 
 
