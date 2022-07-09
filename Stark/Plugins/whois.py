@@ -29,7 +29,7 @@ async def whois(bot, message):
     msg = await message.reply_text("`Processing...`")
     if message.reply_to_message:
         user = message.reply_to_message.from_user.id
-    elif message.user_input:
+    elif message.text:
         user = message.text.split(" ", 1)[1]
     else:
         return await msg.edit("`Give a username or reply to a user..`")
