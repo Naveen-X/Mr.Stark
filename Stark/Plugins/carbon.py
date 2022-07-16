@@ -38,7 +38,7 @@ async def carbon(bot, message):
 
 
 @Client.on_message(filters.command(["icarbon"]))
-async def image_karb(client, message):
+async def image_karb(bot, message):
     ok = await bot.reply_message(message, "`Making Karbon...`")
     code = message.text
     if not code:
