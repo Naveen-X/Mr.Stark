@@ -21,7 +21,7 @@ async def image_carbon(code):
 
 @Client.on_message(filters.command(["carbon"]))
 async def carbon(bot, message):
-    ok = await bot.reply_message(message, "`Making Karbon...`")
+    ok = await bot.reply_text(message, "`Making Karbon...`")
     code = message.text
     if not code:
         if not message.reply_to_message:
@@ -32,14 +32,14 @@ async def carbon(bot, message):
     
     carbon = await make_carbon(code)
     cap = f"__Carbonized By {message.from_user.mention}__\n\n__**By @Mr_StatkBot**"
-    await client.send_document(message.chat.id, carbon, caption=cap)
+    await bot.send_document(message.chat.id, carbon, caption=cap)
     carbon.close()
     await ok.delete()
 
 
 @Client.on_message(filters.command(["icarbon"]))
 async def image_karb(bot, message):
-    ok = await bot.reply_message(message, "`Making Karbon...`")
+    ok = await bot.reply_text(message, "`Making Karbon...`")
     code = message.text
     if not code:
         if not message.reply_to_message:
@@ -50,6 +50,6 @@ async def image_karb(bot, message):
     
     carbon = await image_carbon(code)
     cap = f"__Carbonized By {message.from_user.mention}__\n\n__**By @Mr_StarkBoy**"
-    await client.send_photo(message.chat.id, carbon, caption=cap)
+    await bot.send_photo(message.chat.id, carbon, caption=cap)
     carbon.close()
     await ok.delete()
