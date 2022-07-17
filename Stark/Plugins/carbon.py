@@ -1,55 +1,42 @@
 import os
-from io import BytesIO
-from aiohttp import ClientSession
+from urllib.parse import quote
 from pyrogram import Client, filters
 
-aiosession = ClientSession()
 
-async def make_carbon(code):
-    url = "https://carbonara.vercel.app/api/cook"
-    async with aiosession.post(url, json={"code": code}) as resp:
-        image = BytesIO(await resp.read())
-    image.name = "Stark_carbon.png"
-    return image
-
-async def image_carbon(code):
-    url = "https://carbonara.vercel.app/api/cook"
-    async with aiosession.post(url, json={"code": code}) as resp:
-        image = BytesIO(await resp.read())
-    image.name = "Stark_Carbon.jpg"
-    return image
+async def carbon(code):
+   text = code
+   url = f"https://api.safone.tech/carbon?code={quote(text)}"
+   return url
 
 @Client.on_message(filters.command(["carbon"]))
 async def carbon(bot, message):
-    ok = await bot.reply_text(message, "`Making Karbon...`")
+    ok = await bot.reply_text(message, "`Making Carbon...`")
     code = message.text
     if not code:
         if not message.reply_to_message:
-           return await ok.edit("`Nothing To Karbonize..`")
+           return await ok.edit("`Nothing To Carbonize..`")
         if not message.reply_to_message.text:
-           return await ok.edit("`Nothing To Karbonize...`")
+           return await ok.edit("`Nothing To Carbonize...`")
     code = code or message.reply_to_message.text
     
-    carbon = await make_carbon(code)
+    carbon = await carbon(code)
     cap = f"__Carbonized By {message.from_user.mention}__\n\n__**By @Mr_StatkBot**"
     await bot.send_document(message.chat.id, carbon, caption=cap)
-    carbon.close()
     await ok.delete()
 
 
 @Client.on_message(filters.command(["icarbon"]))
 async def image_karb(bot, message):
-    ok = await bot.reply_text(message, "`Making Karbon...`")
+    ok = await bot.reply_text(message, "`Making Carbon...`")
     code = message.text
     if not code:
         if not message.reply_to_message:
-           return await ok.edit("`Nothing To Karbonize..`")
+           return await ok.edit("`Nothing To Carbonize..`")
         if not message.reply_to_message.text:
-           return await ok.edit("`Nothing To Karbonize...`")
+           return await ok.edit("`Nothing To Carbonize...`")
     code = code or message.reply_to_message.text
     
-    carbon = await image_carbon(code)
-    cap = f"__Carbonized By {message.from_user.mention}__\n\n__**By @Mr_StarkBoy**"
+    carbon = await carbon(code)
+    cap = f"__Carbonized By {message.from_user.mention}__\n\n__**By @Mr_StarkBot**"
     await bot.send_photo(message.chat.id, carbon, caption=cap)
-    carbon.close()
     await ok.delete()
