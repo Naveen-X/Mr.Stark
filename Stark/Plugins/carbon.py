@@ -10,16 +10,23 @@ async def carbon(code):
 @Client.on_message(filters.command(["carbon"]))
 async def make_carbon(bot, message):
     ok = await message.reply_text("`Making Carbon...`")
-    code = message.text.split(' ',1)[1]
-    if not code:
-        if not message.reply_to_message:
-           return await ok.edit("`Nothing To Carbonize..`")
-        if not message.reply_to_message.text:
+    if message.reply_to_message:
+        if message.reply_to_message.caption:
+            code = message.reply_to_message
+        elif message.reply_to_message.text:
+            code = message.reply_to_message.text 
+        elif len(message.command) > 1:
+            code = message.text.split(" ",1)[1]
+        if not code:
            return await ok.edit("`Nothing To Carbonize...`")
     code = code or message.reply_to_message.text
     
     karbon = await carbon(code)
-    cap = f"__Carbonized By {message.from_user.mention}__\n\n__**By @Mr_StatkBot**"
+    if message.from_user:
+        user = message.from_user.mention
+    else:
+        user = message.sender_chat.title
+    cap = f"__Carbonized By {user}__\n\n__**By @Mr_StatkBot**"
     await bot.send_document(message.chat.id, karbon, caption=cap)
     await ok.delete()
 
@@ -27,15 +34,22 @@ async def make_carbon(bot, message):
 @Client.on_message(filters.command(["icarbon"]))
 async def image_carb(bot, message):
     ok = await message.reply_text("`Making Carbon...`")
-    code = message.text.split(' ',1)[1]
-    if not code:
-        if not message.reply_to_message:
-           return await ok.edit("`Nothing To Carbonize..`")
-        if not message.reply_to_message.text:
+    if message.reply_to_message:
+        if message.reply_to_message.caption:
+            code = message.reply_to_message
+        elif message.reply_to_message.text:
+            code = message.reply_to_message.text 
+        elif len(message.command) > 1:
+            code = message.text.split(" ",1)[1]
+        if not code:
            return await ok.edit("`Nothing To Carbonize...`")
     code = code or message.reply_to_message.text
     
-    ikarbon = await carbon(code)
-    cap = f"__Carbonized By {message.from_user.mention}__\n\n__**By @Mr_StarkBot**"
+    karbon = await carbon(code)
+    if message.from_user:
+        user = message.from_user.mention
+    else:
+        user = message.sender_chat.title
+    cap = f"__Carbonized By {user}__\n\n__**By @Mr_StatkBot**"
     await bot.send_photo(message.chat.id, ikarbon, caption=cap)
     await ok.delete()
