@@ -7,7 +7,7 @@ import logging
 from pyrogram import idle
 from Stark.config import Config
 
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s')
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', handers=[logging.FileHandler('log.txt'),logging.StreamHandler()],)
 
 banner = (
     "\033[96m"
