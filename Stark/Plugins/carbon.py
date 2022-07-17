@@ -10,7 +10,7 @@ async def carbon(code):
 
 @Client.on_message(filters.command(["carbon"]))
 async def carbon(bot, message):
-    ok = await bot.reply_text(message, "`Making Carbon...`")
+    ok = await message.reply_text("`Making Carbon...`")
     code = message.text
     if not code:
         if not message.reply_to_message:
@@ -27,7 +27,7 @@ async def carbon(bot, message):
 
 @Client.on_message(filters.command(["icarbon"]))
 async def image_karb(bot, message):
-    ok = await bot.reply_text(message, "`Making Carbon...`")
+    ok = await message.reply_text("`Making Carbon...`")
     code = message.text
     if not code:
         if not message.reply_to_message:
