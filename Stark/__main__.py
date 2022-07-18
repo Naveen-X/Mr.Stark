@@ -6,20 +6,12 @@ import logging
 
 from pyrogram import idle
 from Stark.config import Config
-from logging.handlers import RotatingFileHandler
 
 
-logging.basicConfig(level=logging.INF0,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handers=[
-    RotatingFileHandler(
-         "logs.txt",
-         maxBytes=2097152000,
-         backupCount=10
-    ),
-    logging.StreamHandler()
-    ]
-)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    handlers=[logging.FileHandler(
+                        'log.txt'), logging.StreamHandler()],
+                    level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 logging.getLogger("pyrogram").setLevel(logging.ERROR)
