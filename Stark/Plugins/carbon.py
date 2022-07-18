@@ -19,9 +19,9 @@ async def make_carbon(bot, message):
             code = message.text.split(" ",1)[1]
         if not code:
            return await ok.edit("`Nothing To Carbonize...`")
-    code = code or message.reply_to_message.text
+    input = code or message.reply_to_message.text
     
-    karbon = await carbon(code)
+    karbon = await carbon(input)
     if message.from_user:
         user = message.from_user.mention
     else:
@@ -43,9 +43,9 @@ async def image_carb(bot, message):
             code = message.text.split(" ",1)[1]
         if not code:
            return await ok.edit("`Nothing To Carbonize...`")
-    code = code or message.reply_to_message.text
+    input = code or message.reply_to_message.text
     
-    karbon = await carbon(code)
+    karbon = await carbon(input)
     if message.from_user:
         user = message.from_user.mention
     else:
