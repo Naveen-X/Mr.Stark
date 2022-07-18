@@ -6,7 +6,7 @@ import logging
 
 from pyrogram import idle
 from Stark.config import Config
-from logging import RotatingFileHandler
+from logging.handlers import RotatingFileHandler
 
 
 logging.basicConfig(level=logging.INF0,
