@@ -6,8 +6,23 @@ import logging
 
 from pyrogram import idle
 from Stark.config import Config
+from logging import RotatingFileHandler
 
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', handers=[logging.FileHandler('log.txt'),logging.StreamHandler()],)
+
+logging.basicConfig(level=logging.INF0,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handers=[
+    RotatingFileHandler(
+         "logs.txt",
+         maxBytes=2097152000,
+         backupCount=10
+    ),
+    logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
+logging.getLogger("pyrogram").setLevel(logging.ERROR)
 
 banner = (
     "\033[96m"
