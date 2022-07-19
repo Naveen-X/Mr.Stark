@@ -5,6 +5,7 @@ import socket
 import sys
 import time
 import uuid
+import logging 
 from datetime import datetime
 from os import environ, execle, path, remove
 from pyrogram import Client, filters
@@ -42,7 +43,7 @@ async def restart(_, message):
   execle(sys.executable, *args, environ)
   exit()
   return
-
+  logging.info("Assistant is restarted successfully")
 
 __help__ = """
 <b>System</b>
