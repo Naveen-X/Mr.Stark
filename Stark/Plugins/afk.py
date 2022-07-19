@@ -6,6 +6,7 @@ import datetime
 import pyrogram 
 
 from datetime import timedelta
+from Stark.Plugins.admin_check import *
 from pyrogram import Client, filters
 
 afk_db = {}
