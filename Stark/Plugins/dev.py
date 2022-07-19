@@ -38,8 +38,6 @@ async def eval(bot, message):
             "**ᴘʟᴇᴀsᴇ ɢɪᴠᴇ ᴍᴇ ᴀ ᴄᴏᴅᴇ ᴛᴏ ʀᴜɴ !**"
         )
         return
-    if message.reply_to_message:
-        message.reply_to_message.id
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = io.StringIO()
@@ -88,9 +86,6 @@ async def terminal(bot, message):
         )
         return
     cmd = message.text.split(None, 1)[1]
-    if message.reply_to_message:
-        message.reply_to_message.id
-
     pid, err, out, ret = await run_command(cmd)
     if not out:
         out = "No OutPut!"
