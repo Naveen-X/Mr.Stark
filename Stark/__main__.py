@@ -29,9 +29,9 @@ banner = (
 """
 )
 
-logging.info("Starting Assistant...")
-logging.info(banner)
-logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
+#logging.info("Starting Assistant...")
+#logging.info(banner)
+#logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
 
 plugins = dict(root="Stark/Plugins")
 app = pyrogram.Client(
@@ -42,8 +42,9 @@ app = pyrogram.Client(
         plugins=plugins
     )
 
-app.run()
+app.start()
 logging.info("Starting Assistant...")
 logging.info(banner)
 logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
 
+idle()
