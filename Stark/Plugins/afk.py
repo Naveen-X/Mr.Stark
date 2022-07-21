@@ -72,7 +72,17 @@ async def mention_html(id, name):
   mention = f"""<a href="tg://user?id={id}">{name}</a>"""
   return mention
 
-
+@Client.on_chat_member_updated()
+async def __(client, m):
+    asyncio.create_task(admins_col(client, m, m.chat.id))
+    
+@Client.on_message(filters.command('admincache')
+async def admins_coll(client, m):
+    if not m.sender_chat:
+        if m.from_user.id in admins:
+            await admins_col(client, m, m.chat.id)
+            await m.reply_text("Refreshed admin cache !")
+            
 @Client.on_message(filters.command(["afk"]))
 async def afk(client, m):
     chat_id = m.chat.id
