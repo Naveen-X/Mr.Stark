@@ -76,12 +76,12 @@ async def mention_html(id, name):
 async def __(bot, m):
     asyncio.create_task(admins_col(bot, m, m.chat.id))
     
-@Client.on_message(filters.command('admincache')
-async def admins_coll(bot, m):
-    if not m.sender_chat:
-        if m.from_user.id in admins:
+@Client.on_message(filters.command(["admincache"])
+async def admins_collect(bot, message):
+    if not message.sender_chat:
+        if message.from_user.id in admins:
             await admins_col(bot, m, m.chat.id)
-            await m.reply_text("Refreshed admin cache !")
+            await message.reply_text("Refreshed admin cache !")
             
 @Client.on_message(filters.command(["afk"]))
 async def afk(client, m):
