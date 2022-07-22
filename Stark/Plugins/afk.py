@@ -78,10 +78,11 @@ async def __(bot, m):
     
 @Client.on_message(filters.command(["admincache"])
 async def admins_collect(bot, message):
+    x = await message.reply_text("`Processing`")
     if not message.sender_chat:
         if message.from_user.id in admins:
             await admins_col(bot, m, m.chat.id)
-            await message.reply_text("Refreshed admin cache !")
+            await x.edit("`Refreshed admin cache !`")
             
 @Client.on_message(filters.command(["afk"]))
 async def afk(client, m):
