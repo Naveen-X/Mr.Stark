@@ -1,6 +1,6 @@
 import os
 from pyrogram import Client, filters 
-from urllib.parse import quote as q
+from urllib.parse import quote as qt
 
 @Client.on_message(filters.command(["write"]))
 async def write(bot, message):
@@ -14,7 +14,7 @@ async def write(bot, message):
       await op.edit("`What do you wanna write?`")
       return
    try:
-      value = q(text)
+      value = qt(text)
       url = f"https://api.naveenxd.wip.la/write?text={value}"
       await message.reply_photo(url)
    except Exception as e:
