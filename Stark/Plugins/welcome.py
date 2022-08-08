@@ -4,7 +4,7 @@ from pyrogram.types import Message
 @Client.on_message(filters.new_chat_members)
 async def welcome(bot, message: Message):
   new_members = [f"{u.mention}" for u in message.new_chat_members]
-  text = f"{emoji.SPARKLES} Hey {u.mention}\nWelcome to {message.chat.title}, Have a Nice Day :)"
+  text = f"{emoji.SPARKLES} Hey {new_members}\nWelcome to {message.chat.title}, Have a Nice Day :)"
   await message.reply_text(text)
   
 
