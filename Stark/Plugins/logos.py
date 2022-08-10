@@ -30,7 +30,6 @@ async def black_logo(bot, message):
         fill=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)),
     )
     file_name = "LogoBy@Mr_StarkBot.png"
-    await bot.send_chat_action(message.chat.id, "upload_photo")
     img.save(file_name, "png")
     if message.reply_to_message:
         await bot.send_photo(
@@ -43,7 +42,6 @@ async def black_logo(bot, message):
         await bot.send_photo(
             message.chat.id, photo=file_name, caption="**@Mr_StarkBot** created A Logo For you "
         )
-    await bot.send_chat_action(message.chat.id, "cancel")
     await event.delete()
     if os.path.exists(file_name):
         os.remove(file_name)
@@ -74,13 +72,11 @@ async def slogo(bot, message):
   )
   x = (image_widthz - w) / 2
   y = (image_heightz - h) / 2
-  await bot.send_chat_action(message.chat.id, "upload_photo")
   draw.text(
       (x, y), text, font=font, fill="white", stroke_width=60, stroke_fill="black"
   )
   fname2 = "LogoBy@FRIDAYOT.png"
   img.save(fname2, "png")
-  await bot.send_chat_action(message.chat.id, "cancel")
   if message.reply_to_message:
     await bot.send_photo(
         message.chat.id,
