@@ -1,6 +1,9 @@
+import os 
+import asyncio
+from SafoneAPI import SafoneAPI
 from pyrogram import Client, filters
-from gpytranslate import Translator
 
+api = SafoneAPI()
 
 @Client.on_message(filters.command(["tr", "translate"]))
 async def translate_me(_, message):
@@ -8,15 +11,13 @@ async def translate_me(_, message):
   lang = message.text.split(None, 1)[1]
   if not lang:
         lang = "en"
-
   text = message.reply_to_message.text
   if not text:
       await lol.edit("`Reply to a message to translate it`")
 
-  kk = Translator()
-  text = await kk.translate(text, targetlang=lang)
-  result = text.text
-  await lol.edit(f"**➥Translated successfully:**\n\n➥`{text.text}`")
+  output = await api.translate(text, target=lang)
+  result = output.text
+  await lol.edit(f"**➥Translated successfully:**\n\n➥`{result}`")
   
 __help__ = """
 <b>Translater </b>
