@@ -16,7 +16,7 @@ async def translate_me(_, message):
       await lol.edit("`Reply to a message to translate it`")
 
   output = await api.translate(text, target=lang)
-  result = output.text
+  result = output.translated
   await lol.edit(f"**➥Translated successfully:**\n\n➥`{result}`")
   
 __help__ = """
