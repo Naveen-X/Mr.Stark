@@ -31,7 +31,7 @@ async def cbdta(client,query):
   q = query
   #print(q.data)
   if "close" in q.data:
-    await qq.answer('delete if you can! i cant.', alert=True)
+    await q.answer('delete if you can! i cant.', alert=True)
   elif "help_" in q.data:
     hlp = q.data.split('help_')[1]
     #print(hlp)
