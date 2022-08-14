@@ -9,7 +9,7 @@ api = SafoneAPI()
 async def translate_me(_, message):
   lol = await message.reply_text(f"`Translating please wait!`")
   lang = message.text.split(None, 1)
-  if lang:
+  if len(lang) > 1:
         lang = lang[1]
   else:
         lang = "en"
