@@ -1,4 +1,4 @@
-from script import script
+from Script import script
 from pyrogram import Client, filters
 from pyromod.nav import Pagination
 from pyromod.helpers import ikb
