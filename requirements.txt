@@ -1,4 +1,5 @@
 pyrogram
+pyromod
 telethon
 validators
 filesplit
