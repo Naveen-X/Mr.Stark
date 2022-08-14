@@ -40,7 +40,7 @@ async def cb_handler(client, query):
             reply_markup = InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton("🔙Back", callback_data = "back")
+                        InlineKeyboardButton("🔙Home", callback_data = "back")
                     ]
                 ]
             )
@@ -71,8 +71,8 @@ keyboard = InlineKeyboardMarkup(
                     ],
                     [
                          InlineKeyboardButton(
-                            "✨Credits✨",
-                            url=f"https://github.com/DevsExpo/FridayUserbot"
+                            "✨Commands Help✨",
+                            callback_data="hlp"
                         )
                     ],
                 ]
