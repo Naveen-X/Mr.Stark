@@ -73,8 +73,7 @@ keyboard = InlineKeyboardMarkup(
                          InlineKeyboardButton(
                             "✨Commands Help✨",
                             callback_data="hlp"
-                        )
-                    ],
+                            ),
                 ]
             )
             
