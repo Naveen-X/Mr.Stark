@@ -47,12 +47,13 @@ async def search(client, query):
             yt_id = i["id"]
             uploade_r = i["channel"]
             views = i["views"]
+            publish = i["publishTime"]
             thumb = f"https://img.youtube.com/vi/{yt_id}/hqdefault.jpg"
             capt = f"""
-**Video Title :** `{vid_title}`
-**Link :** `{url}`
-**Uploader :** `{uploade_r}`
-**Views :** `{views}`
+➥ **Title:** `{vid_title}`
+➥ **Channel:** `{uploade_r}`
+➥ **Views:** `{views}`
+➥ **Published:** `{publish}`
             """
             result.append(
                 InlineQueryResultPhoto(
@@ -63,13 +64,9 @@ async def search(client, query):
                         [
                             [
                                 InlineKeyboardButton(
-                                    text="Download - Audio",
-                                    callback_data=f"ytdl_{url}_audio"
+                                    text="🔎Search-Again🔍",
+                                    switch_inline_query_current_chat="yt"
                                 ),
-                                InlineKeyboardButton(
-                                    text="Download - Video",
-                                    callback_data=f"ytdl_{url}_video"
-                                )
                             ]
                         ]
                     )
