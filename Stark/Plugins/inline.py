@@ -1,7 +1,7 @@
 import os
 import asyncio
 from pyrogram import Client, errors
-from youtubesearchpython import VideosSearch
+from youtubesearchpython import SearchVideos
 from pyrogram.handlers import InlineQueryHandler
 from pyrogram.types import (
     InlineKeyboardButton,
