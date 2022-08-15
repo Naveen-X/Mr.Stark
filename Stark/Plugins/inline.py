@@ -32,8 +32,8 @@ async def search(client, query):
             )
         await query.answer(results=answers, cache_time=0)
         return
-    elif string_given.startswith("yt"):
-        results = []
+    if string_given.startswith("yt"):
+        result = []
         try:
             input = string_given.split(" ", maxsplit=1)[1]
         except:
@@ -54,7 +54,7 @@ async def search(client, query):
 **Uploader :** `{uploade_r}`
 **Views :** `{views}`
             """
-            results.append(
+            result.append(
                 InlineQueryResultPhoto(
                     photo_url=thumb,
                     title=vid_title,
@@ -75,7 +75,7 @@ async def search(client, query):
                     )
                 )
             )
-        await client.answer_inline_query(inline_query.id, cache_time=0, results=results)
+        await query.answer(results=result, cache_time=0)
     
 __handlers__ = [
     [
