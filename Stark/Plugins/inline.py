@@ -1,8 +1,17 @@
+import os
 import asyncio
-from pyrogram.handlers import InlineQueryHandler
-from pyrogram.types import InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram import Client, errors
 from youtubesearchpython import VideosSearch
+from pyrogram.handlers import InlineQueryHandler
+from pyrogram.types import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    InlineQueryResultArticle,
+    InlineQueryResultPhoto,
+    InputTextMessageContent,
+)
+
+
 buttons = [
             [
                 InlineKeyboardButton("🤖Click here to contact me in pm 🤖", url="https://t.me/Mr_StarkBot?start=start"),
@@ -11,58 +20,63 @@ buttons = [
 
 @Client.on_inline_query()
 async def search(client, query):
+    string_given = query.query.lower()
     answers = []
-    if query.query == "hi":
+    if string_given == "hi":
         answers.append(
             InlineQueryResultArticle(
-                title="click to contact me in pm",
-                input_message_content=InputTextMessageContent("help"),
+                title="Click to contact me in pm",
+                input_message_content=InputTextMessageContent("Help"),
                 reply_markup=InlineKeyboardMarkup(buttons)
                 )
             )
         await query.answer(results=answers, cache_time=0)
         return
-    string = query.query.lower().strip().rstrip()
-    if string == "yt":
-        await client.answer_inline_query(
-            query.id,
-            results=answers,
-            switch_pm_text=("✍️ Type An Video Name!"),
-            switch_pm_parameter="help",
-            cache_time=0
-        )
-    else:
-        videosSearch = VideosSearch(string.lower(), limit=50)
-        for v in videosSearch.result()["result"]:
-            answers.append(
-                InlineQueryResultArticle(
-                    title=v["title"],
-                    description=("Duration: {} Views: {}").format(
-                        v["duration"],
-                        v["viewCount"]["short"]
-                    ),
-                    input_message_content=InputTextMessageContent(
-                        "**Here is your Youtube Link BY @Mr_StarkBot** \n\n https://www.youtube.com/watch?v={}".format(
-                            v["id"]
-                        ),disable_web_page_preview=True
-                    ),
-                    thumb_url=v["thumbnails"][0]["url"]
+    elif string_given.startswith("yt"):
+        results = []
+        try:
+            input = string_given.split(" ", maxsplit=1)[1]
+        except:
+            return
+        search = SearchVideos(str(input), offset=1, mode="dict", max_results=50)
+        rt = search.result()
+        result_s = rt["search_result"]
+        for i in result_s:
+            url = i["link"]
+            vid_title = i["title"]
+            yt_id = i["id"]
+            uploade_r = i["channel"]
+            views = i["views"]
+            thumb = f"https://img.youtube.com/vi/{yt_id}/hqdefault.jpg"
+            capt = f"""
+**Video Title :** `{vid_title}`
+**Link :** `{url}`
+**Uploader :** `{uploade_r}`
+**Views :** `{views}`
+            """
+            results.append(
+                InlineQueryResultPhoto(
+                    photo_url=thumb,
+                    title=vid_title,
+                    caption=capt,
+                    reply_markup=InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton(
+                                    text="Download - Audio",
+                                    callback_data=f"ytdl_{url}_audio"
+                                ),
+                                InlineKeyboardButton(
+                                    text="Download - Video",
+                                    callback_data=f"ytdl_{url}_video"
+                                )
+                            ]
+                        ]
+                    )
                 )
             )
-        try:
-            await query.answer(
-                results=answers,
-                cache_time=0
-            )
-        except errors.QueryIdInvalid:
-            await query.answer(
-                results=answers,
-                cache_time=0,
-                switch_pm_text=("❌ No Results Found!"),
-                switch_pm_parameter="",
-            )
-
-
+        await client.answer_inline_query(inline_query.id, cache_time=0, results=results)
+    
 __handlers__ = [
     [
         InlineQueryHandler(
