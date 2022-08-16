@@ -42,7 +42,7 @@ async def search(client, query):
         rt = search.result()
         result_s = rt["search_result"]
         for i in result_s:
-            url = i["link"]
+            link = i["link"]
             vid_title = i["title"]
             yt_id = i["id"]
             uploade_r = i["channel"]
@@ -63,6 +63,9 @@ async def search(client, query):
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
+                                InlineKeyboardButton(
+                                    text="🎥Watch-Now"
+                                ),
                                 InlineKeyboardButton(
                                     text="🔎Search-Again🔍",
                                     switch_inline_query_current_chat="yt"
