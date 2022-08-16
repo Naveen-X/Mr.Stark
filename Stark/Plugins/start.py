@@ -34,8 +34,7 @@ async def cb_handler(client, query):
     data = query.data
     if data == "about":
         await query.message.edit_text(
-            text = f"<b>My name : <b/>Mr.Stark</i>\n<b>○ Creator : <a href='tg://user?id=1246467977'>Naveen_xD</a>\n○ Language : <code>Python3</code>\n○ Library : <a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a></b>",
-
+            text = f"<b>My name : <b/>Mr.Stark</i>\n<b>○ Creator : <a href='tg://user?id=1246467977'>Naveen_xD</a>\n   ○ Contributors:  <a href='tg://user?id=1089528685'>Satya</a>\n                     <a href='tg://user?id=1602293216'>Ashit</a>\n○ Language : <code>Python3</code>\n○ Library : <a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a></b>",
             disable_web_page_preview = True,
             reply_markup = InlineKeyboardMarkup(
                 [
