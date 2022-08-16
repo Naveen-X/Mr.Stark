@@ -64,7 +64,8 @@ async def search(client, query):
                         [
                             [
                                 InlineKeyboardButton(
-                                    text="🎥Watch-Now"
+                                    text="🎥Watch-Now",
+                                    url=link
                                 ),
                                 InlineKeyboardButton(
                                     text="🔎Search-Again🔍",
