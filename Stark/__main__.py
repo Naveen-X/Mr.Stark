@@ -41,10 +41,14 @@ app = pyrogram.Client(
         api_hash="eb3bc0998f7a134318a6d5763e9d0d49",
         plugins=plugins
     )
-
+with app:
+  mgs = app.send_message(-1001426113453,'**Starting Bot..**')
 app.start()
+mgs.edit('**Bot Started.**')
 logging.info("Starting Assistant...")
 logging.info(banner)
 logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
 
 idle()
+mgs.delete()
+app.stop()
