@@ -47,7 +47,7 @@ async def hi(c,m):
   kb = page.create(index, lines, columns)
   await m.reply('Help Menu of Stark!', reply_markup=ikb(kb))
 keyboard = ikb([
-    [("😎 About me 😎",, 'about'), ('🖥System stats 🖥', 'sys_info')],
+    [("😎 About me 😎", 'about'), ('🖥System stats 🖥', 'sys_info')],
     [('🤡Commands Help🤡', 'hlp')]
 ])
 
