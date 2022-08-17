@@ -61,7 +61,7 @@ async def search(client, query):
                 InlineQueryResultPhoto(
                     photo_url=thumb,
                     title=vid_title,
-                    description=f"{uploade_r} | {time}"
+                    description=f"{uploade_r} | {time}",
                     caption=capt,
                     reply_markup=InlineKeyboardMarkup(
                         [
