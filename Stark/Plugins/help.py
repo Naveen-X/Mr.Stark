@@ -80,8 +80,8 @@ async def cbdta(client,query):
     index = 0
     lines = 4 
     columns =3
-    kb = page.create(index, lines, columns)
-    await q.message.edit('Help Menu of Stark!', reply_markup=ikb(kb,[("😎 About me 😎", 'about'), ('🖥System stats 🖥', 'sys_info')]))
+    kb = (page.create(index, lines, columns),[("😎 About me 😎", 'about'), ('🖥System stats 🖥', 'sys_info')])
+    await q.message.edit('Help Menu of Stark!', reply_markup=ikb(kb))
   elif data == "about":
         await query.message.edit_text(
             text = f"<b>My name : <b/>Mr.Stark</i>\n<b>○ Creator : <a href='tg://user?id=1246467977'>Naveen_xD</a>\n   ○ Contributors:  <a href='tg://user?id=1089528685'>Satya</a>\n                     <a href='tg://user?id=1602293216'>Ashit</a>\n○ Language : <code>Python3</code>\n○ Library : <a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a></b>",
