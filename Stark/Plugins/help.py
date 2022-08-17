@@ -2,6 +2,13 @@ from Script import script
 from pyrogram import Client, filters
 from pyromod.nav import Pagination
 from pyromod.helpers import ikb
+import os
+import psutil
+import time
+from pyromod.helpers import ikb
+from pyrogram import __version__
+from pyrogram import Client, filters
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from main.helper_func.basic_helpers import get_readable_time
 bot_start_time = time.time()
