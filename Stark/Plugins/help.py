@@ -80,7 +80,7 @@ async def cbdta(client,query):
     index = 0
     lines = 4 
     columns =3
-    kb = (page.create(index, lines, columns),[("😎 About me 😎", 'about'), ('🖥System stats 🖥', 'sys_info')])
+    kb = page.create(index, lines, columns)
     await q.message.edit('Help Menu of Stark!', reply_markup=ikb(kb))
   elif data == "about":
         await query.message.edit_text(
