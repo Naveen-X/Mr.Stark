@@ -47,18 +47,21 @@ async def search(client, query):
             yt_id = i["id"]
             uploade_r = i["channel"]
             views = i["views"]
+            time = i["duration"]
             publish = i["publishTime"]
             thumb = f"https://img.youtube.com/vi/{yt_id}/hqdefault.jpg"
             capt = f"""
 ➥ **Title:** `{vid_title}`
 ➥ **Channel:** `{uploade_r}`
 ➥ **Views:** `{views}`
+➥ **Duration:** `{time}`
 ➥ **Published:** `{publish}`
             """
             result.append(
                 InlineQueryResultPhoto(
                     photo_url=thumb,
                     title=vid_title,
+                    description=f"{uploade_r} | {time}"
                     caption=capt,
                     reply_markup=InlineKeyboardMarkup(
                         [
