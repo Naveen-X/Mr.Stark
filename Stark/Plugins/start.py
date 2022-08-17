@@ -6,7 +6,7 @@ from pyrogram import __version__
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 keyboard = ikb([
-    [("😎 About me 😎",, 'about'), ('🖥System stats 🖥','sys_info')],
+    [("😎 About me 😎", 'about'), ('🖥System stats 🖥','sys_info')],
     [('🤡Commands Help🤡', 'hlp')]
 ])
 @Client.on_message(filters.command(["start", "start@Mr_StarkBot"]))
