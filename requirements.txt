@@ -53,3 +53,4 @@ pyjokes
 gpytranslate
 ffprobe
 python-arq
+pyqrcode
