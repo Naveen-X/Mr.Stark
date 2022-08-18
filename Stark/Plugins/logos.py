@@ -36,7 +36,7 @@ async def black_logo(bot, message):
             message.chat.id,
             photo=file_name,
             caption="Made Using @Mr_StarkBot",
-            reply_to_message_id=message.reply_to_message.message_id,
+            reply_to_message_id=message.reply_to_message.id,
         )
     else:
         await bot.send_photo(
@@ -82,7 +82,7 @@ async def slogo(bot, message):
         message.chat.id,
         photo=fname2,
         caption="Made Using @Mr_StarkBot",
-        reply_to_message_id=message.reply_to_message.message_id,
+        reply_to_message_id=message.reply_to_message.id,
     )
   else:
       await bot.send_photo(
