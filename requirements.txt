@@ -54,3 +54,4 @@ gpytranslate
 ffprobe
 python-arq
 pyqrcode
+pypng
