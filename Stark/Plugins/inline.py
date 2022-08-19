@@ -46,7 +46,7 @@ async def search(client, query):
                          ]
                      )
                    )
-        await query.answer(result=yt_res, cache_time=0)
+        await query.answer(results=yt_res, cache_time=0)
         return
         result = []
         try:
