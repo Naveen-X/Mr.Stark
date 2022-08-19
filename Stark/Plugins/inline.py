@@ -83,8 +83,8 @@ async def search(client, query):
                     title=vid_title,
                     description=f"{uploade_r} | {time}",
                     caption=capt,
-                    input_message_content=InputTextMessageContent(
-                      link ),
+                   # input_message_content=InputTextMessageContent(
+                   #   link ),
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
