@@ -31,7 +31,7 @@ async def search(client, query):
                 reply_markup=InlineKeyboardMarkup(buttons)
                 )
             )
-        await query.answer(results=answers, cache_time=0)
+        await query.answer(results=answers, cache_time=5)
         return
     if iq.startswith("yt"):
         result = []
@@ -45,15 +45,15 @@ async def search(client, query):
                      photo_url = "https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
                      caption = "Help: An inline tool to search YouTube videos\nUsage: `@MrStark_Bot yt <query>`",
                      reply_markup = InlineKeyboardMarkup([
-                         InlineKeyboardButton(
+                         [InlineKeyboardButton(
                            text = "Search Now🔎",
                            switch_inline_query_current_chat="yt ",
-                           )
+                           )]
                          ]
                      )
                    )
                  )
-            await query.answer(results=result, cache_time=0)
+            await query.answer(results=result, cache_time=5)
         search = SearchVideos(str(input), offset=1, mode="dict", max_results=50)
         rt = search.result()
         result_s = rt["search_result"]
