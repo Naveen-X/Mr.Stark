@@ -56,8 +56,6 @@ async def search(client, query):
                      )
                    )
                  )
-            await query.answer(results=result, cache_time=5)
-            return 
         search = SearchVideos(str(input), offset=1, mode="dict", max_results=50)
         rt = search.result()
         result_s = rt["search_result"]
