@@ -44,7 +44,7 @@ async def search(client, query):
                      description = "An inline tool to search YouTube videos",
                      photo_url = "https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
                      caption = "Help: An inline tool to search YouTube videos\nUsage: `@MrStark_Bot yt <query>`",
-                     parse_mode="MARKDOWN",
+                     parse_mode="markdown",
                      reply_markup = InlineKeyboardMarkup([
                          [InlineKeyboardButton(
                            text = "Search Now🔎",
