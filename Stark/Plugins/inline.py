@@ -37,15 +37,17 @@ async def search(client, query):
         return
     if iq.startswith("yt"):
         result = []
+        
         try:
             input = iq.split(" ", maxsplit=1)[1]
-        except IndexError:
+        except:
             result.append(
               InlineQueryResultPhoto(
                      title = "Yt Search",
                      description = "An inline tool to search YouTube videos",
                      photo_url = "https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
                      caption = "Help: An inline tool to search YouTube videos\nUsage: `@MrStark_Bot yt <query>`",
+                     parse_mode="md",
                      reply_markup = InlineKeyboardMarkup([
                          [InlineKeyboardButton(
                            text = "Search Now🔎",
@@ -56,6 +58,7 @@ async def search(client, query):
                    )
                  )
             await query.answer(results=result, cache_time=5)
+            return 
         search = SearchVideos(str(input), offset=1, mode="dict", max_results=50)
         rt = search.result()
         result_s = rt["search_result"]
