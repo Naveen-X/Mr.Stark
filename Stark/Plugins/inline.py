@@ -22,7 +22,7 @@ buttons = [
 async def search(client, query):
     string_given = query.query.lower()
     answers = []
-    if string_given == "hi":
+    if string_given == "":
         answers.append(
             InlineQueryResultArticle(
                 title="Click to contact me in pm",
@@ -33,6 +33,19 @@ async def search(client, query):
         await query.answer(results=answers, cache_time=0)
         return
     if string_given.startswith("yt"):
+        yt_res = InlineQueryResultPhoto(
+                     title = "Yt Search",
+                     description = "An inline tool to search YouTube videos",
+                     photo_url = "https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
+                     caption = "Help: An inline tool to search YouTube videos\nUsage: `@MrStark_Bot yt <query>`",
+                     reply_markup = InlineKeyboardMarkup([
+                         InlineKeyboardButton(
+                           text = "Search Now🔎",
+                           switch_inline_query_current_chat="yt ",
+                           )
+                         ]
+                     )
+        await query.answer(result=yt_res, cache_time=0)
         result = []
         try:
             input = string_given.split(" ", maxsplit=1)[1]
@@ -72,7 +85,7 @@ async def search(client, query):
                                 ),
                                 InlineKeyboardButton(
                                     text="🔎Search-Again🔍",
-                                    switch_inline_query_current_chat="yt"
+                                    switch_inline_query_current_chat="yt "
                                 ),
                             ]
                         ]
