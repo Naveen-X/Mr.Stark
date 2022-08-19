@@ -33,7 +33,11 @@ async def search(client, query):
         await query.answer(results=answers, cache_time=0)
         return
     if string_given.startswith("yt"):
-        yt_res = InlineQueryResultPhoto(
+        result = []
+        try:
+            input = string_given.split(" ", maxsplit=1)[1]
+        except:
+            yt_res = InlineQueryResultPhoto(
                      title = "Yt Search",
                      description = "An inline tool to search YouTube videos",
                      photo_url = "https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
@@ -46,12 +50,7 @@ async def search(client, query):
                          ]
                      )
                    )
-        await query.answer(results=yt_res, cache_time=0)
-        return
-        result = []
-        try:
-            input = string_given.split(" ", maxsplit=1)[1]
-        except:
+            await query.answer(results=yt_res, cache_time=0)
             return
         search = SearchVideos(str(input), offset=1, mode="dict", max_results=50)
         rt = search.result()
