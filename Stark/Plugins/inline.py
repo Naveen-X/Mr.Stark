@@ -46,6 +46,7 @@ async def search(client, query):
                          ]
                      )
         await query.answer(result=yt_res, cache_time=0)
+        return
         result = []
         try:
             input = string_given.split(" ", maxsplit=1)[1]
