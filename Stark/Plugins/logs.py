@@ -6,7 +6,8 @@ from pyrogram import Client, filters
 async def log_cmd(bot, message):
     processing = await message.reply_text("Processing")
     if os.path.exists("log.txt"):
-        logs = open("log.txt", r).read()
+      try:
+        logs = open("log.txt", "r").read()
         ext = "py"
         x = await s_paste(logs, ext)
         link = x["url"]
@@ -25,5 +26,10 @@ async def log_cmd(bot, message):
          )
         )
         await processing.delete()
+      except:
+        await message.reply_document(
+          "log.txt",
+          caption="__**Logs of Mr.Stark**__",
+          )
     else:
         await processing.edit("`File not found`")
