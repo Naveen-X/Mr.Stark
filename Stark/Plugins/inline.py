@@ -45,6 +45,7 @@ async def search(client, query):
                            )
                          ]
                      )
+                   )
         await query.answer(result=yt_res, cache_time=0)
         return
         result = []
