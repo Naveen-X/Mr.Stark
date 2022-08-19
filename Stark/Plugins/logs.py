@@ -1,6 +1,10 @@
 import os
-from Stark.Plugins.paste import s_paste
 from pyrogram import Client, filters
+from Stark.Plugins.paste import s_paste
+from pyrogram.types import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+)
 
 @Client.on_message(filters.command(["log", "logs"]))
 async def log_cmd(bot, message):
