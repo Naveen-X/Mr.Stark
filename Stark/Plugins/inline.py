@@ -38,7 +38,7 @@ async def search(client, query):
         result = []
         
         try:
-            input = iq.split(" ", maxsplit=1)[1]
+            input = (iq.split("yt", maxsplit=1)[1]).strip()
         except:
             result.append(
               InlineQueryResultPhoto(
@@ -46,7 +46,7 @@ async def search(client, query):
                      description = "An inline tool to search YouTube videos",
                      photo_url = "https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
                      caption = "Help: An inline tool to search YouTube videos\nUsage: `@MrStark_Bot yt <query>`",
-                     parse_mode="md",
+                     parse_mode="MARKDOWN",
                      reply_markup = InlineKeyboardMarkup([
                          [InlineKeyboardButton(
                            text = "Search Now🔎",
@@ -83,6 +83,8 @@ async def search(client, query):
                     title=vid_title,
                     description=f"{uploade_r} | {time}",
                     caption=capt,
+                    input_message_content=InputTextMessageContent(
+                      link ),
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
