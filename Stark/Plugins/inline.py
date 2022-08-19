@@ -36,10 +36,8 @@ async def search(client, query):
         return
     if iq.startswith("yt"):
         result = []
-        
-        try:
-            input = (iq.split("yt", maxsplit=1)[1]).strip()
-        except:
+        input = (iq.split("yt", maxsplit=1)[1]).strip()
+        if not input:
             result.append(
               InlineQueryResultPhoto(
                      title = "Yt Search",
@@ -56,6 +54,8 @@ async def search(client, query):
                      )
                    )
                  )
+            await query.answer(results=result, cache_time=5)
+            return 
         search = SearchVideos(str(input), offset=1, mode="dict", max_results=50)
         rt = search.result()
         result_s = rt["search_result"]
