@@ -1,6 +1,7 @@
 import os
 import asyncio
 from pyrogram import Client, errors
+from pyrogram.enums import ParseMode as pm
 from youtubesearchpython import SearchVideos
 from pyrogram.handlers import InlineQueryHandler
 from pyrogram.types import (
@@ -44,7 +45,7 @@ async def search(client, query):
                      description = "An inline tool to search YouTube videos",
                      photo_url = "https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
                      caption = "Help: An inline tool to search YouTube videos\nUsage: `@MrStark_Bot yt <query>`",
-                     parse_mode="markdown",
+                     parse_mode=pm.MARKDOWN,
                      reply_markup = InlineKeyboardMarkup([
                          [InlineKeyboardButton(
                            text = "Search Now🔎",
