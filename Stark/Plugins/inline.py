@@ -79,7 +79,6 @@ async def search(client, query):
                     title=vid_title,
                     description=f"{uploade_r} | {time}",
                     caption=capt,
-                    switch_pm_text="📹 YouTube Search",
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
