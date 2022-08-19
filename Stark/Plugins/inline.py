@@ -20,9 +20,10 @@ buttons = [
 
 @Client.on_inline_query()
 async def search(client, query):
-    string_given = query.query.lower()
+    string_given = query.query.strip()
+    iq = string_given.lower()
     answers = []
-    if string_given == "":
+    if iq == "":
         answers.append(
             InlineQueryResultArticle(
                 title="Click to contact me in pm",
@@ -32,12 +33,13 @@ async def search(client, query):
             )
         await query.answer(results=answers, cache_time=0)
         return
-    if string_given.startswith("yt"):
+    if iq.startswith("yt"):
         result = []
         try:
-            input = string_given.split(" ", maxsplit=1)[1]
-        except:
-            yt_res = InlineQueryResultPhoto(
+            input = iq.split(" ", maxsplit=1)[1]
+        except IndexError:
+            result.append(
+              InlineQueryResultPhoto(
                      title = "Yt Search",
                      description = "An inline tool to search YouTube videos",
                      photo_url = "https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
@@ -50,8 +52,8 @@ async def search(client, query):
                          ]
                      )
                    )
-            await query.answer(results=yt_res, cache_time=0)
-            return
+                 )
+            await query.answer(results=result, cache_time=0)
         search = SearchVideos(str(input), offset=1, mode="dict", max_results=50)
         rt = search.result()
         result_s = rt["search_result"]
@@ -77,6 +79,7 @@ async def search(client, query):
                     title=vid_title,
                     description=f"{uploade_r} | {time}",
                     caption=capt,
+                    switch_pm_text="📹 YouTube Search",
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
