@@ -30,8 +30,7 @@ async def search(client, query):
                 description= "Inline search !",
                 input_message_content=InputTextMessageContent("Help"),
                 reply_markup=InlineKeyboardMarkup(buttons)
-                )
-            )
+                )            
           ]
         await query.answer(results=answer, cache_time=5)
         return
