@@ -22,16 +22,18 @@ buttons = [
 async def search(client, query):
     string_given = query.query.strip()
     iq = string_given.lower()
-    answers = []
+    print(iq)
     if iq == "":
-        answers.append(
+        answer = [
             InlineQueryResultArticle(
                 title="Click to contact me in pm",
+                description= "Inline search !",
                 input_message_content=InputTextMessageContent("Help"),
                 reply_markup=InlineKeyboardMarkup(buttons)
                 )
             )
-        await query.answer(results=answers, cache_time=5)
+          ]
+        await query.answer(results=answer, cache_time=5)
         return
     if iq.startswith("yt"):
         result = []
