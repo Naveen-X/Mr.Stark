@@ -4,6 +4,7 @@ telethon
 validators
 filesplit
 safoneapi
+play_scraper
 wget>=3.2
 CairoSVG>=2.5.2
 faker>=6.6.2
