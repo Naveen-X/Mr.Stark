@@ -15,11 +15,12 @@ from pyrogram.types import (
 
 
 buttons = [
+
             [
-                InlineKeyboardButton("Youtube", switch_inline_query="yt "),
+                InlineKeyboardButton("Youtube (this chat)", switch_inline_query="yt "),InlineKeyboardButton("Youtube (other chat)", switch_inline_query_current_chat="yt ")
             ],
             [
-                InlineKeyboardButton("Apps", switch_inline_query="app "),
+                InlineKeyboardButton("Apps (this chat)", switch_inline_query="app "),InlineKeyboardButton("Apps (other chat)", switch_inline_query_current_chat="app ")
             ]
         ]
 
