@@ -145,12 +145,12 @@ async def search(client, query):
                     description=app_desc,
                     thumb_url=app_icon,
                     url=app_link,
-                   input_message_content=InputTextMessageContent(
-                   message_text=app_details,
-                   parse_mode="Markdown",
-                   disable_web_page_preview=False,
-                 ),
-                   reply_markup=InlineKeyboardMarkup(
+                    input_message_content=InputTextMessageContent(
+                    message_text=app_details,
+                    parse_mode="Markdown",
+                    disable_web_page_preview=False,
+                  ),
+                    reply_markup=InlineKeyboardMarkup(
                         [
                             [
                                 InlineKeyboardButton(
