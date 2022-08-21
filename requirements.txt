@@ -32,10 +32,7 @@ gTTS>=2.2.2
 youtube-search>=2.1.0
 ffmpeg-python>=0.2.0
 wheel>=0.36.2
-anime_downloader>=5.0.7
 hachoir>=3.1.2
-google-trans-new>=1.1.9
-googletrans>=3.0.0
 beautifulsoup4>=4.9.3
 tinydb>=4.4.0
 img2pdf>=0.4.0
@@ -47,7 +44,6 @@ requests>=2.25.1
 Pillow
 pyshorteners>=1.0.1
 telegraph>=1.4.1
-heroku3>=4.2.3
 aiofiles>=0.6.0
 aiohttp>=3.7.4.post0
 pyjokes
