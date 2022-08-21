@@ -16,23 +16,26 @@ from pyrogram.types import (
 
 buttons = [
             [
-                InlineKeyboardButton("🤖Click here to contact me in pm 🤖", url="https://t.me/Mr_StarkBot?start=start"),
+                InlineKeyboardButton("Youtube", switch_inline_query="yt "),
+            ],
+            [
+                InlineKeyboardButton("Apps", switch_inline_query="app "),
             ]
-         ]
+        ]
 
 @Client.on_inline_query()
-async def search(client, query):
+async def searh(client, query):
     string_given = query.query.strip()
     iq = string_given.lower()
     print(iq)
     if iq == "":
         answer = [
             InlineQueryResultArticle(
-                title="Click to contact me in pm",
+                title="Inline tools.",
                 description= "Inline search !",
-                input_message_content=InputTextMessageContent("Help"),
+                input_message_content=InputTextMessageContent("here are inline tools of this bot"),
                 reply_markup=InlineKeyboardMarkup(buttons)
-                )            
+                )
           ]
         await query.answer(results=answer, cache_time=5)
         return
@@ -167,12 +170,3 @@ async def search(client, query):
                 )
             )
         await query.answer(results=result, cache_time=0)
-
-
-__handlers__ = [
-    [
-        InlineQueryHandler(
-            search
-        )
-    ]
-]
