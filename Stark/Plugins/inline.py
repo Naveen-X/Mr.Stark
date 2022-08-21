@@ -126,32 +126,31 @@ async def search(client, query):
             return
         res = play_scraper.search(input)
         for result in res:
-            try:
-                app_name = result["title"]
-                app_dev = result["developer"]
-                dev_link = (
-                    "https://play.google.com/store/apps/dev?id="
-                    + result["developer_id"]
-                )
-                app_desc = result["description"]
-                app_rating = (
-                    f"{result['score']}/5 ⭐️" if result["score"] else "3.5/5 ⭐️"
-                )
-                app_link = "https://play.google.com" + result["url"]
-                app_icon = result["icon"]
-                app_details = f"[📲]({app_icon}) **{app_name}**\n\n**𝖱𝖺𝗍𝗂𝗇𝗀:** `{app_rating}`\n**𝖣𝖾𝗏𝖾𝗅𝗈𝗉𝖾𝗋:** [{app_dev}]({dev_link})\n**𝖣𝖾𝗌𝖼𝗋𝗂𝗉𝗍𝗂𝗈𝗇:** `{app_desc}`\n**𝖥𝗎𝗅𝗅 𝖣𝖾𝗍𝖺𝗂𝗅𝗌:** [𝖵𝗂𝖾𝗐 𝖮𝗇 𝖯𝗅𝖺𝗒 𝖲𝗍𝗈𝗋𝖾]({app_link})"
-                result.append(
-                    InlineQueryResultArticle(
-                        title=app_name,
-                        description=app_desc,
-                        thumb_url=app_icon,
-                        url=app_link,
-                        input_message_content=InputTextMessageContent(
-                            message_text=app_details,
-                            parse_mode="Markdown",
-                            disable_web_page_preview=False,
-                        ),
-                        reply_markup=InlineKeyboardMarkup(
+            app_name = result["title"]
+            app_dev = result["developer"]
+            dev_link = (
+                "https://play.google.com/store/apps/dev?id="
+                + result["developer_id"]
+            )
+            app_desc = result["description"]
+            app_rating = (
+                f"{result['score']}/5 ⭐️" if result["score"] else "3.5/5 ⭐️"
+            )
+            app_link = "https://play.google.com" + result["url"]
+            app_icon = result["icon"]
+            app_details = f"[📲]({app_icon}) **{app_name}**\n\n**𝖱𝖺𝗍𝗂𝗇𝗀:** `{app_rating}`\n**𝖣𝖾𝗏𝖾𝗅𝗈𝗉𝖾𝗋:** [{app_dev}]({dev_link})\n**𝖣𝖾𝗌𝖼𝗋𝗂𝗉𝗍𝗂𝗈𝗇:** `{app_desc}`\n**𝖥𝗎𝗅𝗅 𝖣𝖾𝗍𝖺𝗂𝗅𝗌:** [𝖵𝗂𝖾𝗐 𝖮𝗇 𝖯𝗅𝖺𝗒 𝖲𝗍𝗈𝗋𝖾]({app_link})"
+            result.append(
+                InlineQueryResultArticle(
+                    title=app_name,
+                    description=app_desc,
+                    thumb_url=app_icon,
+                    url=app_link,
+                   input_message_content=InputTextMessageContent(
+                   message_text=app_details,
+                   parse_mode="Markdown",
+                   disable_web_page_preview=False,
+                 ),
+                   reply_markup=InlineKeyboardMarkup(
                         [
                             [
                                 InlineKeyboardButton(
@@ -167,9 +166,7 @@ async def search(client, query):
                     )
                 )
             )
-              except:
-                  continue
-          await query.answer(results=result, cache_time=0)
+        await query.answer(results=result, cache_time=0)
 
 
 __handlers__ = [
