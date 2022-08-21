@@ -102,7 +102,7 @@ async def search(client, query):
             )
         await query.answer(results=result, cache_time=0)
 
-    if query.startswith("app"):
+    if iq.startswith("app"):
         result = []
         input = (iq.split("app", maxsplit=1)[1]).strip()
         if not input:
