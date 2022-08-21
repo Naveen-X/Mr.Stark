@@ -169,7 +169,7 @@ async def search(client, query):
             )
               except:
                   continue
-                await query.answer(results=result, cache_time=0)
+          await query.answer(results=result, cache_time=0)
 
 
 __handlers__ = [
