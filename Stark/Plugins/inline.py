@@ -8,7 +8,7 @@ from pyrogram.handlers import InlineQueryHandler
 from pyrogram.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
-    InlineQueryArticle,
+    InlineQueryResultArticle,
     InlineQueryResultPhoto,
     InputTextMessageContent,
 )
