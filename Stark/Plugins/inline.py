@@ -1,6 +1,8 @@
 import os
+import aiohttp
 import asyncio
 import play_scraper
+from Python_ARQ import ARQ
 from pyrogram import Client, errors
 from pyrogram.enums import ParseMode as pm
 from youtubesearchpython import SearchVideos
@@ -13,6 +15,10 @@ from pyrogram.types import (
     InputTextMessageContent,
 )
 
+ARQ_URI = "https://arq.hamker.in"
+API_KEY = "XYYLVQ-EWWNJL-AUJEDP-PXKSGN-ARQ"
+aiohttpsession = aiohttp.ClientSession()
+arq = ARQ(ARQ_URI, ARQ_API_KEY, aiohttpsession)
 
 buttons = [
 
@@ -171,3 +177,74 @@ async def searh(client, query):
                 )
             )
         await query.answer(results=result, cache_time=0)
+
+    if iq.startswith("wall"):
+      result=[]
+      input = (iq.split("wall", maxsplit=1)[1]).strip()
+      if not input:
+            result.append(
+              InlineQueryResultPhoto(
+                     title = "🖼️ Wallpaper Search",
+                     description = "An inline tool to search Wallpaper",
+                     photo_url = "https://telegra.ph//file/c9045df2755c5f51916e9.jpg",
+                     caption = "**Help:** An inline tool to search Wallpaper\n**Usage:** `@MrStark_Bot wall <query>`",
+                     parse_mode=pm.MARKDOWN,
+                     reply_markup = InlineKeyboardMarkup([
+                         [InlineKeyboardButton(
+                           text = "Search Now🔎",
+                           switch_inline_query_current_chat="wall ",
+                           )]
+                         ]
+                     )
+                   )
+                 )
+            await query.answer(results=result, cache_time=5, switch_pm_text="🖼️ Wallpaper Search", switch_pm_parameter="help")
+            return
+      data = await arq.wall(iinput
+      if not data.ok:
+          result.append(
+            InlineQueryResultArticle(
+              title="Error",
+              description=data.result,
+              input_message_content=InputTextMessageContent(data.result),
+              reply_markup=InlineKeyboardMarkup(
+                [
+                  [
+                  InlineKeyboardButton(
+                    text="Search Again",
+                    switch_inline_query_current_chat="wall ",
+                    )
+                  ]
+                ]
+                )
+              )
+            )
+      else:
+          res = data.result[0:48]
+          for i in res:
+              result.append(
+                InlineQueryResultPhoto(
+                  photo_url=i.url_image,
+                  thumb_url=i.url_thumb,
+                  reply_markup=InlineKeyboardMarkup(
+                    [
+                      [
+                        InlineKeyboardButton(
+                          text="Full view",
+                          url=i.url_image,
+                          ),
+                        InlineKeyboardButton(
+                          text="Search Again",
+                          switch_inline_query_current_chat="wall "
+                          )
+                        ]
+                      ]
+                    )
+                  )
+                )
+      await query.answer(
+            results=result,
+            cache_time=0,
+            switch_pm_text="🖼 Wallpaper Search",
+            switch_pm_parameter="help",
+        )
