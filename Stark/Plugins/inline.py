@@ -18,7 +18,7 @@ from pyrogram.types import (
 ARQ_URI = "https://arq.hamker.in"
 API_KEY = "IDIHNB-KATKEW-BGPKTB-ZTUHBX-ARQ"
 aiohttpsession = aiohttp.ClientSession()
-arq = ARQ(ARQ_URI, ARQ_API_KEY, aiohttpsession)
+arq = ARQ(ARQ_URI, API_KEY, aiohttpsession)
 
 buttons = [
 
