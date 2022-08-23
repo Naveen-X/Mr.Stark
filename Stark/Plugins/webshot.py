@@ -17,12 +17,12 @@ async def check_if_url_is_valid(url):
 async def webshot(bot, message):
   msg = await message.reply_texd("**Wi8 UnTil i take a ScreenShot...**")
   url_ = message.text.split(None, 1)[1]
-    if not url_:
-      await msg.edit("**Give a Url To TaKe A Screen Shot**")
-      return
+  if not url_:
+    await msg.edit("**Give a Url To TaKe A Screen Shot**")
+    return
   if not await check_if_url_is_valid(url):
-        return await msg.edit("**This is An InValid Url.**")
-        
+    return await msg.edit("**This is An InValid Url.**")
+
   params = urlencode(dict(access_key="2994285eb8bb49138cfc573db7d30869",
                         url=url_))
   urlretrieve("https://api.apiflash.com/v1/urltoimage?" + params, "Stark_SS.jpeg")
