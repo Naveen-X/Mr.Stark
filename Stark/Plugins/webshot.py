@@ -29,3 +29,4 @@ async def webshot(bot, message):
   capt_ = f"<b><u>WebShot Captured</b></u> \n<b>URL :</b> <code>{url_}</code> \n\n<b>Powered By Mr.Stark</b>"
   await message.reply_document("Stark_SS.jpeg", caption=capt_)
   os.remove("Stark_SS.jpeg")
+  await msg.delete()
