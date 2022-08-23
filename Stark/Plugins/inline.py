@@ -186,7 +186,7 @@ async def searh(client, query):
               InlineQueryResultPhoto(
                      title = "🖼️ Wallpaper Search",
                      description = "An inline tool to search Wallpaper",
-                     photo_url = "https://telegra.ph//file/c9045df2755c5f51916e9.jpg",
+                     photo_url = "https://cdn.wallpapersafari.com/29/95/xXs2LH.png",
                      caption = "**Help:** An inline tool to search Wallpaper\n**Usage:** `@MrStark_Bot wall <query>`",
                      parse_mode=pm.MARKDOWN,
                      reply_markup = InlineKeyboardMarkup([
