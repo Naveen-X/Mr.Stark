@@ -20,7 +20,7 @@ async def webshot(bot, message):
   if not url_:
     await msg.edit("**Give a Url To TaKe A Screen Shot**")
     return
-  if not await check_if_url_is_valid(url):
+  if not await check_if_url_is_valid(url_):
     return await msg.edit("**This is An InValid Url.**")
 
   params = urlencode(dict(access_key="2994285eb8bb49138cfc573db7d30869",
