@@ -16,8 +16,9 @@ async def check_if_url_is_valid(url):
 @Client.on_message(filters.command(["webshot","ws"]))
 async def webshot(bot, message):
   msg = await message.reply_text("**Wi8 UnTil i take a ScreenShot...**")
-  url_ = message.text.split(None, 1)[1]
-  if not url_:
+  try:
+    url_ = message.text.split(None, 1)[1]
+  except IndexError:
     await msg.edit("**Give a Url To TaKe A Screen Shot**")
     return
   if not await check_if_url_is_valid(url_):
