@@ -201,7 +201,7 @@ async def searh(client, query):
             await query.answer(results=result, cache_time=5, switch_pm_text="🖼️ Wallpaper Search", switch_pm_parameter="help")
             return
       data = await arq.wall(input)
-      if data != data.ok:
+      if not data.ok:
           result.append(
             InlineQueryResultArticle(
               title="Error",
