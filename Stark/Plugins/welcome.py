@@ -10,5 +10,5 @@ async def welcome(bot, message: Message):
 
 @Client.on_message(filters.left_chat_member)
 async def user_left(bot, message: Message):
-  text = "K bye!\n Nice knowing you:("
+  text = "K bye!\nNice knowing you:("
   await message.reply_text(text)
