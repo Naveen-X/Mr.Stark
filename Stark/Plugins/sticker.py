@@ -7,7 +7,7 @@ from pyrogram import Client, filters
 from PIL import Image, ImageDraw, ImageFont
 
 
-@Client.on_message(filters.command(["stcr"])
+@Client.on_message(filters.command(["stcr"]))
 async def make_stcr(c, m):
     ok = await m.reply_text("**Making A Cool StiCkeR**")
     R = random.randint(0, 256)
