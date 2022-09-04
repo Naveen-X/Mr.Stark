@@ -20,8 +20,8 @@ async def make_stcr(c, m):
           elif m.reply_to_message.text:
               text = m.reply_to_message.text
     elif len(m.command) > 1:
-        code = m.text.split(" ",1)[1]
-    if not code:
+        text = m.text.split(" ",1)[1]
+    if not text:
            return await ok.edit("`Give some input to create a sticker...`")
     sticktext = textwrap.wrap(text, width=10)
     sticktext = "\n".join(sticktext)
