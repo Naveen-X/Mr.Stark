@@ -43,6 +43,7 @@ async def make_stcr(c, m):
     image.save(image_stream, "WebP")
     image_stream.seek(0)
     await m.reply_document(image_stream, caption="Mr.Stark")
+    await ok.delete()
     try:
         os.remove(image)
         os.remove(image_stream)
