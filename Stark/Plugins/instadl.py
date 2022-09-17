@@ -80,7 +80,7 @@ def get_ig_download_url(url: str):
                 )
     except (JSONDecodeError, KeyError, IndexError) as err:
         print(err)
-        return "", 0, 0, "", "", 0, False
+        return "", 0, 0, "", "", 0, 0
 
 
 @Client.on_message(filters.command(["instadl", "insdl", "insta", "instadownload"]))
