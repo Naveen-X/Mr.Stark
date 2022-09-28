@@ -33,8 +33,9 @@ EVAL = "**➥ ᴄᴏᴅᴇ:** \n`{code}` \n\n**➥ ᴏᴜᴛᴘᴜᴛ:** \n`{res
 @Client.on_edited_message(filters.command(["eval", "e"]) & filters.user([1246467977, 1089528685]))
 async def eval(bot, message):
     stark = await message.reply_text(f"`ʀᴜɴɴɪɴɢ ᴄᴏᴅᴇ... ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ!`")
-    cmd = message.text.split(None, 1)[1]
-    if not cmd:
+    try:
+        cmd = message.text.split(None, 1)[1]
+    except IndexError:
         await stark.edit(
             "**ᴘʟᴇᴀsᴇ ɢɪᴠᴇ ᴍᴇ ᴀ ᴄᴏᴅᴇ ᴛᴏ ʀᴜɴ !**"
         )
@@ -78,10 +79,12 @@ async def aexec(code, bot, message):
 
 
 @Client.on_message(filters.command(["bash"]) & filters.user([1246467977, 1089528685]))
+@Client.on_edited_message(filters.command(["bash"]) & filters.user([1246467977, 1089528685]))
 async def terminal(bot, message):
     stark = await message.reply_text("`Please Wait!`")
-    cmd = message.text.split(None, 1)[1]
-    if not cmd:
+    try:
+       cmd = message.text.split(None, 1)[1]
+    except IndexError:
         await stark.edit(
             "**ᴘʟᴇᴀsᴇ ɢɪᴠᴇ ᴍᴇ ᴀ ᴄᴍᴅ ᴛᴏ ʀᴜɴ ɪɴ ᴛᴇʀᴍɪɴᴀʟ!**"
         )
