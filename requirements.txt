@@ -1,5 +1,5 @@
-pyrogram
-pyromod
+pyrogram==2.0.0
+pyromod==1.5
 telethon
 validators
 filesplit
