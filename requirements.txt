@@ -1,4 +1,4 @@
-pyrogram==2.0.0
+pyrogram
 pyromod==1.5
 telethon
 validators
