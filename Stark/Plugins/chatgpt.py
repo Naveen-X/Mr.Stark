@@ -18,7 +18,13 @@ def generate_response(user_input):
     message = response.choices[0].text.strip()
     return message
 
-@Client.on_message(filters.text)
+@Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
 def chatbot(bot, message):
-    response = generate_response(message.text)
+    query = message.text.split(None, 1)[1]
+    if not query:
+        await message.reply_text(
+            "`ɪ ᴅɪᴅɴ'ᴛ ɢᴇᴛ ᴛʜᴀᴛ`"
+        )
+        return
+    response = generate_response(query)
     bot.send_message(message.chat.id, response, reply_to_message_id=message.id)
