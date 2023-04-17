@@ -20,8 +20,9 @@ def generate_response(user_input):
 
 @Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
 async def chatbot(bot, message):
-    query = message.text.split(None, 1)[1]
-    if not query:
+    try:
+      query = message.text.split(None, 1)[1]
+    except:
         await message.reply_text(
             "`ɪ ᴅɪᴅɴ'ᴛ ɢᴇᴛ ᴛʜᴀᴛ`"
         )
