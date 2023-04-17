@@ -3,7 +3,7 @@ import openai
 import requests 
 from pyrogram import Client, filters
 
-openai.api_key = "YOUR_OPENAI_API_KEY"
+openai.api_key = "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"
 
 def generate_response(user_input):
     prompt = f"User: {user_input}\nBot:"
