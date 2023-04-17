@@ -10,7 +10,7 @@ def generate_response(user_input):
     response = openai.Completion.create(
         engine="text-davinci-002",
         prompt=prompt,
-        max_tokens=50,
+        max_tokens=500,
         n=1,
         stop=None,
         temperature=0.5,
