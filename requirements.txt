@@ -1,4 +1,5 @@
 pyrogram
+openai
 pyromod==1.5
 telethon
 validators
