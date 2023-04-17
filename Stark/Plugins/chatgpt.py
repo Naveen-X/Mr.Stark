@@ -19,7 +19,7 @@ def generate_response(user_input):
     return message
 
 @Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
-def chatbot(bot, message):
+async def chatbot(bot, message):
     query = message.text.split(None, 1)[1]
     if not query:
         await message.reply_text(
@@ -27,4 +27,4 @@ def chatbot(bot, message):
         )
         return
     response = generate_response(query)
-    bot.send_message(message.chat.id, response, reply_to_message_id=message.id)
+    await bot.send_message(message.chat.id, response, reply_to_message_id=message.id)
