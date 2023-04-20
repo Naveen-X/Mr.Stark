@@ -19,8 +19,8 @@ async def ai_image(bot, message):
     n=3
     )
   for i in range(3):
-  try:
-     image_url = response['data'][i]['url']
-     await message.reply_photo(image_url)
-  except:
-    quit()
+     try:
+        image_url = response['data'][i]['url']
+        await message.reply_photo(image_url)
+     except:
+        quit()
