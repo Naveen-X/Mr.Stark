@@ -6,7 +6,7 @@ from pyrogram import Client, filters
 openai.api_key = "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"
 
 def generate_response(user_input):
-    prompt = f"User: {user_input}\nBot:"
+    prompt = {user_input}
     response = openai.Completion.create(
         engine="text-davinci-002",
         prompt=prompt,
