@@ -22,7 +22,7 @@ async def download(bot, message):
         progress=progress, progress_args=(c_time, f"`Downloading This File!`")
     )
     e_time = time.time()
-    dl_time = round(s_time - e_time)
+    dl_time = round(e_time - s_time)
     file_txt = "__Downloaded This File To__ `{}` __in__ `{}`."
 
     await dl.edit(file_txt.format(Escobar, dl_time))
