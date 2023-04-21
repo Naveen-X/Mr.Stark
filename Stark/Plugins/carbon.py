@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 
 
 async def carbon(code):
-   url = f"https://api.safone.tech/carbon?code={quote(code)}"
+   url = f"https://api.safone.me/carbon?code={quote(code)}"
    return url
 
 @Client.on_message(filters.command(["carbon"]))
