@@ -1,1 +1,1 @@
-Assistant: bash start.sh
+Assistant: bash start_req.sh
