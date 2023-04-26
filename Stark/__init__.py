@@ -1,10 +1,6 @@
 import logging
 from tglogging import TelegramLogHandler
 
-# logging.basicConfig(format = '[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level = logging.DEBUG, handlers = [logging.FileHandler(
-#   'log.txt'), logging.StreamHandler()])
-#
-#
 logging.basicConfig(
     level=logging.ERROR,
     format="[%(asctime)s - %(levelname)s] - %(name)s - %(message)s",
