@@ -19,6 +19,6 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
-logging.getLogger("pyrogram").setLevel(logging.CRITICAL)
+logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 logger.info("live log streaming to telegram.")
