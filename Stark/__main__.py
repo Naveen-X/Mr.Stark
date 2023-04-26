@@ -1,3 +1,4 @@
+import importlib
 import os
 import time
 import asyncio
@@ -7,18 +8,12 @@ import logging
 from pyrogram import idle
 from Stark.config import Config
 
-
-logging.basicConfig(format='%(asctime)s - [Mr.Stark] - %(name)s - %(levelname)s - %(message)s',
-                    handlers=[logging.FileHandler(
-                        'log.txt'), logging.StreamHandler()],
-                    level=logging.INFO)
-
 logger = logging.getLogger(__name__)
-logging.getLogger("pyrogram").setLevel(logging.ERROR)
+logging.getLogger("pyrogram").setLevel(logging.INFO)
 
 banner = (
-    "\033[96m"
-    + r"""
+        "\033[96m"
+        + r"""
   __  __             _____ _             _    
  |  \/  |           / ____| |           | |   
  | \  / |_ __      | (___ | |_ __ _ _ __| | __
@@ -29,22 +24,22 @@ banner = (
 """
 )
 
-#logging.info("Starting Assistant...")
-#logging.info(banner)
-#logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
+# logging.info("Starting Assistant...")
+# logging.info(banner)
+# logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
 
 plugins = dict(root="Stark/Plugins")
 app = pyrogram.Client(
-        "Mr.stark",
-        bot_token="1863795995:AAFrgmiZSE5xVWFyanI1qwDtVAiF2mrqDv0",
-        api_id=1612723,
-        api_hash="eb3bc0998f7a134318a6d5763e9d0d49",
-        plugins=plugins
-    )
+    "Mr.stark",
+    bot_token="1863795995:AAFrgmiZSE5xVWFyanI1qwDtVAiF2mrqDv0",
+    api_id=1612723,
+    api_hash="eb3bc0998f7a134318a6d5763e9d0d49",
+    plugins=plugins
+)
 with app:
-  mgs = app.send_message(-1001426113453,'**Starting Bot..**')
+    mgs = app.send_message(-1001426113453, '**Starting Bot..**')
 app.start()
-mgs.edit('**Bot Started.**')
+mgs.edit('**Bot Started,**')
 logging.info("Starting Assistant...")
 logging.info(banner)
 logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")

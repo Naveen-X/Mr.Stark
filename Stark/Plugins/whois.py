@@ -26,10 +26,16 @@ dc_id = {
 
 @Client.on_message(filters.command(["info", "whois"]))
 async def whois(bot, message):
+    global chat
     msg = await message.reply_text("`Processing...`")
     if message.reply_to_message:
         user = message.reply_to_message.from_user.id
-    elif message.text:
+    elif len(message.text.split(" ", 1)) == 1 and not message.reply_to_message:
+        user = message.from_user.id
+        chat = message.chat.id
+        t = "Chat id: {}".format(chat)
+
+    elif len(message.text.split(" ", 1)) == 2 and not message.reply_to_message:
         user = message.text.split(" ", 1)[1]
     else:
         return await msg.edit("`Give a username or reply to a user..`")
@@ -51,6 +57,7 @@ async def whois(bot, message):
         f"  {b2} <b>Is Scam : <i>{'Yes' if ui.is_scam else 'No'}</i></b>\n",
         f"  {b2} <b>Is Mutual : <i>{'Yes' if ui.is_mutual_contact else 'No'}</i></b>\n",
         f"  {b2} <b>Is Verified : <i>{'Yes' if ui.is_verified else 'No'}</i></b> \n",
+        f"  {b2} <b>This Chat ID : <i>{chat}</i></b>\n",
     ]
     pic = ui.photo.big_file_id if ui.photo else None
     if pic is not None:
