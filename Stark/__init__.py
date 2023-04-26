@@ -9,7 +9,7 @@ logging.basicConfig(
         TelegramLogHandler(
             token="1863795995:AAFrgmiZSE5xVWFyanI1qwDtVAiF2mrqDv0",
             log_chat_id=-1001491739934,
-            update_interval=2,
+            update_interval=5,
             minimum_lines=1,
             pending_logs=200000),
         logging.StreamHandler(),
@@ -19,6 +19,6 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
-logging.getLogger("pyrogram").setLevel(logging.ERROR)
+logging.getLogger("pyrogram").setLevel(logging.CRITICAL)
 
 logger.info("live log streaming to telegram.")
