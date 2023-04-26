@@ -1,3 +1,4 @@
-import logging 
+import logging
 
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level=logging.DEBUG)
+logging.basicConfig(format = '[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level = logging.DEBUG, handlers = [logging.FileHandler(
+  'log.txt'), logging.StreamHandler()])
