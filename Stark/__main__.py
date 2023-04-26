@@ -9,8 +9,6 @@ from pyrogram import idle
 from Stark.config import Config
 
 logger = logging.getLogger(__name__)
-logging.getLogger("pyrogram").setLevel(logging.INFO)
-
 banner = (
         "\033[96m"
         + r"""
