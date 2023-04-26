@@ -5,7 +5,7 @@ import sys
 
 
 @Client.on_message(filters.command("update"))
-def update(client, message):
+async def update(client, message):
     # check if the message is sent by an authorized user
     await message.reply_text(f"**Updating!**")
     if message.from_user.id not in [1246467977, 1089528685]:
