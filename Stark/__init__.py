@@ -2,7 +2,7 @@ import logging
 from tglogging import TelegramLogHandler
 
 logging.basicConfig(
-    level=logging.CRITICAL,
+    level=logging.DEBUG,
     format="[%(asctime)s - %(levelname)s] - %(name)s - %(message)s",
     datefmt='%d-%b-%y %H:%M:%S',
     handlers=[
