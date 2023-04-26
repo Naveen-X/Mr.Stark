@@ -15,5 +15,5 @@ async def update(client, message):
     # stop the current process
     os.kill(os.getpid(), 9)
     # start the bot process again
-    os.execl(sys.executable, sys.executable, *sys.argv)
+    os.execl('bash', 'start.sh', *sys.argv)
     await up.delete()
