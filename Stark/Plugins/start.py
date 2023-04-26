@@ -13,7 +13,7 @@ keyboard = ikb([
 async def start(bot, message):
     firstname = message.from_user.first_name
     text=f"<i>Hello, {firstname} !\nNice To Meet You\nI Am An Assistant bot For My Master!`\nMade by </i> <a href='https://telegram.dog/Naveen_xD'>Naveen_xD</a>"
-    stark="https://telegra.ph//file/1e499838cffa37711bfa2.jpg"
+    stark="resources/images/start_img.jpg"
     parse_mode="html"
     await bot.send_photo(
             message.chat.id,
