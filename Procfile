@@ -1,1 +1,1 @@
-Assistant: python -m Stark
+Assistant: bash start.sh
