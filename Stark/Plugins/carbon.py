@@ -1,4 +1,5 @@
 import os
+import base64
 from urllib.parse import quote
 from pyrogram import Client, filters
 
@@ -22,13 +23,17 @@ async def make_carbon(bot, message):
     if not code:
            return await ok.edit("`Nothing To Carbonize...`")
            
-    carbon_url = await carbon(code)
+    x = await carbon(code)
+    carbon_url = x["image"]
+    decodeit = open('carbon.jpg', 'wb')
+    decodeit.write(base64.b64decode((carbon_url)))
+    decodeit.close()
     if message.from_user:
         user = message.from_user.mention
     else:
         user = message.sender_chat.title
     cap = f"__Carbonized By {user}__\n\n__**By @Mr_StatkBot**"
-    await message.reply_document(carbon_url, caption=cap)
+    await message.reply_document("carbon.jpg", caption=cap)
     await ok.delete()
 
 
@@ -47,11 +52,15 @@ async def carbonn(bot, message):
     if not code:
            return await ok.edit("Nothing To Carbonize...")
            
-    carbon_url = await carbon(code)
+    x = await carbon(code)
+    carbon_url = x["image"]
+    decodeit = open('carbon.jpg', 'wb')
+    decodeit.write(base64.b64decode((carbon_url)))
+    decodeit.close()
     if message.from_user:
         user = message.from_user.mention
     else:
         user = message.sender_chat.title
     cap = f"__Carbonized By {user}__\n\n__**By @Mr_StatkBot**"
-    await bot.send_photo(message.chat.id, carbon_url, caption=cap)
+    await bot.send_photo(message.chat.id, "carbon.jog", caption=cap)
     await ok.delete()
