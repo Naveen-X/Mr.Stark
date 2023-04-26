@@ -24,10 +24,6 @@ banner = (
 """
 )
 
-# logging.info("Starting Assistant...")
-# logging.info(banner)
-# logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
-
 plugins = dict(root="Stark/Plugins")
 app = pyrogram.Client(
     "Mr.stark",
@@ -39,7 +35,7 @@ app = pyrogram.Client(
 with app:
     mgs = app.send_message(-1001426113453, '**Starting Bot..**')
 app.start()
-mgs.edit('**Bot Started,**')
+mgs.edit('**Bot Started**')
 logging.info("Starting Assistant...")
 logging.info(banner)
 logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
