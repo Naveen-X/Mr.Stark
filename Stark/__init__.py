@@ -2,7 +2,7 @@ import logging
 from tglogging import TelegramLogHandler
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="[%(asctime)s - %(levelname)s] - %(name)s - %(message)s",
     datefmt='%d-%b-%y %H:%M:%S',
     handlers=[
@@ -19,6 +19,6 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
+logging.getLogger("pyrogram").setLevel(logging.INFO)
 
 logger.info("live log streaming to telegram.")
