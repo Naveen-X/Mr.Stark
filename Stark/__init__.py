@@ -1,9 +1,10 @@
 import logging
 from tglogging import TelegramLogHandler
 
-logging.basicConfig(format = '[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level = logging.DEBUG, handlers = [logging.FileHandler(
-  'log.txt'), logging.StreamHandler()])
-  
+# logging.basicConfig(format = '[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s', level = logging.DEBUG, handlers = [logging.FileHandler(
+#   'log.txt'), logging.StreamHandler()])
+#
+#
 logging.basicConfig(
     level=logging.INFO,
     format="[%(asctime)s - %(levelname)s] - %(name)s - %(message)s",
@@ -11,11 +12,13 @@ logging.basicConfig(
     handlers=[
         TelegramLogHandler(
             token="1863795995:AAFrgmiZSE5xVWFyanI1qwDtVAiF2mrqDv",
-            log_chat_id=-1001426113453, 
-            update_interval=2, 
-            minimum_lines=1, 
+            log_chat_id=-1001426113453,
+            update_interval=2,
+            minimum_lines=1,
             pending_logs=200000),
-        logging.StreamHandler()
+        logging.StreamHandler(),
+        logging.FileHandler(
+            'log.txt')
     ]
 )
 
