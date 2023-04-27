@@ -12,12 +12,12 @@ from traceback import format_exc
 from tglogging import TelegramLogHandler
 
 def error_handling(func):
-    async def inner(bot,message): #kwargs mean any other args avai
+    async def inner(bot,message):
         try:
             if func.__name__ != 'on_message':
                 await bot.send_message(-1001426113453,'👤 /'+func.__name__)
                 pass
-            await func(bot,messag)
+            await func(bot,message)
         except BaseException as error:
             fullerror = "".join(traceback.TracebackException.from_exception(error).format())
             printerror = await bot.send_message(-1001426113453,f'❌ **{error}**\n```\n{fullerror}\n```\n\n__{str(format_exc)}__', disable_web_page_preview=True)
