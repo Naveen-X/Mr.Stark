@@ -103,7 +103,7 @@ me = {
       "text": mes.text, 
       "replyMessage": {}
     }
-              messages.append(me)
+    messages.append(me)
     text = {
   "type": "quote",
   "format": "png",
