@@ -15,11 +15,11 @@ def error_handling(func):
     async def inner(bot,message):
         try:
             if func.__name__ != 'on_message':
-                await bot.send_message(-1001426113453,'👤 /'+func.__name__)
+                await bot.send_message(-1001491739934,'👤 /'+func.__name__)
                 pass
             await func(bot,message)
         except BaseException as error:
-            await bot.send_message(-1001426113453, error)
+            await bot.send_message(-1001491739934, error)
     return inner  
     
 logging.basicConfig(
