@@ -95,7 +95,7 @@ async def serch(client, m):
         "type": "private",
         "name":  f"{first_name} {last_name}"
         }
-me = {
+              me = {
       "entities": [],
       "chatId": m.chat.id,
       "avatar": True,
@@ -103,7 +103,7 @@ me = {
       "text": mes.text, 
       "replyMessage": {}
     }
-    messages.append(me)
+              messages.append(me)
     text = {
   "type": "quote",
   "format": "png",
