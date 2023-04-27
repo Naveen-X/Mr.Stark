@@ -64,42 +64,11 @@ async def google(bot, message):
     await pablo.edit("**sᴇᴀʀᴄʜ ǫᴜᴇʀʏ:**\n`" + query + "`\n\n**ʀᴇsᴜʟᴛs:**\n" + msg, disable_web_page_preview=True)
 
 
-@Client.on_message(filters.command(["img"]))
-async def image(bot, message):
-    pablo = await message.reply_text("`ᴘʀᴏᴄᴇssɪɴɢ...`")
-    query = message.text.split(None, 1)[1]
-    if not query:
-        await pablo.edit("`ɢɪᴠᴇ ᴛᴇxᴛ ғᴏʀ ɪᴍᴀɢᴇ sᴇᴀʀᴄʜ!`")
-        return
-    if "|" in query:
-        lim = query.split("|")[1] if (query.split("|")[1]).isdigit() else 5
-    else:
-        lim = 6
-    response = googleimagesdownload()
-    arguments = {
-        "keywords": query,
-        "limit": lim,
-        "format": "jpg",
-        "silent_mode": True,
-        "no_directory": "no_directory",
-    }
-    paths = response.download(arguments)
-    lst = paths[0][query]
-    Beast = []
-    for x in lst:
-        try:
-            Beast.append(InputMediaPhoto(str(x)))
-        except:
-            pass
-    await bot.send_media_group(message.chat.id, media=Beast)
-    shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
-    await pablo.delete()
 
-
+      
 __help__ = """
 <b>Google</b>
 ➥ /gs <query> - get results from google
-➥ /img <query> - gets images from google
 """
 
 __mod_name__ = "Google"    
