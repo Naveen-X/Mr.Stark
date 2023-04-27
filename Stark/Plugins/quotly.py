@@ -1,8 +1,9 @@
 import os
+import requests 
 from pyrogram import Client, filters
 
 @Client.on_message(filters.command(["q"]))
-async def serch(client, m):
+async def quote(client, m):
     qse = await m.reply_text("`Quoting..`")
     u = m.from_user
     messages = []
