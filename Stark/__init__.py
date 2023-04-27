@@ -19,10 +19,7 @@ def error_handling(func):
                 pass
             await func(bot,message)
         except BaseException as error:
-            fullerror = "".join(traceback.TracebackException.from_exception(error).format())
-            printerror = await bot.send_message(-1001426113453,f'❌ **{error}**\n```\n{fullerror}\n```\n\n__{str(format_exc)}__', disable_web_page_preview=True)
-            await bot.send_message(message.chat.id,f"❌ **An unexpected error has occur** \n```\n{error}\n```\nWe are sorry for that. [Fullerror]({printerror.link})")
-            traceback.print_exception(type(error), error, error.__traceback__, file = sys.stderr)
+            await bot.send_message(-1001426113453, error)
     return inner  
     
 logging.basicConfig(
