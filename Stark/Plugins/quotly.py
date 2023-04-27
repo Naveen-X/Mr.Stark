@@ -72,7 +72,7 @@ async def quote(client, m):
 #   text = re_te(m.chat.id, f"{m.from_user.first_name} {m.from_user.last_name}", m.reply_to_message.text, )
     if m.text == "/q":
               mes = m.reply_to_message
-              u = m.from_user
+              u = mes.from_user
               if not u.first_name:
                   first_name = ""
               else:
