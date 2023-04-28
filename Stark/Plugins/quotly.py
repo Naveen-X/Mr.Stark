@@ -26,8 +26,8 @@ async def quote(client, m):
         }
         
     if len(m.command) > 1:
-       num = m.reply_to_message.id
-       if m.command[1].isdigit:
+      num = m.reply_to_message.id
+      if m.command[1].isdigit():
           for i in range(int(m.command[1])):
               mes = await client.get_messages(m.chat.id, num+i)
               u = mes.from_user
