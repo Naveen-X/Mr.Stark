@@ -137,7 +137,7 @@ async def quote(client, m):
   "backgroundColor": "#1b1429",
   "width": 512,
   "height": 768,
-  "scale": 3,
+  "scale": 2,
   "messages": messages
   
 }
