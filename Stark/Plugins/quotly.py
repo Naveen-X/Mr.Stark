@@ -76,7 +76,7 @@ async def quote(client, m):
                   last_name = ""
               else:
                  last_name = u.last_name
-              if m.reply_to_message.reply_to_message:   
+              if mes.reply_to_message:   
                  uu = {
            "id": u.id,
            "first_name": first_name,
