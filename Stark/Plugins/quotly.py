@@ -106,7 +106,7 @@ async def quote(client, m):
          }
        }
                  messages.append(me)
-              if m.reply_to_message:
+              if mes:
                  uu = {
            "id": u.id,
            "first_name": first_name,
