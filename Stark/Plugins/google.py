@@ -5,6 +5,34 @@ from urllib.parse import quote
 
 from pyrogram import Client, filters
 
+async def search_google(query: str, limit: int = 10):
+    results = []
+    query = quote(query)
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(
+            f"https://customsearch.googleapis.com/customsearch/v1?q={query}&key=AIzaSyABKLWB_mLrepcEUTTXo5_p-DDT76ccjdU&cx=5d7ff60ca55a45503"
+        ) as response:
+            try:
+                resp = await response.json()
+            except Exception:
+                return None
+
+    for i in resp["items"]:
+        if len(results) >= limit:
+            break
+
+        result = {}
+        try:
+            result["title"] = i["title"]
+            result["link"] = i["link"]
+            result["description"] = i["snippet"]
+            results.append(result)
+        except Exception:
+            pass
+
+    return results
+
 
 @Client.on_message(filters.command(["gs", "google"]))
 async def google(bot, message):
