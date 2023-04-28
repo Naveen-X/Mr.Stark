@@ -62,6 +62,7 @@ async def quote(client, m):
       "from": uu,
       "text": mes.text, 
       "replyMessage": {}
+      }
               messages.append(me)
 
 #   text = re_te(m.chat.id, f"{m.from_user.first_name} {m.from_user.last_name}", m.reply_to_message.text, )
