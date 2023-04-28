@@ -43,7 +43,7 @@ async def google(bot, message):
         await gs.edit(
             "`ᴘʟᴇᴀsᴇ ɢɪᴠᴇ ᴍᴇ ᴀ ᴠᴀʟɪᴅ ɪɴᴘᴜᴛ ᴛᴏ sᴇᴀʀᴄʜ ɪɴ ɢᴏᴏɢʟᴇ!`"
         )
-    return
+        return
     results = await search_google(query)
     
     titles = []
