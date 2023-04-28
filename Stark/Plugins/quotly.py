@@ -65,7 +65,6 @@ async def quote(client, m):
       }
               messages.append(me)
 
-#   text = re_te(m.chat.id, f"{m.from_user.first_name} {m.from_user.last_name}", m.reply_to_message.text, )
     if m.text == "/q":
               mes = m.reply_to_message
               u = mes.from_user
@@ -77,35 +76,62 @@ async def quote(client, m):
                   last_name = ""
               else:
                  last_name = u.last_name
-              uu = {
-        "id": u.id,
-        "first_name": first_name,
-        "last_name": last_name,
-        "username": u.username,
-        "language_code": "eu",
-        "title": f"{first_name} {last_name}",
-        "photo": {
-          "small_file_id": u.photo.small_file_id,
-          "small_file_unique_id": u.photo.small_photo_unique_id,
-          "big_file_id": u.photo.big_file_id,
-          "big_file_unique_id": u.photo.big_photo_unique_id
-        },
-        "type": "private",
-        "name":  f"{first_name} {last_name}"
-        }
-              me = {
-      "entities": [],
-      "chatId": m.chat.id,
-      "avatar": True,
-      "from": uu,
-      "text": mes.text, 
-      "replyMessage": {
-        "text": m.reply_to_message.reply_to_message.text,
-        "name": m.reply_to_message.reply_to_message.from_user.first_name,
-        "chatId": m.reply_to_message.reply_to_message.from_user.id
-      }
-    }
-              messages.append(me)
+              if m.reply_to_message.reply_to_message:   
+                 uu = {
+           "id": u.id,
+           "first_name": first_name,
+           "last_name": last_name,
+           "username": u.username,
+           "language_code": "eu",
+           "title": f"{first_name} {last_name}",
+           "photo": {
+             "small_file_id": u.photo.small_file_id,
+             "small_file_unique_id": u.photo.small_photo_unique_id,
+             "big_file_id": u.photo.big_file_id,
+             "big_file_unique_id": u.photo.big_photo_unique_id
+           },
+           "type": "private",
+           "name":  f"{first_name} {last_name}"
+           }
+                 me = {
+         "entities": [],
+         "chatId": m.chat.id,
+         "avatar": True,
+         "from": uu,
+         "text": mes.text, 
+         "replyMessage": {
+           "text": m.reply_to_message.reply_to_message.text,
+           "name": m.reply_to_message.reply_to_message.from_user.first_name,
+           "chatId": m.reply_to_message.reply_to_message.from_user.id
+         }
+       }
+                 messages.append(me)
+              else:
+                 uu = {
+           "id": u.id,
+           "first_name": first_name,
+           "last_name": last_name,
+           "username": u.username,
+           "language_code": "eu",
+           "title": f"{first_name} {last_name}",
+           "photo": {
+             "small_file_id": u.photo.small_file_id,
+             "small_file_unique_id": u.photo.small_photo_unique_id,
+             "big_file_id": u.photo.big_file_id,
+             "big_file_unique_id": u.photo.big_photo_unique_id
+           },
+           "type": "private",
+           "name":  f"{first_name} {last_name}"
+           }
+                 me = {
+         "entities": [],
+         "chatId": m.chat.id,
+         "avatar": True,
+         "from": uu,
+         "text": mes.text, 
+         "replyMessage": {}
+       }
+                 messages.append(me)
     text = {
   "type": "quote",
   "format": "png",
