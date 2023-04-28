@@ -65,7 +65,7 @@ async def quote(client, m):
       }
               messages.append(me)
 
-    if m.text == "/q":
+    if m.text == "/q" or "/qu" or "/qt" or "/quote":
               mes = m.reply_to_message
               u = mes.from_user
               if not u.first_name:
