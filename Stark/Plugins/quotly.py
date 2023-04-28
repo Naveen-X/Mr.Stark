@@ -100,9 +100,9 @@ async def quote(client, m):
          "from": uu,
          "text": mes.text, 
          "replyMessage": {
-           "text": m.reply_to_message.reply_to_message.text,
-           "name": m.reply_to_message.reply_to_message.from_user.first_name,
-           "chatId": m.reply_to_message.reply_to_message.from_user.id
+           "text": mes.reply_to_message.text,
+           "name": mes.reply_to_message.from_user.first_name,
+           "chatId": mes.reply_to_message.from_user.id
          }
        }
                  messages.append(me)
@@ -128,8 +128,7 @@ async def quote(client, m):
          "chatId": m.chat.id,
          "avatar": True,
          "from": uu,
-         "text": mes.text, 
-         "replyMessage": {}
+         "text": mes.text,
        }
                  messages.append(me)
     text = {
