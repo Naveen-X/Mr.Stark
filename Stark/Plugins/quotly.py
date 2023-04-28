@@ -99,7 +99,11 @@ async def quote(client, m):
       "avatar": True,
       "from": uu,
       "text": mes.text, 
-      "replyMessage": {}
+      "replyMessage": {
+        "text": m.reply_to_message.reply_to_message.text,
+        "name": m.reply_to_message.reply_to_message.from_user.first_name,
+        "chatId": m.reply_to_message.reply_to_message.from_user.id
+      }
     }
               messages.append(me)
     text = {
