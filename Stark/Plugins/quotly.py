@@ -3,7 +3,7 @@ import base64
 import requests 
 from pyrogram import Client, filters
 
-@Client.on_message(filters.command(["q"]))
+@Client.on_message(filters.command(["q", "qu", "qt", "quote"]))
 async def quote(client, m):
     qse = await m.reply_text("`Quoting..`")
     u = m.from_user
