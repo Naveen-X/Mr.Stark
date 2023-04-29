@@ -14,11 +14,9 @@ def carbon(code):
     return js
 
 
-
-
 @Client.on_message(filters.command(["carbon"]))
 async def make_carbon(bot, message):
-    async def car_(bot,message):
+    async def car_(bot, message):
         ok = await message.reply_text("`Making Carbon...`")
         try:
             code = None
@@ -47,10 +45,12 @@ async def make_carbon(bot, message):
             os.remove("carbon.jpg")
         except Exception as e:
             await ok.edit(f"**Error :** `{e}`")
+
     try:
-        await asyncio.wait_for(car_(bot,message), timeout=60)
+        await asyncio.wait_for(car_(bot, message), timeout=60)
     except asyncio.TimeoutError:
         return await message.reply_text("`Timeout Exceeded. Carbonization process took too long.`")
+
 
 @Client.on_message(filters.command(["icarbon"]))
 async def carbonn(bot, message):
