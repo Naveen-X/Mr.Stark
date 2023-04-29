@@ -175,6 +175,7 @@ async def quote(client, m):
   
 }
     r = requests.post("https://bot.lyo.su/quote/generate", json = text)
+    print(r)
     image = r.json()["result"]["image"]
     im = base64.b64decode(image.encode('utf-8'))
     open('k.webp', 'wb').write(im)
