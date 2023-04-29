@@ -150,10 +150,10 @@ async def quote(client, m):
            }
                  me = {
          "entities": [],
+         "mediaType": "Photo",
          "chatId": m.chat.id,
          "avatar": True,
          "from": uu,
-         "text": mes.text,
          "media": [
         {
           "file_id": mes.photo.file_id,
