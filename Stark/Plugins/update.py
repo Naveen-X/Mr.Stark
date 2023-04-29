@@ -4,7 +4,7 @@ import os
 import sys
 
 
-@Client.on_message(filters.command("update", "up"))
+@Client.on_message(filters.command(["update", "up"]))
 async def update(client, message):
     # check if the message is sent by an authorized user
     up = await message.reply_text(f"**Updating!**")
