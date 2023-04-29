@@ -149,11 +149,6 @@ async def quote(client, m):
            "name":  f"{first_name} {last_name}"
            }
                  me = {
-         "entities": [],
-         "mediaType": "Photo",
-         "chatId": m.chat.id,
-         "avatar": True,
-         "from": uu,
          "media": [
         {
           "file_id": mes.photo.file_id,
@@ -162,6 +157,11 @@ async def quote(client, m):
           "width": mes.photo.width
         }
       ],
+         "mediaType": "Photo",
+         "chatId": m.chat.id,
+         "avatar": True,
+         "from": uu,
+         "replyMessage": {}
        }
                  messages.append(me)
     text = {
