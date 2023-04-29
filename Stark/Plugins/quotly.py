@@ -145,14 +145,6 @@ async def quote(client, m):
              "big_file_id": u.photo.big_file_id,
              "big_file_unique_id": u.photo.big_photo_unique_id
            },
-           "media": [
-        {
-          "file_id": mes.photo.file_id,
-          "file_size": mes.photo.file_size,
-          "height": mes.photo.height,
-          "width": mes.photo.width
-        }
-      ],
            "type": "private",
            "name":  f"{first_name} {last_name}"
            }
@@ -162,6 +154,14 @@ async def quote(client, m):
          "avatar": True,
          "from": uu,
          "text": mes.text,
+         "media": [
+        {
+          "file_id": mes.photo.file_id,
+          "file_size": mes.photo.file_size,
+          "height": mes.photo.height,
+          "width": mes.photo.width
+        }
+      ],
        }
                  messages.append(me)
     text = {
