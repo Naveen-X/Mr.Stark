@@ -12,8 +12,8 @@ async def update(client, message):
         return
     # fetch the latest changes from the remote repository
     subprocess.run(["git", "pull"])
+    await up.delete()
     # stop the current process
     os.kill(os.getpid(), 9)
     # start the bot process again
     os.execl('bash', 'start.sh', *sys.argv)
-    await up.delete()
