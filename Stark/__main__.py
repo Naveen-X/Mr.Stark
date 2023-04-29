@@ -3,7 +3,7 @@ import sys
 import time
 import logging
 import asyncio
-#import pyrogram
+import pyrogram
 import traceback 
 
 from pyrogram import idle
