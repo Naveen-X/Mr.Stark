@@ -1,5 +1,7 @@
 import os
 from pyrogram import Client, filters
+
+from Stark import error_handler
 from Stark.Plugins.paste import s_paste
 from pyrogram.types import (
     InlineKeyboardButton,
@@ -7,6 +9,7 @@ from pyrogram.types import (
 )
 
 @Client.on_message(filters.command(["log", "logs"]))
+@error_handler
 async def log_cmd(bot, message):
     processing = await message.reply_text("Processing")
     if os.path.exists("log.txt"):

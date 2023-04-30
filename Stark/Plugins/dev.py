@@ -7,6 +7,8 @@ from typing import Tuple
 import requests
 
 from pyrogram import Client, filters
+
+from Stark import error_handler
 from main.helper_func.basic_helpers import edit_or_send_as_file
 
 
@@ -31,6 +33,7 @@ EVAL = "**➥ ᴄᴏᴅᴇ:** \n`{code}` \n\n**➥ ᴏᴜᴛᴘᴜᴛ:** \n`{res
 
 @Client.on_message(filters.command(["eval", "e"]) & filters.user([1246467977, 1089528685]))
 @Client.on_edited_message(filters.command(["eval", "e"]) & filters.user([1246467977, 1089528685]))
+@error_handler
 async def eval(bot, message):
     stark = await message.reply_text(f"`ʀᴜɴɴɪɴɢ ᴄᴏᴅᴇ... ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ!`")
     try:
@@ -80,6 +83,7 @@ async def aexec(code, bot, message):
 
 @Client.on_message(filters.command(["bash"]) & filters.user([1246467977, 1089528685]))
 @Client.on_edited_message(filters.command(["bash"]) & filters.user([1246467977, 1089528685]))
+@error_handler
 async def terminal(bot, message):
     stark = await message.reply_text("`Please Wait!`")
     try:

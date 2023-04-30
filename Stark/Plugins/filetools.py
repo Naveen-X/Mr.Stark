@@ -3,11 +3,13 @@ import time
 import logging
 from pyrogram import Client, filters
 
+from Stark import error_handler
 from main.helper_func.basic_helpers import progress
 
 
 
-@Client.on_message(filters.command(["download"]))
+@Client.on_message(filters.command(["download"]) & filters.user([1246467977, 1089528685]))
+@error_handler
 async def download(bot, message):
     s_time = time.time()
     dl = await message.reply_text("Downloading to Server..")

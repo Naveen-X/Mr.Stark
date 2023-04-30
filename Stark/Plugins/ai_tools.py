@@ -2,10 +2,12 @@ import os
 import openai
 import requests
 from pyrogram import Client, filters
+from Stark import error_handler
 
 openai.api_key = "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"
 
 @Client.on_message(filters.command(["generate", "genimage"]))
+@error_handler
 async def ai_image(bot, message):
   x = await message.reply_text("`Generating images, it may take a while`")
   try:

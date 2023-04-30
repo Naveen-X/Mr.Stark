@@ -10,6 +10,8 @@ from pyrogram import __version__
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
+from Stark import error_handler
 from main.helper_func.basic_helpers import get_readable_time
 bot_start_time = time.time()
 assistant_version = "V1.0"
@@ -40,6 +42,7 @@ def item_title(item,page):
     return f'{item}'
 
 @Client.on_message(filters.command(['help','hlp','h']))
+@error_handler
 async def hi(c,m):
   objects = [ x for x in dir(script) if not x.startswith('__')]
   page = Pagination(
@@ -64,7 +67,7 @@ async def cbdta(client,query):
   data = query.data
   #print(q.data)
   if "close" in q.data:
-    await q.answer('delete if you can! i cant.')
+    await q.answer('Wait, Why?\nDelete if you can! i cant.')
   elif "help_" in q.data:
     hlp = q.data.split('help_')[1]
     #print(hlp)
@@ -84,7 +87,7 @@ async def cbdta(client,query):
     await q.message.edit('Help Menu of Stark!', reply_markup=ikb(kb))
   elif data == "about":
         await query.message.edit_text(
-            text = f"<b>My name : <b/>Mr.Stark</i>\n<b>○ Creator : <a href='tg://user?id=1246467977'>Naveen_xD</a>\n   ○ Contributors:  <a href='tg://user?id=1089528685'>Satya</a>\n                     <a href='tg://user?id=1602293216'>Ashit</a>\n○ Language : <code>Python3</code>\n○ Library : <a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a></b>",
+            text = f"<b>My name : <b/>Mr.Stark</i>\n<b>○ Creator : <a href='tg://user?id=1246467977'>Naveen_xD</a>\n○ Contributors:  <a href='tg://user?id=1089528685'>Satya</a>\n<a href='tg://user?id=1602293216'>Ashit</a>\n○ Language : <code>Python3</code>\n○ Library : <a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a></b>",
             disable_web_page_preview = True,
             reply_markup = InlineKeyboardMarkup(
                 [

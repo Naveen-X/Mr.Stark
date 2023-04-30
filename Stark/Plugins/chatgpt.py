@@ -3,6 +3,8 @@ import openai
 import requests 
 from pyrogram import Client, filters
 
+from Stark import error_handler
+
 openai.api_key = "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"
 
 def generate_response(user_input):
@@ -19,6 +21,7 @@ def generate_response(user_input):
     return message
 
 @Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
+@error_handler
 async def chatbot(bot, message):
     try:
       query = message.text.split(None, 1)[1]

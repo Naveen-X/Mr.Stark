@@ -5,6 +5,8 @@ from os import getenv
 from pyrogram import Client, filters
 from requests import JSONDecodeError, get
 
+from Stark import error_handler
+
 IG_SESSION = '44772171796%3AP6QWzVAZMk9B6K%3A10%3AAYcy2RWYlFUPjvRd50cYqZHgkNvYwMLkcZc2M5K1Uw'
 
 spam = {}
@@ -84,6 +86,7 @@ def get_ig_download_url(url: str):
 
 
 @Client.on_message(filters.command(["instadl", "insdl", "insta", "instadownload"]))
+@error_handler
 async def instadl(c, m):
     ok = await m.reply_text("**TrYing to DowNloAd**")
     if not IG_SESSION:

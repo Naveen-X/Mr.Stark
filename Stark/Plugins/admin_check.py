@@ -1,8 +1,10 @@
 from pyrogram import *
+from pyrogram import *
 from pyrogram.types import *
 import time
 import json
 import os
+from Stark import error_handler
 
 
 immune = {}

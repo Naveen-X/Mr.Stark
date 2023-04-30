@@ -5,6 +5,9 @@ from urllib.parse import quote
 
 from pyrogram import Client, filters
 
+from Stark import error_handler
+
+
 async def search_google(query: str, limit: int = 10):
     results = []
     query = quote(query)
@@ -35,6 +38,7 @@ async def search_google(query: str, limit: int = 10):
 
 
 @Client.on_message(filters.command(["gs", "google"]))
+@error_handler
 async def google(bot, message):
     gs = await message.reply_text("`Processing..`")
     try:

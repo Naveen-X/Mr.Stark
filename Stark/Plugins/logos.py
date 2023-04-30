@@ -5,8 +5,11 @@ import random
 from pyrogram import Client, filters
 from PIL import Image, ImageDraw, ImageFont
 
+from Stark import error_handler
+
 
 @Client.on_message(filters.command(["alogo"]))
+@error_handler
 async def black_logo(bot, message):
     event = await message.reply_text("**Painting A Logo For You Broh...**")
     text = message.text.split(None, 1)[1]
@@ -50,6 +53,7 @@ async def black_logo(bot, message):
 
 
 @Client.on_message(filters.command(["slogo"]))
+@error_handler
 async def slogo(bot, message):
   event = await message.reply_text("`Processing`")
   text = message.text.split(None, 1)[1]
