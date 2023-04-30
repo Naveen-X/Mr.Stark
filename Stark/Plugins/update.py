@@ -4,8 +4,11 @@ import sys
 from time import sleep
 import subprocess
 
+from Stark import error_handler
+
 
 @Client.on_message(filters.command(["update", "up"]))
+@error_handler
 async def update(client, message):
     up = await message.reply_text(f"**Updating!**")
     if message.from_user.id not in [1246467977, 1089528685]:
@@ -31,7 +34,8 @@ async def update(client, message):
         await up.edit('Git pull failed with error:\n{}'.format(result.stderr.decode('utf-8')))
 
 
-@Client.on_message(filters.command(["update", "up", "d"]))
+@Client.on_message(filters.command(["d"]))
+@error_handler
 async def de_snipp(client, message):
     up = await message.reply_text(f"**Please Wait!**")
     if message.from_user.id not in [1246467977, 1089528685]:

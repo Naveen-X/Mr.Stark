@@ -4,7 +4,11 @@ import logging
 import requests
 from pyrogram import Client, filters
 
+from Stark import error_handler
+
+
 @Client.on_message(filters.command(["q", "qu", "qt", "quote"]))
+@error_handler
 async def quote(client, m):
     qse = await m.reply_text("`Quoting..`")
     u = m.from_user

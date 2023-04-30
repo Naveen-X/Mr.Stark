@@ -3,6 +3,7 @@ import requests
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+from Stark import error_handler
 
 
 async def s_paste(message, extension="py"):
@@ -27,6 +28,7 @@ async def s_paste(message, extension="py"):
 
 
 @Client.on_message(filters.command(["paste"]))
+@error_handler
 async def paste(bot, message):
   pablo = await message.reply_text("**《 ᴘᴀsᴛɪɴɢ ᴛᴏsᴘᴀᴄᴇʙɪɴ... 》`")
   text = message.reply_to_message.text

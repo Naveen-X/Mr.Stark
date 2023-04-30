@@ -6,6 +6,7 @@ from telegraph import upload_file
 
 
 @Client.on_message(filters.command(["wasted"]))
+
 async def wasted(bot, message):
     gta = await bot.send_message(message.chat.id, "`Processing...`")
     if not message.reply_to_message:

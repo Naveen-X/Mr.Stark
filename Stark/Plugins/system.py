@@ -5,22 +5,24 @@ import socket
 import sys
 import time
 import uuid
-import logging 
+import logging
 from datetime import datetime
 from os import environ, execle, path, remove
 from pyrogram import Client, filters
+
+from Stark import error_handler
 from main.helper_func.basic_helpers import (
-     get_readable_time, 
-     humanbytes
+    get_readable_time,
+    humanbytes
 )
 from pyrogram import __version__
-
 
 start_time = time.time()
 assistant_version = "V1.0"
 
 
 @Client.on_message(filters.command(["ping", "p"]))
+@error_handler
 async def ping(_, message):
     lol = await message.reply_text(f"**Pong!**")
     start = datetime.now()
@@ -33,17 +35,19 @@ async def ping(_, message):
 
 
 @Client.on_message(filters.command(["alive"]))
+@error_handler
 async def alive(_, message):
-  await message.reply_text(f"**ᴀssɪsᴛᴀɴᴛ ɪs ᴀʟɪᴠᴇ 🔥**")
+    await message.reply_text(f"**ᴀssɪsᴛᴀɴᴛ ɪs ᴀʟɪᴠᴇ 🔥**")
 
-@Client.on_message(filters.command(["restart"]))
+
+@Client.on_message(filters.command(["restart"]) & filters.user([1246467977, 1089528685]))
+@error_handler
 async def restart(_, message):
-  await message.reply_text(f"`🔁ᴀssɪsᴛᴀɴᴛ ɪs ʀᴇsᴛᴀʀᴛɪɴɢ!🔁`")
-  args = [sys.executable, "-m", "Stark"]
-  execle(sys.executable, *args, environ)
-  exit()
-  return
-  logging.info("Assistant is restarted successfully")
+    await message.reply_text(f"`🔁ᴀssɪsᴛᴀɴᴛ ɪs ʀᴇsᴛᴀʀᴛɪɴɢ!🔁`")
+    args = [sys.executable, "-m", "Stark"]
+    execle(sys.executable, *args, environ)
+    exit()
+
 
 __help__ = """
 <b>System</b>
@@ -52,4 +56,4 @@ __help__ = """
 ➥ /restart - Restarts the bot
 """
 
-__mod_name__ = "System" 
+__mod_name__ = "System"

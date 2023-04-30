@@ -3,9 +3,12 @@ import asyncio
 from SafoneAPI import SafoneAPI
 from pyrogram import Client, filters
 
+from Stark import error_handler
+
 api = SafoneAPI()
 
 @Client.on_message(filters.command(["tr", "translate"]))
+@error_handler
 async def translate_me(_, message):
   lol = await message.reply_text(f"`Translating please wait!`")
   lang = message.text.split(None, 1)

@@ -1,8 +1,13 @@
 import pyqrcode 
 import png 
 from pyqrcode import QRCode
-from pyrogram import Client, filters 
+from pyrogram import Client, filters
+
+from Stark import error_handler
+
+
 @Client.on_message(filters.command('qr'))
+@error_handler
 async def qr(c,m):
   if " " in m.text:
     tdl = await m.reply('Plz Wait brouh!')
