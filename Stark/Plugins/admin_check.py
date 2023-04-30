@@ -6,7 +6,6 @@ import json
 import os
 from Stark import error_handler
 
-
 immune = {}
 admins = {}
 admin_perms = {}
@@ -22,8 +21,8 @@ async def admins_coll(client, m):
 async def immutable_col(client, m, chat_id: int):
     chat_imm = admins.get(int(chat_id))
     if not chat_imm:
-       await admins_col(client, m, chat_id)
-       chat_imm = admins.get(int(chat_id))
+        await admins_col(client, m, chat_id)
+        chat_imm = admins.get(int(chat_id))
     try:
         my_ch = (await client.get_chat(chat_id)).linked_chat.id
         chat_imm.append(my_ch)
@@ -44,6 +43,7 @@ async def immutable(client, m, chat_id, user_id):
         return True
     else:
         return False
+
 
 # del cmd
 
@@ -85,6 +85,7 @@ async def is_admin(client, m, chat_id, user_id):
     else:
         return False
 
+
 # non async
 
 def admins_col_sync(client, m, chat_id):
@@ -110,7 +111,7 @@ def admins_col_sync(client, m, chat_id):
     chat_admins.append(int(chat_id))
     admin_perms.update({int(chat_id): perms})
     admins.update({int(chat_id): chat_admins})
-    
+
 
 def is_admin_sync(client, m, chat_id, user_id):
     chat_id = int(chat_id)

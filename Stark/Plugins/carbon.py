@@ -12,12 +12,12 @@ from pyrogram import Client, types
 from typing import Optional
 from Stark import error_handler
 
+
 def carbon(code):
     url = f"https://api.safone.me/carbon?code={quote(code)}"
     resp = requests.get(url)
     js = resp.json()["image"]
     return js
-
 
 
 @Client.on_message(filters.command(["carbon"]))

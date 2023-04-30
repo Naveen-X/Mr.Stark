@@ -2,6 +2,8 @@ import os
 import asyncio
 from pyrogram import Client, filters
 
+from Stark import error_handler
+
 bullets = {
     "bullet1": ">",
     "bullet2": "•",
@@ -25,6 +27,7 @@ dc_id = {
 }
 
 @Client.on_message(filters.command(["info", "whois"]))
+@error_handler
 async def whois(bot, message):
     global chat
     msg = await message.reply_text("`Processing...`")

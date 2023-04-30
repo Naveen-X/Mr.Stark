@@ -12,7 +12,6 @@ from Stark import error_handler
 from main.helper_func.basic_helpers import edit_or_send_as_file
 
 
-
 async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
     """Run Commands"""
     args = shlex.split(cmd)
@@ -87,7 +86,7 @@ async def aexec(code, bot, message):
 async def terminal(bot, message):
     stark = await message.reply_text("`Please Wait!`")
     try:
-       cmd = message.text.split(None, 1)[1]
+        cmd = message.text.split(None, 1)[1]
     except IndexError:
         await stark.edit(
             "**ᴘʟᴇᴀsᴇ ɢɪᴠᴇ ᴍᴇ ᴀ ᴄᴍᴅ ᴛᴏ ʀᴜɴ ɪɴ ᴛᴇʀᴍɪɴᴀʟ!**"
@@ -125,8 +124,7 @@ async def run_command(cmd):
         errors = "No Errors!"
     output = stdout.decode()
     return process.pid, errors, output, process.returncode
-    
-    
+
 
 __help__ = """
 <b>Dev</b>
@@ -134,4 +132,4 @@ __help__ = """
 ➥ /bash <command> - run terminal commands on telegram
 """
 
-__mod_name__ = "Dev" 
+__mod_name__ = "Dev"

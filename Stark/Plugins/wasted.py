@@ -4,9 +4,11 @@ import requests
 from pyrogram import Client, filters
 from telegraph import upload_file
 
+from Stark import error_handler
+
 
 @Client.on_message(filters.command(["wasted"]))
-
+@error_handler
 async def wasted(bot, message):
     gta = await bot.send_message(message.chat.id, "`Processing...`")
     if not message.reply_to_message:

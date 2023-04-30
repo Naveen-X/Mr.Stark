@@ -1,11 +1,12 @@
 import os
 import openai
-import requests 
+import requests
 from pyrogram import Client, filters
 
 from Stark import error_handler
 
 openai.api_key = "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"
+
 
 def generate_response(user_input):
     prompt = user_input
@@ -20,11 +21,12 @@ def generate_response(user_input):
     message = response.choices[0].text.strip()
     return message
 
+
 @Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
 @error_handler
 async def chatbot(bot, message):
     try:
-      query = message.text.split(None, 1)[1]
+        query = message.text.split(None, 1)[1]
     except:
         await message.reply_text(
             "`ɪ ᴅɪᴅɴ'ᴛ ɢᴇᴛ ᴛʜᴀᴛ`"
