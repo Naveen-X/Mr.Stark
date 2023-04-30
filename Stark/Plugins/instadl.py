@@ -5,12 +5,12 @@ from os import getenv
 from pyrogram import Client, filters
 from requests import JSONDecodeError, get
 
-IG_SESSION = getenv("IG_SESSION", "")
+IG_SESSION = '44772171796%3AP6QWzVAZMk9B6K%3A10%3AAYcy2RWYlFUPjvRd50cYqZHgkNvYwMLkcZc2M5K1Uw'
 
 spam = {}
 
 cookies = {
-    "sessionid": '44772171796%3AP6QWzVAZMk9B6K%3A10%3AAYcy2RWYlFUPjvRd50cYqZHgkNvYwMLkcZc2M5K1Uw',
+    "sessionid": IG_SESSION,
 }
 
 def get_ig_download_url(url: str):
@@ -98,9 +98,9 @@ async def instadl(c, m):
     elif len(m.command) > 1:
         url = m.text.split(" ",1)[1]
     if not url:
-           return await ok.edit("`Usage: /instadl <url>`")
+           return await ok.edit("Usage: /instadl <url>")
     if not url.startswith("https://www.instagram.com"):
-        await ok.edit("`Invalid url.`")
+        await ok.edit("Invalid url.")
         return
     (
         dl_url,
@@ -122,9 +122,9 @@ async def instadl(c, m):
     )
     if carousel:
         dl_bytes = [get(i, cookies=cookies).content for i in dl_url]
-        await m.respond(
+        await m.reply_document(
             caption,
-            file=dl_bytes,
+            document=dl_bytes,
         )
         return await msg.delete()
     with io.BytesIO(get(dl_url, cookies=cookies).content) as f:

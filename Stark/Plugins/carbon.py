@@ -5,7 +5,12 @@ from urllib.parse import quote
 from pyrogram import Client, filters
 import requests
 import asyncio
-
+import logging
+import traceback
+from functools import wraps
+from pyrogram import Client, types
+from typing import Optional
+from Stark import error_handler
 
 def carbon(code):
     url = f"https://api.safone.me/carbon?code={quote(code)}"
@@ -14,7 +19,9 @@ def carbon(code):
     return js
 
 
+
 @Client.on_message(filters.command(["carbon"]))
+@error_handler
 async def make_carbon(bot, message):
     async def car_(bot, message):
         ok = await message.reply_text("`Making Carbon...`")
@@ -44,7 +51,7 @@ async def make_carbon(bot, message):
             await ok.delete()
             os.remove("carbon.jpg")
         except Exception as e:
-            await ok.edit(f"**Error :** `{e}`")
+            raise e
 
     try:
         await asyncio.wait_for(car_(bot, message), timeout=60)
@@ -53,6 +60,7 @@ async def make_carbon(bot, message):
 
 
 @Client.on_message(filters.command(["icarbon"]))
+@error_handler
 async def carbonn(bot, message):
     ok = await message.reply_text("Making Carbon...")
 
