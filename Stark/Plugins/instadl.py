@@ -15,6 +15,7 @@ cookies = {
     "sessionid": IG_SESSION,
 }
 
+
 def get_ig_download_url(url: str):
     """Get the download url for the media."""
     url = url + "?&__a=1&__d=dis" if not url.endswith("?&__a=1&__d=dis") else url
@@ -94,14 +95,14 @@ async def instadl(c, m):
         return
     url = None
     if m.reply_to_message:
-          if m.reply_to_message.caption:
-               utl = m.reply_to_message
-          elif m.reply_to_message.text:
-              url = m.reply_to_message.text
+        if m.reply_to_message.caption:
+            utl = m.reply_to_message
+        elif m.reply_to_message.text:
+            url = m.reply_to_message.text
     elif len(m.command) > 1:
-        url = m.text.split(" ",1)[1]
+        url = m.text.split(" ", 1)[1]
     if not url:
-           return await ok.edit("Usage: /instadl <url>")
+        return await ok.edit("Usage: /instadl <url>")
     if not url.startswith("https://www.instagram.com"):
         await ok.edit("Invalid url.")
         return

@@ -22,14 +22,17 @@ arq = ARQ(ARQ_URI, API_KEY, aiohttpsession)
 
 buttons = [
 
-            [
-                InlineKeyboardButton("Youtube (this chat)", switch_inline_query="yt "),InlineKeyboardButton("Youtube (other chat)", switch_inline_query_current_chat="yt ")
-            ],
-            [
-                InlineKeyboardButton("Apps (this chat)", switch_inline_query="app "),InlineKeyboardButton("Apps (other chat)", switch_inline_query_current_chat="app ")
-            ]
-        ]
-        
+    [
+        InlineKeyboardButton("Youtube (this chat)", switch_inline_query="yt "),
+        InlineKeyboardButton("Youtube (other chat)", switch_inline_query_current_chat="yt ")
+    ],
+    [
+        InlineKeyboardButton("Apps (this chat)", switch_inline_query="app "),
+        InlineKeyboardButton("Apps (other chat)", switch_inline_query_current_chat="app ")
+    ]
+]
+
+
 @Client.on_inline_query()
 async def searh(client, query):
     string_given = query.query.strip()
@@ -39,11 +42,11 @@ async def searh(client, query):
         answer = [
             InlineQueryResultArticle(
                 title="Inline tools.",
-                description= "Inline search !",
+                description="Inline search !",
                 input_message_content=InputTextMessageContent("here are inline tools of this bot"),
                 reply_markup=InlineKeyboardMarkup(buttons)
-                )
-          ]
+            )
+        ]
         await query.answer(results=answer, cache_time=5)
         return
 
@@ -52,23 +55,24 @@ async def searh(client, query):
         input = (iq.split("yt", maxsplit=1)[1]).strip()
         if not input:
             result.append(
-              InlineQueryResultPhoto(
-                     title = "Yt Search",
-                     description = "An inline tool to search YouTube videos",
-                     photo_url = "https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
-                     caption = "**Help:** An inline tool to search YouTube videos\n**Usage:** `@MrStark_Bot yt <query>`",
-                     parse_mode=pm.MARKDOWN,
-                     reply_markup = InlineKeyboardMarkup([
-                         [InlineKeyboardButton(
-                           text = "Search Now🔎",
-                           switch_inline_query_current_chat="yt ",
-                           )]
-                         ]
-                     )
-                   )
-                 )
-            await query.answer(results=result, cache_time=5, switch_pm_text="🎥 Youtube Search", switch_pm_parameter="help")
-            return 
+                InlineQueryResultPhoto(
+                    title="Yt Search",
+                    description="An inline tool to search YouTube videos",
+                    photo_url="https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
+                    caption="**Help:** An inline tool to search YouTube videos\n**Usage:** `@MrStark_Bot yt <query>`",
+                    parse_mode=pm.MARKDOWN,
+                    reply_markup=InlineKeyboardMarkup([
+                        [InlineKeyboardButton(
+                            text="Search Now🔎",
+                            switch_inline_query_current_chat="yt ",
+                        )]
+                    ]
+                    )
+                )
+            )
+            await query.answer(results=result, cache_time=5, switch_pm_text="🎥 Youtube Search",
+                               switch_pm_parameter="help")
+            return
         search = SearchVideos(str(input), offset=1, mode="dict", max_results=50)
         rt = search.result()
         result_s = rt["search_result"]
@@ -117,21 +121,21 @@ async def searh(client, query):
         input = (iq.split("app", maxsplit=1)[1]).strip()
         if not input:
             result.append(
-              InlineQueryResultPhoto(
-                     title = "App Search",
-                     description = "An inline tool to search Apps",
-                     photo_url = "https://telegra.ph//file/c9045df2755c5f51916e9.jpg",
-                     caption = "**Help:** An inline tool to search Apps\n**Usage:** `@MrStark_Bot app <query>`",
-                     parse_mode=pm.MARKDOWN,
-                     reply_markup = InlineKeyboardMarkup([
-                         [InlineKeyboardButton(
-                           text = "Search Now🔎",
-                           switch_inline_query_current_chat="app ",
-                           )]
-                         ]
-                     )
-                   )
-                 )
+                InlineQueryResultPhoto(
+                    title="App Search",
+                    description="An inline tool to search Apps",
+                    photo_url="https://telegra.ph//file/c9045df2755c5f51916e9.jpg",
+                    caption="**Help:** An inline tool to search Apps\n**Usage:** `@MrStark_Bot app <query>`",
+                    parse_mode=pm.MARKDOWN,
+                    reply_markup=InlineKeyboardMarkup([
+                        [InlineKeyboardButton(
+                            text="Search Now🔎",
+                            switch_inline_query_current_chat="app ",
+                        )]
+                    ]
+                    )
+                )
+            )
             await query.answer(results=result, cache_time=5, switch_pm_text="📱 App Search", switch_pm_parameter="help")
             return
         res = play_scraper.search(input)
@@ -139,8 +143,8 @@ async def searh(client, query):
             app_name = result["title"]
             app_dev = result["developer"]
             dev_link = (
-                "https://play.google.com/store/apps/dev?id="
-                + result["developer_id"]
+                    "https://play.google.com/store/apps/dev?id="
+                    + result["developer_id"]
             )
             app_desc = result["description"]
             app_rating = (
@@ -156,10 +160,10 @@ async def searh(client, query):
                     thumb_url=app_icon,
                     url=app_link,
                     input_message_content=InputTextMessageContent(
-                    message_text=app_details,
-                    parse_mode="Markdown",
-                    disable_web_page_preview=False,
-                  ),
+                        message_text=app_details,
+                        parse_mode="Markdown",
+                        disable_web_page_preview=False,
+                    ),
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
@@ -179,70 +183,71 @@ async def searh(client, query):
         await query.answer(results=result, cache_time=0)
 
     if iq.startswith("wall"):
-      result=[]
-      input = (iq.split("wall", maxsplit=1)[1]).strip()
-      if not input:
+        result = []
+        input = (iq.split("wall", maxsplit=1)[1]).strip()
+        if not input:
             result.append(
-              InlineQueryResultPhoto(
-                     title = "🖼️ Wallpaper Search",
-                     description = "An inline tool to search Wallpaper",
-                     photo_url = "https://cdn.wallpapersafari.com/29/95/xXs2LH.png",
-                     caption = "**Help:** An inline tool to search Wallpaper\n**Usage:** `@MrStark_Bot wall <query>`",
-                     parse_mode=pm.MARKDOWN,
-                     reply_markup = InlineKeyboardMarkup([
-                         [InlineKeyboardButton(
-                           text = "Search Now🔎",
-                           switch_inline_query_current_chat="wall ",
-                           )]
-                         ]
-                     )
-                   )
-                 )
-            await query.answer(results=result, cache_time=5, switch_pm_text="🖼️ Wallpaper Search", switch_pm_parameter="help")
-            return
-      data = await arq.wall(input)
-      if not data.ok:
-          result.append(
-            InlineQueryResultArticle(
-              title="Error",
-              description=data.result,
-              input_message_content=InputTextMessageContent(data.result),
-              reply_markup=InlineKeyboardMarkup(
-                [
-                  [
-                  InlineKeyboardButton(
-                    text="Search Again",
-                    switch_inline_query_current_chat="wall ",
-                    )
-                  ]
-                ]
-                )
-              )
-            )
-      else:
-          res = data.result[0:48]
-          for i in res:
-              result.append(
                 InlineQueryResultPhoto(
-                  photo_url=i.url_image,
-                  thumb_url=i.url_thumb,
-                  reply_markup=InlineKeyboardMarkup(
-                    [
-                      [
-                        InlineKeyboardButton(
-                          text="Full view",
-                          url=i.url_image,
-                          ),
-                        InlineKeyboardButton(
-                          text="Search Again",
-                          switch_inline_query_current_chat="wall "
-                          )
-                        ]
-                      ]
+                    title="🖼️ Wallpaper Search",
+                    description="An inline tool to search Wallpaper",
+                    photo_url="https://cdn.wallpapersafari.com/29/95/xXs2LH.png",
+                    caption="**Help:** An inline tool to search Wallpaper\n**Usage:** `@MrStark_Bot wall <query>`",
+                    parse_mode=pm.MARKDOWN,
+                    reply_markup=InlineKeyboardMarkup([
+                        [InlineKeyboardButton(
+                            text="Search Now🔎",
+                            switch_inline_query_current_chat="wall ",
+                        )]
+                    ]
                     )
-                  )
                 )
-      await query.answer(
+            )
+            await query.answer(results=result, cache_time=5, switch_pm_text="🖼️ Wallpaper Search",
+                               switch_pm_parameter="help")
+            return
+        data = await arq.wall(input)
+        if not data.ok:
+            result.append(
+                InlineQueryResultArticle(
+                    title="Error",
+                    description=data.result,
+                    input_message_content=InputTextMessageContent(data.result),
+                    reply_markup=InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton(
+                                    text="Search Again",
+                                    switch_inline_query_current_chat="wall ",
+                                )
+                            ]
+                        ]
+                    )
+                )
+            )
+        else:
+            res = data.result[0:48]
+            for i in res:
+                result.append(
+                    InlineQueryResultPhoto(
+                        photo_url=i.url_image,
+                        thumb_url=i.url_thumb,
+                        reply_markup=InlineKeyboardMarkup(
+                            [
+                                [
+                                    InlineKeyboardButton(
+                                        text="Full view",
+                                        url=i.url_image,
+                                    ),
+                                    InlineKeyboardButton(
+                                        text="Search Again",
+                                        switch_inline_query_current_chat="wall "
+                                    )
+                                ]
+                            ]
+                        )
+                    )
+                )
+        await query.answer(
             results=result,
             cache_time=0,
             switch_pm_text="🖼 Wallpaper Search",

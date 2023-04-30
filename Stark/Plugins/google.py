@@ -14,7 +14,7 @@ async def search_google(query: str, limit: int = 10):
 
     async with aiohttp.ClientSession() as session:
         async with session.get(
-            f"https://customsearch.googleapis.com/customsearch/v1?q={query}&key=AIzaSyABKLWB_mLrepcEUTTXo5_p-DDT76ccjdU&cx=5d7ff60ca55a45503"
+                f"https://customsearch.googleapis.com/customsearch/v1?q={query}&key=AIzaSyABKLWB_mLrepcEUTTXo5_p-DDT76ccjdU&cx=5d7ff60ca55a45503"
         ) as response:
             try:
                 resp = await response.json()
@@ -42,14 +42,14 @@ async def search_google(query: str, limit: int = 10):
 async def google(bot, message):
     gs = await message.reply_text("`Processing..`")
     try:
-       query = message.text.split(None, 1)[1]
+        query = message.text.split(None, 1)[1]
     except IndexError:
         await gs.edit(
             "`ᴘʟᴇᴀsᴇ ɢɪᴠᴇ ᴍᴇ ᴀ ᴠᴀʟɪᴅ ɪɴᴘᴜᴛ ᴛᴏ sᴇᴀʀᴄʜ ɪɴ ɢᴏᴏɢʟᴇ!`"
         )
         return
     results = await search_google(query)
-    
+
     titles = []
     links = []
     descriptions = []
@@ -57,12 +57,11 @@ async def google(bot, message):
         titles.append(result["title"])
         links.append(result["link"])
         descriptions.append(result["description"])
-        
+
     msg = ""
     for tt, lik, des in zip(titles, links, descriptions):
-            msg += f"[{tt}]({lik})\n`{des}`\n\n"
+        msg += f"[{tt}]({lik})\n`{des}`\n\n"
     await gs.edit("**sᴇᴀʀᴄʜ ǫᴜᴇʀʏ:**\n`" + query + "`\n\n**ʀᴇsᴜʟᴛs:**\n" + msg, disable_web_page_preview=True)
-
 
 
 __help__ = """
@@ -70,4 +69,4 @@ __help__ = """
 ➥ /gs <query> - get results from google
 """
 
-__mod_name__ = "Google"    
+__mod_name__ = "Google"

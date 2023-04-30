@@ -48,53 +48,51 @@ async def black_logo(bot, message):
     await event.delete()
     if os.path.exists(file_name):
         os.remove(file_name)
-        
-        
 
 
 @Client.on_message(filters.command(["slogo"]))
 @error_handler
 async def slogo(bot, message):
-  event = await message.reply_text("`Processing`")
-  text = message.text.split(None, 1)[1]
-  if not text:
-    await event.edit("**I Dont want to Talk With You!**\n**Gib Some test to Make LOGO Bro!**")
-    return
-  fpath = glob.glob("resources/Fonts/*")
-  font = random.choice(fpath)
-  img = Image.open("./resources/images/yellow_bg_for_logo.jpg")
-  draw = ImageDraw.Draw(img)
-  font = ImageFont.truetype(font, 600)
-  image_widthz, image_heightz = img.size
-  w, h = draw.textsize(text, font=font)
-  h += int(h * 0.21)
-  draw.text(
-      ((image_widthz - w) / 2, (image_heightz - h) / 2),
-      text,
-      font=font,
-      fill=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)),
-  )
-  x = (image_widthz - w) / 2
-  y = (image_heightz - h) / 2
-  draw.text(
-      (x, y), text, font=font, fill="white", stroke_width=60, stroke_fill="black"
-  )
-  fname2 = "LogoBy@FRIDAYOT.png"
-  img.save(fname2, "png")
-  if message.reply_to_message:
-    await bot.send_photo(
-        message.chat.id,
-        photo=fname2,
-        caption="Made Using @Mr_StarkBot",
-        reply_to_message_id=message.reply_to_message.id,
+    event = await message.reply_text("`Processing`")
+    text = message.text.split(None, 1)[1]
+    if not text:
+        await event.edit("**I Dont want to Talk With You!**\n**Gib Some test to Make LOGO Bro!**")
+        return
+    fpath = glob.glob("resources/Fonts/*")
+    font = random.choice(fpath)
+    img = Image.open("./resources/images/yellow_bg_for_logo.jpg")
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype(font, 600)
+    image_widthz, image_heightz = img.size
+    w, h = draw.textsize(text, font=font)
+    h += int(h * 0.21)
+    draw.text(
+        ((image_widthz - w) / 2, (image_heightz - h) / 2),
+        text,
+        font=font,
+        fill=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)),
     )
-  else:
-      await bot.send_photo(
-          message.chat.id, photo=fname2, caption="Made Using @Mr_StarkBot"
-      )
-  await event.delete()
-  if os.path.exists(fname2):
-    os.remove(fname2) 
+    x = (image_widthz - w) / 2
+    y = (image_heightz - h) / 2
+    draw.text(
+        (x, y), text, font=font, fill="white", stroke_width=60, stroke_fill="black"
+    )
+    fname2 = "LogoBy@FRIDAYOT.png"
+    img.save(fname2, "png")
+    if message.reply_to_message:
+        await bot.send_photo(
+            message.chat.id,
+            photo=fname2,
+            caption="Made Using @Mr_StarkBot",
+            reply_to_message_id=message.reply_to_message.id,
+        )
+    else:
+        await bot.send_photo(
+            message.chat.id, photo=fname2, caption="Made Using @Mr_StarkBot"
+        )
+    await event.delete()
+    if os.path.exists(fname2):
+        os.remove(fname2)
 
 
 __help__ = """
@@ -103,4 +101,4 @@ __help__ = """
 ➥ /slogo <text> - makes a cool logo with given text
 """
 
-__mod_name__ = "Logos" 
+__mod_name__ = "Logos"

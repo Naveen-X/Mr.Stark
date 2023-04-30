@@ -26,45 +26,43 @@ async def s_paste(message, extension="py"):
     return {"error": "Unable to reach spacebin."}
 
 
-
 @Client.on_message(filters.command(["paste"]))
 @error_handler
 async def paste(bot, message):
-  pablo = await message.reply_text("**《 ᴘᴀsᴛɪɴɢ ᴛᴏsᴘᴀᴄᴇʙɪɴ... 》`")
-  text = message.reply_to_message.text
-  message_s = text
-  if not text:
-      if not message.reply_to_message:
-          return await pablo.edit("`Reply To File / Give Me Text To Paste!`")
-          return
-      if not message.reply_to_message.text:
-          file = await message.reply_to_message.download()
-          m_list = open(file, "r").read()
-          message_s = m_list
-          os.remove(file)
-      elif message.reply_to_message.text:
-          message_s = message.reply_to_message.text
+    pablo = await message.reply_text("**《 ᴘᴀsᴛɪɴɢ ᴛᴏsᴘᴀᴄᴇʙɪɴ... 》`")
+    text = message.reply_to_message.text
+    message_s = text
+    if not text:
+        if not message.reply_to_message:
+            return await pablo.edit("`Reply To File / Give Me Text To Paste!`")
+            return
+        if not message.reply_to_message.text:
+            file = await message.reply_to_message.download()
+            m_list = open(file, "r").read()
+            message_s = m_list
+            os.remove(file)
+        elif message.reply_to_message.text:
+            message_s = message.reply_to_message.text
 
-  ext = "py"
-  x = await s_paste(message_s, ext)
-  link = x["url"]
-  raw = x["raw"]
-  
-  keyboard = InlineKeyboardMarkup(
-      [
-          [
-              InlineKeyboardButton(
-                  text="Paste", 
-                  url=f"{link}",
-              ),
-              InlineKeyboardButton(
-                  text="Raw",
-                  url=f"{raw}",
-              ),
-          ],
-      ]
-  )
-  await pablo.edit("Pasted Your Text Successfully to Spacebin",
-    reply_markup=keyboard,
-    disable_web_page_preview=True)
-    
+    ext = "py"
+    x = await s_paste(message_s, ext)
+    link = x["url"]
+    raw = x["raw"]
+
+    keyboard = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="Paste",
+                    url=f"{link}",
+                ),
+                InlineKeyboardButton(
+                    text="Raw",
+                    url=f"{raw}",
+                ),
+            ],
+        ]
+    )
+    await pablo.edit("Pasted Your Text Successfully to Spacebin",
+                     reply_markup=keyboard,
+                     disable_web_page_preview=True)
