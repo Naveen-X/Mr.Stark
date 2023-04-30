@@ -62,50 +62,28 @@ def error_handler(func):
 
 `{e}`
 
-
 **Complete Error:**
-
 ```
 {traceback.format_exc()}
 ```
 
-
 **DATE:** `{datetime.datetime.now()}`
-
 **TIME:** `{datetime.datetime.now().strftime("%H:%M:%S")}`
-
 **USER:** `{message.from_user.id}`
-
-**USER MENTION:** `{message.from_user.mention}`
-
-**USERNAME:** `{message.from_user.username}`
-
+**USER MENTION:** {message.from_user.mention}
+**USERNAME:** @{message.from_user.username}
 **FIRST NAME:** `{message.from_user.first_name}`
-
-**LAST NAME:** `{message.from_user.last_name}`
-
 **CHAT:** `{message.chat.id}`
-
 **MESSAGE LINK:** __{message.link}__
-
 **MESSAGE TEXT:** `{message.text}`
-
 **MESSAGE ID:** `{message.id}`
-
 **REPLIED TO MESSAGE ID:** `{message.reply_to_message.id if message.reply_to_message else None}`
-
 **REPLIED TO MESSAGE TEXT:** `{message.reply_to_message.text if message.reply_to_message else None}`
-
 **REPLIED TO MESSAGE USER ID:** `{message.reply_to_message.from_user.id if message.reply_to_message else None}`
-
 **REPLIED TO MESSAGE USER MENTION:** `{message.reply_to_message.from_user.mention if message.reply_to_message else None}`
-
 **REPLIED TO MESSAGE USERNAME:** `{message.reply_to_message.from_user.username if message.reply_to_message else None}`
-
 **REPLIED TO MESSAGE CHAT ID:** `{message.reply_to_message.chat.id if message.reply_to_message else None}`
-
 **REPLIED TO MESSAGE LINK:** `{message.reply_to_message.link if message.reply_to_message else None}`
-
 """)
             filename = "error_" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=8)) + ".md"
             try:
