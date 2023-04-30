@@ -10,7 +10,7 @@ IG_SESSION = getenv("IG_SESSION", "")
 spam = {}
 
 cookies = {
-    "sessionid": IG_SESSION,
+    "sessionid": '44772171796%3AP6QWzVAZMk9B6K%3A10%3AAYcy2RWYlFUPjvRd50cYqZHgkNvYwMLkcZc2M5K1Uw',
 }
 
 def get_ig_download_url(url: str):
@@ -122,7 +122,7 @@ async def instadl(c, m):
     )
     if carousel:
         dl_bytes = [get(i, cookies=cookies).content for i in dl_url]
-        await message.respond(
+        await m.respond(
             caption,
             file=dl_bytes,
         )
