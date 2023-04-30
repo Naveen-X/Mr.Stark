@@ -1,6 +1,4 @@
 import pyqrcode
-import png
-from pyqrcode import QRCode
 from pyrogram import Client, filters
 
 from Stark import error_handler

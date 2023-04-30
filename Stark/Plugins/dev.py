@@ -1,10 +1,8 @@
 import asyncio
 import io
-import os
 import sys
 import traceback
 from typing import Tuple
-import requests
 
 from pyrogram import Client, filters
 

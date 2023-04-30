@@ -1,7 +1,5 @@
 import io
-import os
-import time
-from os import getenv
+
 from pyrogram import Client, filters
 from requests import JSONDecodeError, get
 

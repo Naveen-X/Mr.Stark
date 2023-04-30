@@ -1,8 +1,9 @@
-from pyrogram import Client, filters
 import os
+import subprocess
 import sys
 from time import sleep
-import subprocess
+
+from pyrogram import Client, filters
 
 from Stark import error_handler
 
@@ -41,7 +42,7 @@ async def de_snipp(client, message):
     if message.from_user.id not in [1246467977, 1089528685]:
         await up.edit("**You are not allowed to do this.**")
         return
-    if 1==1:
+    if 1 == 1:
         import requests
 
         # Set the GitLab API endpoint and access token

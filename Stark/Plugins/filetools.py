@@ -1,6 +1,5 @@
-import os
 import time
-import logging
+
 from pyrogram import Client, filters
 
 from Stark import error_handler

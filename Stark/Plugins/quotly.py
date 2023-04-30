@@ -1,6 +1,5 @@
-import os
 import base64
-import logging
+
 import requests
 from pyrogram import Client, filters
 

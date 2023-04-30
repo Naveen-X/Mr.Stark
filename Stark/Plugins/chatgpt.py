@@ -1,6 +1,4 @@
-import os
 import openai
-import requests
 from pyrogram import Client, filters
 
 from Stark import error_handler

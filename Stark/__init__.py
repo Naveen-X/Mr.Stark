@@ -1,4 +1,5 @@
 import datetime
+import json
 import logging
 import os
 import random
@@ -6,10 +7,9 @@ import string
 import traceback
 from functools import wraps
 from logging.handlers import RotatingFileHandler
-from pyrogram import Client, types
+
 import requests
-import json
-import asyncio
+from pyrogram import Client, types
 
 
 def get_gitlab_snippet(title, content, file):

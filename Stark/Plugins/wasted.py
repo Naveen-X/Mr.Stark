@@ -1,5 +1,4 @@
 import os
-import requests
 
 from pyrogram import Client, filters
 from telegraph import upload_file
@@ -18,9 +17,9 @@ async def wasted(bot, message):
     pic = await bot.download_media(ok)
     poto_url = upload_file(pic)
     imglink = f"https://telegra.ph{poto_url[0]}"
-    
+
     url = f"https://some-random-api.ml/canvas/wasted?avatar={imglink}"
-   
+
     await message.reply_photo(url)
     await gta.delete()
     os.remove(pic)

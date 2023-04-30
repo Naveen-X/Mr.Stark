@@ -1,16 +1,14 @@
-from Script import script
-from pyrogram import Client, filters
-from pyromod.nav import Pagination
-from pyromod.helpers import ikb
 import os
-import psutil
 import time
-from pyromod.helpers import ikb
-from pyrogram import __version__
-from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+import psutil
+from pyrogram import Client, filters
+from pyrogram import __version__
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyromod.helpers import ikb
+from pyromod.nav import Pagination
+
+from Script import script
 from Stark import error_handler
 from main.helper_func.basic_helpers import get_readable_time
 
@@ -85,15 +83,15 @@ async def cbdta(client, query):
         # print(hlp)
         await q.edit_message_text(text=(getattr(script, hlp)), reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
             text='Back', callback_data='hlp'), InlineKeyboardButton(text='Home', callback_data='back')], [
-                                                                                                      InlineKeyboardButton(
-                                                                                                          text='System Stats',
-                                                                                                          callback_data='sys_info'),
-                                                                                                      InlineKeyboardButton(
-                                                                                                          text='About me',
-                                                                                                          callback_data='about')],
-                                                                                                  [InlineKeyboardButton(
-                                                                                                      text='Close',
-                                                                                                      callback_data='close'), ]]))
+            InlineKeyboardButton(
+                text='System Stats',
+                callback_data='sys_info'),
+            InlineKeyboardButton(
+                text='About me',
+                callback_data='about')],
+            [InlineKeyboardButton(
+                text='Close',
+                callback_data='close'), ]]))
     elif "hlp" in q.data:
         objects = [x for x in dir(script) if not x.startswith('__')]
         page = Pagination(

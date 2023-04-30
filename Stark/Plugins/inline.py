@@ -1,12 +1,8 @@
-import os
 import aiohttp
-import asyncio
 import play_scraper
 from Python_ARQ import ARQ
-from pyrogram import Client, errors
+from pyrogram import Client
 from pyrogram.enums import ParseMode as pm
-from youtubesearchpython import SearchVideos
-from pyrogram.handlers import InlineQueryHandler
 from pyrogram.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
@@ -14,6 +10,7 @@ from pyrogram.types import (
     InlineQueryResultPhoto,
     InputTextMessageContent,
 )
+from youtubesearchpython import SearchVideos
 
 ARQ_URI = "https://arq.hamker.in"
 API_KEY = "IDIHNB-KATKEW-BGPKTB-ZTUHBX-ARQ"

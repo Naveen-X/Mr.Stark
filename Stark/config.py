@@ -1,10 +1,11 @@
 import os
+
 from dotenv import load_dotenv
-from distutils.util import strtobool
 
 if os.path.exists("local.env"):
     load_dotenv("local.env")
-    
+
+
 class Config(object):
     API_ID = int(os.environ.get("API_ID", 1))
     API_HASH = os.environ.get("API_HASH", None)

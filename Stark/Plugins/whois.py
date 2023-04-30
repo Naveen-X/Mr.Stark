@@ -26,6 +26,7 @@ dc_id = {
     5: "Singapore, SG",
 }
 
+
 @Client.on_message(filters.command(["info", "whois"]))
 @error_handler
 async def whois(bot, message):
@@ -51,9 +52,9 @@ async def whois(bot, message):
         f"{b3} <b>User-info of <i>“{ui.mention}”</i> :</b>\n\n",
         f"  {b1} <b>Firstname : <i>{ui.first_name}</i></b>\n",
         f"  {b1} <b>Lastname : <i>{ui.last_name}</i></b>\n" if ui.last_name else "",
-       (f"  {b1} <b>Username :</b> <code>@{ui.username}</code>\n" if ui.username else ""),
+        (f"  {b1} <b>Username :</b> <code>@{ui.username}</code>\n" if ui.username else ""),
         f"  {b1} <b>User ID :</b> <code>{ui.id}</code>\n",
-        f"  {b2} <b>User DCID : <i>{xio}</i></b>\n", 
+        f"  {b2} <b>User DCID : <i>{xio}</i></b>\n",
         f"  {b2} <b>Premium User : <i>{ui.is_premium}</i></b>\n"
         f"  {b2} <b>Status : <i>{ui.status}</i></b>\n",
         f"  {b2} <b>Is Bot : <i>{'Yes' if ui.is_bot else 'No'}</i></b>\n",

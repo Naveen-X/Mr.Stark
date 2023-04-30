@@ -1,15 +1,13 @@
-import logging
 import os
-import base64
-from urllib.parse import quote
-from pyrogram import Client, filters
-import requests
 import asyncio
-import logging
-import traceback
-from functools import wraps
-from pyrogram import Client, types
-from typing import Optional
+import base64
+import os
+from urllib.parse import quote
+
+import requests
+from pyrogram import Client
+from pyrogram import filters
+
 from Stark import error_handler
 
 

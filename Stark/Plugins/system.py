@@ -1,21 +1,14 @@
-import platform
-import re
-import psutil
-import socket
 import sys
 import time
-import uuid
-import logging
 from datetime import datetime
-from os import environ, execle, path, remove
+from os import environ, execle
+
 from pyrogram import Client, filters
 
 from Stark import error_handler
 from main.helper_func.basic_helpers import (
-    get_readable_time,
-    humanbytes
+    get_readable_time
 )
-from pyrogram import __version__
 
 start_time = time.time()
 assistant_version = "V1.0"

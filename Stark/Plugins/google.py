@@ -1,8 +1,6 @@
-import os
-import aiohttp
-import requests
 from urllib.parse import quote
 
+import aiohttp
 from pyrogram import Client, filters
 
 from Stark import error_handler

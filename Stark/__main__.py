@@ -1,15 +1,7 @@
-import os
-import sys
-import time
 import logging
-import asyncio
-import pyrogram
-import traceback 
 
+import pyrogram
 from pyrogram import idle
-from pyrogram.types import Message
-from Stark.config import Config
-from traceback import format_exc
 
 banner = (
         "\033[96m"

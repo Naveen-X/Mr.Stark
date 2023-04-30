@@ -1,12 +1,13 @@
 import os
-from pyrogram import Client, filters
 
-from Stark import error_handler
-from Stark.Plugins.paste import s_paste
+from pyrogram import Client, filters
 from pyrogram.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
 )
+
+from Stark import error_handler
+from Stark.Plugins.paste import s_paste
 
 
 @Client.on_message(filters.command(["log", "logs"]))

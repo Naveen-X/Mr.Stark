@@ -1,10 +1,11 @@
+import glob
 import io
 import os
-import glob
 import random
 import textwrap
-from pyrogram import Client, filters 
+
 from PIL import Image, ImageDraw, ImageFont
+from pyrogram import Client, filters
 
 from Stark import error_handler
 
@@ -18,14 +19,14 @@ async def make_stcr(c, m):
     B = random.randint(0, 256)
     text = None
     if m.reply_to_message:
-          if m.reply_to_message.caption:
-               text = m.reply_to_message
-          elif m.reply_to_message.text:
-              text = m.reply_to_message.text
+        if m.reply_to_message.caption:
+            text = m.reply_to_message
+        elif m.reply_to_message.text:
+            text = m.reply_to_message.text
     elif len(m.command) > 1:
-        text = m.text.split(" ",1)[1]
+        text = m.text.split(" ", 1)[1]
     if not text:
-           return await ok.edit("`Give some input to create a sticker...`")
+        return await ok.edit("`Give some input to create a sticker...`")
     sticktext = textwrap.wrap(text, width=10)
     sticktext = "\n".join(sticktext)
     image = Image.new("RGBA", (512, 512), (255, 255, 255, 0))
