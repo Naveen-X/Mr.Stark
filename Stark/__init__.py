@@ -111,7 +111,7 @@ def error_handler(func):
 async def handle_error(client: Client, message, exception: Exception, k):
     logging.error(f"Error in {message.command[0]}: {exception}")
     await message.reply_text(
-        "**An error occurred while processing your request.**\n\n**ERROR:** `{}`\n\n__If you think THis was a serious error Please forward this message to__ ** @s4tyendra ** __or__ ** @naveen_xd **\n\n**Complete Error: [Click here](https://t.me/c/1491739934/{})**".format(
+        "**An error occurred while processing your request.**\n\n**ERROR:** `{}`\n\n__If you think THis was a serious error Please forward this message to__ ** [Satya](t.me/s4tyendra) ** __or__ ** [Naveen](t.me/naveen_xd) **\n\n**Complete Error: [Click here](https://t.me/c/1491739934/{})**".format(
             exception, k.id))
 
 
