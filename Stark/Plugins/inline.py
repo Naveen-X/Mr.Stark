@@ -30,7 +30,7 @@ buttons = [
         InlineKeyboardButton("Image",
           switch_inline_query_current_chat="torrent "
           )
-    ]
+    ],
     [
         InlineKeyboardButton("Wallpaper",
           switch_inline_query_current_chat="wall ")
