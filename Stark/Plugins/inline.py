@@ -11,6 +11,7 @@ from pyrogram.types import (
     InputTextMessageContent,
 )
 from youtubesearchpython import SearchVideos
+from main.helper_func.inline_funcs import *
 
 ARQ_URI = "https://arq.hamker.in"
 API_KEY = "IDIHNB-KATKEW-BGPKTB-ZTUHBX-ARQ"
@@ -20,12 +21,19 @@ arq = ARQ(ARQ_URI, API_KEY, aiohttpsession)
 buttons = [
 
     [
-        InlineKeyboardButton("Youtube (this chat)", switch_inline_query="yt "),
-        InlineKeyboardButton("Youtube (other chat)", switch_inline_query_current_chat="yt ")
+        InlineKeyboardButton("Youtube", switch_inline_query_current_chat="yt "),
+        InlineKeyboardButton("Torrent",
+          switch_inline_query_current_chat="torrent ")
     ],
     [
-        InlineKeyboardButton("Apps (this chat)", switch_inline_query="app "),
-        InlineKeyboardButton("Apps (other chat)", switch_inline_query_current_chat="app ")
+        InlineKeyboardButton("Apps",switch_inline_query_current_chat="app "),
+        InlineKeyboardButton("Image",
+          switch_inline_query_current_chat="torrent "
+          )
+    ]
+    [
+        InlineKeyboardButton("Wallpaper",
+          switch_inline_query_current_chat="wall ")
     ]
 ]
 
@@ -45,9 +53,8 @@ async def searh(client, query):
             )
         ]
         await query.answer(results=answer, cache_time=5)
-        return
 
-    if iq.startswith("yt"):
+    elif iq.startswith("yt"):
         result = []
         input = (iq.split("yt", maxsplit=1)[1]).strip()
         if not input:
@@ -113,7 +120,7 @@ async def searh(client, query):
             )
         await query.answer(results=result, cache_time=0)
 
-    if iq.startswith("app"):
+    elif iq.startswith("app"):
         result = []
         input = (iq.split("app", maxsplit=1)[1]).strip()
         if not input:
@@ -179,7 +186,7 @@ async def searh(client, query):
             )
         await query.answer(results=result, cache_time=0)
 
-    if iq.startswith("wall"):
+    elif iq.startswith("wall"):
         result = []
         input = (iq.split("wall", maxsplit=1)[1]).strip()
         if not input:
@@ -202,51 +209,35 @@ async def searh(client, query):
             await query.answer(results=result, cache_time=5, switch_pm_text="🖼️ Wallpaper Search",
                                switch_pm_parameter="help")
             return
-        data = await arq.wall(input)
-        if not data.ok:
-            result.append(
-                InlineQueryResultArticle(
-                    title="Error",
-                    description=data.result,
-                    input_message_content=InputTextMessageContent(data.result),
-                    reply_markup=InlineKeyboardMarkup(
-                        [
-                            [
-                                InlineKeyboardButton(
-                                    text="Search Again",
-                                    switch_inline_query_current_chat="wall ",
-                                )
-                            ]
-                        ]
-                    )
+        answerss = await wall_func(answers, input)
+        await client.answer_inline_query(query.id, results=answerss, cache_time=2)
+        
+    elif iq.split()[0] == "torrent":
+            if len(iq.split()) < 2:
+                return await client.answer_inline_query(
+                    query.id,
+                    results=answers,
+                    switch_pm_text="Torrent Search | torrent [QUERY]",
+                    switch_pm_parameter="inline",
                 )
+            tex = text.split(None, 1)[1].strip()
+            answerss = await torrent_func(answers, tex)
+            await client.answer_inline_query(
+                query.id,
+                results=answerss,
             )
-        else:
-            res = data.result[0:48]
-            for i in res:
-                result.append(
-                    InlineQueryResultPhoto(
-                        photo_url=i.url_image,
-                        thumb_url=i.url_thumb,
-                        reply_markup=InlineKeyboardMarkup(
-                            [
-                                [
-                                    InlineKeyboardButton(
-                                        text="Full view",
-                                        url=i.url_image,
-                                    ),
-                                    InlineKeyboardButton(
-                                        text="Search Again",
-                                        switch_inline_query_current_chat="wall "
-                                    )
-                                ]
-                            ]
-                        )
-                    )
+    
+    elif iq.split()[0] == "image":
+            if len(iq.split()) < 2:
+                return await client.answer_inline_query(
+                    query.id,
+                    results=answers,
+                    is_gallery=True,
+                    switch_pm_text="Image Search | image [QUERY]",
+                    switch_pm_parameter="inline",
                 )
-        await query.answer(
-            results=result,
-            cache_time=0,
-            switch_pm_text="🖼 Wallpaper Search",
-            switch_pm_parameter="help",
-        )
+            tex = text.split(None, 1)[1].strip()
+            answerss = await image_func(answers, tex)
+            await client.answer_inline_query(
+                query.id, results=answerss, cache_time=3600
+            )
