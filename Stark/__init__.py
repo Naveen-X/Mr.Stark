@@ -58,7 +58,7 @@ def error_handler(func):
             return await func(client, message, *args, **kwargs)
         except Exception as e:
             error = (f"""
-**Error in {func.__module__}.{func.__name__}:** 
+**Error in {func.__module__.split(".")[2]}.{func.__name__}:** 
 
 `{e}`
 
