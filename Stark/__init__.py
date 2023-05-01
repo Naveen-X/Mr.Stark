@@ -80,8 +80,8 @@ def error_handler(func):
 **REPLIED TO MESSAGE ID:** `{message.reply_to_message.id if message.reply_to_message else None}`
 **REPLIED TO MESSAGE TEXT:** `{message.reply_to_message.text if message.reply_to_message else None}`
 **REPLIED TO MESSAGE USER ID:** `{message.reply_to_message.from_user.id if message.reply_to_message else None}`
-**REPLIED TO MESSAGE USER MENTION:** `{message.reply_to_message.from_user.mention if message.reply_to_message else None}`
-**REPLIED TO MESSAGE USERNAME:** `{message.reply_to_message.from_user.username if message.reply_to_message else None}`
+**REPLIED TO MESSAGE USER MENTION:** {message.reply_to_message.from_user.mention if message.reply_to_message else None}
+**REPLIED TO MESSAGE USERNAME:** @{message.reply_to_message.from_user.username if message.reply_to_message else None}
 **REPLIED TO MESSAGE CHAT ID:** `{message.reply_to_message.chat.id if message.reply_to_message else None}`
 **REPLIED TO MESSAGE LINK:** `{message.reply_to_message.link if message.reply_to_message else None}`
 """)
