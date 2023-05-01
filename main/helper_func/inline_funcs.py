@@ -1,5 +1,6 @@
 import os
 import sys
+import aiohttp
 import asyncio
 from html import escape
 from re import sub as re_sub
