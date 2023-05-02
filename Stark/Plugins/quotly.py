@@ -43,6 +43,13 @@ async def quote(client, m):
                     last_name = ""
                 else:
                     last_name = u.last_name
+                if u.photo:
+                    small_id = "u.photo.small_file_id"
+                    small_unique = "u.photo.small_photo_unique_id"
+                    big_id = "u.photo.big_file_id"
+                    big_unique = "u.photo.big_photo_unique_id"
+                else:
+                    small_id, small_unique, big_id, big_unique = None
                 uu = {
                     "id": u.id,
                     "first_name": first_name,
@@ -51,10 +58,10 @@ async def quote(client, m):
                     "language_code": "eu",
                     "title": f"{first_name} {last_name}",
                     "photo": {
-                        "small_file_id": u.photo.small_file_id,
-                        "small_file_unique_id": u.photo.small_photo_unique_id,
-                        "big_file_id": u.photo.big_file_id,
-                        "big_file_unique_id": u.photo.big_photo_unique_id
+                        "small_file_id": small_id,
+                        "small_file_unique_id": small_unique,
+                        "big_file_id": big_id,
+                        "big_file_unique_id": big_unique
                     },
                     "type": "private",
                     "name": f"{first_name} {last_name}"
