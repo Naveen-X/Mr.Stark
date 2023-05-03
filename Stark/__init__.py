@@ -1,4 +1,5 @@
 import os
+import pytz 
 import json
 import random
 import string
@@ -10,8 +11,36 @@ from functools import wraps
 from logging.handlers import RotatingFileHandler
 
 from telegraph import Telegraph
-from pyrogram import Client, types
+from pyrogram import Client
+from pyrogram.types import
+    InlineKeyboardButton,
+    InlineKeyboardMarkup
 
+@Client.on_callback_query()
+async def cbdta(client, query):
+    q = query
+    data = query.data
+    if "error" in q.data:
+      text = telegraph(traceback.format_exc())
+      await query.answer(text, show_alert=True)
+      
+buttons=InlineKeyboardMarkup(
+  [
+    InlineKeyboardButton("View on Web", url=get_gitlab_snippet(str(e), str(error), filename))
+  ],
+  [
+    InlineKeyboardButton("Complete error", callback_data="error")
+  ]
+)
+
+def telegraph(text:str):
+    telegraph = Telegraph()
+    telegraph.create_account(short_name='Mr.Stark')
+    response = telegraph.create_page(
+    "**<b>!ERROR - REPORT!<\b>",
+    html_content=text
+   )
+    return response['url']
 
 def get_gitlab_snippet(title, content, file):
     url = 'https://gitlab.com/api/v4/snippets'
@@ -37,7 +66,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="[%(asctime)s - %(levelname)s] - %(name)s - %(message)s",
     datefmt='%d-%b-%y %H:%M:%S')
-
+    
 # Create a file handler
 log_file = "log.txt"
 file_handler = RotatingFileHandler(log_file, maxBytes=1024 * 1024, backupCount=5)
@@ -51,6 +80,10 @@ logger.addHandler(file_handler)
 # Set the logging level for the pyrogram module to ERROR
 logging.getLogger("pyrogram").setLevel(logging.INFO)
 
+x = "Asia/Kolkata"
+TZ = pytz.timezone(x)
+datetime_tz = datetime.now(TZ)
+
 
 def error_handler(func):
     @wraps(func)
@@ -58,7 +91,18 @@ def error_handler(func):
         try:
             return await func(client, message, *args, **kwargs)
         except Exception as e:
-            error = (f"""
+            tg_error=(f"""
+**!ERROR - REPORT!** 
+
+`{e}`
+
+**Plugin-Name:** `{func.__module__.split(".")[2]}`
+**Function-Name:** `{func.__name__}`
+""")
+tg_error+= datetime_tz.strftime(
+                        "**Date :** `%Y-%m-%d` \n**Time :** `%H:%M:%S`"
+                    )
+            gitlab_error = (f"""
 **Error in {func.__module__.split(".")[2]} in `{func.__name__}`:** 
 
 `{e}`
@@ -88,14 +132,11 @@ def error_handler(func):
 """)
             filename = "error_" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=8)) + ".md"
             try:
-                k = await client.send_message(-1001491739934, error, disable_web_page_preview=True,
-                                              reply_markup=types.InlineKeyboardMarkup(
-                                                  [[types.InlineKeyboardButton("View on Web",
-                                                                               url=get_gitlab_snippet(str(e),
-                                                                                                      str(error),
-                                                                                                      filename))]]))
+                k = await client.send_message(-1001491739934, tg_error, disable_web_page_preview=True,
+                                              reply_markup=buttons
+                                              )
             except:
-                url = get_gitlab_snippet(str(e), str(error), filename)
+                url = get_gitlab_snippet(str(e), str(gitlab_error), filename)
                 with open(filename, "w", encoding='utf-8') as f:
                     f.write(str(error))
                 k = await client.send_document(chat_id=-1001491739934, document=filename,
