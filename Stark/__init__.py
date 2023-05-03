@@ -13,9 +13,7 @@ import requests
 from pyrogram import types
 from pyrogram import Client
 from telegraph import Telegraph
-from pyrogram.types import
-    InlineKeyboardButton,
-    InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
     
 @Client.on_callback_query()
 async def cbdta(client, query):
