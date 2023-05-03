@@ -1,3 +1,5 @@
+import asyncio
+
 immune = {}
 admins = {}
 admin_perms = {}
