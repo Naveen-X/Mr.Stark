@@ -19,7 +19,7 @@ async def cbdta(client, query):
     q = query
     data = query.data
     if "error" in q.data:
-      text = telegraph(traceback.format_exc())
+      text = traceback.format_exc()
       await query.answer(text, show_alert=True)
 
 def get_gitlab_snippet(title, content, file):
