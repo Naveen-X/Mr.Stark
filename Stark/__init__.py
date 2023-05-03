@@ -10,10 +10,20 @@ from logging.handlers import RotatingFileHandler
 
 import pytz
 import requests
-from pyrogram import Client
 from pyrogram import types
+from pyrogram import Client
 from telegraph import Telegraph
-
+from pyrogram.types import
+    InlineKeyboardButton,
+    InlineKeyboardMarkup
+    
+@Client.on_callback_query()
+async def cbdta(client, query):
+    q = query
+    data = query.data
+    if "error" in q.data:
+      text = telegraph(traceback.format_exc())
+      await query.answer(text, show_alert=True)
 
 def telegraph_url(text: str):
     telegraph = Telegraph()
@@ -24,6 +34,14 @@ def telegraph_url(text: str):
     )
     return response['url']
 
+buttons=InlineKeyboardMarkup(
+  [
+    InlineKeyboardButton("View on Gitlab", url=get_gitlab_snippet(str(e), str(error), filename))
+  ],
+  [
+    InlineKeyboardButton("Complete error", callback_data="error")
+  ]
+)
 
 def get_gitlab_snippet(title, content, file):
     url = 'https://gitlab.com/api/v4/snippets'
@@ -81,12 +99,6 @@ def error_handler(func):
 
 **Plugin-Name:** `{func.__module__.split(".")[2]}`
 **Function-Name:** `{func.__name__}`
-
-**TRACEBACK:**
-```
-{traceback.format_exc()}
-```
-\n
 """)
             tg_error += datetime_tz.strftime(
                 "**Date :** `%Y-%m-%d` \n**Time :** `%H:%M:%S`"
@@ -122,12 +134,7 @@ def error_handler(func):
             filename = "error_" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=8)) + ".md"
             try:
                 k = await client.send_message(-1001491739934, tg_error, disable_web_page_preview=True,
-                                              reply_markup=types.InlineKeyboardMarkup(
-                                                  [[types.InlineKeyboardButton("View on Gitlab",
-                                                                               url=get_gitlab_snippet(str(e),
-                                                                                                      str(gitlab_error),
-                                                                                                      filename))]]
-                                              )
+                                              reply_markup=buttons
                                               )
             except:
                 url = get_gitlab_snippet(str(e), str(gitlab_error), filename)
