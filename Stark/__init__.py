@@ -9,6 +9,7 @@ import traceback
 from functools import wraps
 from logging.handlers import RotatingFileHandler
 
+from telegraph import Telegraph
 from pyrogram import Client, types
 
 
