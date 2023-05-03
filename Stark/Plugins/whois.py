@@ -61,7 +61,7 @@ async def whois(bot, message):
         f"  {b2} <b>Is Scam : <i>{'Yes' if ui.is_scam else 'No'}</i></b>\n",
         f"  {b2} <b>Is Mutual : <i>{'Yes' if ui.is_mutual_contact else 'No'}</i></b>\n",
         f"  {b2} <b>Is Verified : <i>{'Yes' if ui.is_verified else 'No'}</i></b> \n",
-        f"  {b2} <b>This Chat ID : <i>{chat}</i></b>\n",
+        f"  {b2} <b>This Chat ID : <i>{message.chat.id}</i></b>\n",
     ]
     pic = ui.photo.big_file_id if ui.photo else None
     if pic is not None:
