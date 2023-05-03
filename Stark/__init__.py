@@ -10,17 +10,20 @@ from logging.handlers import RotatingFileHandler
 
 import pytz
 import requests
-from pyrogram import types
 from pyrogram import Client
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-    
-@Client.on_callback_query()
-async def cbdta(client, query):
-    q = query
-    data = query.data
-    if "error" in q.data:
-      text = traceback.format_exc()
-      await query.answer(text, show_alert=True)
+from pyrogram import types
+from telegraph import Telegraph
+
+
+def telegraph_url(text: str):
+    telegraph = Telegraph()
+    telegraph.create_account(short_name='Mr.Stark')
+    response = telegraph.create_page(
+        "**<b>!ERROR - REPORT!<\b>",
+        html_content=text
+    )
+    return response['url']
+
 
 def get_gitlab_snippet(title, content, file):
     url = 'https://gitlab.com/api/v4/snippets'
@@ -41,14 +44,6 @@ def get_gitlab_snippet(title, content, file):
     else:
         return f'Error creating snippet: {response.text}'
 
-buttons=InlineKeyboardMarkup(
-  [
-    InlineKeyboardButton("View on Gitlab", url=get_gitlab_snippet(str(e), str(error), filename))
-  ],
-  [
-    InlineKeyboardButton("Complete error", callback_data="error")
-  ]
-)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -86,6 +81,12 @@ def error_handler(func):
 
 **Plugin-Name:** `{func.__module__.split(".")[2]}`
 **Function-Name:** `{func.__name__}`
+
+**TRACEBACK:**
+```
+{traceback.format_exc()}
+```
+\n
 """)
             tg_error += datetime_tz.strftime(
                 "**Date :** `%Y-%m-%d` \n**Time :** `%H:%M:%S`"
@@ -121,7 +122,12 @@ def error_handler(func):
             filename = "error_" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=8)) + ".md"
             try:
                 k = await client.send_message(-1001491739934, tg_error, disable_web_page_preview=True,
-                                              reply_markup=buttons
+                                              reply_markup=types.InlineKeyboardMarkup(
+                                                  [[types.InlineKeyboardButton("View on Gitlab",
+                                                                               url=get_gitlab_snippet(str(e),
+                                                                                                      str(gitlab_error),
+                                                                                                      filename))]]
+                                              )
                                               )
             except:
                 url = get_gitlab_snippet(str(e), str(gitlab_error), filename)
