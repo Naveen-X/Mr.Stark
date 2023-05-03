@@ -24,6 +24,15 @@ app = pyrogram.Client(
     api_hash="eb3bc0998f7a134318a6d5763e9d0d49",
     plugins=plugins
 )
+
+
+def my_error_handler(client, update, error):
+    print("An error occurred:", error)
+    app.send_message(-1001426113453, f"An error occurred:\n`{error}`")
+
+
+app.add_handler(pyrogram.handlers.MessageHandler(my_error_handler))
+
 with app:
     mgs = app.send_message(-1001426113453, '**Starting Bot..**')
 app.start()
