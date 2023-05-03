@@ -100,7 +100,7 @@ def error_handler(func):
 tg_error+= datetime_tz.strftime(
                         "**Date :** `%Y-%m-%d` \n**Time :** `%H:%M:%S`"
                     )
-            gitlab_error = (f"""
+            gitlab_error=(f"""
 **Error in {func.__module__.split(".")[2]} in `{func.__name__}`:** 
 
 `{e}`
