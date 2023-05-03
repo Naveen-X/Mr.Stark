@@ -5,7 +5,7 @@ from requests import JSONDecodeError, get
 
 from Stark import error_handler
 
-IG_SESSION = '44772171796%3AP6QWzVAZMk9B6K%3A10%3AAYcy2RWYlFUPjvRd50cYqZHgkNvYwMLkcZc2M5K1Uw'
+IG_SESSION = '44772171796%3AZhrSoyFLs0YBoE%3A12%3AAYeHeW2FstpD7jSlJaA-Qt1ojhkxkm4GTaTyncWqjQ'
 
 spam = {}
 
