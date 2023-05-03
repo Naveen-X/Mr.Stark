@@ -32,15 +32,6 @@ def telegraph_url(text: str):
     )
     return response['url']
 
-buttons=InlineKeyboardMarkup(
-  [
-    InlineKeyboardButton("View on Gitlab", url=get_gitlab_snippet(str(e), str(error), filename))
-  ],
-  [
-    InlineKeyboardButton("Complete error", callback_data="error")
-  ]
-)
-
 def get_gitlab_snippet(title, content, file):
     url = 'https://gitlab.com/api/v4/snippets'
     headers = {'PRIVATE-TOKEN': 'glpat-LYuzpGiZtj_FTdDAUEPp', 'Content-Type': 'application/json'}
@@ -60,6 +51,14 @@ def get_gitlab_snippet(title, content, file):
     else:
         return f'Error creating snippet: {response.text}'
 
+buttons=InlineKeyboardMarkup(
+  [
+    InlineKeyboardButton("View on Gitlab", url=get_gitlab_snippet(str(e), str(error), filename))
+  ],
+  [
+    InlineKeyboardButton("Complete error", callback_data="error")
+  ]
+)
 
 logging.basicConfig(
     level=logging.INFO,
