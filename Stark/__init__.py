@@ -12,7 +12,6 @@ import pytz
 import requests
 from pyrogram import types
 from pyrogram import Client
-from telegraph import Telegraph
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
     
 @Client.on_callback_query()
@@ -22,15 +21,6 @@ async def cbdta(client, query):
     if "error" in q.data:
       text = telegraph(traceback.format_exc())
       await query.answer(text, show_alert=True)
-
-def telegraph_url(text: str):
-    telegraph = Telegraph()
-    telegraph.create_account(short_name='Mr.Stark')
-    response = telegraph.create_page(
-        "**<b>!ERROR - REPORT!<\b>",
-        html_content=text
-    )
-    return response['url']
 
 def get_gitlab_snippet(title, content, file):
     url = 'https://gitlab.com/api/v4/snippets'
