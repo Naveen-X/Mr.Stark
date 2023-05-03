@@ -32,7 +32,8 @@ async def telegrapher(c, m):
     page_title = m.text.split(None, 1)[1] or m.from_user.first_name
     page_text = m.reply_to_message.text
     page_text = page_text.replace("\n", "</br>")
-    response = telegraph.create_page(page_title, html_content=page_text)
+    try:
+      response = telegraph.create_page(page_title, html_content=page_text)
     except exceptions.TelegraphException as exc:
       await tg.edit("Telegram Failed\n `{exc}`")
       return
