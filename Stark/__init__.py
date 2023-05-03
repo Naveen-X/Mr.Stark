@@ -65,7 +65,7 @@ logging.getLogger("pyrogram").setLevel(logging.INFO)
 
 x = "Asia/Kolkata"
 TZ = pytz.timezone(x)
-datetime_tz = datetime.now(TZ)
+datetime_tz = datetime.datetime.now(TZ)
 
 
 def error_handler(func):
