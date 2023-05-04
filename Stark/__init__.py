@@ -84,7 +84,6 @@ def error_handler(func):
 {traceback.format_exc()}
 ```
 \n
-
 **Plugin-Name:** `{func.__module__.split(".")[2]}`
 **Function-Name:** `{func.__name__}`
 """)
