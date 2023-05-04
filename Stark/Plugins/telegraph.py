@@ -45,7 +45,7 @@ async def telegrapher(c, m):
     try:
       response = telegraph.create_page(page_title, html_content=page_text)
       wow_graph = "__Uploaded to Telegraph__"
-      url = "https://telegra.ph/" + respomse['path']
+      url = "https://telegra.ph/{respomse['path']}"
       await tg.edit(
         wow_graph, reply_markup=InlineKeyboardMarkup(
           [
