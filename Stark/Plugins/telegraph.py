@@ -44,8 +44,7 @@ async def telegrapher(c, m):
     try:
       response = telegraph.create_page(page_title, html_content=page_text)
       wow_graph = "__Uploaded to Telegraph__"
-      url = respomse['url']
-      button = InlineKeyboardButton(text="Click here", url=url)
+      button = InlineKeyboardButton(text="Click here", url=response['url'])
       keyboard = InlineKeyboardMarkup([[button]])
       await m.reply_text(
         wow_graph, reply_markup=keyboard
