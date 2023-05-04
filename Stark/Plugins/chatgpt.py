@@ -24,12 +24,6 @@ async def chatbot(bot, message):
         return
     query = quote(query)
     response = generate_response(query)
-    i = 0
-    while True:
-      i += 1
-      await bot.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
-      time.sleep(3)
-      if i == 3:
-        break
+    await bot.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
     await bot.send_message(message.chat.id, response, reply_to_message_id=message.id)
     await bot.send_chat_action(message.chat.id, enums.ChatAction.CANCEL)
