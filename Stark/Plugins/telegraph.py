@@ -30,12 +30,10 @@ async def telegrapher(c, m):
       return
     up_done = "__Uploaded to Telegraph__"
     url = media_url[0]
+    button = InlineKeyboardButton(text=up_done, url=url)
+    keyboard = InlineKeyboardMarkup([[button]])
     await m.reply_text(
-      wow_graph, reply_markup=InlineKeyboardMarkup(
-        [
-          InlineKeyboardButton(up_done, url)
-          ]
-        )
+      wow_graph, reply_markup=keyboard
       )
     os.remove(m_d)
     await tg.delete()
@@ -47,12 +45,10 @@ async def telegrapher(c, m):
       response = telegraph.create_page(page_title, html_content=page_text)
       wow_graph = "__Uploaded to Telegraph__"
       url = "https://telegra.ph/{respomse['path']}"
+      button = InlineKeyboardButton(text=wow_graph, url=url)
+      keyboard = InlineKeyboardMarkup([[button]])
       await m.reply_text(
-        wow_graph, reply_markup=InlineKeyboardMarkup(
-          [
-            InlineKeyboardButton(wow_graph, url)
-            ]
-          )
+        wow_graph, reply_markup=keyboard
         )
       await tg.delete()
     except exceptions.TelegraphException as exc:
