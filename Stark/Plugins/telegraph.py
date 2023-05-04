@@ -29,7 +29,7 @@ async def telegrapher(c, m):
       os.remove(m_d)
       return
     up_done = "__Uploaded to Telegraph__"
-    url = media_url[0]
+    url = "https://telegra.ph/" + media_url[0]
     button = InlineKeyboardButton(text="Click here", url=url)
     keyboard = InlineKeyboardMarkup([[button]])
     await m.reply_text(
