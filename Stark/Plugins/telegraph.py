@@ -44,15 +44,14 @@ async def telegrapher(c, m):
     page_text = page_text.replace("\n", "</br>")
     try:
       response = telegraph.create_page(page_title, html_content=page_text)
+      wow_graph = "__Uploaded to Telegraph__"
+      url = "https://telegra.ph/" + respomse['path']
+      await tg.edit(
+        wow_graph, reply_markup=InlineKeyboardMarkup(
+          [
+            InlineKeyboardButton(wow_graph, url)
+            ]
+          )
+        )
     except exceptions.TelegraphException as exc:
       await tg.edit("Telegram Failed\n `{exc}`")
-      return
-    wow_graph = "__Uploaded to Telegraph__"
-    url = "https://telegra.ph/" + respomse['path']
-    await tg.edit(
-      wow_graph, reply_markup=InlineKeyboardMarkup(
-        [
-          InlineKeyboardButton(wow_graph, url)
-          ]
-        )
-      )
