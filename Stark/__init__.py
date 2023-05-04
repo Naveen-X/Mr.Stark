@@ -79,14 +79,14 @@ def error_handler(func):
 
 `{e}`
 
-**Plugin-Name:** `{func.__module__.split(".")[2]}`
-**Function-Name:** `{func.__name__}`
-
 **TRACEBACK:**
 ```
 {traceback.format_exc()}
 ```
 \n
+
+**Plugin-Name:** `{func.__module__.split(".")[2]}`
+**Function-Name:** `{func.__name__}`
 """)
             tg_error += datetime_tz.strftime(
                 "**Date :** `%Y-%m-%d` \n**Time :** `%H:%M:%S`"
