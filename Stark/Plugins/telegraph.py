@@ -28,6 +28,16 @@ async def telegrapher(c, m):
       await tg.edit("Telegraph failed\n`{exc}`")
       os.remove(m_d)
       return
+    up_done = "__Uploaded to Telegraph__"
+    url = media_url[0]
+    await tg.edit(
+      wow_graph, reply_markup=InlineKeyboardMarkup(
+        [
+          InlineKeyboardButton(up_done, url)
+          ]
+        )
+      )
+    os.remove(m_d)
   elif m.reply_to_message.text:
     page_title = m.text.split(None, 1)[1] or m.from_user.first_name
     page_text = m.reply_to_message.text
