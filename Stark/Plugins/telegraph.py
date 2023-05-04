@@ -30,7 +30,7 @@ async def telegrapher(c, m):
       return
     up_done = "__Uploaded to Telegraph__"
     url = media_url[0]
-    await tg.edit(
+    await m.reply_text(
       wow_graph, reply_markup=InlineKeyboardMarkup(
         [
           InlineKeyboardButton(up_done, url)
@@ -38,6 +38,7 @@ async def telegrapher(c, m):
         )
       )
     os.remove(m_d)
+    await tg.delete()
   elif m.reply_to_message.text:
     page_title = m.text.split(None, 1)[1] or m.from_user.first_name
     page_text = m.reply_to_message.text
@@ -46,12 +47,13 @@ async def telegrapher(c, m):
       response = telegraph.create_page(page_title, html_content=page_text)
       wow_graph = "__Uploaded to Telegraph__"
       url = "https://telegra.ph/{respomse['path']}"
-      await tg.edit(
+      await m.reply_text(
         wow_graph, reply_markup=InlineKeyboardMarkup(
           [
             InlineKeyboardButton(wow_graph, url)
             ]
           )
         )
+      await tg.delete()
     except exceptions.TelegraphException as exc:
       await tg.edit("Telegram Failed\n `{exc}`")
