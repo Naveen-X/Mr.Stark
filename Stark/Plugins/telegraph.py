@@ -38,7 +38,10 @@ async def telegrapher(c, m):
     os.remove(m_d)
     await tg.delete()
   elif m.reply_to_message.text:
-    page_title = m.text.split(None, 1)[1] or m.from_user.first_name
+    try:
+        page_title = m.text.split(None, 1)[1]
+    except IndexError:
+        page_title = m.from_user.first_name
     page_text = m.reply_to_message.text
     page_text = page_text.replace("\n", "</br>")
     try:
