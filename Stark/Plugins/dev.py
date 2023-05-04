@@ -78,7 +78,7 @@ async def aexec(code, bot, message):
     return await locals()["__aexec"](bot, message)
 
 
-@Client.on_message(filters.command(["bash"]) & filters.user([1246467977, 1089528685]))
+@Client.on_message(filters.command(["bash", "sh"]) & filters.user([1246467977, 1089528685]))
 @Client.on_edited_message(filters.command(["bash"]) & filters.user([1246467977, 1089528685]))
 @error_handler
 async def terminal(bot, message):
