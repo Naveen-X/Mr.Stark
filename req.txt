@@ -37,6 +37,7 @@ python-arq
 python-dotenv
 pypng
 pytest
+pySmartDL
 requests
 safoneapi
 scipy
