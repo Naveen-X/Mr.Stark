@@ -152,6 +152,13 @@ class script(object):
     "cmds": ["d"],
   }
 ]
+  URL_UPLOADER = [
+  {
+    "desc": "download's file from given link",
+    "cmds": ["urlupload"],
+    "usage": "/urlupload [direct link of the file]"
+  }
+]
   WASTED = [
   {
     "desc": "Gta-V wasted effect on replied image",
