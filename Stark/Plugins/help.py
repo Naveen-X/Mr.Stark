@@ -32,7 +32,7 @@ Naveen_xD @Mr.Stark
 ✘ CPU: {cpu}%
 ✘ RAM: {mem}%
 ✘ DISK: {disk}%
-✘ USERS: {await db.get_user_count()}%
+✘ USERS: {await db.get_user_count()}
 --------------------------
 """
     return stats
