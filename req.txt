@@ -42,6 +42,7 @@ requests
 safoneapi
 scipy
 selenium
+spotipy
 TgCrypto
 telegraph
 telethon
