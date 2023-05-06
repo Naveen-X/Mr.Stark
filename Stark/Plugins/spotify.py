@@ -15,6 +15,7 @@ async def spotify_search(c, m):
     query = m.text.split(None, 1)[1]
   except IndexError:
     await m.reply_text("Gib some input to search..")
+    return
   spt = await m.reply_text("Searching for your song...")
   results = sp.search(q=query, type='track')
   m = ""
