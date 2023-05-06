@@ -2,7 +2,7 @@ from pyrogram import Client, filters
 from pyromod.helpers import ikb
 
 from Stark import error_handler
-
+from Stark import db
 keyboard = ikb([
     [("😎 About me 😎", 'about'), ('🖥System stats 🖥', 'sys_info')],
     [('🤡Commands Help🤡', 'hlp')]

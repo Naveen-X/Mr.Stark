@@ -60,8 +60,8 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
         estimated_total_time = time_formatter(milliseconds=estimated_total_time)
 
         progress = "`[{0}{1}]` \n".format(
-            "".join(["▰" for i in range(math.floor(percentage / 5))]),
-            "".join(["▱" for i in range(20 - math.floor(percentage / 5))]),
+            "".join(["#" for i in range(math.floor(percentage / 5))]),
+            "".join(["-" for i in range(20 - math.floor(percentage / 5))]),
         )
 
         ok = "`{0}%` \n".format(round(percentage, 2))
@@ -92,7 +92,7 @@ async def download_video(quality, url, filename):
     with open(filename, "wb") as f:
         for data in file_size_request.iter_content(block_size):
             f.write(data)
-    logger.info("Video Downloaded Successfully!")
+    logging.info("Video Downloaded Successfully!")
 
 
 async def download_from_url(url, dl_loc, message):
@@ -106,14 +106,14 @@ async def download_from_url(url, dl_loc, message):
             speed = dl.get_speed(human=True)
             estimated_total_time = dl.get_eta(human=True)
             progress = "`[{0}{1}]` \n".format(
-                "".join(["▰" for i in range(math.floor(percentage / 5))]),
-                "".join(["▱" for i in range(20 - math.floor(percentage / 5))]),
+                "".join(["#" for i in range(math.floor(percentage / 5))]),
+                "".join(["-" for i in range(20 - math.floor(percentage / 5))]),
             )
             ok = "`{0}%` \n".format(round(percentage, 2))
             tmp = (
                 ok
                 + progress
-                + "\n★ 𝙳𝙾𝙽𝙴: `{0}` \n★ 𝚃𝙾𝚃𝙰𝙻: `{1}` \n★ 𝚂𝙿𝙴𝙴𝙳: `{2}` \n★ 𝚃𝙸𝙼𝙴 𝙻𝙴𝙵𝚃: `{3}`".format(
+                + "\n>> DONE: `{0}` \n>> TOTAL: `{1}` \n>> SPEED: `{2}` \n>> TIME LEFT: `{3}`".format(
                     humanbytes(downloaded),
                     humanbytes(total_length),
                     speed.title(),

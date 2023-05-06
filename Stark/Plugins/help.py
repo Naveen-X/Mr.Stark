@@ -9,7 +9,7 @@ from pyromod.helpers import ikb
 from pyromod.nav import Pagination
 
 from Script import script
-from Stark import error_handler
+from Stark import error_handler, db
 from main.helper_func.basic_helpers import get_readable_time
 
 bot_start_time = time.time()
@@ -32,6 +32,8 @@ Naveen_xD @Mr.Stark
 ✘ CPU: {cpu}%
 ✘ RAM: {mem}%
 ✘ DISK: {disk}%
+✘ USERS: {await db.get_user_count()}%
+--------------------------
 """
     return stats
 

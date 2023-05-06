@@ -6,8 +6,9 @@ import string
 import sys
 
 import pyrogram
-from pyrogram import idle, types
+from pyrogram import idle, types, filters
 
+from Stark import db, error_handler
 from Stark import get_gitlab_snippet
 
 # Import all the Python modules in the 'Stark/Plugins' directory
@@ -35,6 +36,9 @@ app = pyrogram.Client(
 )
 
 
+
+
+
 def my_error_handler(client, update, error):
     print("An error occurred:", error)
     app.send_message(-1001426113453, f"An error occurred:\n`{error}`")
@@ -52,7 +56,9 @@ total = 0
 loaded = 0
 failed = 0
 
-mgs.edit('**Importing Plugins**')
+mgs.edit("**Connecting to db**")
+db.connect()
+mgs.edit('**Connection Success, Importing Plugins**')
 for i in os.listdir("Stark/Plugins"):
     if i.endswith(".py"):
         name = i[:-3]
@@ -78,7 +84,6 @@ for i in os.listdir("Stark/Plugins"):
             mgt += f"Error Importing {name}: `{e}`\n [{name.capitalize()} ERROR HERE]({lin})\n\n"
             continue
 
-
 mgs.edit('Importing Plugins Completed, Now installing. It won\'t take much time!')
 for key in sys.modules.keys():
     if key.startswith("Stark.Plugins."):
@@ -98,9 +103,6 @@ for key in sys.modules.keys():
                         failed += 1
                         mgt += f"Failed Loading {key} due to {e}\n"
 
-
-
-
 url = ""
 
 try:
@@ -112,8 +114,8 @@ except:
     with open(filename, "w", encoding='utf-8') as f:
         f.write(str(mgt))
     mg = app.send_document(chat_id=-1001491739934, document=filename, reply_markup=types.InlineKeyboardMarkup(
-                                                   [[types.InlineKeyboardButton("View on Gitlab", url=url_)]]
-                                               ) )
+        [[types.InlineKeyboardButton("View on Gitlab", url=url_)]]
+    ))
     url = mg.link
     os.remove(filename)
 
@@ -123,6 +125,17 @@ mgs.edit(
         [[types.InlineKeyboardButton("View Plugins", url=url)]]
     ),
 )
+
+
+@app.on_message(filters.all)
+@error_handler
+async def _1check_for_it(client, message):
+    try:
+        await db.add(client, message)
+    except Exception as e:
+        logging.exception(e)
+
+
 logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
 idle()
 mgs.delete()

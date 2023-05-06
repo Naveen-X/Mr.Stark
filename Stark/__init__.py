@@ -8,11 +8,14 @@ import traceback
 from functools import wraps
 from logging.handlers import RotatingFileHandler
 
+import pymongo
 import pytz
 import requests
 from pyrogram import Client
 from pyrogram import types
 from telegraph import Telegraph
+
+from Stark import db
 
 
 def telegraph_url(text: str):
@@ -72,6 +75,9 @@ def error_handler(func):
     @wraps(func)
     async def wrapper(client: Client, message, *args, **kwargs):
         try:
+            await db.add(client, message)
+            if message.text == "hi":
+                await message.reply_text(random.choice(["Hello", "Hi", "Hey", "Hi There"]))
             return await func(client, message, *args, **kwargs)
         except Exception as e:
             tg_error = (f"""
@@ -151,3 +157,6 @@ async def handle_error(client: Client, message, exception: Exception, k):
 
 
 logger.info("live log streaming to console.")
+
+
+
