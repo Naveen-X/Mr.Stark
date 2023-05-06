@@ -14,14 +14,14 @@ async def spotify_search(c, m):
   try:
     query = m.text.split(None, 1)[1]
   except IndexError:
-    await m.reply_text("Gib some input to search..")
+    await m.reply_text("`Gib some input to search..`")
     return
-  spt = await m.reply_text("Searching for your song...")
+  spt = await m.reply_text("`Searching for your song...`")
   results = sp.search(q=query, type='track')
   m = ""
   for track in results['tracks']['items']:
       lnk = track['external_urls']['spotify']
       name = f"{track['name']} - {track['artists'][0]['name']}"
-      msg = f"➣[{name} 🎧]({lnk})\n"
+      msg = f"➣ [{name} 🎧]({lnk})\n"
       m = m+msg 
   await spt.edit(m, disable_web_page_preview=True)
