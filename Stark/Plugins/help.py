@@ -111,7 +111,7 @@ async def cb_handler(client, query):
         lines = 3
         columns = 3
         kb = page.create(page=index, lines=lines, columns=columns)
-        return kb
+        return kb+keyboard(sent_by)
 
     if 'help_' in query.data:
         hlp = query.data.split('help_')[1]
