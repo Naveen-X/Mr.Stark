@@ -121,7 +121,10 @@ async def cb_handler(client, query):
         for text__ in text_:
             desc = text__.get('desc')
             cmds_ = list(text__.get('cmds'))
-            cmds = ', '.join(cmds_)
+            try:
+                cmds = ', '.join(cmds_)
+            except:
+                cmds = None
             usage = text__.get('usage')
             if desc is None:
                 desc = "No Description Provided by the Developer"
@@ -131,11 +134,11 @@ async def cb_handler(client, query):
                 usage = "No Usage Provided by the Developer"
 
             msg = msg + """
-**
+
 Info: `{}`
 Commands: `{}`
 Usage: `{}`
-**
+
             """.format(desc, cmds, usage)
 
         await query.edit_message_text(text=msg, reply_markup=
