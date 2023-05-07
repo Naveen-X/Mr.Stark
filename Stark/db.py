@@ -3,7 +3,7 @@ from typing import Mapping, Any
 import pymongo
 from pymongo import MongoClient
 from pymongo.database import Database
-
+from Stark.Config import Config
 DB: Database[Mapping[str, Any]] = None  # Helps In Auto-Completion
 users: MongoClient[Mapping[str, Any]] = None  # Helps In Auto-Completion
 
@@ -12,7 +12,7 @@ def connect():
     global DB
     global users
     client = pymongo.MongoClient(
-        'mongodb+srv://Altruix_xD:naveen_xd2580@altruix.orcwc3o.mongodb.net/?retryWrites=true&w=majority')
+        Config.MONGO_DB)
     DB = client.STARK
     users = DB.users
 
