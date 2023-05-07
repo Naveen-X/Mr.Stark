@@ -120,15 +120,22 @@ async def cb_handler(client, query):
         text_ = list(getattr(Script, hlp))
         for text__ in text_:
             desc = text__.get('desc')
-            cmds = list(text__['cmds'])
-            cmds = ', '.join(cmds)
-            usage = text__['usage']
+            cmds_ = list(text__.get('cmds'))
+            cmds = ', '.join(cmds_)
+            usage = text__.get('usage')
+            if desc is None:
+                desc = "No Description Provided by the Developer"
+            if cmds is None:
+                cmds = "No Commands Provided by the Developer"
+            if usage is None:
+                usage = "No Usage Provided by the Developer"
+
             msg = msg + """
-            
-<b>Info:</b> `{}`
-<b>Commands:</b> `{}`
-<b>Usage:</b> `{}`
-___
+**          
+Info: `{}`
+Commands: `{}`
+Usage: `{}`
+**
             """.format(desc, cmds, usage)
 
         await query.edit_message_text(text=msg, reply_markup=
