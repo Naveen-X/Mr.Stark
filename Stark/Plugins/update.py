@@ -64,9 +64,9 @@ async def de_snipp(client, message):
                 if response.status_code == 204:
                     await up.edit(f'Snippet {snippet_id} deleted successfully')
                 else:
-                    print(f'Error deleting snippet {snippet_id}: {response.text}')
+                    print(f'Error deleting snippet `{snippet_id}`: `{response.text}`')
             except Exception as e:
-                up.edit(f'Error deleting snippet {snippet_id}: {e}')
+                up.edit(f'Error deleting snippet `{snippet_id}`: `{e}`')
                 continue
-        await up.edit(f"**Deleted {len(snippets)} snippets!**")
+        await up.edit(f"**Deleted `{len(snippets)}` snippets!**")
         return
