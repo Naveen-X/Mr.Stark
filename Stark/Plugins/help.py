@@ -131,11 +131,11 @@ async def cb_handler(client, query):
                 usage = "No Usage Provided by the Developer"
 
             msg = msg + """
-**          
+*       
 Info: `{}`
 Commands: `{}`
 Usage: `{}`
-**
+*
             """.format(desc, cmds, usage)
 
         await query.edit_message_text(text=msg, reply_markup=
