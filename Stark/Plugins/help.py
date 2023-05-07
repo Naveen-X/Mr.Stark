@@ -84,7 +84,7 @@ async def cbdta(client, query):
     elif "help_" in q.data:
         hlp = q.data.split('help_')[1]
         # print(hlp)
-        await q.edit_message_text(text=(getattr(script, hlp)), reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
+        await q.edit_message_text(text=(getattr(Script, hlp)), reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
             text='Back', callback_data='hlp'), InlineKeyboardButton(text='Home', callback_data='back')], [
             InlineKeyboardButton(
                 text='System Stats',
