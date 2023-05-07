@@ -8,7 +8,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyromod.helpers import ikb
 from pyromod.nav import Pagination
 
-from help import Script
+from help_mod import Script
 from Script import script
 from Stark import error_handler, db
 from main.helper_func.basic_helpers import get_readable_time
@@ -96,7 +96,7 @@ async def cbdta(client, query):
                 text='Close',
                 callback_data='close'), ]]))
     elif "hlp" in q.data:
-        objects = [x for x in dir(script) if not x.startswith('__')]
+        objects = [x for x in dir(Script) if not x.startswith('__')]
         page = Pagination(
             objects,
             page_data=page_data,
