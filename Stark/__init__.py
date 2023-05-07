@@ -16,7 +16,7 @@ from pyrogram import Client
 from telegraph import Telegraph
 
 from Stark import db 
-from Stark.Config import Config
+from Stark.config import Config
 
 GITLAB_TOKEN = Config.GITLAB_TOKEN
 
