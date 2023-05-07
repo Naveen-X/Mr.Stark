@@ -4,8 +4,9 @@ from pyrogram import Client, filters
 from requests import JSONDecodeError, get
 
 from Stark import error_handler
+from Stark.Config import Config
 
-IG_SESSION = '44772171796%3AZhrSoyFLs0YBoE%3A12%3AAYeHeW2FstpD7jSlJaA-Qt1ojhkxkm4GTaTyncWqjQ'
+IG_SESSION = Config.IG_SESSION
 
 spam = {}
 
