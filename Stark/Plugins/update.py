@@ -24,11 +24,11 @@ async def update(client, message):
             return
         else:
             if "-r" in message.text:
-                await up.edit(f'Updated to latest version.\n{output}\n\nNow Restarting with installing requirements.')
+                await up.edit(f'Updated to latest version.\n`{output}`\n\nNow Restarting with installing requirements.')
                 os.kill(os.getpid(), 9)
                 os.execl('bash', 'update_req.sh', *sys.argv)
             else:
-                await up.edit(f'Updated to latest version.\n{output}\n\nNow Restarting.')
+                await up.edit(f'Updated to latest version.\n`{output}`\n\nNow Restarting.')
                 os.kill(os.getpid(), 9)
                 os.execl('bash', 'update.sh', *sys.argv)
     else:
