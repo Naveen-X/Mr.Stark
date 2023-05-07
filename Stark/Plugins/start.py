@@ -2,11 +2,13 @@ from pyrogram import Client, filters
 from pyromod.helpers import ikb
 
 from Stark import error_handler
-from Stark import db
-keyboard = ikb([
-    [("😎 About me 😎", 'about'), ('🖥System stats 🖥', 'sys_info')],
-    [('🤡Commands Help🤡', 'hlp')]
-])
+
+
+def keyboard(id):
+    return ikb([
+        [("😎 About me 😎", f'{id}.about'), ('🖥System stats 🖥', f'{id}.sys_info')],
+        [('🤡Commands Help🤡', f'{id}.hlp')]
+    ])
 
 
 @Client.on_message(filters.command(["start", "start@Mr_StarkBot"]))
@@ -20,5 +22,5 @@ async def start(bot, message):
         message.chat.id,
         stark,
         text,
-        reply_markup=keyboard,
+        reply_markup=keyboard(message.from_user.id),
     )

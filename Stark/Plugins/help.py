@@ -119,7 +119,7 @@ async def cb_handler(client, query):
         msg = ""
         text_ = list(getattr(Script, hlp))
         for text__ in text_:
-            desc = text__['desc']
+            desc = text__.get('desc')
             cmds = list(text__['cmds'])
             cmds = ', '.join(cmds)
             usage = text__['usage']
@@ -175,7 +175,7 @@ ___
         firstname = query.from_user.first_name
         await query.message.edit_text(
             text=f"<i>Hello, {firstname} !\nNice To Meet You, Well I Am A Powerfull Assistant bot For My Master!`\nMade by </i>Naveen_xD",
-            reply_markup=keyboard,
+            reply_markup=keyboard(sent_by),
             disable_web_page_preview=True
         )
     elif 'sys_info' in query.data:
