@@ -3,10 +3,14 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
 from Stark import error_handler
+from Stark.Config import Config
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
 
-client_credentials_manager = SpotifyClientCredentials(client_id='e5f24fc4807b4bb6afa62e92fb607875', client_secret='08a5ff44ba7d47e4867983392b5a7ef0')
+SPT_CLIENT = Config.SPT_CLIENT
+SPT_SECRET = Config.SPT_SECRET
+
+client_credentials_manager = SpotifyClientCredentials(client_id=SPT_CLIENT, client_secret=SPT_SECRET)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 @Client.on_message(filters.command(["spotify"]))
