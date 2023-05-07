@@ -1,4 +1,4 @@
-class script(object):
+class Script(object):
   AI = [
   {
     "desc": "Generates AI response from OpenAI",
