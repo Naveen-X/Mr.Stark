@@ -8,6 +8,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyromod.helpers import ikb
 from pyromod.nav import Pagination
 
+from help import Script
 from Script import script
 from Stark import error_handler, db
 from main.helper_func.basic_helpers import get_readable_time
@@ -53,7 +54,7 @@ def item_title(item, page):
 @Client.on_message(filters.command(['help', 'hlp', 'h']))
 @error_handler
 async def hi(c, m):
-    objects = [x for x in dir(script) if not x.startswith('__')]
+    objects = [x for x in dir(Script) if not x.startswith('__')]
     page = Pagination(
         objects,
         page_data=page_data,
