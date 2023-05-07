@@ -15,8 +15,10 @@ from pyrogram import types
 from pyrogram import Client
 from telegraph import Telegraph
 
-from Stark import db
+from Stark import db 
+from Stark.Config import Config
 
+GITLAB_TOKEN = Config.GITLAB_TOKEN
 
 def telegraph_url(text: str):
     telegraph = Telegraph()
@@ -30,7 +32,7 @@ def telegraph_url(text: str):
 
 def get_gitlab_snippet(title, content, file):
     url = 'https://gitlab.com/api/v4/snippets'
-    headers = {'PRIVATE-TOKEN': 'glpat-LYuzpGiZtj_FTdDAUEPp', 'Content-Type': 'application/json'}
+    headers = {'PRIVATE-TOKEN': GITLAB_TOKEN, 'Content-Type': 'application/json'}
 
     # Set the snippet data
     snippet_data = {'title': title, 'file_name': file, 'content': content,
