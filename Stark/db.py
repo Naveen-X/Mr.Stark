@@ -3,7 +3,7 @@ from typing import Mapping, Any
 import pymongo
 from pymongo import MongoClient
 from pymongo.database import Database
-from Stark.Config import Config
+from Stark.config import Config
 DB: Database[Mapping[str, Any]] = None  # Helps In Auto-Completion
 users: MongoClient[Mapping[str, Any]] = None  # Helps In Auto-Completion
 
