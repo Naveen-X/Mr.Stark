@@ -24,4 +24,4 @@ async def spotify_search(c, m):
       name = f"{track['name']} - {track['artists'][0]['name']}"
       msg = f"‎‎  ➣ **[{name} 🎧]({lnk})**\n"
       m = m+msg 
-  await spt.edit(m, disable_web_page_preview=True, parse_mode = "markdown")
+  await spt.edit(m, disable_web_page_preview=True, parse_mode = "md")
