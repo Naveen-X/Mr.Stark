@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 from requests import JSONDecodeError, get
 
 from Stark import error_handler
-from Stark.Config import Config
+from Stark.config import Config
 
 IG_SESSION = Config.IG_SESSION
 
