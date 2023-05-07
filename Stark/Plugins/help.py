@@ -96,7 +96,7 @@ async def cbdta(client, query):
                 text='Close',
                 callback_data='close'), ]]))
     elif "hlp" in q.data:
-        objects = [x for x in dir(script) if not x.startswith('__')]
+        objects = [x for x in dir(Script) if not x.startswith('__')]
         page = Pagination(
             objects,
             page_data=page_data,
