@@ -3,7 +3,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
 from Stark import error_handler
-from Stark.Config import Config
+from Stark.config import Config
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
 
