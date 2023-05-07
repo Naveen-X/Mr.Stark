@@ -135,9 +135,9 @@ async def cb_handler(client, query):
 
             msg = msg + """
 
-Info: `{}`
-Commands: `{}`
-Usage: `{}`
+<b>Info: </b> {}
+<b>Commands: </b> {}
+<b>Usage: </b> {}
 
             """.format(desc, cmds, usage)
 
