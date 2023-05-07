@@ -120,7 +120,7 @@ except:
     os.remove(filename)
 
 mgs.edit(
-    f"**Bot Started**\n__Loaded `{loaded}` Plugins.\n Failed: `{failed}`__",
+    f"**Bot Started**\n__Loaded `{loaded}` Plugins Successfully.\nFailed to load `{failed}` plugins__",
     reply_markup=types.InlineKeyboardMarkup(
         [[types.InlineKeyboardButton("View Plugins", url=url)]]
     ),
