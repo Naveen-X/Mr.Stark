@@ -135,9 +135,9 @@ async def cb_handler(client, query):
 
             msg = msg + """
 
-<b>Info: </b> <code>{}</code>
-<b>Commands: </b> <code>{}</code>
-<b>Usage: </b> <code>{}</code>
+𝗜𝗻𝗳𝗼: `{}`
+𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀: `{}`
+𝗨𝘀𝗮𝗴𝗲: `{}`
 
             """.format(desc, cmds, usage)
 
@@ -164,13 +164,13 @@ async def cb_handler(client, query):
     elif "about" in query.data:
         await query.message.edit_text(
             text=f"""
-<b>My name : <b/><i>Mr.Stark</i>
-<b>○ Made By :  </b> 
+`My name : <b/><i>Mr.Stark</i>
+`○ Made By :  </b> 
     <a href='tg://user?id=1246467977'>Naveen_xD</a>
     <a href='tg://user?id=1089528685'>Satya</a>
     <a href='tg://user?id=1602293216'>Ashit</a>
-<b>○ Language : </b><code>Python3</code>
-<b>○ Library : <a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a></b>
+`○ Language : </b><`>Python3</`>
+`○ Library : <a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a></b>
 """,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
