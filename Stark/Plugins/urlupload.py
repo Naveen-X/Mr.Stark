@@ -160,10 +160,10 @@ async def url_upload(c, m):
 
     msg = await m.reply_text("𝙿𝚛𝚘𝚌𝚎𝚜𝚜𝚒𝚗𝚐 ...", quote=True)
     if "http" not in link:
-        return await msg.edit("")
+        return await msg.edit("𝚃𝚑𝚒𝚜 𝚒𝚜 𝚗𝚘𝚝 𝚊 𝚍𝚒𝚛𝚎𝚌𝚝 𝚕𝚒𝚗𝚔 𝚕𝚖𝚊𝚘!")
 
     if "|" in link:
-        link, filename = link.split("𝚃𝚑𝚒𝚜 𝚒𝚜 𝚗𝚘𝚝 𝚊 𝚍𝚒𝚛𝚎𝚌𝚝 𝚕𝚒𝚗𝚔 𝚕𝚖𝚊𝚘!")
+        link, filename = link.split("|")
         link = link.strip()
         filename = filename.strip()
     else:
@@ -175,7 +175,7 @@ async def url_upload(c, m):
     dl_loc = os.path.join(tmp_directory_for_each_user, filename)
     ok, file_path = await download_from_url(link, dl_loc, msg)
     if ok is False:
-        return await msg.edit(f"𝙴𝚛𝚛𝚘𝚛...\n```{ok}```")
+        return await msg.edit(f"𝙴𝚛𝚛𝚘𝚛...\n```{file_path}```")
     try:
         path = Path(file_path)
     except IndexError:
