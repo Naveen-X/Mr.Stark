@@ -184,10 +184,12 @@ async def url_upload(c, m):
         start = time.time()
         await msg.edit("𝙳𝚘𝚠𝚗𝚕𝚘𝚊𝚍𝚎𝚍 𝚂𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢!")
         if path.is_file() and path.stat().st_size < 2097152000:
-            await m.reply_document(
+            await c.send_document(
+                chat_id=m.chat.id,
                 document=str(path),
                 thumb="resources/images/thumb.jpg",
                 caption="Uᴘʟᴏᴀᴅᴇᴅ Uꜱɪɴɢ [Mr.Stark](https://t.me/Mr_StarkBot)",
+                force_document=False,
                 progress=progress_for_pyrogram,
                 progress_args=("**ЦPLФДDIИG...**", msg, start),
                 quote=True,
