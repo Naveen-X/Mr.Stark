@@ -175,7 +175,7 @@ async def url_upload(c, m):
     dl_loc = os.path.join(tmp_directory_for_each_user, filename)
     ok, file_path = await download_from_url(link, dl_loc, msg)
     if ok is False:
-        return await msg.edit(f"𝙴𝚛𝚛𝚘𝚛...\n```{file_path}```")
+        return await msg.edit(f"𝙴𝚛𝚛𝚘𝚛...\n```{ok}```")
     try:
         path = Path(file_path)
     except IndexError:
