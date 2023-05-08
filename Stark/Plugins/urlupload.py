@@ -192,7 +192,6 @@ async def url_upload(c, m):
                 force_document=False,
                 progress=progress_for_pyrogram,
                 progress_args=("**ЦPLФДDIИG...**", msg, start),
-                quote=True,
             )
             await msg.delete()
         else:
