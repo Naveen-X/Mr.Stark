@@ -23,7 +23,7 @@ async def chatbot(bot, message):
         )
         return
     query = quote(query)
-    response = generate_response(query)
     await bot.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
+    response = generate_response(query)
     await bot.send_message(message.chat.id, response, reply_to_message_id=message.id)
     await bot.send_chat_action(message.chat.id, enums.ChatAction.CANCEL)
