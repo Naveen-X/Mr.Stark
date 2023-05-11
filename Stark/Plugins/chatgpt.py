@@ -31,7 +31,7 @@ async def chatgpt(c, m):
 
 @Client.on_message(filters.reply)
 async def gpt_reply(c, m):
-  if m.replied.user_id == 1863795995:
+  if m.reply_to_message.from_user.id == 1863795995:
     text = m.text
     query = quote(text)
     await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
