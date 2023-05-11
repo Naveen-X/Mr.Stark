@@ -14,27 +14,27 @@ def generate_response(query: str):
   
 @Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
 @error_handler
-async def chatgpt(c, message):
+async def chatgpt(c, m):
     try:
-        query = message.text.split(None, 1)[1]
+        query = m.text.split(None, 1)[1]
     except:
-        await message.reply_text(
+        await m.reply_text(
             "`ɪ ᴅɪᴅɴ'ᴛ ɢᴇᴛ ᴛʜᴀᴛ`"
         )
         return
     query = quote(query)
-    await c.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
+    await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
     response = generate_response(query)
-    await c.send_message(message.chat.id, response, reply_to_message_id=message.id)
-    await c.send_chat_action(message.chat.id, enums.ChatAction.CANCEL)
+    await c.send_messsge(m.chat.id, response, reply_to_message_id=m.id)
+    await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
 
 
 @Client.on_message(filters.replied)
 async def gpt_reply(c, m):
-  if m.replied.user_id = 1863795995:
+  if m.replied.user_id == 1863795995:
     text = m.text
     query = quote(text)
-    await c.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
+    await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
     response = generate_response(query)
-    await c.send_message(message.chat.id, response, reply_to_message_id=message.id)
-    await c.send_chat_action(message.chat.id, enums.ChatAction.CANCEL)
+    await c.send_message(m.chat.id, response, reply_to_message_id=m.id)
+    await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
