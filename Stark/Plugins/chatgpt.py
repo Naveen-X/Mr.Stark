@@ -14,7 +14,7 @@ def generate_response(query: str):
   
 @Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
 @error_handler
-async def chatbot(bot, message):
+async def chatgpt(c, message):
     try:
         query = message.text.split(None, 1)[1]
     except:
@@ -23,7 +23,18 @@ async def chatbot(bot, message):
         )
         return
     query = quote(query)
-    await bot.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
+    await c.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
     response = generate_response(query)
-    await bot.send_message(message.chat.id, response, reply_to_message_id=message.id)
-    await bot.send_chat_action(message.chat.id, enums.ChatAction.CANCEL)
+    await c.send_message(message.chat.id, response, reply_to_message_id=message.id)
+    await c.send_chat_action(message.chat.id, enums.ChatAction.CANCEL)
+
+
+@Client.on_message(filters.replied)
+async def gpt_reply(c, m):
+  if m.replied.user_id = 1863795995:
+    text = m.text
+    query = quote(text)
+    await c.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
+    response = generate_response(query)
+    await c.send_message(message.chat.id, response, reply_to_message_id=message.id)
+    await c.send_chat_action(message.chat.id, enums.ChatAction.CANCEL)
