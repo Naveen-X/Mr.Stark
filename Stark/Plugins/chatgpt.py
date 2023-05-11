@@ -25,7 +25,7 @@ async def chatgpt(c, m):
     query = quote(query)
     await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
     response = generate_response(query)
-    await c.send_messsge(m.chat.id, response, reply_to_message_id=m.id)
+    await c.send_message(m.chat.id, response, reply_to_message_id=m.id)
     await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
 
 
