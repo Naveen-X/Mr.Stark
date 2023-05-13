@@ -36,7 +36,7 @@ def sed_gen(sad_quotes):
 @Client.on_message(filters.command(["sed", "sad"]))
 @error_handler
 async def sed_qoute(c, m):
-	qt = sed_gen()
+	qt = sed_gen(sad_quotes)
 	if not m.reply_to_message:
 		await m.reply_text(qt)
 		return
