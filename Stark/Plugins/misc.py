@@ -16,6 +16,16 @@ sad_quotes = [
     "The longer and more carefully we look at a funny story, the sadder it becomes.",
     "You cannot protect yourself from sadness without protecting yourself from happiness.",
     "I am not happy without you in my life, and I will never be happy again.",
+      "Programming is like a puzzle. You try every possible combination until the code fits, but sometimes the pieces just won't come together.",
+    "The saddest part of programming is when you realize your code is not working and you don't know why.",
+    "The worst kind of bug is the one you can't reproduce.",
+    "Debugging is like being a detective in a crime movie where you are also the murderer.",
+    "The best code is the one never written, but the worst is the one written and never tested.",
+    "The code may be elegant, but if it doesn't work, it's just a pretty mess.",
+    "Programming is like walking a tightrope. One mistake and you're back to square one.",
+    "The code you write is only as good as the testing you put it through.",
+    "The hardest part of programming is not the coding, but the debugging.",
+    "Programming is like a never-ending game of whack-a-mole. You fix one bug and another one pops up.",
 ]
 #Call client to say cmd, otherwise it wont listen --Unknown
     #idk why i made this function instead of directly using random in message
