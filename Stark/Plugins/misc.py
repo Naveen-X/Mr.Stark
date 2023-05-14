@@ -49,13 +49,13 @@ async def sed_qoute(c, m):
 qt = DB.qt
 
 async def add_qt(chat_id):
-    stark = await qt.find_one({"chat_id": chat_id})
+    stark = qt.find_one({"chat_id": chat_id})
     if stark is None:
-        await qt.insert_one({"chat_id": chat_id})
+        qt.insert_one({"chat_id": chat_id})
 
 
 async def del_qt(chat_id):
-    await qt.delete_one({"chat_id": chat_id})
+    qt.delete_one({"chat_id": chat_id})
 
 @Client.on_message(filters.command(["add_qt"]))
 @error_handler
