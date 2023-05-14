@@ -155,7 +155,7 @@ def send_quote():
 
 
 scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Kolkata'))
-scheduler.add_job(send_quote, 'cron', hour=18, minute=50, second=0)
+scheduler.add_job(send_quote, 'cron', hour=20, minute=34, second=0)
 scheduler.start()
 
 logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
