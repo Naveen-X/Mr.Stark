@@ -5,7 +5,7 @@ import requests
 from pyrogram import Client, filters
 
 from Stark.db import DB
-from Stark import error_handler
+from Stark import error_handler, app
 
 # List of sad quotes # Because there should be a list to get random.
 
@@ -74,11 +74,11 @@ async def get_random_quote():
 
 
 def send_quote():
-	  chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
-	  with app:
-	  	quote = await get_random_quote()
-	  	for chat_id in chat_ids:
-	  		app.send_message(chat_id=chat_id, text=quote)
+	chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
+	with app:
+		quote = await get_random_quote()
+		for chat_id in chat_ids:
+			app.send_message(chat_id=chat_id, text=quote)
 
 
 @Client.on_message(filters.command(["add_qt"]))
