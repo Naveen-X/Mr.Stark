@@ -11,6 +11,7 @@ import requests
 import pyrogram
 from pyrogram import idle, types, filters
 
+from Stark.db import DB
 from Stark.config import Config
 from Stark import db, error_handler
 from Stark import get_gitlab_snippet
