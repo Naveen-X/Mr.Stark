@@ -2,10 +2,11 @@ import os
 import sys
 import pytz
 import string
-import random
+import random 
+import asyncio
 import inspect
 import logging
-import asyncio
+import requests 
 
 import pyrogram
 from pyrogram import idle, types, filters
@@ -142,8 +143,8 @@ async def get_random_quote():
     quote_text = data["content"]
     quote_author = data["author"]
     reply_text = f"__{quote_text}__\n\n- `{quote_author}`"
-    return reply_text
 
+    return reply_text
 def send_quote():
 	chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
 	with app:
