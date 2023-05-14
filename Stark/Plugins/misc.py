@@ -1,6 +1,7 @@
 import random
 from pyrogram import Client, filters
 
+from Stark.db import DB
 from Stark import error_handler
 
 # List of sad quotes # Because there should be a list to get random.
@@ -45,3 +46,14 @@ async def sed_qoute(c, m):
 		return
 
 #Code finished ntg to see now...
+qt = DB.qt
+
+async def add_qt(chat_id):
+    stark = await qt.find_one({"chat_id": chat_id})
+    if stark is None:
+        await qt.insert_one({"chat_id": chat_id})
+
+
+async def del_qt(chat_id):
+    await qt.delete_one({"chat_id": chat_id})
+
