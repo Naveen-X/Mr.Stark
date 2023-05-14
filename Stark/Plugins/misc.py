@@ -1,10 +1,9 @@
 import pytz
 import random
+import asyncio
 import requests 
 from pyrogram import Client, filters
-from apscheduler.schedulers.background import BackgroundScheduler
-import asyncio
-import requests
+
 from Stark.db import DB
 from Stark import error_handler
 
@@ -73,17 +72,13 @@ async def get_random_quote():
     reply_text = f"__{quote_text}__\n\n- `{quote_author}`"
     return reply_text
 
-chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
 
 def send_quote():
-    with Client:
-        quote = asyncio.run(get_random_quote())
+	  chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
+    with app:
+        quote = await get_random_quote()
         for chat_id in chat_ids:
-            Client.send_message(chat_id=chat_id, text=quote)
-
-scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Kolkata'))
-scheduler.add_job(send_quote, 'cron', hour=18, minute=37, second=0)
-scheduler.start()
+            app.send_message(chat_id=chat_id, text=quote)
 
 
 @Client.on_message(filters.command(["add_qt"]))
