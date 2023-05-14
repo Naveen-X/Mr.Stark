@@ -5,6 +5,7 @@ import string
 import random
 import inspect
 import logging
+import asyncio
 
 import pyrogram
 from pyrogram import idle, types, filters
@@ -12,11 +13,10 @@ from pyrogram import idle, types, filters
 from Stark.config import Config
 from Stark import db, error_handler
 from Stark import get_gitlab_snippet
-from Stark.Plugins.misc import send_quote
+from Stark.Plugins.misc import get_random_quote
 from apscheduler.schedulers.background import BackgroundScheduler
 
 # Import all the Python modules in the 'Stark/Plugins' directory
-
 banner = (
         "\033[96m"
         + r"""
@@ -133,6 +133,14 @@ async def _1check_for_it(client, message):
         await db.add(client, message)
     except Exception as e:
         logging.exception(e)
+
+def send_quote():
+	chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
+	with app:
+		quote = asyncio.run(get_random_quote())
+		for chat_id in chat_ids:
+			app.send_message(chat_id=chat_id, text=quote)
+
 
 scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Kolkata'))
 scheduler.add_job(send_quote, 'cron', hour=18, minute=50, second=0)
