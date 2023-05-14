@@ -81,7 +81,7 @@ def send_quote():
 
 scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Kolkata'))
 scheduler.add_job(send_quote, 'cron', hour=18, minute=26, second=0)
-
+scheduler.start()
 
 @Client.on_message(filters.command(["add_qt"]))
 @error_handler
