@@ -76,9 +76,9 @@ async def get_random_quote():
 def send_quote():
 	  chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
 	  with app:
-        quote = await get_random_quote()
-        for chat_id in chat_ids:
-            app.send_message(chat_id=chat_id, text=quote)
+	  	quote = await get_random_quote()
+	  	for chat_id in chat_ids:
+	  		app.send_message(chat_id=chat_id, text=quote)
 
 
 @Client.on_message(filters.command(["add_qt"]))
