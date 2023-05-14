@@ -71,7 +71,7 @@ async def get_random_quote():
 	reply_text = f"__{quote_text}__\n\n- `{quote_author}`"
 	return reply_text
 
-chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})
+chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
 
 def send_quote():
     with Client:
