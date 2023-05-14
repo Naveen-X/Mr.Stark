@@ -54,3 +54,4 @@ wheel
 youtube-search
 youtube-search-python
 pymongo[srv]
+pytz
