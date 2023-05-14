@@ -3,7 +3,8 @@ import random
 import requests 
 from pyrogram import Client, filters
 from apscheduler.schedulers.background import BackgroundScheduler
-
+import asyncio
+import requests
 from Stark.db import DB
 from Stark import error_handler
 
@@ -60,28 +61,30 @@ async def add_qt(chat_id):
 async def del_qt(chat_id):
     qt.delete_one({"chat_id": chat_id})
 
+
 async def get_random_quote():
-	QUOTES_API_ENDPOINT = "https://api.quotable.io/random"
-	response = requests.get(QUOTES_API_ENDPOINT)
-	if response.status_code != 200:
-		return f"Error fetching quote ({response.status_code})"
-	data = response.json()
-	quote_text = data["content"]
-	quote_author = data["author"]
-	reply_text = f"__{quote_text}__\n\n- `{quote_author}`"
-	return reply_text
+    QUOTES_API_ENDPOINT = "https://api.quotable.io/random"
+    response = requests.get(QUOTES_API_ENDPOINT)
+    if response.status_code != 200:
+        return f"Error fetching quote ({response.status_code})"
+    data = response.json()
+    quote_text = data["content"]
+    quote_author = data["author"]
+    reply_text = f"__{quote_text}__\n\n- `{quote_author}`"
+    return reply_text
 
 chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
 
 def send_quote():
     with Client:
-        quote = get_random_quote()
+        quote = asyncio.run(get_random_quote())
         for chat_id in chat_ids:
             Client.send_message(chat_id=chat_id, text=quote)
 
 scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Kolkata'))
-scheduler.add_job(send_quote, 'cron', hour=18, minute=32, second=0)
+scheduler.add_job(send_quote, 'cron', hour=18, minute=37, second=0)
 scheduler.start()
+
 
 @Client.on_message(filters.command(["add_qt"]))
 @error_handler
