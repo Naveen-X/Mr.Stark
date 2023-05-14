@@ -1,5 +1,7 @@
 import random
+import requests 
 from pyrogram import Client, filters
+from apscheduler.schedulers.background import BackgroundScheduler
 
 from Stark.db import DB
 from Stark import error_handler
@@ -71,3 +73,25 @@ async def qt_remove(c, m):
 	await del_qt(m.chat.id)
 	await x.edit("__Chat has been removed from DataBase\nFrom now you won't get daily quotes__")
 
+
+async def get_random_quote():
+	QUOTES_API_ENDPOINT = "https://api.quotable.io/random"
+	response = requests.get(QUOTES_API_ENDPOINT)
+	if response.status_code != 200:
+		return f"Error fetching quote ({response.status_code})"
+	data = response.json()
+	quote_text = data["content"]
+	quote_author = data["author"]
+	reply_text = f"__{quote_text}__\n\n- `{quote_author}`"
+	return reply_text
+
+chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})
+
+def send_quote():
+    with Client:
+        quote = get_random_quote()
+        for chat_id in chat_ids:
+            Client.send_message(chat_id=chat_id, text=quote)
+
+scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Kolkata'))
+scheduler.add_job(send_quote, 'cron', hour=17, minute=0, second=0)
