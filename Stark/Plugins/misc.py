@@ -66,7 +66,8 @@ async def qt_add(c, m):
 
 @Client.on_message(filters.command(["del_qt"]))
 @error_handler
-async def qt_add(c, m):
+async def qt_remove(c, m):
 	x = await m.reply_text("__Removing Chat from DataBase__")
 	await del_qt(m.chat.id)
 	await x.edit("__Chat has been removed from DataBase\nFrom now you won't get daily quotes__")
+
