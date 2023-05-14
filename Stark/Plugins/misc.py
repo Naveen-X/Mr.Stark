@@ -5,7 +5,6 @@ import requests
 from pyrogram import Client, filters
 
 from Stark.db import DB
-from Stark.__main__ import app
 from Stark import error_handler
 
 # List of sad quotes # Because there should be a list to get random.
