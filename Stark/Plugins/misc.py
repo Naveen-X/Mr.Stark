@@ -59,21 +59,6 @@ async def add_qt(chat_id):
 async def del_qt(chat_id):
     qt.delete_one({"chat_id": chat_id})
 
-@Client.on_message(filters.command(["add_qt"]))
-@error_handler
-async def qt_add(c, m):
-	x = await m.reply_text("__Adding Chat to DataBase__")
-	await add_qt(m.chat.id)
-	await x.edit("__Chat has been added to DataBase\nFrom now you will get daily quotes__")
-
-@Client.on_message(filters.command(["del_qt"]))
-@error_handler
-async def qt_remove(c, m):
-	x = await m.reply_text("__Removing Chat from DataBase__")
-	await del_qt(m.chat.id)
-	await x.edit("__Chat has been removed from DataBase\nFrom now you won't get daily quotes__")
-
-
 async def get_random_quote():
 	QUOTES_API_ENDPOINT = "https://api.quotable.io/random"
 	response = requests.get(QUOTES_API_ENDPOINT)
@@ -94,4 +79,19 @@ def send_quote():
             Client.send_message(chat_id=chat_id, text=quote)
 
 scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Kolkata'))
-scheduler.add_job(send_quote, 'cron', hour=17, minute=0, second=0)
+scheduler.add_job(send_quote, 'cron', hour=17, minute=15, second=0)
+
+
+@Client.on_message(filters.command(["add_qt"]))
+@error_handler
+async def qt_add(c, m):
+	x = await m.reply_text("__Adding Chat to DataBase__")
+	await add_qt(m.chat.id)
+	await x.edit("__Chat has been added to DataBase\nFrom now you will get daily quotes__")
+
+@Client.on_message(filters.command(["del_qt"]))
+@error_handler
+async def qt_remove(c, m):
+	x = await m.reply_text("__Removing Chat from DataBase__")
+	await del_qt(m.chat.id)
+	await x.edit("__Chat has been removed from DataBase\nFrom now you won't get daily quotes__")
