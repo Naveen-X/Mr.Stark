@@ -135,18 +135,16 @@ async def cb_handler(client, query):
 
             msg = msg + """
 
-𝗜𝗻𝗳𝗼: `{}`
-𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀: `{}`
-𝗨𝘀𝗮𝗴𝗲: `{}`
+𝗜𝗻𝗳𝗼: {}
+𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀: {}
+𝗨𝘀𝗮𝗴𝗲: {}
 
             """.format(desc, cmds, usage)
 
         await query.edit_message_text(text=msg, reply_markup=
 
         ikb([
-            [('Back', f'{sent_by}.hlp'), ('Home', f'{sent_by}.back')],
-            [('System Stats', f'{sent_by}.sys_info'), ('About me', f'{sent_by}.about')],
-            [('Close', f'{sent_by}.close')]
+            [('Back', f'{sent_by}.hlp'), ('Close', f'{sent_by}.close')]
         ]))
     # check if query.data is single digit integer
     elif 'page_' in query.data:
