@@ -60,7 +60,7 @@ class Script(object):
             "usage": "/gs <text to search>"
         },
     ]
-    INSTA_DL = [
+    INSTADL = [
         {
             "desc": "Download post/reel from instagram",
             "cmds": ["insta", "instadl", "insdl", "instadownload"],
@@ -77,6 +77,23 @@ class Script(object):
             "desc": "Makes a logo for you, try it out",
             "cmds": ["slogo"],
             "usage": "/slogo <text for logo>"
+        }
+    ]
+    MISC = [
+        {
+   "desc": "Add chat to quote db",
+   "cmds": ["ad_qt"],
+   "usage": "/add_qt"
+        },
+        {
+   "desc": "remove chat from quote db",
+   "cmds": ["del_qt"],
+   "usage": "/del_qt"
+        },
+        {
+   "desc": "sends quote daily at 8:00 am and 6:00 pm",
+   "cmds": ["no cmd"],
+   "usage": "works automatically"
         }
     ]
     PORT = [
@@ -152,7 +169,7 @@ class Script(object):
             "cmds": ["d"],
         }
     ]
-    URL_UPLOADER = [
+    URLUPLOADER = [
         {
             "desc": "download's file from given link",
             "cmds": ["urlupload"],
