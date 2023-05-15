@@ -154,10 +154,13 @@ def send_quote():
 			app.send_message(chat_id=chat_id, text=quote)
 
 
-scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Kolkata'))
-scheduler.add_job(send_quote, 'cron', hour=20, minute=34, second=0)
-scheduler.start()
+def sheduler():
+	scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Kolkata'))
+	scheduler.add_job(send_quote, 'cron', hour=16, minute=03, second=0)
+	scheduler.start()
 
+if __name__ == '__main__':
+	sheduler()
 logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
 idle()
 mgs.delete()
