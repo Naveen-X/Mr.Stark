@@ -1,5 +1,3 @@
-import time
-
 from pyrogram import Client, filters
 
 from Stark import error_handler
@@ -9,7 +7,6 @@ from main.helper_func.basic_helpers import progress
 @Client.on_message(filters.command(["download"]))
 @error_handler
 async def download(bot, message):
-    s_time = time.time()
     dl = await message.reply_text("Downloading to Server..")
     if not message.reply_to_message:
         await dl.edit("`Reply to a message to download!")
@@ -18,13 +15,11 @@ async def download(bot, message):
         await dl.edit("`Reply to a message to download!`")
         return
     Escobar = await message.reply_to_message.download(
-        progress=progress, progress_args=("`Downloading This File!`", dl, s_time)
+        progress=progress, progress_args=("`Downloading This File!`", dl)
     )
-    e_time = time.time()
-    dl_time = round(e_time - s_time)
-    file_txt = "__Downloaded This File To__ `{}` __in__ `{}`."
+    file_txt = "__Downloaded This File To__ `{}`."
 
-    await dl.edit(file_txt.format(Escobar, dl_time))
+    await dl.edit(file_txt.format(Escobar))
 
 @Client.on_message(filters.command(["upload"]))
 @error_handler
