@@ -6,7 +6,7 @@ from Stark import error_handler
 from main.helper_func.basic_helpers import progress
 
 
-@Client.on_message(filters.command(["download"]) & filters.user([1246467977, 1089528685]))
+@Client.on_message(filters.command(["download"]))
 @error_handler
 async def download(bot, message):
     s_time = time.time()
@@ -19,7 +19,7 @@ async def download(bot, message):
         return
     c_time = time.time()
     Escobar = await message.reply_to_message.download(
-        progress=progress, progress_args=(c_time, f"`Downloading This File!`")
+        progress=progress, progress_args=("`Downloading This File!`", dl, s_time)
     )
     e_time = time.time()
     dl_time = round(e_time - s_time)
