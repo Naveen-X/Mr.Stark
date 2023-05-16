@@ -1,8 +1,9 @@
 from pyrogram import Client, filters
 
 from Stark import error_handler
-from main.helper_func.basic_helpers import progress
 
+def progress(current, total):
+    print(f"Downloaded {current} out of {total}")
 
 @Client.on_message(filters.command(["download"]))
 @error_handler
@@ -14,12 +15,11 @@ async def download(bot, message):
     if not message.reply_to_message.media:
         await dl.edit("`Reply to a message to download!`")
         return
-    Escobar = await message.reply_to_message.download(
-        progress=progress, progress_args=("`Downloading This File!`", dl)
-    )
+    if message.reply_to_message.media or message.reply_to_message.document or message.reply_to_message.photo:
+        file = await message.reply_to_message.download(progress=progress)
     file_txt = "__Downloaded This File To__ `{}`."
 
-    await dl.edit(file_txt.format(Escobar))
+    await dl.edit(file_txt.format(file))
 
 @Client.on_message(filters.command(["upload"]))
 @error_handler
@@ -31,6 +31,8 @@ async def upload_file(c, m):
     if m.from_user.id not in [1246467977, 1089528685]:
         if not file.startswith('downloads/'):
             await m.reply_text("You are unauthorized..")
+        if not file.startswith('/app/Mr.Stark/downloads/'):
+            await m.reply_text("`You are unauthorized`")
         else:
             msg = await m.reply_text("Uploading file please wait...")
             await m.reply_document(file)
