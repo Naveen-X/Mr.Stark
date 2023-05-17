@@ -34,9 +34,9 @@ async def paste(bot, message):
     try:
       text = message.text.split(None, 1)[1]
     except IndexError:
-    	await pablo.edit("Reply to a File / message / give me text as input to Paste...`")
+      await pablo.edit("Reply to a File / message / give me text as input to Paste...`")
     message_s = text
-    if not text:
+    if not message_s:
         if not message.reply_to_message:
             return await pablo.edit("`Reply To File / Give Me Text To Paste!`")
             return
