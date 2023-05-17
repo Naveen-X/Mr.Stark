@@ -154,4 +154,4 @@ async def instadl(c, m):
           await c.send_video(
             m.chat.id, f, caption=caption, reply_to_message_id=m.id, reply_markup=keyboard
          )
-    await msg.delete()
+          await msg.edit(f)
