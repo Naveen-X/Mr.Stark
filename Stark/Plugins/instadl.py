@@ -5,7 +5,7 @@ from requests import JSONDecodeError, get
 
 from Stark import error_handler
 from Stark.config import Config
-from pyrogram.types import InputMediaDocument, InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import InputMedia, InputMediaDocument, InlineKeyboardButton, InlineKeyboardMarkup
 
 IG_SESSION = Config.IG_SESSION
 
