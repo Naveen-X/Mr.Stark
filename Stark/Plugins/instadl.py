@@ -128,17 +128,17 @@ async def instadl(c, m):
         username.upper(), caption, likes, comments
     )
     keyboard = InlineKeyboardMarkup(
+    [
         [
-            [
-                InlineKeyboardButton(
-                    text=f"♥ {likes}"
-                ),
-                InlineKeyboardButton(
-                    text=f"💬 {comments}"
-                ),
-            ],
-        ]
-    )
+            InlineKeyboardButton(
+                text=f"♥ {likes}"
+            ),
+            InlineKeyboardButton(
+                text=f"💬 {comments}"
+            ),
+        ],
+    ]
+)
     if carousel:
         dl_bytes = [(InputMediaDocument(i, caption=caption_2) if i == dl_url[-1] else InputMediaDocument(i)) for i in dl_url]
         await c.send_media_group(
