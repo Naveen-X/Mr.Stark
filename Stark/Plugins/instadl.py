@@ -117,7 +117,7 @@ async def instadl(c, m):
     ) = get_ig_download_url(url)
     caption = caption[:700] if len(caption) > 700 else caption
     if not dl_url:
-        await ok.edit("`Failed to get the download url.`")
+        await ok.edit(f"`Failed to get the download url.`\n{dl_url}")
         return
     await ok.delete()
     msg = await m.reply_text("`Downloading...`")
