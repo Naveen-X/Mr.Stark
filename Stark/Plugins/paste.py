@@ -47,8 +47,8 @@ async def paste(bot, message):
           text = message.text.split(None, 1)[1]
       if not text:
             return await pablo.edit("`Reply To File / Give Me Text To Paste!`")
-
-
+    except Exception as e:
+      await pablo.edit(f"Error occured:- `{e}`")
     ext = "py"
     x = await s_paste(text, ext)
     link = x["url"]
