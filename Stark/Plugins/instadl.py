@@ -131,10 +131,12 @@ async def instadl(c, m):
     [
         [
             InlineKeyboardButton(
-                text=f"♥ {likes}"
+                text=f"♥ {likes}",
+                callback_data="likes",
             ),
             InlineKeyboardButton(
-                text=f"💬 {comments}"
+                text=f"💬 {comments}",
+                callback_data="comments",
             ),
         ],
     ]
