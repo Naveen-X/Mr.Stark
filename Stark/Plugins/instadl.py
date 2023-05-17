@@ -157,7 +157,7 @@ async def instadl(c, m):
         if f.name == 'instagram.jpg':
            await c.send_photo(
             m.chat.id, f, caption=caption, reply_to_message_id=m.id, reply_markup=keyboard
-        		)
+           )
         else:
           await c.send_document(
             m.chat.id, f, caption=caption, force_document=False, reply_to_message_id=m.id, reply_markup=keyboard
