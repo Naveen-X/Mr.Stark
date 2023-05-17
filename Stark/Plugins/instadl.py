@@ -150,8 +150,11 @@ async def instadl(c, m):
         return await msg.delete()
     with io.BytesIO(get(dl_url, cookies=cookies).content) as f:
         f.name = "instagram.jpg" if media_type == 1 else "instagram.mp4"
-        await msg.edit(f)
-        if f == 'instagram.mp4':
+        if f.name == 'instagram.mp4':
           await c.send_video(
             m.chat.id, f, caption=caption, reply_to_message_id=m.id, reply_markup=keyboard
+         )
+        else:
+          await c.send_document(
+            m.chat.id, f, caption=caption, force_document=False, reply_to_message_id=m.id, reply_markup=keyboard
          )
