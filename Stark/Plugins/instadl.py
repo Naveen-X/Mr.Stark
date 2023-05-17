@@ -5,7 +5,7 @@ from requests import JSONDecodeError, get
 
 from Stark import error_handler
 from Stark.config import Config
-from pyrogram.types import InputMediaDocument
+from pyrogram.types import InputMediaDocument, InlineKeyboardButton, InlineKeyboardMarkup
 
 IG_SESSION = Config.IG_SESSION
 
@@ -121,11 +121,26 @@ async def instadl(c, m):
         return
     await ok.delete()
     msg = await m.reply_text("`Downloading...`")
-    caption = "<b>📷 {}</b>\n<i>{}</i>\n<b>Likes:</b> {}\n<b>Comments:</b> {}".format(
+    caption = "<b>📷 {}</b>\n<i>{}</i>\n".format(
+        username.upper(), caption
+    )
+    caption_2 = "<b>📷 {}</b>\n<i>{}</i>\n<b>♥ Likes:</b> {}\n<b>💬 Comments:</b> {}".format(
         username.upper(), caption, likes, comments
     )
+    keyboard = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text=f"♥ {likes}"
+                ),
+                InlineKeyboardButton(
+                    text=f"💬 {comments}"
+                ),
+            ],
+        ]
+    )
     if carousel:
-        dl_bytes = [(InputMediaDocument(i, caption=caption) if i == dl_url[-1] else InputMediaDocument(i)) for i in dl_url]
+        dl_bytes = [(InputMediaDocument(i, caption=caption_2) if i == dl_url[-1] else InputMediaDocument(i)) for i in dl_url]
         await c.send_media_group(
             chat_id=m.chat.id,
             media=dl_bytes,
@@ -134,6 +149,6 @@ async def instadl(c, m):
     with io.BytesIO(get(dl_url, cookies=cookies).content) as f:
         f.name = "instagram.jpg" if media_type == 1 else "instagram.mp4"
         await c.send_document(
-            m.chat.id, f, caption=caption, force_document=False, reply_to_message_id=m.id
+            m.chat.id, f, caption=caption, force_document=False, reply_to_message_id=m.id, reply_markup=keyboard,
         )
     await msg.delete()
