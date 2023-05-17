@@ -32,23 +32,22 @@ async def s_paste(message, extension="py"):
 async def paste(bot, message):
     pablo = await message.reply_text("**《 ᴘᴀsᴛɪɴɢ ᴛᴏ sᴘᴀᴄᴇʙɪɴ... 》`")
     try:
-      text = message.text.split(None, 1)[1]
-    except IndexError:
-      await pablo.edit("Reply to a File / message / give me text as input to Paste...`")
-    message_s = text
-    if not message_s:
-        if not message.reply_to_message:
-            return await pablo.edit("`Reply To File / Give Me Text To Paste!`")
-            return
-        if not message.reply_to_message.text:
-            file = await message.reply_to_message.download()
-            m_list = open(file, "r").read()
-            message_s = m_list
-            os.remove(file)
+      text = None
+      if message.reply_to_message:
+        if message.reply_to_message.caption:
+          text = message.reply_to_message.caption
         elif message.reply_to_message.text:
-            message_s = message.reply_to_message.text
-        elif message.text.split(None, 1)[1]:
-            message_s = message.text.split(None, 1)[1]
+          text = message.reply_to_message.text
+        elif message.reply_to_message.document:
+          file = await message.reply_to_message.download()
+          m_list = open(file, "r").read()
+          text = m_list
+          os.remove(file)
+      elif len(message.command) > 1:
+          text = message.text.split(None, 1)[1]
+      if not text:
+            return await pablo.edit("`Reply To File / Give Me Text To Paste!`")
+
 
     ext = "py"
     x = await s_paste(message_s, ext)
