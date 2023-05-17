@@ -97,7 +97,7 @@ for key in sys.modules.keys():
                     try:
                         for h in member[1].handlers:
                             app.add_handler(*h)
-                        mgt += f"{key} Loaded Successfully\n"
+                        mgt += f"[ Loaded Successfully ] - `{key}`\n"
                         loaded += 1
                     except Exception as e:
                         failed += 1
