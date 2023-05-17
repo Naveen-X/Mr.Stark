@@ -150,10 +150,10 @@ async def instadl(c, m):
         f.name = "instagram.jpg" if media_type == 1 else "instagram.mp4"
         if f == 'instagram.mp4':
           await c.send_video(
-            m.chat.id, f, caption=caption, reply_to_message_id=m.id, reply_markup=keyboard,
+            m.chat.id, f, caption=caption, reply_to_message_id=m.id, reply_markup=keyboard
          )
         else:
           await c.send_document(
-            m.chat.id, f, caption=caption, force_document=False, reply_to_message_id=m.id, reply_markup=keyboard,
+            m.chat.id, f, caption=caption, force_document=False, reply_to_message_id=m.id, reply_markup=keyboard
          )
     await msg.delete()
