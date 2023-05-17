@@ -31,7 +31,10 @@ async def s_paste(message, extension="py"):
 @error_handler
 async def paste(bot, message):
     pablo = await message.reply_text("**《 ᴘᴀsᴛɪɴɢ ᴛᴏ sᴘᴀᴄᴇʙɪɴ... 》`")
-    text = message.reply_to_message.text
+    try:
+      text = message.text.split(None, 1)[1]
+    except IndexError:
+    	await pablo.edit("Reply to a File / message / give me text as input to Paste...`")
     message_s = text
     if not text:
         if not message.reply_to_message:
