@@ -30,8 +30,8 @@ async def s_paste(message, extension="py"):
 @Client.on_message(filters.command(["paste"]))
 @error_handler
 async def paste(bot, message):
-    pablo = await message.reply_text("**《 ᴘᴀsᴛɪɴɢ ᴛᴏsᴘᴀᴄᴇʙɪɴ... 》`")
-    text = message.reply_to_message.text or message.text.split(None, 1)[1]
+    pablo = await message.reply_text("**《 ᴘᴀsᴛɪɴɢ ᴛᴏ sᴘᴀᴄᴇʙɪɴ... 》`")
+    text = message.reply_to_message.text
     message_s = text
     if not text:
         if not message.reply_to_message:
