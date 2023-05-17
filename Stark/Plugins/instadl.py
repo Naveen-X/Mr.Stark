@@ -4,7 +4,8 @@ from pyrogram import Client, filters
 from requests import JSONDecodeError, get
 
 from Stark import error_handler
-from Stark.config import Config
+from Stark.config import config
+from pyrogram.types import InputMediaDocument
 
 IG_SESSION = Config.IG_SESSION
 
@@ -124,10 +125,10 @@ async def instadl(c, m):
         username.upper(), caption, likes, comments
     )
     if carousel:
-        dl_bytes = [get(i, cookies=cookies).content for i in dl_url]
-        await m.reply_document(
-            caption,
-            document=dl_bytes,
+        dl_bytes = [(InputMediaDocument(i, caption=caption) if i == dl_url[-1] else InputMediaDocument(i)) for i in dl_url]
+        await c.send_media_group(
+            chat_id=m.chat.id,
+            media=dl_bytes,
         )
         return await msg.delete()
     with io.BytesIO(get(dl_url, cookies=cookies).content) as f:
