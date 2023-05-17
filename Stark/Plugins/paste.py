@@ -31,7 +31,7 @@ async def s_paste(message, extension="py"):
 @error_handler
 async def paste(bot, message):
     pablo = await message.reply_text("**《 ᴘᴀsᴛɪɴɢ ᴛᴏsᴘᴀᴄᴇʙɪɴ... 》`")
-    text = message.reply_to_message.text
+    text = message.reply_to_message.text or message.text.split(None, 1)[1]
     message_s = text
     if not text:
         if not message.reply_to_message:
@@ -44,6 +44,7 @@ async def paste(bot, message):
             os.remove(file)
         elif message.reply_to_message.text:
             message_s = message.reply_to_message.text
+        elif message.text.split(None, 1)[1]
 
     ext = "py"
     x = await s_paste(message_s, ext)
