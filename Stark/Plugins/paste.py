@@ -44,7 +44,8 @@ async def paste(bot, message):
             os.remove(file)
         elif message.reply_to_message.text:
             message_s = message.reply_to_message.text
-        elif message.text.split(None, 1)[1]
+        elif message.text.split(None, 1)[1]:
+            message_s = message.text.split(None, 1)[1]
 
     ext = "py"
     x = await s_paste(message_s, ext)
