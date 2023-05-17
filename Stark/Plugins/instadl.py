@@ -5,7 +5,7 @@ from requests import JSONDecodeError, get
 
 from Stark import error_handler
 from Stark.config import Config
-from pyrogram.types import InputMedia, InputMediaDocument, InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import InputMedia, InputMediaPhoto, InputMediaVideo, InputMediaDocument, InlineKeyboardButton, InlineKeyboardMarkup
 
 IG_SESSION = Config.IG_SESSION
 
@@ -142,7 +142,7 @@ async def instadl(c, m):
     ]
 )
     if carousel:
-        dl_bytes = [(InputMedia(i, caption=caption_2) if i == dl_url[-1] else InputMedia(i)) for i in dl_url]
+        dl_bytes = [(InputMediaVideo(i, caption=caption_2) if i == dl_url[-1] else InputMediaVideo(i)) for i in dl_url]
         await c.send_media_group(
             chat_id=m.chat.id,
             media=dl_bytes,
