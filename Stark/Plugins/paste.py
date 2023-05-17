@@ -50,7 +50,7 @@ async def paste(bot, message):
 
 
     ext = "py"
-    x = await s_paste(message_s, ext)
+    x = await s_paste(text, ext)
     link = x["url"]
     raw = x["raw"]
 
