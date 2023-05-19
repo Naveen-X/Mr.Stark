@@ -12,9 +12,10 @@ from pyrogram.types import (
 )
 from youtubesearchpython import SearchVideos
 from main.helper_func.inline_funcs import *
+from Stark.config impory Config 
 
 ARQ_URI = "https://arq.hamker.in"
-API_KEY = "IDIHNB-KATKEW-BGPKTB-ZTUHBX-ARQ"
+API_KEY = Config.ARQ_API
 aiohttpsession = aiohttp.ClientSession()
 arq = ARQ(ARQ_URI, API_KEY, aiohttpsession)
 
