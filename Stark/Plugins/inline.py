@@ -12,7 +12,7 @@ from pyrogram.types import (
 )
 from youtubesearchpython import SearchVideos
 from main.helper_func.inline_funcs import *
-from Stark.config impory Config 
+from Stark.config import Config 
 
 ARQ_URI = "https://arq.hamker.in"
 API_KEY = Config.ARQ_API
