@@ -15,7 +15,7 @@ def keyboard(id):
 @error_handler
 async def start(bot, message):
     firstname = message.from_user.first_name
-    text = f"<i>Hello, {firstname} !\nNice To Meet You\nI Am An Assistant bot For My Master!`\nMade by </i> <a href='https://telegram.dog/Naveen_xD'>Naveen_xD</a>"
+    text = f"<i>Hello, {firstname} !\nNice To Meet You\nI Am Mr.Stark\nMade by </i> <a href='https://telegram.dog/Naveen_xD'>Naveen_xD</a>"
     stark = "resources/images/start_img.jpg"
     parse_mode = "html"
     await bot.send_photo(
