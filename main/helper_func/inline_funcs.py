@@ -19,9 +19,10 @@ from pyrogram.types import (
     InputTextMessageContent,
     InlineQueryResultCachedDocument,
 )
+from Stark.config import Config 
 
 ARQ_URI = "https://arq.hamker.in"
-API_KEY = "IDIHNB-KATKEW-BGPKTB-ZTUHBX-ARQ"
+API_KEY = Config.ARQ_API
 aiohttpsession = aiohttp.ClientSession()
 arq = ARQ(ARQ_URI, API_KEY, aiohttpsession)
 
