@@ -2,8 +2,9 @@ import openai
 from pyrogram import Client, filters
 
 from Stark import error_handler
+from Stark.config import Config 
 
-openai.api_key = "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"
+openai.api_key = Config.OPEN_AI_KEY
 
 
 @Client.on_message(filters.command(["generate", "genimage"]))
