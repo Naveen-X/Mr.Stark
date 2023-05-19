@@ -16,4 +16,4 @@ class Config(object):
     MONGO_DB = os.environ.get("MONGO_DB", None)
     GITLAB_TOKEN = os.environ.get("GITLAB_TOKEN", None)
     WSA = os.environ.get("WSA", None)
-    
+    ARQ_API = os.environ.get("ARQ_API", None)
