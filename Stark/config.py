@@ -15,3 +15,5 @@ class Config(object):
     SPT_SECRET = os.environ.get("SPT_SECRET", None)
     MONGO_DB = os.environ.get("MONGO_DB", None)
     GITLAB_TOKEN = os.environ.get("GITLAB_TOKEN", None)
+    WSA = os.environ.get("WSA", None)
+    
