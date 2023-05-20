@@ -135,9 +135,9 @@ async def cb_handler(client, query):
 
             msg = msg + """
 
-𝗜𝗻𝗳𝗼: `{}.`
-𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀: `{}.`
-𝗨𝘀𝗮𝗴𝗲: `{}.`
+𝗜𝗻𝗳𝗼: `{}­`
+𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀: `{}­`
+𝗨𝘀𝗮𝗴𝗲: `{}­`
             """.format(desc, cmds, usage)
 
         await query.edit_message_text(text=msg, reply_markup=
