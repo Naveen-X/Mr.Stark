@@ -36,14 +36,14 @@ async def paste(bot, message):
       if message.reply_to_message:
         if message.reply_to_message.caption:
           text = message.reply_to_message.caption
-        elif message.reply_to_message.text:
+        if message.reply_to_message.text:
           text = message.reply_to_message.text
-        elif message.reply_to_message.document:
+        if message.reply_to_message.document:
           file = await message.reply_to_message.download()
           m_list = open(file, "r").read()
           text = m_list
           os.remove(file)
-      elif len(message.command) > 1:
+      if len(message.command) > 1:
           text = message.text.split(None, 1)[1]
       if not text:
             return await pablo.edit("`Reply To File / Give Me Text To Paste!`")
