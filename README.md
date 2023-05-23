@@ -57,4 +57,4 @@ Here are some of the available commands and their descriptions:
 ## Additional Information
 - [Visit our website](https://mr-stark.devh.in) to learn more about Mr. Stark and explore its features.
 - For any inquiries or support, feel free to contact our team at [support@devh.in](mailto:support@devh.in). You can also contact **[Satya](https://t.me/s4tyendra)** __or__ **[Naveen](https://t.me/naveen_xd)**
-- Join our Telegram channel [@DevhBotUpdates](https://t.me/DevhUpdates) to stay updated with the latest news and feature announcements.
+- Join our Telegram channel [@DevhUpdates](https://t.me/DevhUpdates) to stay updated with the latest news and feature announcements.
