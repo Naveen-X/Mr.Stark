@@ -30,7 +30,7 @@ async def s_paste(message, extension="py"):
 @Client.on_message(filters.command(["paste"]))
 @error_handler
 async def paste(bot, message):
-    pablo = await message.reply_text("**《 ᴘᴀsᴛɪɴɢ ᴛᴏ sᴘᴀᴄᴇʙɪɴ... 》`")
+    pablo = await message.reply_text("`𝙿𝚊𝚜𝚝𝚒𝚗𝚐...`")
     try:
       text = None
       if message.reply_to_message:
@@ -58,14 +58,16 @@ async def paste(bot, message):
                 InlineKeyboardButton(
                     text="Paste",
                     url=f"{link}",
-                ),
+                )
+            ],
+            [
                 InlineKeyboardButton(
                     text="Raw",
                     url=f"{raw}",
-                ),
+                )
             ],
         ]
     )
-    await pablo.edit("Pasted Your Text Successfully to Spacebin",
+    await pablo.edit("__Pasted__",
                      reply_markup=keyboard,
                      disable_web_page_preview=True)
