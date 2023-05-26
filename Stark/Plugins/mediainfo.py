@@ -5,6 +5,7 @@ from typing import Tuple
 from telegraph import Telegraph 
 
 from Stark import error_handler
+from pyrogram.types import Message
 from pyrogram import Client, filters
 from main.helper_func.basic_helpers import runcmd
 
@@ -57,7 +58,7 @@ async def media_info(_, message: Message):
         ws = media_info.replace("\n", "")
         response = telegraph.create_page(title_of_page, html_content=ws)
         km = response["path"]
-        await mi.edit(f"This MediaInfo can be found here")
+        await mi.edit(f"This MediaInfo can be found [Here](https://telegra.ph/{km})")
         if os.path.exists(file_path):
             os.remove(file_path)
     else:
