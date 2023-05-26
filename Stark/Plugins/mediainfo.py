@@ -40,3 +40,26 @@ async def media_info(c, m):
     else:
         await mi.edit("`Reply to a video`")
         return
+
+@Client.on_message(filters.command(['tinfo']))
+@error_handler
+async def media_info(_, message: Message):
+    mi = await message.reply_text("Processing...")
+    if message.reply_to_message and message.reply_to_message.video:
+        await mi.edit("Downloading media to get info. Please wait...")
+        file_path = await message.reply_to_message.download()
+        out, err, ret, pid = runcmd(f"mediainfo '{file_path}'")
+        if not out:
+            await mi.edit("Unable to determine file info.")
+            return
+        media_info = f"{out}"
+        title_of_page = "Media Info 🎬"
+        ws = media_info.replace("\n", "")
+        response = telegraph.create_page(title_of_page, html_content=ws)
+        km = response["path"]
+        await mi.edit(f"This MediaInfo can be found here")
+        if os.path.exists(file_path):
+            os.remove(file_path)
+    else:
+        await mi.edit("Reply to a video.")
+        return
