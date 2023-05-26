@@ -96,6 +96,13 @@ class Script(object):
    "usage": "works automatically"
         }
     ]
+    MEDIAINFO = [
+        {
+            "desc": "Gets MediaInfo of Replied Video",
+            "cmds": ["mediainfo", "mediadata"],
+            "usage": "/mediainfo <Reply to a video>"
+        }
+    ]
     PORT = [
         {
             "desc": "Scans open ports of an ip address",
