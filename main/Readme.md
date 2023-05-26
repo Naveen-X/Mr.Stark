@@ -2,3 +2,4 @@
 ```
 Some functions or helpers used while making plugins
 ```
+#
