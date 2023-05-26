@@ -1,7 +1,4 @@
 import os
-import asyncio
-import shlex
-from typing import Tuple
 from telegraph import Telegraph 
 
 from Stark import error_handler
@@ -49,7 +46,7 @@ async def media_info(_, message: Message):
     if message.reply_to_message and message.reply_to_message.video:
         await mi.edit("Downloading media to get info. Please wait...")
         file_path = await message.reply_to_message.download()
-        out, err, ret, pid = runcmd(f"mediainfo '{file_path}'")
+        out, err, ret, pid = await runcmd(f"mediainfo '{file_path}'")
         if not out:
             await mi.edit("Unable to determine file info.")
             return
