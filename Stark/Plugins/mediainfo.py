@@ -52,7 +52,7 @@ async def media_info(_, message: Message):
             return
         media_info = f"{out}"
         title_of_page = "Media Info 🎬"
-        ws = media_info.replace("\n", "")
+        ws = media_info.replace("\n", "<br>")
         response = telegraph.create_page(title_of_page, html_content=ws)
         km = response["path"]
         await mi.edit(f"This MediaInfo can be found [Here](https://telegra.ph/{km})")
