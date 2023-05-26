@@ -17,7 +17,7 @@ async def media_info(c, m):
     mi = await m.reply_text("`Processing..`")
     if m.reply_to_message:
       if m.reply_to_message.video:
-        await mi.info("`Downloading media to get info\n Pls wi8..`")
+        await mi.edit("`Downloading media to get info\n Pls wi8..`")
         file_path = await m.reply_to_message.download()
         out, err, ret, pid = await runcmd(f"mediainfo '{file_path}'")
         if not out:
