@@ -14,7 +14,6 @@ glitch_this
 gTTS
 hachoir
 html5lib
-imdb
 img2pdf
 langdetect
 lottie
