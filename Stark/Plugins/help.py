@@ -79,7 +79,7 @@ async def start(client, message):
     def item_title(item, page):
         return f'{item}'
 
-    await message.reply_text('Help Menu of Stark!', reply_markup=ikb(get_help_menu(1)))
+    await message.reply_photo("resources/images/start_img.jpg", caption='Help Menu of Stark!', reply_markup=ikb(get_help_menu(1)))
 
 
 @Client.on_callback_query()
