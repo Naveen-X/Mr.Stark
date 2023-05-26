@@ -28,6 +28,7 @@ async def upload_file(c, m):
         file = m.text.split(None, 1)[1]
     except IndexError:
         await m.reply_text("What should I upload??")
+        return
     if m.from_user.id not in [1246467977, 1089528685]:
         if not file.startswith('downloads/'):
             await m.reply_text("You are unauthorized..")
