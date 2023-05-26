@@ -30,13 +30,13 @@ async def ping(_, message):
 @Client.on_message(filters.command(["alive"]))
 @error_handler
 async def alive(_, message):
-    await message.reply_text(f"**ᴀssɪsᴛᴀɴᴛ ɪs ᴀʟɪᴠᴇ 🔥**")
+    await message.reply_text(f"**Bᴏᴛ ɪs ᴀʟɪᴠᴇ 🔥**")
 
 
 @Client.on_message(filters.command(["restart"]) & filters.user([1246467977, 1089528685]))
 @error_handler
 async def restart(_, message):
-    await message.reply_text(f"`🔁ᴀssɪsᴛᴀɴᴛ ɪs ʀᴇsᴛᴀʀᴛɪɴɢ!🔁`")
+    await message.reply_text("`𝙱𝚘𝚝 𝚒𝚜 𝚁𝚎𝚜𝚝𝚊𝚛𝚝𝚒𝚗𝚐...!`")
     args = [sys.executable, "-m", "Stark"]
     execle(sys.executable, *args, environ)
     exit()
