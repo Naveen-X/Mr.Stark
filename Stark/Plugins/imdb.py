@@ -77,7 +77,7 @@ async def callback_handler(client, callback_query):
             message_text = "No streaming sites available for this movie."
         
         await callback_query.answer()
-        await callback_query.message.edit_text(
+        await callback_query.message.reply_text(
             text=message_text,
             parse_mode="html"
         )
