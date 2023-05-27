@@ -11,13 +11,11 @@ from Stark import error_handler
 
 ia = IMDb()
 
-@Client.on_message(filters.command(["imdb"]))
-@error_handler
 async def search_movie(bot, message):
     if len(message.command) < 2:
         await bot.send_message(
             chat_id=message.chat.id,
-            text="`Please provide a movie or TV series name after the /imdb command.`"
+            text="Please provide a movie or TV series name after the /imdb command."
         )
         return
 
@@ -60,7 +58,7 @@ async def search_movie(bot, message):
         await message.reply_text("No movie found.")
 
 # Define the callback query handler
-@Client.on_callback_query()
+@app.on_callback_query()
 async def callback_handler(client, callback_query):
     data = callback_query.data
     if data.startswith("streaming_sites_"):
