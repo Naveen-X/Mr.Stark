@@ -1,9 +1,6 @@
-import os 
-try:
-	from imdb import IMDb 
-except:
-	os.system("pip install imdb")
-	from imdb import IMDb
+import os
+import requests 
+from imdb import IMDb
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -49,13 +46,19 @@ async def search_movie(bot, message):
         caption += f"🌐 Language: {language}\n"
         caption += f"🌍 Countries: {countries}\n"
         caption += f"⏱️ Runtime: {runtime} mins\n"
+        
+        poster_path = f"poster_{movie_id}.jpg"
+        response = requests.get(poster_url)
+        with open(poster_path, "wb") as file:
+            file.write(response.content)
 
         await bot.send_photo(
             chat_id=message.chat.id,
-            photo=cover_url,
+            photo=poster_path,
             caption=caption,
             reply_markup=get_inline_keyboard(movie.movieID)
         )
+        os.remove(poster_path)
     else:
         await message.reply_text("No movie found.")
 
@@ -63,7 +66,7 @@ async def search_movie(bot, message):
 @Client.on_callback_query()
 async def callback_handler(client, callback_query):
     data = callback_query.data
-    if data == back:
+    if data == "back":
     	await callback_query.message.edit_text(
             text=caption,
             reply_markup=get_inline_keyboard(movie.movieID)
@@ -84,7 +87,7 @@ async def callback_handler(client, callback_query):
             reply_markup = InlineKeyboardMarkup(keyboard)
             message_text = "Click on the streaming site:"
         else:
-            reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data=back)]])
+            reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="back")]])
             message_text = "No streaming sites available for this movie."
         
         await callback_query.answer()
