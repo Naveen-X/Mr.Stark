@@ -2,7 +2,7 @@ import os
 import requests 
 from imdb import IMDb
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarku
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from Stark import error_handler
 
