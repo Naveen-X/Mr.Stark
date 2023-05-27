@@ -133,3 +133,73 @@ def get_inline_keyboard(movie):
     )
     keyboard.append([streaming_sites_button])
     return InlineKeyboardMarkup(keyboard)
+
+@Client.on_message(filters.command(["test"]))
+@error_handler
+async def search_movie(bot, message):
+    if len(message.command) < 2:
+        await bot.send_message(
+            chat_id=message.chat.id,
+            text="Please provide a movie or TV series name after the /imdb command."
+        )
+        return
+
+    query = " ".join(message.command[1:])
+    # Perform a search query to obtain the movie details
+    response = requests.get(f"https://apis.justwatch.com/content/titles/en_US/popular?query={query}")
+    data = response.json()
+
+    if data.get("items"):
+        movie = data["items"][0]
+
+        title = movie["title"]
+        year = movie["original_release_year"]
+        rating = movie["scoring"]["imdb"]
+        plot = movie["short_description"]
+        genres = ", ".join(movie["genre_ids"])
+        streaming_sites = get_streaming_sites(movie)
+        
+        caption = f"🎬 Title: {title}\n"
+        caption += f"⭐️ Rating: {rating}\n"
+        caption += f"🔍 Plot: {plot}\n"
+        caption += f"📅 Year: {year}\n"
+        caption += f"🌟 Genres: {genres}\n"
+        caption += f"🌐 Streaming Sites: {', '.join(streaming_sites)}\n"
+
+        await bot.send_message(
+            chat_id=message.chat.id,
+            text=caption,
+            reply_markup=get_inline_keyboard(streaming_sites)
+        )
+    else:
+        await message.reply_text("No movie found.")
+
+def get_streaming_sites(movie):
+    # Extract streaming site information from the movie data
+    offers = movie.get("offers", [])
+    streaming_sites = []
+
+    for offer in offers:
+        if offer.get("monetization_type") == "flatrate":
+            streaming_sites.append(offer["provider_id"])
+
+    return streaming_sites
+
+def get_inline_keyboard(streaming_sites):
+    keyboard = []
+    
+    for site in streaming_sites:
+        # Customize the button labels and URLs based on the streaming site
+        if site == "netflix":
+            button = InlineKeyboardButton(text="Netflix", url="https://www.netflix.com/")
+        elif site == "amazon_prime":
+            button = InlineKeyboardButton(text="Amazon Prime", url="https://www.amazon.com/primevideo")
+        elif site == "hulu":
+            button = InlineKeyboardButton(text="Hulu", url="https://www.hulu.com/")
+        else:
+            # Add more streaming site options as needed
+            button = InlineKeyboardButton(text=site.capitalize(), url="https://example.com/")
+        
+        keyboard.append([button])
+
+    return InlineKeyboardMarkup(keyboard)
