@@ -56,7 +56,6 @@ async def search_movie(bot, message):
             chat_id=message.chat.id,
             photo=cover_url,
             caption=caption,
-            parse_mode="html",
             reply_markup=get_inline_keyboard(movie)
         )
     else:
