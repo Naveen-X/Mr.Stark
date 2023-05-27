@@ -12,10 +12,7 @@ ia = IMDb()
 @error_handler
 async def search_movie(bot, message):
     if len(message.command) < 2:
-        await bot.send_message(
-            chat_id=message.chat.id,
-            text="Please provide a movie or TV series name after the /imdb command."
-        )
+        await message.reply_text("Please provide a movie or TV series name after the /imdb command.")
         return
 
     query = " ".join(message.command[1:])
@@ -46,7 +43,7 @@ async def search_movie(bot, message):
         caption += f"🌐 Language: {language}\n"
         caption += f"🌍 Countries: {countries}\n"
         caption += f"⏱️ Runtime: {runtime} mins\n"
-        
+
         poster_path = f"poster_{movie.movieID}.jpg"
         response = requests.get(cover_url)
         with open(poster_path, "wb") as file:
@@ -54,7 +51,7 @@ async def search_movie(bot, message):
 
         await bot.send_photo(
             chat_id=message.chat.id,
-            photo=poster_path,
+            photo=InputFile(poster_path),
             caption=caption,
             reply_markup=get_inline_keyboard(movie.movieID)
         )
