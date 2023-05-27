@@ -63,6 +63,11 @@ async def search_movie(bot, message):
 @Client.on_callback_query()
 async def callback_handler(client, callback_query):
     data = callback_query.data
+    if data == back:
+    	await callback_query.message.edit_text(
+            text=caption,
+            reply_markup=get_inline_keyboard(movie.movieID)
+        )
     if data.startswith("streaming_sites_"):
         movie_id = data.split("_")[2]
         
@@ -79,7 +84,7 @@ async def callback_handler(client, callback_query):
             reply_markup = InlineKeyboardMarkup(keyboard)
             message_text = "Click on the streaming site:"
         else:
-            reply_markup = None
+            reply_markup = InlineKeyboardMarkup[[(InlineKeyboardButton(text="Back", callback_data=back)]]
             message_text = "No streaming sites available for this movie."
         
         await callback_query.answer()
