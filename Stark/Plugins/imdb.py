@@ -1,4 +1,9 @@
-from imdb import IMDb
+import os 
+try:
+	from imdb import IMDb 
+except:
+	os.system("pip install imdb")
+	from imdb import IMDb
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
