@@ -48,7 +48,7 @@ async def search_movie(bot, message):
         caption += f"⏱️ Runtime: {runtime} mins\n"
         
         poster_path = f"poster_{movie.movieID}.jpg"
-        response = requests.get(poster_url)
+        response = requests.get(cover_url)
         with open(poster_path, "wb") as file:
             file.write(response.content)
 
