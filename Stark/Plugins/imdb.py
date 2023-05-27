@@ -64,21 +64,28 @@ async def search_movie(bot, message):
 async def callback_handler(client, callback_query):
     data = callback_query.data
     if data.startswith("streaming_sites_"):
-        movie_id = data.split("_")[2]
+        movie_id = data.split("_")[1]
         
         # Fetch streaming sites for the movie using IMDbPY or any other method
         movie = ia.get_movie(movie_id)
         streaming_sites = movie.get('streaming_sites')
         
         if streaming_sites:
-            streaming_sites_text = "\n".join(streaming_sites)
-            message_text = f"Streaming Sites:\n\n{streaming_sites_text}"
+            keyboard = []
+            for site in streaming_sites:
+                button = InlineKeyboardButton(text=site, url=streaming_sites[site])
+                keyboard.append([button])
+            
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            message_text = "Click on the streaming site:"
         else:
+            reply_markup = None
             message_text = "No streaming sites available for this movie."
         
         await callback_query.answer()
-        await callback_query.message.reply_text(
+        await callback_query.message.edit_text(
             text=message_text,
+            reply_markup=reply_markup
         )
 
 def get_inline_keyboard(movie):
