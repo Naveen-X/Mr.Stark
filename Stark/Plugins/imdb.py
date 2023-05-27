@@ -77,7 +77,6 @@ async def callback_handler(client, callback_query):
         await callback_query.answer()
         await callback_query.message.reply_text(
             text=message_text,
-            parse_mode="html"
         )
 
 def get_inline_keyboard(movie):
