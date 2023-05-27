@@ -95,7 +95,7 @@ async def callback_handler(bot, callback_query):
         caption = generate_movie_caption(movie)
         reply_markup = get_inline_keyboard(movie_id)
 
-        await callback_query.message.edit_text(
+        await callback_query.edit_message_caption(
             text=caption,
             reply_markup=reply_markup
         )
