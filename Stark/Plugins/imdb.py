@@ -58,7 +58,7 @@ async def search_movie(bot, message):
         await message.reply_text("No movie found.")
 
 # Define the callback query handler
-@app.on_callback_query()
+@Client.on_callback_query()
 async def callback_handler(client, callback_query):
     data = callback_query.data
     if data.startswith("streaming_sites_"):
