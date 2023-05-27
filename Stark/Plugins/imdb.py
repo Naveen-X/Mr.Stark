@@ -120,7 +120,7 @@ async def callback_handler(bot, callback_query):
             message_text = "No streaming sites available for this movie."
 
         await callback_query.answer()
-        await callback_query.message.edit_text(
+        await callback_query.edit_message_caption(
             text=message_text,
             reply_markup=reply_markup
         )
