@@ -54,7 +54,7 @@ async def search_movie(bot, message):
             chat_id=message.chat.id,
             photo=cover_url,
             caption=caption,
-            reply_markup=get_inline_keyboard(movie)
+            reply_markup=get_inline_keyboard(movie.movieID)
         )
     else:
         await message.reply_text("No movie found.")
@@ -64,7 +64,7 @@ async def search_movie(bot, message):
 async def callback_handler(client, callback_query):
     data = callback_query.data
     if data.startswith("streaming_sites_"):
-        movie_id = data.split("_")[1]
+        movie_id = data.split("_")[2]
         
         # Fetch streaming sites for the movie using IMDbPY or any other method
         movie = ia.get_movie(movie_id)
@@ -92,7 +92,7 @@ def get_inline_keyboard(movie):
     keyboard = []
     streaming_sites_button = InlineKeyboardButton(
         text="Streaming Sites",
-        callback_data=f"streaming_sites_{movie.movieID}"
+        callback_data=f"streaming_sites_{movie}"
     )
     keyboard.append([streaming_sites_button])
     return InlineKeyboardMarkup(keyboard)
