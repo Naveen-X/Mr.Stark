@@ -25,49 +25,65 @@ async def search_movie(bot, message):
     movies = ia.search_movie(query)
     if movies:
         movie = movies[0]
-        await bot.run(ia.update, movie, ['main', 'plot', 'genres', 'runtime', 'rating', 'director', 'cast', 'cover url', 'streaming sites'])
-        title = movie.get('title')
-        year = movie.get('year')
-        rating = movie.get('rating')
-        plot = movie.get('plot')
-        genres = ', '.join(movie.get('genres', []))
-        runtime = movie.get('runtime')
-        director = ', '.join(movie.get('director', []))
-        cast = ', '.join([actor['name'] for actor in movie.get('cast', [])[:5]])
-        cover_url = movie.get('cover url')
-        streaming_sites = movie.get('streaming sites', [])
+        ia.update(movie, ["main", "plot", "cast", "cover url", "language", "countries", "plot outline"])
 
-        message_text = f"🎬 {title}\n\n"
-        message_text += f"📅 Year: {year}\n"
-        message_text += f"⭐️ Rating: {rating}\n"
-        message_text += f"🎭 Genres: {genres}\n"
-        message_text += f"⏱️ Runtime: {runtime} minutes\n"
-        message_text += f"🎥 Director: {director}\n"
-        message_text += f"🌟 Cast: {cast}\n\n"
-        message_text += f"📝 Plot: {plot}\n"
+        title = movie["title"]
+        year = movie["year"]
+        rating = movie["rating"]
+        plot = movie["plot"][0]
+        genres = ", ".join(movie["genres"])
+        director = movie["director"][0]["name"]
+        cast = ", ".join([actor["name"] for actor in movie["cast"][:5]])
+        runtime = movie["runtimes"][0]
+        language = movie["language"][0]
+        countries = ", ".join(movie["countries"])
+        plot_outline = movie.get("plot outline", "")
+        cover_url = movie.get("cover url", "")
 
-        if streaming_sites:
-            sites_text = "Available Streaming Sites:\n"
-            for site in streaming_sites:
-                sites_text += f"• {site}\n"
-            message_text += f"\n{sites_text}"
-
-        keyboard = InlineKeyboardMarkup(
-            [
-                [InlineKeyboardButton("IMDb Page", url=f"https://www.imdb.com/title/{movie.movieID}/")],
-                [InlineKeyboardButton("More Details", callback_data=f"more_details_{movie.movieID}")]
-            ]
-        )
+        caption = f"🎬 Title: {title}\n"
+        caption += f"📅 Year: {year}\n"
+        caption += f"⭐️ Rating: {rating}\n"
+        caption += f"🔍 Plot: {plot}\n"
+        caption += f"🌟 Genres: {genres}\n"
+        caption += f"🎬 Director: {director}\n"
+        caption += f"🌐 Language: {language}\n"
+        caption += f"🌍 Countries: {countries}\n"
+        caption += f"⏱️ Runtime: {runtime} mins\n"
+        caption += f"📜 Plot Outline: {plot_outline}\n"
+        caption += f"🌟 Cast: {cast}\n"
 
         await bot.send_photo(
             chat_id=message.chat.id,
             photo=cover_url,
-            caption=message_text,
-            reply_markup=keyboard,
-            parse_mode="html"
+            caption=caption,
+            parse_mode="html",
+            reply_markup=get_inline_keyboard(movie)
         )
     else:
-        await bot.send_message(
-            chat_id=message.chat.id,
-            text="No movie or TV series found with that name."
+        await message.reply_text("No movie found.")
+
+# Define the callback query handler
+@Client.on_callback_query()
+async def callback_handler(client, callback_query):
+    data = callback_query.data
+    if data.startswith("streaming_sites_"):
+        movie_id = data.split("_")[1]
+        # Fetch streaming sites for the movie using IMDbPY or any other method
+        # Replace the code below with your logic to retrieve streaming sites
+        streaming_sites = ["Netflix", "Amazon Prime", "Hulu", "Disney+"]
+
+        streaming_sites_text = "\n".join(streaming_sites)
+        await callback_query.answer()
+        await callback_query.edit_message_text(
+            text=f"Streaming Sites:\n\n{streaming_sites_text}",
+            parse_mode="html"
         )
+
+def get_inline_keyboard(movie):
+    keyboard = []
+    streaming_sites_button = InlineKeyboardButton(
+        text="Streaming Sites",
+        callback_data=f"streaming_sites_{movie.movieID}"
+    )
+    keyboard.append([streaming_sites_button])
+    return InlineKeyboardMarkup(keyboard)
