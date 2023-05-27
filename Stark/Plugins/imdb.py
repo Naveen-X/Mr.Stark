@@ -65,15 +65,20 @@ async def callback_handler(client, callback_query):
     data = callback_query.data
     if data.startswith("streaming_sites_"):
         movie_id = data.split("_")[1]
+        
         # Fetch streaming sites for the movie using IMDbPY or any other method
-        # Replace the code below with your logic to retrieve streaming sites
-        streaming_sites = ["Netflix", "Amazon Prime", "Hulu", "Disney+"]
-
-        streaming_sites_text = "\n".join(streaming_sites)
+        movie = ia.get_movie(movie_id)
+        streaming_sites = movie.get('streaming_sites')
+        
+        if streaming_sites:
+            streaming_sites_text = "\n".join(streaming_sites)
+            message_text = f"Streaming Sites:\n\n{streaming_sites_text}"
+        else:
+            message_text = "No streaming sites available for this movie."
+        
         await callback_query.answer()
         await callback_query.edit_message_text(
-            text=f"Streaming Sites:\n\n{streaming_sites_text}",
-            parse_mode="html"
+            text=message_text
         )
 
 def get_inline_keyboard(movie):
