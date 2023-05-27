@@ -2,7 +2,7 @@ import os
 import requests 
 from imdb import IMDb
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarku
 
 from Stark import error_handler
 
@@ -51,7 +51,7 @@ async def search_movie(bot, message):
 
         await bot.send_photo(
             chat_id=message.chat.id,
-            photo=InputFile(poster_path),
+            photo=poster_path,
             caption=caption,
             reply_markup=get_inline_keyboard(movie.movieID)
         )
@@ -59,34 +59,66 @@ async def search_movie(bot, message):
     else:
         await message.reply_text("No movie found.")
 
+def generate_movie_caption(movie):
+    title = movie["title"]
+    year = movie["year"]
+    rating = movie["rating"]
+    plot = movie["plot"][0]
+    genres = ", ".join(movie["genres"])
+    director = movie["director"][0]["name"]
+    cast = ", ".join([actor["name"] for actor in movie["cast"][:5]])
+    runtime = movie["runtimes"][0]
+    language = movie["language"][0]
+    countries = ", ".join(movie["countries"])
+    plot_outline = movie.get("plot outline", "")
+    cover_url = movie.get("cover url", "")
+
+    caption = f"🎬 Title: {title}\n"
+    caption += f"⭐️ Rating: {rating}\n"
+    caption += f"🔍 Plot: {plot}\n"
+    caption += f"📅 Year: {year}\n"
+    caption += f"🌟 Genres: {genres}\n"
+    caption += f"🎬 Director: {director}\n"
+    caption += f"🌐 Language: {language}\n"
+    caption += f"🌍 Countries: {countries}\n"
+    caption += f"⏱️ Runtime: {runtime} mins\n"
+
+    return generate_movie_caption
+    
 # Define the callback query handler
 @Client.on_callback_query()
-async def callback_handler(client, callback_query):
+async def callback_handler(bot, callback_query):
     data = callback_query.data
     if data == "back":
-    	await callback_query.message.edit_text(
+        movie_id = callback_query.message.reply_markup.inline_keyboard[0][0].callback_data
+        movie = ia.get_movie(movie_id)
+        caption = generate_movie_caption(movie)
+        reply_markup = get_inline_keyboard(movie_id)
+
+        await callback_query.message.edit_text(
             text=caption,
-            reply_markup=get_inline_keyboard(movie.movieID)
+            reply_markup=reply_markup
         )
-    if data.startswith("streaming_sites_"):
+
+    elif data.startswith("streaming_sites_"):
         movie_id = data.split("_")[2]
-        
+
         # Fetch streaming sites for the movie using IMDbPY or any other method
         movie = ia.get_movie(movie_id)
         streaming_sites = movie.get('streaming_sites')
-        
+
         if streaming_sites:
             keyboard = []
             for site in streaming_sites:
                 button = InlineKeyboardButton(text=site, url=streaming_sites[site])
                 keyboard.append([button])
-            
+
             reply_markup = InlineKeyboardMarkup(keyboard)
             message_text = "Click on the streaming site:"
         else:
-            reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="🔙 Back", callback_data="back")]])
+            reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="back")]])
             message_text = "No streaming sites available for this movie."
-        
+
         await callback_query.answer()
         await callback_query.message.edit_text(
             text=message_text,
