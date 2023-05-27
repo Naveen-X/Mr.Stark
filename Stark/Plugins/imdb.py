@@ -41,16 +41,14 @@ async def search_movie(bot, message):
         cover_url = movie.get("cover url", "")
 
         caption = f"🎬 Title: {title}\n"
-        caption += f"📅 Year: {year}\n"
         caption += f"⭐️ Rating: {rating}\n"
         caption += f"🔍 Plot: {plot}\n"
+        caption += f"📅 Year: {year}\n"
         caption += f"🌟 Genres: {genres}\n"
         caption += f"🎬 Director: {director}\n"
         caption += f"🌐 Language: {language}\n"
         caption += f"🌍 Countries: {countries}\n"
         caption += f"⏱️ Runtime: {runtime} mins\n"
-        caption += f"📜 Plot Outline: {plot_outline}\n"
-        caption += f"🌟 Cast: {cast}\n"
 
         await bot.send_photo(
             chat_id=message.chat.id,
