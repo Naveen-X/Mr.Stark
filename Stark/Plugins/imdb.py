@@ -12,6 +12,7 @@ from Stark import error_handler
 ia = IMDb()
 
 @Client.on_message(filters.command(["imdb"]))
+@error_handler
 async def search_movie(bot, message):
     if len(message.command) < 2:
         await bot.send_message(
