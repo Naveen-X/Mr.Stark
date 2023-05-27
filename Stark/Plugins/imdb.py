@@ -87,7 +87,7 @@ async def callback_handler(client, callback_query):
             reply_markup = InlineKeyboardMarkup(keyboard)
             message_text = "Click on the streaming site:"
         else:
-            reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="back")]])
+            reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="🔙 Back", callback_data="back")]])
             message_text = "No streaming sites available for this movie."
         
         await callback_query.answer()
