@@ -62,7 +62,7 @@ async def search_movie(bot, message):
 async def callback_handler(client, callback_query):
     data = callback_query.data
     if data.startswith("streaming_sites_"):
-        movie_id = data.split("_")[1]
+        movie_id = data.split("_")[2]
         
         # Fetch streaming sites for the movie using IMDbPY or any other method
         movie = ia.get_movie(movie_id)
