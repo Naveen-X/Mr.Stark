@@ -100,7 +100,7 @@ async def callback_handler(bot, callback_query):
             reply_markup=reply_markup
         )
 
-    elif data.startswith(f"streaming_sites_{}.{callback_query.from_user.id}"):
+    elif data.startswith(f"streaming_sites_.{callback_query.from_user.id}"):
         movie_id = data.split("_")[2]
 
         # Fetch streaming sites for the movie using IMDbPY or any other method
