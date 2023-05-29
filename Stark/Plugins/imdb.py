@@ -59,7 +59,6 @@ async def search_movie(bot, message):
             photo=cover_url,
             caption=message_text,
             reply_markup=keyboard,
-            parse_mode="html"
         )
     else:
         await bot.send_message(
