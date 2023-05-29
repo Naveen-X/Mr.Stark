@@ -38,13 +38,7 @@ async def search_movie(bot, message):
         message_text += f"🎭 Genres: `{genres}`\n"
         message_text += f"⏱️ Runtime: `{runtime} minutes`\n"
         message_text += f"🌟 Cast: `{cast}`\n\n"
-        message_text += f"📝 Plot: `{plot}`\n"
-
-        if streaming_sites:
-            sites_text = "**__Available Streaming Sites:__**\n"
-            for site in streaming_sites:
-                sites_text += f"• `{site}`\n"
-            message_text += f"\n`{sites_text}`"
+        message_text += f"📝 Plot: `{plot}`"
 
         keyboard = InlineKeyboardMarkup(
             [
