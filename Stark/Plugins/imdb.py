@@ -31,7 +31,7 @@ async def search_movie(bot, message):
         cast = ', '.join([actor['name'] for actor in movie.get('cast', [])[:5]])
         cover_url = movie.get('cover url')
 
-        message_text = f"🎬 **{title}**\n\n"
+        message_text = f"🎬 **{title}**\n"
         message_text += f"📅 Year: `{year}`\n"
         message_text += f"⭐️ Rating: `{rating}`\n"
         message_text += f"🎭 Genres: `{genres}`\n"
