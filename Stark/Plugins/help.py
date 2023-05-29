@@ -10,7 +10,6 @@ from pyromod.nav import Pagination
 
 from Stark import db
 from Stark.Plugins.start import keyboard
-from Stark.Plugins.imdb import get_inline_keyboard, generate_movie_caption, ia
 from help_mod import Script
 from main.helper_func.basic_helpers import get_readable_time
 
@@ -189,39 +188,3 @@ async def cb_handler(client, query):
     elif 'sys_info' in query.data:
         text = await bot_sys_stats()
         await query.answer(text, show_alert=True)
-    data = query.data
-    if data == "back":
-        movie_id = query.message.reply_markup.inline_keyboard[0][0].callback_data
-        movie = ia.get_movie(movie_id)
-        caption = generate_movie_caption(movie)
-        reply_markup = get_inline_keyboard(movie_id)
-
-        await query.edit_message_caption(
-            text=caption,
-            reply_markup=reply_markup
-        )
-
-    elif data.startswith(f"streaming_sites_.{query.from_user.id}"):
-        movie_id = data.split("_")[2]
-
-        # Fetch streaming sites for the movie using IMDbPY or any other method
-        movie = ia.get_movie(movie_id)
-        streaming_sites = movie.get('streaming_sites')
-
-        if streaming_sites:
-            keyboard = []
-            for site in streaming_sites:
-                button = InlineKeyboardButton(text=site, url=streaming_sites[site])
-                keyboard.append([button])
-
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            message_text = "Click on the streaming site:"
-        else:
-            reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="back")]])
-            message_text = "No streaming sites available for this movie."
-
-        await query.answer()
-        await query.edit_message_caption(
-            text=message_text,
-            reply_markup=reply_markup
-        )
