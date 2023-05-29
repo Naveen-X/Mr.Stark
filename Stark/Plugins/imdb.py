@@ -17,10 +17,10 @@ async def search_movie(bot, message):
         return
 
     query = " ".join(message.command[1:])
-    movies = ia.search_movie, query
+    movies = ia.search_movie(query)
     if movies:
         movie = movies[0]
-        await bot.run(ia.update, movie, ['main', 'plot', 'genres', 'runtime', 'rating', 'director', 'cast', 'cover url', 'streaming sites'])
+        ia.update(movie, ['main', 'plot', 'genres', 'runtime', 'rating', 'director', 'cast', 'cover url', 'streaming sites'])
         title = movie.get('title')
         year = movie.get('year')
         rating = movie.get('rating')
