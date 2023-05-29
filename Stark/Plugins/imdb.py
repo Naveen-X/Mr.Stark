@@ -27,7 +27,7 @@ async def search_movie(bot, message):
         plot = movie.get('plot')
         genres = ', '.join(movie.get('genres', []))
         runtime = movie.get('runtime')
-        director = ', '.join(movie.get('director', []))
+        director = movie.get('director')
         cast = ', '.join([actor['name'] for actor in movie.get('cast', [])[:5]])
         cover_url = movie.get('cover url')
         streaming_sites = movie.get('streaming sites', [])
