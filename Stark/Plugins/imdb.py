@@ -43,7 +43,7 @@ async def search_movie(bot, message):
 
         keyboard = InlineKeyboardMarkup(
             [
-                [InlineKeyboardButton("IMDb Page", url=f"https://www.imdb.com/title/{movie.movieID}/")],
+                [InlineKeyboardButton("View on IMDb", url=f"https://www.imdb.com/title/tt{movie.movieID}/")],
                 [InlineKeyboardButton("More Details", callback_data=f"more_details_{movie.movieID}")]
             ]
         )
