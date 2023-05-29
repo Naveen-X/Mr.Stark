@@ -20,24 +20,26 @@ async def search_movie(bot, message):
     movies = ia.search_movie(query)
     if movies:
         movie = movies[0]
-        ia.update(movie, ['main', 'plot', 'genres', 'runtime', 'rating', 'director', 'cast', 'cover url', 'streaming sites'])
-        title = movie.get('title')
-        year = movie.get('year')
-        rating = movie.get('rating')
-        plot = movie.get('plot')
-        genres = ', '.join(movie.get('genres', []))
-        runtime = movie.get('runtime')
-        director = movie.get('director')
-        cast = ', '.join([actor['name'] for actor in movie.get('cast', [])[:5]])
-        cover_url = movie.get('cover url')
+        ia.update(movie, ["main", "plot", "cast", "cover url", "language", "countries", "plot outline"])
 
-        message_text = f"🎬 **{title}**\n"
+        title = movie["title"]
+        year = movie["year"]
+        rating = movie["rating"]
+        plot = movie["plot"][0]
+        genres = ", ".join(movie["genres"])
+        cast = ", ".join([actor["name"] for actor in movie["cast"][:5]])
+        runtime = movie["runtimes"][0]
+        lang = movie["language"][0]
+        cover_url = movie.get("cover url", "")
+
+        message_text = f"🎬 **{title}**\n\n"
         message_text += f"📅 Year: `{year}`\n"
         message_text += f"⭐️ Rating: `{rating}`\n"
         message_text += f"🎭 Genres: `{genres}`\n"
+        message_text += f"🌐 Language: `{lang}`
         message_text += f"⏱️ Runtime: `{runtime} minutes`\n"
         message_text += f"🌟 Cast: `{cast}`\n\n"
-        message_text += f"📝 Plot: `{plot}`"
+        message_text += f"📝 Plot: __{plot}__"
 
         keyboard = InlineKeyboardMarkup(
             [
