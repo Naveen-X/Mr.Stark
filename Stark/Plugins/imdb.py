@@ -5,6 +5,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from Stark import error_handler
 
 ia = IMDb()
+movie_name_db = {}
 
 @Client.on_message(filters.command(["imdb", "IMDb"]))
 @error_handler
