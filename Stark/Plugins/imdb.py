@@ -21,7 +21,7 @@ async def search_movie(client, message):
     mv = await message.reply_text(f"`Searching for {movie_name}`")
 
     # Search for the movie using IMDbPY
-    movies = ia.search_movie(movie_name)
+    movies = ia.search_movie(movie_name, results=10)
 
     # If no movies were found, send a message to the user and return
     if len(movies) == 0:
@@ -112,7 +112,7 @@ async def more_details_handler(client, callback_query):
     # Send the message with the movie Details	
     view_button = InlineKeyboardButton(text="View on IMDb", url=f"https://www.imdb.com/title/tt{movie.getID()}/")
     # Add the buttons to an InlineKeyboardMarkup object
-    keyboard = InlineKeyboardMarkup([[view_button])
+    keyboard = InlineKeyboardMarkup([[view_button]])
     await callback_query.message.edit_text(
         text=movie_msg,
         disable_web_page_preview=True,
