@@ -39,18 +39,22 @@ class Script(object):
         {
             "desc": "Get a cat image",
             "cmds": ["cat"],
+             "usage": "/cat"
         },
         {
             "desc": "Get a dog image",
             "cmds": ["dog"],
+             "usage": "/dog"
         },
         {
             "desc": "Get a random meme",
             "cmds": ["meme"],
+             "usage": "/meme"
         },
         {
             "desc": "Get a panda image",
             "cmds": ["panda"],
+             "usage": "/panda"
         }
     ]
     GOOGLE = [
