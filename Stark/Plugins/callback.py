@@ -106,10 +106,12 @@ async def more_details_handler(client, callback_query):
     back_button = InlineKeyboardButton(text="Back", callback_data=f"back_to_search:{back}")
     # Add the buttons to an InlineKeyboardMarkup object
     keyboard = InlineKeyboardMarkup([[view_button], [back_button]])
-    await callback_query.message.edit_message_media(
-        media=InputMediaPhoto(poster_url),
-        text=movie_msg,
-        disable_web_page_preview=True,
+    # await message.reply_to_message.edit_media(
+    #     media=InputMediaPhoto("https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg", caption="satya"))
+    await callback_query.message.edit_media(
+        media=InputMediaPhoto(poster_url, caption=movie_msg),
+        # text=movie_msg,
+        # disable_web_page_preview=True,
         reply_markup=keyboard,
     )
 
@@ -132,8 +134,9 @@ async def back_to_search_handler(client, callback_query):
 
     # Send a message to the user with the search results and buttons
     message_text = f"Found {len(movies)} results. Please select a movie:"
-    await callback_query.message.edit_text(
-        text=message_text,
+    await callback_query.message.edit_media(
+        media=InputMediaPhoto("https://exchange4media.gumlet.io/news-photo/123661-93930-IMDbAmazon.jpg", caption=message_text),
+        # text=message_text,
         reply_markup=keyboard,
-        disable_web_page_preview=True
+        # disable_web_page_preview=True
     )
