@@ -125,4 +125,3 @@ async def back_to_search_handler(client, callback_query):
         reply_markup=keyboard,
         disable_web_page_preview=True
     )
-    await callback_query.message.delete()
