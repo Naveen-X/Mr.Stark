@@ -1,101 +1,113 @@
 from imdb import IMDb
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 
+# import pyrogram.types.
 ia = IMDb()
 
 
-# @Client.on_callback_query(filters.regex("^select_movie"))
-# async def select_movie_handler(client, callback_query):
-#     # Get the index of the selected movie from the callback callback_data
-#     await callback_query.answer("Hold on...", show_alert=True)
-#     index = int(callback_query.data.split(" ")[1])
-#     movie_name = get_movie_name = movie_name_db.get("name")
-#     # Search for the movie using IMDbPY
-#     movie_id = ia.search_movie(movie_name, results=10)[index].getID()
-#     movie = ia.get_movie(movie_id)
-#
-#     # Get the URL of the movie poster, if available
-#     if 'full-size cover url' in movie.keys():
-#         poster_url = movie['full-size cover url']
-#     elif 'cover url' in movie.keys():
-#         poster_url = movie['cover url']
-#     else:
-#         poster_url = None
-#
-#     # Create a message with the movie details and poster
-#     movie_msg = f"<b>🎬 {movie['title']}</b> ({movie['year']})\n\n"
-#     movie_msg += f"<b>⭐️ Rating:</b> {movie['rating']}\n"
-#     movie_msg += f"<b>🎭 Genres:</b> {' | '.join(movie['genres'])}\n\n"
-#     movie_msg += f"📝: {movie['plot'][0]}...\n"
-#
-#     # Create inline keyboard with two buttons
-#     view_button = InlineKeyboardButton(text="View on IMDb", url=f"https://www.imdb.com/title/tt{movie.getID()}/")
-#     more_details_button = InlineKeyboardButton(text="More Details", callback_data=f"more_details {movie.getID()}")
-#
-#     # Add the buttons to an InlineKeyboardMarkup object
-#     keyboard = InlineKeyboardMarkup([[view_button], [more_details_button]])
-#
-#     # Send the message with the poster and button_list
-#     await callback_query.message.reply_photo(
-#         photo=poster_url,
-#         caption=movie_msg,
-#         reply_markup=keyboard,
-#     )
-#     await callback_query.message.delete()
-
-
-# Define the callback query handler for the "More Details" button
 @Client.on_callback_query(filters.regex("^more_details"))
 async def more_details_handler(client, callback_query):
-    # Get the IMDb ID of the movie from the callback data
     imdb_id = callback_query.data.split(" ")[1]
     await callback_query.answer("Ok")
     back = callback_query.data.split(":")[1]
     movie = ia.get_movie(imdb_id)
-    # Create a message with the movie details
-    movie_msg = f"<b>🎬 {movie.get('title')}</b> ({movie.get('year')})\n\n"
 
+    if 'full-size cover url' in movie.keys():
+        poster_url = movie['full-size cover url']
+    elif 'cover url' in movie.keys():
+        poster_url = movie['cover url']
+    else:
+        poster_url = "https://exchange4media.gumlet.io/news-photo/123661-93930-IMDbAmazon.jpg"
+
+    # Formatting and displaying movie details
+    movie_msg = f"🎬 **Title:** {movie.get('title')}\n"
+    movie_msg += f"📅 **Year:** {movie.get('year')}\n"
+
+    # Rating
     try:
-        movie_msg += f"<b>⭐️ Rating:</b> {movie.get('rating')}\n"
+        rating = movie.get('rating')
+        movie_msg += f"⭐️ **Rating:** {rating}" if rating else "⭐️ **Rating:** N/A"
+        movie_msg += "\n"
     except KeyError:
-        movie_msg += "<b>⭐️ Rating:</b> N/A\n"
+        movie_msg += "⭐️ **Rating:** N/A\n"
 
+    # Genres
     try:
-        movie_msg += f"<b>🎭 Genres:</b> {' | '.join(movie.get('genres', []))}\n"
+        genres = movie.get('genres', [])
+        movie_msg += f"🎭 **Genres:** {', '.join(genres)}" if genres else "🎭 **Genres:** N/A"
+        movie_msg += "\n"
     except KeyError:
-        movie_msg += "<b>🎭 Genres:</b> N/A\n"
+        movie_msg += "🎭 **Genres:** N/A\n"
 
+    # Languages
     try:
-        movie_msg += f"<b>🌐 Language:</b> {' | '.join(movie.get('languages', []))}\n"
+        languages = movie.get('languages', [])
+        movie_msg += f"🌐 **Languages:** {', '.join(languages)}" if languages else "🌐 **Languages:** N/A"
+        movie_msg += "\n"
     except KeyError:
-        movie_msg += "<b>🌐 Language:</b> N/A\n"
+        movie_msg += "🌐 **Languages:** N/A\n"
 
+    # Runtime
     try:
-        movie_msg += f"<b>⏱️ Runtime:</b> {movie.get('runtimes', [])[0]} minutes\n"
+        runtime = movie.get('runtimes', ['N/A'])[0]
+        movie_msg += f"⏱️ **Runtime:** {runtime} minutes" if runtime else "⏱️ **Runtime:** N/A"
+        movie_msg += "\n"
     except (KeyError, IndexError):
-        movie_msg += "<b>⏱️ Runtime:</b> N/A\n"
+        movie_msg += "⏱️ **Runtime:** N/A\n"
 
+    # Plot
     try:
-        movie_msg += f"<b>📝 Plot:</b> {movie.get('plot', [''])[0]}...\n"
+        plot = movie.get('plot', [''])[0]
+        movie_msg += f"📝 **Plot:** {plot}..." if plot else "📝 **Plot:** N/A"
+        movie_msg += "\n"
     except (KeyError, IndexError):
-        movie_msg += "<b>📝 Plot:</b> N/A\n"
+        movie_msg += "📝 **Plot:** N/A\n"
 
-    movie_msg += "\n<b>🌟 Cast:</b>\n"
+    # Directors
+    try:
+        directors = [director.get('name') for director in movie.get('director', [])]
+        movie_msg += f"🎥 **Directors:** {', '.join(directors)}\n"
+    except KeyError:
+        movie_msg += "🎥 **Directors:** N/A\n"
 
-    # Add the cast members to the message
+    # Writers
+    try:
+        writers = [writer.get('name') for writer in movie.get('writer', [])]
+        movie_msg += f"🖋️ **Writers:** {', '.join(writers)}\n"
+    except KeyError:
+        movie_msg += "🖋️ **Writers:** N/A\n"
+
+    # Cast
+    movie_msg += "\n🌟 **Cast:**\n"
     for person in movie.get('cast', [])[:5]:
         try:
-            movie_msg += f"- {person.get('name')} ({person.get('currentRole')})\n"
+            name = person.get('name', 'N/A')
+            role = person.get('currentRole', 'N/A')
+            movie_msg += f"- {name} ({role})\n"
         except KeyError:
             movie_msg += "- N/A\n"
 
+    # Streaming Platforms
+    streaming_info = movie.get('akas', [])
+    if streaming_info:
+        movie_msg += "\n📺 **Streaming As:**\n"
+        for entry in streaming_info:
+            movie_msg += f"- {entry}\n"
+
+    # Release Dates
+    release_dates = movie.get('release dates', {})
+    if release_dates:
+        movie_msg += "\n🗓️ **Release Dates:**\n"
+        for country, date in release_dates.items():
+            movie_msg += f"- {country}: {date}\n"
     # Send the message with the movie Details
     view_button = InlineKeyboardButton(text="View on IMDb", url=f"https://www.imdb.com/title/tt{movie.getID()}/")
     back_button = InlineKeyboardButton(text="Back", callback_data=f"back_to_search:{back}")
     # Add the buttons to an InlineKeyboardMarkup object
     keyboard = InlineKeyboardMarkup([[view_button], [back_button]])
-    await callback_query.message.edit_text(
+    await callback_query.message.edit_message_media(
+        media=InputMediaPhoto(poster_url),
         text=movie_msg,
         disable_web_page_preview=True,
         reply_markup=keyboard,

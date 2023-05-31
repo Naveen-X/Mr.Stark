@@ -30,10 +30,10 @@ async def search_movie(client, message):
             text="`Please provide a movie or TV series name. Not a paragraph! :)`"
         )
         return
-    mv = await message.reply_text(f"`Searching for {movie_name}`")
+    mv = await message.reply_photo("https://exchange4media.gumlet.io/news-photo/123661-93930-IMDbAmazon.jpg", caption=f"`Searching for {movie_name}`")
     movies = ia.search_movie(movie_name, results=10)
     if len(movies) == 0:
-        await message.reply_text("**__No movies found with that name!__**")
+        await mv.edit("**__No movies found with that name!__**")
         return
     button_list = []
     for i, movie in enumerate(movies[:10]):
