@@ -64,6 +64,13 @@ class Script(object):
             "usage": "/gs <text to search>"
         },
     ]
+    IMDB = [
+        {
+            "desc": "Get information about a Movie/Series",
+            "cmds": ["imdb"],
+            "usage": "/imdb <Movename/Series Name>"
+        }
+    ]
     INSTADL = [
         {
             "desc": "Download post/reel from instagram",
