@@ -8,6 +8,62 @@ from Stark.db import DB
 from Stark import error_handler
 
 # List of sad quotes # Because there should be a list to get random.
+normiefont = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+]
+weebyfont = [
+    "卂",
+    "乃",
+    "匚",
+    "刀",
+    "乇",
+    "下",
+    "厶",
+    "卄",
+    "工",
+    "丁",
+    "长",
+    "乚",
+    "从",
+    "𠘨",
+    "口",
+    "尸",
+    "㔿",
+    "尺",
+    "丂",
+    "丅",
+    "凵",
+    "リ",
+    "山",
+    "乂",
+    "丫",
+    "乙",
+]
 
 sad_quotes = [
     "The worst kind of sad is not being able to explain why.",
@@ -74,3 +130,20 @@ async def qt_remove(c, m):
 	x = await m.reply_text("__Removing Chat from DataBase__")
 	await del_qt(m.chat.id)
 	await x.edit("__Chat has been removed from DataBase\nFrom now you won't get daily quotes__")
+
+@Client.on_message(filters.command(["weeb", "weebify"]))
+@error_handler
+async def weebify(c, m):
+    wb = await m.reply_text("`Wi8...`")
+    args = m.text.split(None, 1)[1]
+    if not args:
+        args = m.reply_to_message.text
+    if not args:
+        await wb.edit("`What I am Supposed to Weebify U Dumb`")
+        return
+    string = "  ".join(args).lower()
+    for normiecharacter in string:
+        if normiecharacter in normiefont:
+            weebycharacter = weebyfont[normiefont.index(normiecharacter)]
+            string = string.replace(normiecharacter, weebycharacter)
+    await wb.edit(string)
