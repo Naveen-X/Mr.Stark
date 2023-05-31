@@ -24,7 +24,7 @@ async def search_movie(client, message):
             text="`Please provide a movie or TV series name after the /imdb command.`"
         )
         return
-    if len(movie_name) > 50:
+    if len(str(movie_name)) > 40:
         await client.send_message(
             chat_id=message.chat.id,
             text="`Please provide a movie or TV series name. Not a paragraph! :)`"
@@ -37,8 +37,8 @@ async def search_movie(client, message):
         return
     button_list = []
     for i, movie in enumerate(movies[:10]):
-        button_list.append([InlineKeyboardButton(text=movie['title'], callback_data=f"more_details {movie.movieID}")])
-
+        button_list.append([InlineKeyboardButton(text=movie['title'], callback_data=f"more_details {movie.movieID} :{movie_name}:")])
+    # button_list.append([InlineKeyboardButton(text="", callback_data=f"more_details {movie.movieID}")])
     # Add the buttons to an InlineKeyboardMarkup object
     keyboard = InlineKeyboardMarkup(button_list)
 
