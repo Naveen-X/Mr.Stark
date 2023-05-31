@@ -135,7 +135,8 @@ async def qt_remove(c, m):
 @error_handler
 async def weebify(c, m):
     wb = await m.reply_text("`Wi8...`")
-    args = m.text.split(None, 1)[1]
+    try:
+       args = m.text.split(None, 1)[1]
     except IndexError:
         args = m.reply_to_message.text
     if not args:
