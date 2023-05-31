@@ -18,7 +18,7 @@ async def wasted(bot, message):
     poto_url = upload_file(pic)
     imglink = f"https://telegra.ph{poto_url[0]}"
 
-    url = f"https://some-random-api.ml/canvas/wasted?avatar={imglink}"
+    url = f"https://some-random-api.com/canvas/wasted?avatar={imglink}"
 
     await message.reply_photo(url)
     await gta.delete()
