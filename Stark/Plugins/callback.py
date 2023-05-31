@@ -55,16 +55,40 @@ async def more_details_handler(client, callback_query):
     movie = ia.get_movie(imdb_id)
     # Create a message with the movie details
     movie_msg = f"<b>🎬 {movie.get('title')}</b> ({movie.get('year')})\n\n"
-    movie_msg += f"<b>⭐️ Rating:</b> {movie.get('rating')}\n"
-    movie_msg += f"<b>🎭 Genres:</b> {' | '.join(movie.get('genres', []))}\n"
-    movie_msg += f"<b>🌐 Language:</b> {' | '.join(movie.get('languages', []))}\n"
-    movie_msg += f"<b>⏱️ Runtime:</b> {movie.get('runtimes', [])} minutes\n"
-    movie_msg += f"<b>📝 Plot:</b> {movie.get('plot', [''])}...\n"
+
+    try:
+        movie_msg += f"<b>⭐️ Rating:</b> {movie.get('rating')}\n"
+    except KeyError:
+        movie_msg += "<b>⭐️ Rating:</b> N/A\n"
+
+    try:
+        movie_msg += f"<b>🎭 Genres:</b> {' | '.join(movie.get('genres', []))}\n"
+    except KeyError:
+        movie_msg += "<b>🎭 Genres:</b> N/A\n"
+
+    try:
+        movie_msg += f"<b>🌐 Language:</b> {' | '.join(movie.get('languages', []))}\n"
+    except KeyError:
+        movie_msg += "<b>🌐 Language:</b> N/A\n"
+
+    try:
+        movie_msg += f"<b>⏱️ Runtime:</b> {movie.get('runtimes', [])[0]} minutes\n"
+    except (KeyError, IndexError):
+        movie_msg += "<b>⏱️ Runtime:</b> N/A\n"
+
+    try:
+        movie_msg += f"<b>📝 Plot:</b> {movie.get('plot', [''])[0]}...\n"
+    except (KeyError, IndexError):
+        movie_msg += "<b>📝 Plot:</b> N/A\n"
+
     movie_msg += "\n<b>🌟 Cast:</b>\n"
 
     # Add the cast members to the message
     for person in movie.get('cast', [])[:5]:
-        movie_msg += f"- {person.get('name')} ({person.get('currentRole')})\n"
+        try:
+            movie_msg += f"- {person.get('name')} ({person.get('currentRole')})\n"
+        except KeyError:
+            movie_msg += "- N/A\n"
 
     # Send the message with the movie Details
     view_button = InlineKeyboardButton(text="View on IMDb", url=f"https://www.imdb.com/title/tt{movie.getID()}/")
@@ -87,8 +111,8 @@ async def back_to_search_handler(client, callback_query):
     button_list = []
     for i, movie in enumerate(movies[:10]):
         button_list.append(
-            [InlineKeyboardButton(text=f"{movie['title']} ({movie['year']})",
-                                  callback_data=f"more_details {movie.movieID}")]
+            [InlineKeyboardButton(text=f"{movie['title']}",
+                                  callback_data=f"more_details {movie.movieID} :{movie_name}:")]
         )
 
     # Add the buttons to an InlineKeyboardMarkup object
