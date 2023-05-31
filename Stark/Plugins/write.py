@@ -4,21 +4,6 @@ from urllib.parse import quote as qt
 
 from Stark import error_handler
 
-def text_set(text):
-    lines = []
-    if len(text) <= 55:
-        lines.append(text)
-    else:
-        all_lines = text.split("\n")
-        for line in all_lines:
-            if len(line) <= 55:
-                lines.append(line)
-            else:
-                k = int(len(line) / 55)
-                for z in range(1, k + 2):
-                    lines.append(line[((z - 1) * 55) : (z * 55)])
-    return lines[:25]
-
 @Client.on_message(filters.command(["write"]))
 @error_handler
 async def write(bot, message):
@@ -32,7 +17,7 @@ async def write(bot, message):
         await op.edit("`What do you wanna write?`")
         return
     try:
-        value = qt(text_set(text))
+        value = qt(text)
         url = f"https://api.naveenxd.wip.la/write?text={value}"
         await message.reply_photo(url)
         await op.delete()
