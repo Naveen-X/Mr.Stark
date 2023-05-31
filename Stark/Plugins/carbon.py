@@ -84,5 +84,6 @@ async def carbonn(bot, message):
     else:
         user = message.sender_chat.title
     cap = f"__Carbonized By {user}__\n\n__**By @Mr_StatkBot**"
-    await bot.send_photo(message.chat.id, "carbon.jog", caption=cap)
+    await bot.send_photo(message.chat.id, "carbon.jpg", caption=cap)
     await ok.delete()
+    os.remove("carbon.jpg")
