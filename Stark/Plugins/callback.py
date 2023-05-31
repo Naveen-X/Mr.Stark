@@ -54,23 +54,23 @@ async def more_details_handler(client, callback_query):
     back = callback_query.data.split(":")[1]
     movie = ia.get_movie(imdb_id)
     # Create a message with the movie details
-    movie_msg = f"<b>🎬 {movie['title']}</b> ({movie['year']})\n\n"
-    movie_msg += f"<b>⭐️ Rating:</b> {movie['rating']}\n"
-    movie_msg += f"<b>🎭 Genres:</b> {' | '.join(movie['genres'])}\n"
-    movie_msg += f"<b>🌐 Language:</b> {' | '.join(movie['language'])}\n"
-    movie_msg += f"<b>⏱️ Runtime:</b> {movie['runtimes'][0]} minutes\n"
-    movie_msg += f"<b>📝 Plot:</b> {movie['plot'][0]}...\n"
-    movie_msg += f"\n<b>🌟 Cast:</b>\n"
+    movie_msg = f"<b>🎬 {movie.get('title')}</b> ({movie.get('year')})\n\n"
+    movie_msg += f"<b>⭐️ Rating:</b> {movie.get('rating')}\n"
+    movie_msg += f"<b>🎭 Genres:</b> {' | '.join(movie.get('genres', []))}\n"
+    movie_msg += f"<b>🌐 Language:</b> {' | '.join(movie.get('languages', []))}\n"
+    movie_msg += f"<b>⏱️ Runtime:</b> {movie.get('runtimes', [])} minutes\n"
+    movie_msg += f"<b>📝 Plot:</b> {movie.get('plot', [''])}...\n"
+    movie_msg += "\n<b>🌟 Cast:</b>\n"
 
     # Add the cast members to the message
-    for person in movie['cast'][:5]:
-        movie_msg += f"- {person['name']} ({person.currentRole})\n"
+    for person in movie.get('cast', [])[:5]:
+        movie_msg += f"- {person.get('name')} ({person.get('currentRole')})\n"
 
     # Send the message with the movie Details
     view_button = InlineKeyboardButton(text="View on IMDb", url=f"https://www.imdb.com/title/tt{movie.getID()}/")
     back_button = InlineKeyboardButton(text="Back", url=f"back_to_search:{back}")
     # Add the buttons to an InlineKeyboardMarkup object
-    keyboard = InlineKeyboardMarkup([[view_button]])
+    keyboard = InlineKeyboardMarkup([[view_button], [back_button]])
     await callback_query.message.edit_text(
         text=movie_msg,
         disable_web_page_preview=True,
