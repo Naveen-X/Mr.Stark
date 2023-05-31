@@ -21,5 +21,6 @@ async def write(bot, message):
         value = qt(text)
         url = f"https://api.naveenxd.wip.la/write?text={value}"
         await message.reply_photo(url)
+        await op.delete()
     except Exception as e:
         await op.edit(f"**An error occurred:**\n`{e}`")
