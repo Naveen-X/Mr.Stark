@@ -1,4 +1,5 @@
-from imdb import IMDb
+from imdb import IMDb 
+from Stark import error_handler
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 
@@ -7,6 +8,7 @@ ia = IMDb()
 
 
 @Client.on_callback_query(filters.regex("^more_details"))
+@error_handler
 async def more_details_handler(client, callback_query):
     imdb_id = callback_query.data.split(" ")[1]
     await callback_query.answer("Ok")
@@ -117,6 +119,7 @@ async def more_details_handler(client, callback_query):
 
 
 @Client.on_callback_query(filters.regex("^back_to_search"))
+@error_handler
 async def back_to_search_handler(client, callback_query):
     movie_name = callback_query.data.split(":")[1]
     await callback_query.answer(movie_name)
