@@ -131,7 +131,6 @@ async def searh(client, query):
                     description="An inline tool to search Apps",
                     photo_url="https://telegra.ph//file/c9045df2755c5f51916e9.jpg",
                     caption="**Help:** An inline tool to search Apps\n**Usage:** `@MrStark_Bot app <query>`",
-                    parse_mode=pm.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton(
                             text="Search Now🔎",
@@ -189,6 +188,7 @@ async def searh(client, query):
 
     elif iq.startswith("wall"):
         result = []
+        answers = []
         input = (iq.split("wall", maxsplit=1)[1]).strip()
         if not input:
             result.append(
@@ -214,6 +214,7 @@ async def searh(client, query):
         await client.answer_inline_query(query.id, results=answerss, cache_time=2)
         
     elif iq.split()[0] == "torrent":
+            hanswers = []
             if len(iq.split()) < 2:
                 return await client.answer_inline_query(
                     query.id,
@@ -229,6 +230,7 @@ async def searh(client, query):
             )
     
     elif iq.split()[0] == "image":
+            answers = []
             if len(iq.split()) < 2:
                 return await client.answer_inline_query(
                     query.id,
