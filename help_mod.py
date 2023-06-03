@@ -42,11 +42,6 @@ class Script(object):
              "usage": "/dog"
         },
         {
-            "desc": "Get a random meme",
-            "cmds": ["meme"],
-             "usage": "/meme"
-        },
-        {
             "desc": "Get a panda image",
             "cmds": ["panda"],
              "usage": "/panda"
