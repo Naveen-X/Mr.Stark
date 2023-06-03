@@ -27,12 +27,12 @@ class Script(object):
         {
             "desc": "Executes python code",
             "cmds": ["eval", "e"],
-            "usage": "/e <python code>"
+            "usage": "/e [python code]"
         },
         {
             "desc": "Run bash/terminal cmd",
             "cmds": ["bash", "sh"],
-            "usage": "/bash <cmd>"
+            "usage": "/bash [cmd]"
         }
     ]
     FUN = [
@@ -61,33 +61,33 @@ class Script(object):
         {
             "desc": "Google searcher!",
             "cmds": ["gs", "google"],
-            "usage": "/gs <text to search>"
+            "usage": "/gs [text to search]"
         },
     ]
     IMDB = [
         {
             "desc": "Get information about a Movie/Series",
             "cmds": ["imdb"],
-            "usage": "/imdb <Movename/Series Name>"
+            "usage": "/imdb [Movename/Series Name]"
         }
     ]
     INSTADL = [
         {
             "desc": "Download post/reel from instagram",
             "cmds": ["insta", "instadl", "insdl", "instadownload"],
-            "usage": "/instadl <instagram post/reel link>"
+            "usage": "/instadl [instagram post/reel link]"
         }
     ]
     LOGOS = [
         {
             "desc": "Makes a logo for you with black bg",
             "cmds": ["alogo"],
-            "usage": "/alogo <text for logo>"
+            "usage": "/alogo [text for logo]"
         },
         {
             "desc": "Makes a logo for you, try it out",
             "cmds": ["slogo"],
-            "usage": "/slogo <text for logo>"
+            "usage": "/slogo [text for logo]"
         }
     ]
     MISC = [
@@ -111,7 +111,7 @@ class Script(object):
         {
             "desc": "Gets MediaInfo of Replied Video",
             "cmds": ["mediainfo", "mediadata"],
-            "usage": "/mediainfo <Reply to a video>"
+            "usage": "/mediainfo [Reply to a video]"
         }
     ]
     PORT = [
@@ -125,21 +125,21 @@ class Script(object):
         {
             "desc": "Pastes the given text in spacebin",
             "cmds": ["paste"],
-            "usage": "/paste <reply to message/text file>"
+            "usage": "/paste [reply to message/text file]"
         }
     ]
     QR = [
         {
             "desc": "Generates qr for given text",
             "cmds": ["qr"],
-            "usage": "/qr <text to make qr>"
+            "usage": "/qr [text to make qr]"
         }
     ]
     QUOTLY = [
         {
             "desc": "Converts your text into a quote",
             "cmds": ["quote", "qt", "qu", "q"],
-            "usage": "/q <reply to a text message>"
+            "usage": "/q [reply to a text message]"
         }
     ]
     STICKER = [
@@ -167,14 +167,14 @@ class Script(object):
         {
             "desc": "Creates a telegraph",
             "cmds": ["/telegraph", "/tgraph"],
-            "usage": "/tgraph <title for the telegraph | reply to a text message>"
+            "usage": "/tgraph [title for the telegraph | reply to a text message]"
         }
     ]
     TRANSLATE = [
         {
             "desc": "Translates the replied message",
             "cmds": ["tr", "translate"],
-            "usage": "/tr <language code | reply to a text message>"
+            "usage": "/tr [language code | reply to a text message]"
         }
     ]
     UPDATE = [
@@ -198,14 +198,14 @@ class Script(object):
         {
             "desc": "Gta-V wasted effect on replied image",
             "cmds": ["wasted"],
-            "usage": "/wasted <reply to a photo>"
+            "usage": "/wasted [reply to a photo]"
         }
     ]
     WHOIS = [
         {
             "desc": "Know who the replied person is",
             "cmds": ["info", "whois"],
-            "usage": "/info <user id/username | reply to a user message"
+            "usage": "/info [user id/username | reply to a user message]"
         }
     ]
     WRITE = [
