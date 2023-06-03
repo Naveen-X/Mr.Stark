@@ -14,11 +14,11 @@ from help_mod import Script
 from main.helper_func.basic_helpers import get_readable_time
 
 bot_start_time = time.time()
-assistant_version = "V1.0"
+bot_version = "V2.0"
 
 
 async def bot_sys_stats():
-    version = assistant_version
+    version = bot_version
     bot_uptime = int(time.time() - bot_start_time)
     cpu = psutil.cpu_percent()
     mem = psutil.virtual_memory().percent
@@ -161,12 +161,13 @@ async def cb_handler(client, query):
     elif "about" in query.data:
         await query.message.edit_text(
             text=f"""
-`My name : <b/><i>Mr.Stark</i>
-`○ Made By :  </b> 
+<b>My name : </b><i>Mr.Stark</i>
+<b>Version : </b><i>{bot_version}</i>
+<b>○ Made By :  </b> 
     <a href='tg://user?id=1246467977'>Naveen_xD</a>
     <a href='tg://user?id=1089528685'>Satya</a>
     <a href='tg://user?id=1602293216'>Ashit</a>
-`○ Language : </b><`>Python3</`>
+`○ Language : </b><code>Python3</code>
 `○ Library : <a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a></b>
 """,
             disable_web_page_preview=True,
