@@ -4,11 +4,6 @@ class Script(object):
             "desc": "Generates AI response from OpenAI",
             "cmds": ["gpt", "askgpt", "chatgpt"],
             "usage": "/gpt Who are you?"
-        },
-        {
-            "desc": "Generates images using OpenAI",
-            "cmds": ["generate", "genimage"],
-            "usage": "/genimage an alien"
         }
     ]
     CARBON = [
