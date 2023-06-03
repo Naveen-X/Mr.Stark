@@ -40,13 +40,3 @@ async def restart(_, message):
     args = [sys.executable, "-m", "Stark"]
     execle(sys.executable, *args, environ)
     exit()
-
-
-__help__ = """
-<b>System</b>
-➥ /ping - shows uptime and speed
-➥ /alive - For checking the bot is alive or not
-➥ /restart - Restarts the bot
-"""
-
-__mod_name__ = "System"
