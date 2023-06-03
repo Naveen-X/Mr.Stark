@@ -47,6 +47,18 @@ class Script(object):
              "usage": "/panda"
         }
     ]
+    FILETOOLS = [
+        {
+            "desc": "Downloads File to Local",
+            "cmds": ["download"],
+            "usage": "/download [reply to a doc/vid]"
+        },
+        {
+            "desc": "Upload Files from Local",
+            "cmds": ["upload"],
+            "usage": "/upload [filename/path of the file]"
+        },
+    ]
     GOOGLE = [
         {
             "desc": "Google searcher!",
