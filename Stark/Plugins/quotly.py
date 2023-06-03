@@ -142,39 +142,9 @@ async def quote(client, m):
                 "text": mes.text,
             }
             messages.append(me)
-        if mes.photo:
-            uu = {
-                "id": u.id,
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": u.username,
-                "language_code": "eu",
-                "title": f"{first_name} {last_name}",
-                "photo": {
-                    "small_file_id": u.photo.small_file_id,
-                    "small_file_unique_id": u.photo.small_photo_unique_id,
-                    "big_file_id": u.photo.big_file_id,
-                    "big_file_unique_id": u.photo.big_photo_unique_id
-                },
-                "type": "private",
-                "name": f"{first_name} {last_name}"
-            }
-            me = {
-                "media": [
-                    {
-                        "file_id": mes.photo.file_id,
-                        "file_size": mes.photo.file_size,
-                        "height": mes.photo.height,
-                        "width": mes.photo.width
-                    }
-                ],
-                "mediaType": "Photo",
-                "chatId": m.chat.id,
-                "avatar": True,
-                "from": uu,
-                "replyMessage": {}
-            }
-            messages.append(me)
+    if m.text == "/q" or "/qu" or "/qt" or "/quote" and not m.reply_to_message:
+      await m.reply_text("`Reply to a text message or guve text along with command`")
+      return
     text = {
         "type": "quote",
         "format": "png",
