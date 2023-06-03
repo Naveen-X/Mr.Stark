@@ -12,12 +12,11 @@ from Stark import error_handler
 @error_handler
 async def black_logo(bot, message):
     event = await message.reply_text("**Painting A Logo For You Broh...**")
-    text = message.text.split(None, 1)[1]
-    if not text:
-        await event.edit(
-            "**Gib Some Text Bro!**"
-        )
-        return
+    try:
+       text = message.text.split(None, 1)[1]
+    except IndexError:
+      await event.edit("**Gib Some Text Bro!**")
+      return
     fpath = glob.glob("resources/Fonts/*")
     font = random.choice(fpath)
     img = Image.open("./resources/images/black_blank_image.jpg")
@@ -54,15 +53,14 @@ async def black_logo(bot, message):
 @error_handler
 async def slogo(bot, message):
     event = await message.reply_text("`Processing`")
-    text = message.text.split(None, 1)[1]
-    if not text:
-        await event.edit("**I Dont want to Talk With You!**\n**Gib Some test to Make LOGO Bro!**")
-        return
-    fpath = glob.glob("resources/Fonts/*")
-    font = random.choice(fpath)
+    try:
+       text = message.text.split(None, 1)[1]
+    except IndexError:
+      await event.edit("**I Dont want to Talk With You!**\n**Gib Some text to Make LOGO Bro!**")
+      return
     img = Image.open("./resources/images/yellow_bg_for_logo.jpg")
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype(font, 600)
+    font = ImageFont.truetype("resources/Fonts/Chopsic.otf", 380)
     image_widthz, image_heightz = img.size
     w, h = draw.textsize(text, font=font)
     h += int(h * 0.21)
