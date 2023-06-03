@@ -104,13 +104,6 @@ class Script(object):
             "usage": "/mediainfo [Reply to a video]"
         }
     ]
-    PORT = [
-        {
-            "desc": "Scans open ports of an ip address",
-            "cmds": ["scanip"],
-            "usage": "/scanip <domain/ip>"
-        }
-    ]
     PASTE = [
         {
             "desc": "Pastes the given text in spacebin",
