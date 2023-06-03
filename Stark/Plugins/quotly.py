@@ -78,7 +78,12 @@ async def quote(client, m):
 
     if m.text == "/q" or "/qu" or "/qt" or "/quote":
         mes = m.reply_to_message
-        u = mes.from_user
+        try:
+          u = mes.from_user
+        except:
+          await qse.edit("Reply to a text message or guve text along with command`")
+          return
+        
         if not u.first_name:
             first_name = ""
         else:
