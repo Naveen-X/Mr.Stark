@@ -9,7 +9,7 @@ ia = IMDb()
 @Client.on_callback_query(filters.regex("^more_details"))
 async def more_details_handler(client, callback_query):
     imdb_id = callback_query.data.split(" ")[1]
-    await callback_query.answer("Ok")
+    await callback_query.answer("Hold on..", show_alert=True)
     back = callback_query.data.split(":")[1]
     movie = ia.get_movie(imdb_id)
 
@@ -119,7 +119,7 @@ async def more_details_handler(client, callback_query):
 @Client.on_callback_query(filters.regex("^back_to_search"))
 async def back_to_search_handler(client, callback_query):
     movie_name = callback_query.data.split(":")[1]
-    await callback_query.answer(movie_name)
+    await callback_query.answer(movie_name, show_alert=True)
     movies = ia.search_movie(movie_name, results=10)
     # Create a list of buttons for each search result
     button_list = []
