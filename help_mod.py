@@ -15,7 +15,7 @@ class Script(object):
         {
             "desc": "Creates a carbon in image format",
             "cmds": ["icarbon"],
-            "usage": "/carbon reply to a text message or give some text as input"
+            "usage": "/icarbon reply to a text message or give some text as input"
         }
     ]
     DEV = [
