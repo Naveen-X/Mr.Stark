@@ -167,8 +167,8 @@ async def cb_handler(client, query):
     <a href='tg://user?id=1246467977'>Naveen_xD</a>
     <a href='tg://user?id=1089528685'>Satya</a>
     <a href='tg://user?id=1602293216'>Ashit</a>
-`○ Language : </b><code>Python3</code>
-`○ Library : <a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a></b>
+`<b>○Language : </b><code>Python3</code>
+`<b>○Library : </b><a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a></b>
 """,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
