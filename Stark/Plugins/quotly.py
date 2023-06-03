@@ -158,6 +158,6 @@ async def quote(client, m):
     r = requests.post("https://bot.lyo.su/quote/generate", json=text)
     image = r.json()["result"]["image"]
     im = base64.b64decode(image.encode('utf-8'))
-    open('k.webp', 'wb').write(im)
-    await m.reply_sticker("k.webp")
+    open('qt.webp', 'wb').write(im)
+    await m.reply_sticker("qt.webp")
     await qse.delete()
