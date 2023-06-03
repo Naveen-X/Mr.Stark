@@ -81,7 +81,7 @@ async def quote(client, m):
         try:
           u = mes.from_user
         except:
-          await qse.edit("Reply to a text message or guve text along with command`")
+          await qse.edit("`Reply to a text message or guve text along with command`")
           return
         
         if not u.first_name:
