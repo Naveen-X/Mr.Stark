@@ -21,11 +21,3 @@ async def translate_me(_, message):
     output = await api.translate(text, target=lang)
     result = output.translated
     await lol.edit(f"**➥Translated successfully:**\n\n➥`{result}`")
-
-
-__help__ = """
-<b>Translater </b>
-➥ /tr <language code> reply to a message - translates the replied message
-"""
-
-__mod_name__ = "Translator"

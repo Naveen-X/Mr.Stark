@@ -91,12 +91,3 @@ async def slogo(bot, message):
     await event.delete()
     if os.path.exists(fname2):
         os.remove(fname2)
-
-
-__help__ = """
-<b>Logos</b>
-➥ /alogo <text> - makes logo with given text
-➥ /slogo <text> - makes a cool logo with given text
-"""
-
-__mod_name__ = "Logos"

@@ -44,13 +44,12 @@ async def make_carbon(bot, message):
                 user = message.from_user.mention
             else:
                 user = message.sender_chat.title
-            cap = f"__Carbonized By {user}__\n\n__**By @Mr_StatkBot**"
+            cap = f"__Carbonized By {user}__\n\n__**By @Mr_StarkBot**"
             await message.reply_document("carbon.jpg", caption=cap)
             await ok.delete()
             os.remove("carbon.jpg")
         except Exception as e:
             raise e
-
     try:
         await asyncio.wait_for(car_(bot, message), timeout=60)
     except asyncio.TimeoutError:
@@ -61,7 +60,6 @@ async def make_carbon(bot, message):
 @error_handler
 async def carbonn(bot, message):
     ok = await message.reply_text("Making Carbon...")
-
     code = None
     if message.reply_to_message:
         if message.reply_to_message.caption:
@@ -70,10 +68,8 @@ async def carbonn(bot, message):
             code = message.reply_to_message.text
     elif len(message.command) > 1:
         code = message.text.split(" ", 1)[1]
-
     if not code:
         return await ok.edit("Nothing To Carbonize...")
-
     x = carbon(code)
     carbon_url = x
     decodeit = open('carbon.jpg', 'wb')
@@ -83,7 +79,7 @@ async def carbonn(bot, message):
         user = message.from_user.mention
     else:
         user = message.sender_chat.title
-    cap = f"__Carbonized By {user}__\n\n__**By @Mr_StatkBot**"
+    cap = f"__Carbonized By {user}__\n\n__**By @Mr_StarkBot**"
     await bot.send_photo(message.chat.id, "carbon.jpg", caption=cap)
     await ok.delete()
     os.remove("carbon.jpg")

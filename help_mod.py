@@ -4,11 +4,6 @@ class Script(object):
             "desc": "Generates AI response from OpenAI",
             "cmds": ["gpt", "askgpt", "chatgpt"],
             "usage": "/gpt Who are you?"
-        },
-        {
-            "desc": "Generates images using OpenAI",
-            "cmds": ["generate", "genimage"],
-            "usage": "/genimage an alien"
         }
     ]
     CARBON = [
@@ -20,7 +15,7 @@ class Script(object):
         {
             "desc": "Creates a carbon in image format",
             "cmds": ["icarbon"],
-            "usage": "/carbon reply to a text message or give some text as input"
+            "usage": "/icarbon reply to a text message or give some text as input"
         }
     ]
     DEV = [
@@ -47,15 +42,22 @@ class Script(object):
              "usage": "/dog"
         },
         {
-            "desc": "Get a random meme",
-            "cmds": ["meme"],
-             "usage": "/meme"
-        },
-        {
             "desc": "Get a panda image",
             "cmds": ["panda"],
              "usage": "/panda"
         }
+    ]
+    FILETOOLS = [
+        {
+            "desc": "Downloads File to Local",
+            "cmds": ["download"],
+            "usage": "/download [reply to a doc/vid]"
+        },
+        {
+            "desc": "Upload Files from Local",
+            "cmds": ["upload"],
+            "usage": "/upload [filename/path of the file]"
+        },
     ]
     GOOGLE = [
         {
@@ -112,13 +114,6 @@ class Script(object):
             "desc": "Gets MediaInfo of Replied Video",
             "cmds": ["mediainfo", "mediadata"],
             "usage": "/mediainfo [Reply to a video]"
-        }
-    ]
-    PORT = [
-        {
-            "desc": "Scans open ports of an ip address",
-            "cmds": ["scanip"],
-            "usage": "/scanip <domain/ip>"
         }
     ]
     PASTE = [

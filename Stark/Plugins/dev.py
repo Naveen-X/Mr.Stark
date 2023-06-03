@@ -123,12 +123,3 @@ async def run_command(cmd):
         errors = "No Errors!"
     output = stdout.decode()
     return process.pid, errors, output, process.returncode
-
-
-__help__ = """
-<b>Dev</b>
-➥ /eval <python code> - runs the given code
-➥ /bash <command> - run terminal commands on telegram
-"""
-
-__mod_name__ = "Dev"
