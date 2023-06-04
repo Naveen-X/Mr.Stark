@@ -10,6 +10,8 @@ async def wanted(c,m):
   if (m.text == "/wanted" or "/bounty" and not m.reply_to_message):
     async for photo in c.get_chat_photos(m.from_user.id, limit=1):
       photo_url = await c.download_media(photo.file_id)
-    poster = WantedPoster(m.from_user.first_name, photo_url)
-    poster.save('wanted.png')
-    await c.send_photo(chat_id=m.chat.id, photo='wanted.png')
+    wanted_poster = WantedPoster(photo_url, m.from_user.first_name, bounty_amount)
+    path = wanted_poster.generate()
+    await c.send_photo(chat_id=m.chat.id, photo='path')
+  else:
+    await bt.edit("fine")
