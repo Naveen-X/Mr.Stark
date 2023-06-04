@@ -36,9 +36,15 @@ async def upload_file(c, m):
             await m.reply_text("`You are unauthorized`")
         else:
             msg = await m.reply_text("Uploading file please wait...")
-            await m.reply_document(file)
+            try:
+              await m.reply_document(file)
+            except:
+              await msg.edit("`No Such File Found`")
             await msg.delete()
     else:
         msg = await m.reply_text("Uploading file please wait...")
-        await m.reply_document(file)
+        try:
+          await m.reply_document(file)
+        except:
+          await msg.edit("`No Such File Found`")
         await msg.delete()
