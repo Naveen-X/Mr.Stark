@@ -76,13 +76,16 @@ async def quote(client, m):
                 }
                 messages.append(me)
 
-    if m.text == "/q" or "/qu" or "/qt" or "/quote":
-        mes = m.reply_to_message
-        try:
-          u = mes.from_user
-        except:
+    if (m.text == "/q" or "/qu" or "/qt" or "/quote") and not m.reply_to_message:
+       
           await qse.edit("`Reply to a text message or guve text along with command`")
           return
+    else:
+       mes = m.reply_to_message
+       try:
+         u = mes.from_user
+       except Exception as e:
+        print(e)
         
         if not u.first_name:
             first_name = ""
