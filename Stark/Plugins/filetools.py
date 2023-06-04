@@ -13,7 +13,7 @@ async def download(bot, message):
         await dl.edit("`Reply to a message to download!`")
         return
     if message.reply_to_message.media or message.reply_to_message.document or message.reply_to_message.photo:
-        file = await message.reply_to_message.download(progress)
+        file = await message.reply_to_message.download()
     file_txt = "__Downloaded This File To__ `{}`."
     filename = os.path.basename(file)
     f_name = os.path.join("downloads", filename)
