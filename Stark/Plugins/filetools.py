@@ -1,9 +1,6 @@
-from pyrogram import Client, filters
-
+import os 
 from Stark import error_handler
-
-def progress(current, total):
-    print(f"Downloaded {current} out of {total}")
+from pyrogram import Client, filters
 
 @Client.on_message(filters.command(["download"]))
 @error_handler
@@ -18,8 +15,9 @@ async def download(bot, message):
     if message.reply_to_message.media or message.reply_to_message.document or message.reply_to_message.photo:
         file = await message.reply_to_message.download(progress=progress)
     file_txt = "__Downloaded This File To__ `{}`."
-
-    await dl.edit(file_txt.format(file))
+    filename = os.path.basename(file)
+    f_name = os.path.join("downloads", filename)
+    await dl.edit(file_txt.format(f_name))
 
 @Client.on_message(filters.command(["upload"]))
 @error_handler
