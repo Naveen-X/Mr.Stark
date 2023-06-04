@@ -11,10 +11,9 @@ async def wanted(c,m):
     async for photo in c.get_chat_photos(m.from_user.id, limit=1):
       photo_url = await c.download_media(photo.file_id)
     if len(m.command) > 1:
-      try:
-        bounty_amount = m.text.split(None, 1)[1]
-      except IndexError:
-        bounty_amount = 3_000_000_000
+      bounty_amount = m.text.split(None, 1)[1]
+    else:
+      bounty_amount = 3_000_000_000
     try:
       last_name = m.from_user.last_name
     except:
