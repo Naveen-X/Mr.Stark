@@ -24,17 +24,9 @@ async def chatgpt(c, m):
         return
     query = quote(query)
     await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
-    response = generate_response(query)
+    try:
+      response = generate_response(query)
+    except JSONDecodeError:
+      response = "ChatGPT Error (401)"
     await c.send_message(m.chat.id, response, reply_to_message_id=m.id)
     await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
-
-
-# @Client.on_message(filters.reply)
-# async def gpt_reply(c, m):
-#   if m.reply_to_message.from_user.id == 1863795995:
-#     text = m.text
-#     query = quote(text)
-#     await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
-#     response = generate_response(query)
-#     await c.send_message(m.chat.id, response, reply_to_message_id=m.id)
-#     await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
