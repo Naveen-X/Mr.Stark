@@ -15,8 +15,9 @@ async def wanted(c,m):
       last_name = m.from_user.last_name
     except:
       last_name=None
-    wanted_poster = WantedPoster(photo_url, m.from_user.first_name, last_name, bounty_amount)
+    wanted_poster = WantedPoster(photo_url, last_name, m.from_user.first_name, bounty_amount)
     path = wanted_poster.generate()
     await c.send_photo(chat_id=m.chat.id, photo=path)
+    return
   else:
     await bt.edit("fine")
