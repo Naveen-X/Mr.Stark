@@ -10,9 +10,6 @@ async def wanted(c,m):
   if (m.text == "/wanted" or "/bounty" and not m.reply_to_message):
     async for photo in c.get_chat_photos(m.from_user.id, limit=1):
       photo_url = await c.download_media(photo.file_id)
-    if len(m.command) > 1:
-      bounty_amount = m.text.split(None, 1)[1]
-    else:
       bounty_amount = 3_000_000_000
     try:
       last_name = m.from_user.last_name
@@ -21,16 +18,13 @@ async def wanted(c,m):
     wanted_poster = WantedPoster(photo_url, last_name, m.from_user.first_name, bounty_amount)
     path = wanted_poster.generate()
     await c.send_photo(chat_id=m.chat.id, photo=path)
+    await bt.delete()
     os.remove(path)
     return
   if (m.text == "/wanted" or "/bounty" and m.reply_to_message):
     async for photo in c.get_chat_photos(m.reply_to_message.from_user.id, limit=1):
       photo_url = await c.download_media(photo.file_id)
-    if len(m.command) > 1:
-      try:
-        bounty_amount = m.text.split(None, 1)[1]
-      except IndexError:
-        bounty_amount = 3_000_000_000
+      bounty_amount = 3_000_000_000
     try:
       last_name = m.reply_to_message.from_user.last_name
     except:
@@ -38,5 +32,6 @@ async def wanted(c,m):
     wanted_poster = WantedPoster(photo_url, last_name, m.reply_to_message.from_user.first_name, bounty_amount)
     path = wanted_poster.generate()
     await c.send_photo(chat_id=m.chat.id, photo=path)
+    await bt.delete()
     os.remove(path)
     return
