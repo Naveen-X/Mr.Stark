@@ -19,5 +19,5 @@ async def wanted(c,m):
     path = wanted_poster.generate()
     await c.send_photo(chat_id=m.chat.id, photo=path)
     return
-  else:
+  if (m.text == "/wanted" or "/bounty" and m.reply_to_message):
     await bt.edit("fine")
