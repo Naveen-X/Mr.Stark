@@ -13,6 +13,6 @@ async def wanted(c,m):
     bounty_amount = 3_000_000_000
     wanted_poster = WantedPoster(photo_url, m.from_user.first_name, bounty_amount)
     path = wanted_poster.generate()
-    await c.send_photo(chat_id=m.chat.id, photo='path')
+    await c.send_photo(chat_id=m.chat.id, photo=path)
   else:
     await bt.edit("fine")
