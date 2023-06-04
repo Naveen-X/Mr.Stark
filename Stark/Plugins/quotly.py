@@ -29,11 +29,8 @@ async def quote(client, m):
         "name": f"{m.from_user.first_name} {m.from_user.last_name}"
     }
 
-    if len(m.command) > 1:
-        try:
-          num = m.reply_to_message.id
-        except:
-          num = m.id
+    if m.reply_to_message and len(m.command) > 1:
+        num = m.reply_to_message.id
         if m.command[1].isdigit():
             for i in range(int(m.command[1])):
                 mes = await client.get_messages(m.chat.id, num + i)
@@ -79,7 +76,7 @@ async def quote(client, m):
                 }
                 messages.append(me)
 
-    if (m.text == "/q" or "/qu" or "/qt" or "/quote") and (m.reply_to_message):
+    if (m.text == "/q" or m.text=="/qu" or m.text=="/qt" or m.text=="/quote") and (m.reply_to_message):
         mes = m.reply_to_message
         u = mes.from_user
         if not u.first_name:
@@ -145,7 +142,7 @@ async def quote(client, m):
                 "text": mes.text,
             }
             messages.append(me)
-    if (m.text == "/q" or "/qu" or "/qt" or "/quote") and (not m.reply_to_message):
+    if (m.text == "/q" or m.text=="/qu" or m.text=="/qt" or m.text=="/quote") and (not m.reply_to_message):
       await qse.edit("`Reply to a text message or guve text along with command`")
       return
     text = {
