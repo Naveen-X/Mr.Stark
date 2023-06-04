@@ -11,7 +11,11 @@ async def wanted(c,m):
     async for photo in c.get_chat_photos(m.from_user.id, limit=1):
       photo_url = await c.download_media(photo.file_id)
     bounty_amount = 3_000_000_000
-    wanted_poster = WantedPoster(photo_url, m.from_user.first_name, bounty_amount)
+    try:
+      last_name = m.from_user.last_name
+    except:
+      last_name=None
+    wanted_poster = WantedPoster(photo_url, m.from_user.first_name, last_name, bounty_amount)
     path = wanted_poster.generate()
     await c.send_photo(chat_id=m.chat.id, photo=path)
   else:
