@@ -142,7 +142,7 @@ async def instadl(c, m):
     ]
 )
     if carousel:
-        dl_bytes = [(InputMediaVideo(i, caption=caption_2) if i == dl_url[-1] else InputMediaVideo(i)) for i in dl_url]
+        dl_bytes = [(InputMediaPhoto(i, caption=caption_2) if i == dl_url[-1] else InputMediaPhoto(i)) for i in dl_url]
         await c.send_media_group(
             chat_id=m.chat.id,
             media=dl_bytes,
