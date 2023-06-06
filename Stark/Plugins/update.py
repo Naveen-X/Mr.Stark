@@ -7,12 +7,13 @@ from pyrogram import Client, filters
 
 from Stark import error_handler
 
+AUTH_LIST = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
 
 @Client.on_message(filters.command(["update", "up"]))
 @error_handler
 async def update(client, message):
     up = await message.reply_text(f"**Updating!**")
-    if message.from_user.id not in [1246467977, 1089528685]:
+    if message.from_user.id not in AUTH_LIST:
         await up.edit("**You are not allowed to do this.**")
         return
     sleep(1)
@@ -39,7 +40,7 @@ async def update(client, message):
 @error_handler
 async def de_snipp(client, message):
     up = await message.reply_text(f"**Please Wait!**")
-    if message.from_user.id not in [1246467977, 1089528685]:
+    if message.from_user.id not in AUTH_LIST:
         await up.edit("**You are not allowed to do this.**")
         return
     if 1 == 1:
