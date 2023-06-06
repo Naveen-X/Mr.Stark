@@ -16,14 +16,14 @@ async def dis_auth_user(user_id):
 
 @Client.on_message(filters.command(["auth"]) & filters.user([1246467977, 1089528685]))
 @error_handler
-async def qt_add(c, m):
+async def add_auth(c, m):
     if m.reply_to_message:
-        x = await m.reply_text("__Authorising User__")
+        x = await m.reply_text("`Authorising User`")
         user_ids = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
         if m.reply_to_message.from_user.id not in user_ids:
             try:
                 await auth_user(m.reply_to_message.from_user.id)
-                await x.edit("__Authorised__")
+                await x.edit("`Authorised`")
             except Exception as e:
                 await x.edit("**Error Occurred:** " + str(e))
         else:
@@ -34,17 +34,24 @@ async def qt_add(c, m):
 
 @Client.on_message(filters.command(["disauth", "unauth"]) & filters.user([1246467977, 1089528685]))
 @error_handler
-async def qt_remove(c, m):
+async def remove_auth(c, m):
     if m.reply_to_message:
-        x = await m.reply_text("__UnAuthorising User__")
+        x = await m.reply_text("`UnAuthorising User`")
         user_ids = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
         if m.reply_to_message.from_user.id in user_ids:
             try:
                 await dis_auth_user(m.reply_to_message.from_user.id)
-                await x.edit("__UnAuthorised__")
+                await x.edit("`UnAuthorised`")
             except Exception as e:
                 await x.edit("**Error Occurred:** " + str(e))
         else:
           await x.edit("**User is Not Authorised Yet**")
     else:
         await m.reply_text("`Reply to a user to UnAuthorise him`")
+
+@Client.on_message(filters.command(["listauth", "list_auth"]) & filters.user([1246467977, 1089528685]))
+async def list_auth(c,m):
+    x = await m.reply_text("`Getting Authorised Users list`")
+    try:
+      user_ids = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
+      
