@@ -16,19 +16,19 @@ def mongo_keyboard(id_):
 
 @Client.on_message(filters.command("showdb"))
 @error_handler
-def start_command(client, message):
+async def start_command(client, message):
     if dic.get(str(message.from_user.id)) is not None:
-        message.reply_text(
+        await message.reply_text(
             "Welcome to My Bot! You can start interacting with the bot.", reply_markup=mongo_keyboard(message.from_user.id))
     else:
-        message.reply_text(
+        await message.reply_text(
             "use /adddb [mongo uri]")
 @Client.on_message(filters.command("adddb"))
 @error_handler
-def start_command(client, message):
+async def start_command(client, message):
     db = message.text.split(" ")[1]
     dic[str(message.from_user.id)] = db
-    message.reply_text("Done!")
+    await message.reply_text("Done!")
 
     
 
