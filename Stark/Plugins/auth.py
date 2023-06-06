@@ -3,13 +3,13 @@ from Stark import error_handler
 from pyrogram import Client, filters
 
 async def auth_user(user_id):
-    stark = DB.auth.find_one({"user_id": user_id})
+    stark = DB.auth.find_one({"_id": user_id})
     if stark is None:
-        DB.auth.insert_one({"user_id": user_id})
+        DB.auth.insert_one({"_id": user_id})
 
 
 async def dis_auth_user(user_id):
-    DB.auth.delete_one({"user_id": user_id})
+    DB.auth.delete_one({"_id": user_id})
 
 
 ## I know This is wrong but it's OK!
