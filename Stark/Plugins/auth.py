@@ -23,7 +23,7 @@ async def add_auth(c, m):
         user_ids = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
         if m.reply_to_message.from_user.id not in user_ids:
             try:
-                await auth_user(m.reply_to_message.from_user.id)
+                await auth_user(m.reply_to_message.from_user.id, c)
                 await x.edit("`Authorised`")
             except Exception as e:
                 await x.edit("**Error Occurred:** " + str(e))
