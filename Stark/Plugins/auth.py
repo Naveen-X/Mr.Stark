@@ -19,11 +19,15 @@ async def dis_auth_user(user_id):
 async def qt_add(c, m):
     if m.reply_to_message:
         x = await m.reply_text("__Authorising User__")
-        try:
-            await auth_user(m.reply_to_message.from_user.id)
-            await x.edit("__Authorised__")
-        except Exception as e:
-            await x.edit("**Error Occurred:** " + str(e))
+        user_ids = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
+        if m.reply_to_message.from_user.id not in user_ids:
+            try:
+                await auth_user(m.reply_to_message.from_user.id)
+                await x.edit("__Authorised__")
+            except Exception as e:
+                await x.edit("**Error Occurred:** " + str(e))
+        else:
+          await x.edit("**User Already Authorised**")
     else:
         await m.reply_text("`Reply to a user to Authorise him`")
 
@@ -33,10 +37,14 @@ async def qt_add(c, m):
 async def qt_remove(c, m):
     if m.reply_to_message:
         x = await m.reply_text("__UnAuthorising User__")
-        try:
-            await dis_auth_user(m.reply_to_message.from_user.id)
-            await x.edit("__UnAuthorised__")
-        except:
-            await x.edit("__User is Not Authorised Yet__")
+        user_ids = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
+        if m.reply_to_message.from_user.id in user_ids:
+            try:
+                await dis_auth_user(m.reply_to_message.from_user.id)
+                await x.edit("__UnAuthorised__")
+            except Exception as e:
+                await x.edit("**Error Occurred:** " + str(e))
+        else:
+          await x.edit("**User is Not Authorised Yet**")
     else:
         await m.reply_text("`Reply to a user to UnAuthorise him`")
