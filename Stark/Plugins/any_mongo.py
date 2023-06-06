@@ -13,13 +13,18 @@ def mongo_keyboard(id_):
         [[InlineKeyboardButton("MongoDB", callback_data="mongo_"+f"[{id_}]")]])
     return mongo_keyboard_
 
+async def mongo_keyboard_(id_):
+    mongo_keyboard_ = InlineKeyboardMarkup(
+        [[InlineKeyboardButton("MongoDB", callback_data="mongo_"+f"[{id_}]")]])
+    return mongo_keyboard_
+
 
 @Client.on_message(filters.command("showdb"))
 @error_handler
 async def start_command(client, message):
     if dic.get(str(message.from_user.id)) is not None:
         await message.reply_text(
-            "Welcome to My Bot! You can start interacting with the bot.", reply_markup=mongo_keyboard(message.from_user.id))
+            "Welcome to My Bot! You can start interacting with the bot.", reply_markup=await mongo_keyboard_(message.from_user.id))
     else:
         await message.reply_text(
             "use /adddb [mongo uri]")
