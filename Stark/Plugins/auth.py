@@ -53,11 +53,11 @@ async def remove_auth(c, m):
 
 @Client.on_message(filters.command(["listauth", "list_auth"]) & filters.user([1246467977, 1089528685]))
 async def list_auth(c,m):
-    x = await m.reply_text("Getting Authorised Users list")
+    x = await m.reply_text("`Getting Authorised Users list`")
     if 1 == 1:
       users = DB.auth.find({})
-      mg = ""
+      mg = "**List of Authorised Users: **\n"
       for i in users:
         t = i["mention"]
-        mg += f"{t}\n"
-      await m.reply_text(mg)
+        mg += f"• {t}\n"
+      await x.edit(mg)
