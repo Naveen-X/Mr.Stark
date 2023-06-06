@@ -148,14 +148,16 @@ def show_fukindata(callback_query, collection, db, _id,mongo_uri):
     if document:
         callback_query.message.reply_text(f"Document details:\n\n{document}")
     else:
-        doc_id = ObjectId(_id)
-        document = col.find_one({"_id": doc_id})
-        if document:
-            callback_query.message.reply_text(f"Document details:\n\n{document}")
-        else:
-            document = col.find_one({"_id": int(_id)})
+       try:
+            doc_id = ObjectId(_id)
+            document = col.find_one({"_id": doc_id})
             if document:
-                callback_query.message.reply_text(
-                    f"Document details:\n\n{document}")
-            else:
-                callback_query.message.reply_text("Document not found.")
+                callback_query.message.reply_text(f"Document details:\n\n{document}")
+       except:
+             try:
+                document = col.find_one({"_id": int(_id)})
+                if document:
+                    callback_query.message.reply_text(
+                        f"Document details:\n\n{document}")
+             except:
+                    callback_query.message.reply_text("Document not found.")
