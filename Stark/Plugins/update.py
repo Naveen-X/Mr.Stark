@@ -5,6 +5,7 @@ from time import sleep
 
 from pyrogram import Client, filters
 
+from Stark.db import DB
 from Stark import error_handler
 
 AUTH_LIST = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
