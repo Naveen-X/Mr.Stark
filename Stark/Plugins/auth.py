@@ -2,10 +2,11 @@ from Stark.db import DB
 from Stark import error_handler
 from pyrogram import Client, filters
 
-async def auth_user(user_id):
+async def auth_user(user_id, bot):
     stark = DB.auth.find_one({"_id": user_id})
     if stark is None:
-        DB.auth.insert_one({"_id": user_id})
+        men = await bot.get_users(user_id).mention
+        DB.auth.insert_one({"_id": user_id,"mention":men})
 
 
 async def dis_auth_user(user_id):
