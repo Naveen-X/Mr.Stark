@@ -50,9 +50,3 @@ async def remove_auth(c, m):
     else:
         await m.reply_text("`Reply to a user to UnAuthorise him`")
 
-@Client.on_message(filters.command(["listauth", "list_auth"]) & filters.user([1246467977, 1089528685]))
-async def list_auth(c,m):
-    x = await m.reply_text("`Getting Authorised Users list`")
-    try:
-      user_ids = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
-      
