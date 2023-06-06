@@ -18,7 +18,7 @@ async def dis_auth_user(user_id):
 @error_handler
 async def qt_add(c, m):
 	if m.reply_to_message:
-    x = await m.reply_text("__Authorising User__")
+      x = await m.reply_text("__Authorising User__")
     try:
       await auth_user(m.reply_to_message.from_user.id)
       await x.edit("__Authorused__")
