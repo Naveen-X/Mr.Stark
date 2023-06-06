@@ -7,6 +7,7 @@ from typing import Tuple
 
 from pyrogram import Client, filters
 
+from Stark.db import DB
 from Stark import error_handler
 from main.helper_func.basic_helpers import edit_or_send_as_file
 
@@ -28,9 +29,10 @@ async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
 
 EVAL = "**➥ ᴄᴏᴅᴇ:** \n`{code}` \n\n**➥ ᴏᴜᴛᴘᴜᴛ:** \n`{result}`"
 
+AUTH_LIST = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
 
-@Client.on_message(filters.command(["eval", "e"]) & filters.user([1246467977, 1089528685]))
-@Client.on_edited_message(filters.command(["eval", "e"]) & filters.user([1246467977, 1089528685]))
+@Client.on_message(filters.command(["eval", "e"]) & filters.user(AUTH_LIST))
+@Client.on_edited_message(filters.command(["eval", "e"]) & filters.user(AUTH_LIST))
 @error_handler
 async def eval(bot, message):
     stark = await message.reply_text(f"`ʀᴜɴɴɪɴɢ ᴄᴏᴅᴇ... ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ!`")
@@ -79,8 +81,8 @@ async def aexec(code, bot, message):
     return await locals()["__aexec"](bot, message)
 
 
-@Client.on_message(filters.command(["bash", "sh"]) & filters.user([1246467977, 1089528685]))
-@Client.on_edited_message(filters.command(["bash"]) & filters.user([1246467977, 1089528685]))
+@Client.on_message(filters.command(["bash", "sh"]) & filters.user(AUTH_LIST))
+@Client.on_edited_message(filters.command(["bash"]) & filters.user(AUTH_LIST))
 @error_handler
 async def terminal(bot, message):
     stark = await message.reply_text("`Please Wait!`")
