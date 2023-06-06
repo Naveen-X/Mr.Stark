@@ -4,7 +4,7 @@ from datetime import datetime
 from os import environ, execle
 
 from pyrogram import Client, filters
-
+from Stark.db import DB
 from Stark import error_handler
 from main.helper_func.basic_helpers import (
     get_readable_time
