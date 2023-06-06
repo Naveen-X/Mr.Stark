@@ -56,3 +56,4 @@ youtube-search-python
 pymongo[srv]
 pytz
 imdbpy
+one-piece-wanted-poster
