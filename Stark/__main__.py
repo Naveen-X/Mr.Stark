@@ -106,7 +106,7 @@ for key in sys.modules.keys():
 url = ""
 
 try:
-    mg = app.send_message(-1001491739934, mgt)
+    mg = app.send_message(-1001491739934, text=mgt)
     url = mg.link
 except:
     filename = "PLUGINS_" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=8)) + ".md"
