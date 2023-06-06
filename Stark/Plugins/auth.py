@@ -6,7 +6,8 @@ async def auth_user(user_id, bot):
     stark = DB.auth.find_one({"_id": user_id})
     if stark is None:
         men = await bot.get_users(user_id)
-        DB.auth.insert_one({"_id": user_id,"mention":men.mention})
+        men = men.mention
+        DB.auth.insert_one({"_id": user_id,"mention":men})
 
 
 async def dis_auth_user(user_id):
@@ -50,3 +51,13 @@ async def remove_auth(c, m):
     else:
         await m.reply_text("`Reply to a user to UnAuthorise him`")
 
+@Client.on_message(filters.command(["listauth", "list_auth"]) & filters.user([1246467977, 1089528685]))
+async def list_auth(c,m):
+    x = await m.reply_text("Getting Authorised Users list")
+    if 1 == 1:
+      users = DB.auth.find({})
+      mg = ""
+      for i in users:
+        t = i["mention"]
+        mg += f"{t}\n"
+      await m.reply_text(mg)
