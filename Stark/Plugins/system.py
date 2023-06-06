@@ -11,8 +11,8 @@ from main.helper_func.basic_helpers import (
 )
 
 start_time = time.time()
-assistant_version = "V1.0"
-
+assistant_version = "V2.0"
+AUTH_LIST = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
 
 @Client.on_message(filters.command(["ping", "p"]))
 @error_handler
@@ -33,7 +33,7 @@ async def alive(_, message):
     await message.reply_text(f"**Bᴏᴛ ɪs ᴀʟɪᴠᴇ 🔥**")
 
 
-@Client.on_message(filters.command(["restart"]) & filters.user([1246467977, 1089528685]))
+@Client.on_message(filters.command(["restart"]) & filters.user(AUTH_LIST))
 @error_handler
 async def restart(_, message):
     await message.reply_text("`𝙱𝚘𝚝 𝚒𝚜 𝚁𝚎𝚜𝚝𝚊𝚛𝚝𝚒𝚗𝚐...!`")
