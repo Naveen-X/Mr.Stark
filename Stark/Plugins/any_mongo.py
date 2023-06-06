@@ -3,7 +3,7 @@ import pymongo
 from time import sleep
 from bson import ObjectId
 from Stark import error_handler
-from pyrogram import Client as app, filters, idle
+from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 dic = {}
@@ -14,7 +14,7 @@ def mongo_keyboard(id_):
     return mongo_keyboard_
 
 
-@app.on_message(filters.command("showdb"))
+@Client.on_message(filters.command("showdb"))
 @error_handler
 def start_command(client, message):
     if dic.get(str(message.from_user.id)) is not None:
@@ -23,7 +23,7 @@ def start_command(client, message):
     else:
         message.reply_text(
             "use /adddb [mongo uri]")
-@app.on_message(filters.command("adddb"))
+@Client.on_message(filters.command("adddb"))
 @error_handler
 def start_command(client, message):
     db = message.text.split(" ")[1]
@@ -38,7 +38,7 @@ def mongo_keyboard(id_):
     return mongo_keyboard_
   
 pattern = re.compile(r".*\[(\d+)\].*")
-@app.on_callback_query(filters.regex(pattern))
+@Client.on_callback_query(filters.regex(pattern))
 def button_callback(client, callback_query):
     if f"[{callback_query.from_user.id}]" in str(callback_query.data):
         try:
