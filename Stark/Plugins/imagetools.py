@@ -121,7 +121,7 @@ async def getfakecertificate(c, m):
             reply_to_message_id=m.reply_to_message.id,
         )
     else:
-        await c.send_photo(message.chat.id, photo=ok)
+        await c.send_photo(m.chat.id, photo=ok)
     await pablo.delete()
     if os.path.exists(ok):
         os.remove(ok)
