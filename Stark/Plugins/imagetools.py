@@ -93,11 +93,10 @@ async def c_imagenote(c, m):
 @Client.on_message(filters.command(["genca", "gencertificate"]))
 @error_handler
 async def getfakecertificate(c, m):
-    engine = message.Engine
     pablo = await m.reply_text("`Processing...`")
     try:
       text = m.text.split(None, 1)[1]
-    if not text:
+    except IndexError:
         await pablo.edit("`Give input for name on certificate`")
         return
     famous_people = ["Modi", "Trump", "Albert", "Gandhi"]
