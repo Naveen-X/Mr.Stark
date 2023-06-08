@@ -5,7 +5,6 @@ import textwrap
 from shutil import rmtree
 from datetime import datetime
 
-import cv2
 import wget
 import pytz
 import requests
