@@ -11,6 +11,7 @@ import requests
 import numpy as np 
 from pygifsicle import optimize
 from pyrogram import Client, filters
+from PIL import Image, ImageDraw, ImageFont
 from main.helper_func.plugin_helpers import (
     convert_to_image,
     convert_image_to_image_note,
@@ -88,3 +89,41 @@ async def c_imagenote(c, m):
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
+
+@Client.on_message(filters.command(["genca", "gencertificate"]))
+@error_handler
+async def getfakecertificate(c, m):
+    engine = message.Engine
+    pablo = await m.reply_text("`Processing...`")
+    try:
+      text = m.text.split(None, 1)[1]
+    if not text:
+        await pablo.edit("`Give input for name on certificate`")
+        return
+    famous_people = ["Modi", "Trump", "Albert", "Gandhi"]
+    img = Image.open("./resources/images/certificate_templete.png")
+    d1 = ImageDraw.Draw(img)
+    myFont = ImageFont.truetype("./resources/Fonts/impact.ttf", 200)
+    myFont2 = ImageFont.truetype("./resources/Fonts/impact.ttf", 70)
+    myFont3 = ImageFont.truetype("./resources/Fonts/Streamster.ttf", 50)
+    d1.text((1433, 1345), text, font=myFont, fill=(51, 51, 51))
+    TZ = pytz.timezone(Config.TZ)
+    datetime_tz = datetime.now(TZ)
+    oof = datetime_tz.strftime('%Y/%m/%d')
+    d1.text((961, 2185), oof, font=myFont2, fill=(51, 51, 51))
+    d1.text((2441, 2113), random.choice(famous_people), font=myFont3, fill=(51, 51, 51))
+    file_name = "certificate.png"
+    ok = file_name
+    img.save(ok, "PNG")
+    if m.reply_to_message:
+        await c.send_photo(
+            m.chat.id,
+            photo=ok,
+            reply_to_message_id=m.reply_to_message.id,
+        )
+    else:
+        await c.send_photo(message.chat.id, photo=ok)
+    await pablo.delete()
+    if os.path.exists(ok):
+        os.remove(ok)
+        
