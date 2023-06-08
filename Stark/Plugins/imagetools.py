@@ -17,11 +17,13 @@ from main.helper_func.plugin_helpers import (
     convert_vid_to_vidnote,
     generate_meme
 )
+from Stark import error_handler
 
 DURATION = 200
 LOOP = 0 
 
 @Client.on_message(filters.command(["memify"]))
+@error_handler
 async def momify(c,m):
     owo = await m.reply_text("`Processing...`")
     img = await convert_to_image(m, c)
@@ -48,7 +50,7 @@ async def momify(c,m):
     generate_meme(img, top_text=top_text, bottom_text=bottom_text)
     imgpath = "memeimg.webp"
     if m.reply_to_message:
-        await client.send_sticker(
+        await c.send_sticker(
             m.chat.id,
             sticker=imgpath,
             reply_to_message_id=m.reply_to_message.message_id,
