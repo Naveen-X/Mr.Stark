@@ -73,6 +73,23 @@ class Script(object):
             "usage": "/imdb [Movename/Series Name]"
         }
     ]
+    IMAGETOOLS = [
+        {
+            "desc": "Create ur own memes",
+            "cmds": ["memify"],
+            "usage": "/memify [Upper text ; Lower text] | reply to a media"
+        },
+        {
+            "desc": "Crop Image Into Round & Cool Sticker",
+            "cmds": ["circle"],
+            "usage": "/circle [reply to a photo or sticker]"
+        },
+        {
+            "desc": "Get Fake Certificate With Given Name!",
+            "cmds": ["genca", "gencertificate"],
+            "usage": "/genca [Name on the certificate]"
+        }
+    ]
     INSTADL = [
         {
             "desc": "Download post/reel from instagram",
@@ -114,6 +131,18 @@ class Script(object):
             "desc": "Gets MediaInfo of Replied Video",
             "cmds": ["mediainfo", "mediadata"],
             "usage": "/mediainfo [Reply to a video]"
+        }
+    ]
+    MONGODB = [
+        {
+            "desc": "Adds MongoDB to database so that u can access",
+            "cmds": ["adddb"],
+            "usage": "/adddb [mongo uri]"
+        },
+        {
+            "desc": "Get access to the MongoDB uri u added using /adddb",
+            "cmds": ["showdb"],
+            "usage": "/showdb"
         }
     ]
     PASTE = [
