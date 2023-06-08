@@ -10,6 +10,7 @@ import pytz
 import requests
 import numpy as np 
 from pygifsicle import optimize
+from pyrogram import Client, filters
 from main.helper_func.plugin_helpers import (
     convert_to_image,
     convert_image_to_image_note,
