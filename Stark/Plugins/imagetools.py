@@ -11,7 +11,7 @@ import pytz
 import requests
 import numpy as np 
 from pygifsicle import optimize
-from main..helper_func.plugin_helpers import (
+from main.helper_func.plugin_helpers import (
     convert_to_image,
     convert_image_to_image_note,
     convert_vid_to_vidnote,
