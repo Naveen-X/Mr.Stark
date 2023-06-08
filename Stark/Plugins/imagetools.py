@@ -53,7 +53,7 @@ async def momify(c,m):
         await c.send_sticker(
             m.chat.id,
             sticker=imgpath,
-            reply_to_message_id=m.reply_to_message.message_id,
+            reply_to_message_id=m.reply_to_message.id,
         )
     else:
         await c.send_sticker(m.chat.id, sticker=imgpath)
