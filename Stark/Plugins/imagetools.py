@@ -106,7 +106,7 @@ async def getfakecertificate(c, m):
     myFont2 = ImageFont.truetype("./resources/Fonts/impact.ttf", 70)
     myFont3 = ImageFont.truetype("./resources/Fonts/Streamster.ttf", 50)
     d1.text((1433, 1345), text, font=myFont, fill=(51, 51, 51))
-    TZ = pytz.timezone(Config.TZ)
+    TZ = pytz.timezone("Asia/Kolkata")
     datetime_tz = datetime.now(TZ)
     oof = datetime_tz.strftime('%Y/%m/%d')
     d1.text((961, 2185), oof, font=myFont2, fill=(51, 51, 51))
