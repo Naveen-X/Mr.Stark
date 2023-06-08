@@ -60,3 +60,31 @@ async def momify(c,m):
     if os.path.exists(imgpath):
         os.remove(imgpath)
     await owo.delete()
+
+@Client.on_message(filters.command(["circle"]))
+@error_handler
+async def c_imagenote(c, m):
+    owo = await m.reply_text("`Processing...`")
+    img = await convert_to_image(m, c)
+    if not img:
+        await owo.edit("`Reply to a Valid media`")
+        return
+    if not os.path.exists(img):
+        await owo.edit("`Its a invalid media`")
+        return
+    ok = await convert_image_to_image_note(img)
+    if not os.path.exists(ok):
+        await owo.edit("`Unable To Convert To Round Image.`")
+        return
+    if m.reply_to_message:
+        await c.send_sticker(
+            m.chat.id,
+            sticker=ok,
+            reply_to_message_id=m.reply_to_message.id,
+        )
+    else:
+        await client.send_sticker(m.chat.id, sticker=ok)
+    await owo.delete()
+    for files in (ok, img):
+        if files and os.path.exists(files):
+            os.remove(files)
