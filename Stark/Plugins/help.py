@@ -64,7 +64,7 @@ async def start(client, message):
             item_title=item_title
         )
         index = page_
-        lines = 3
+        lines = 5
         columns = 3
         kb = page.create(page=index, lines=lines, columns=columns)
         return kb
