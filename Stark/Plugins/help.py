@@ -108,7 +108,7 @@ async def cb_handler(client, query):
             item_title=item_title
         )
         index = page_
-        lines = 4
+        lines = 5
         columns = 3
         kb = page.create(page=index, lines=lines, columns=columns)
         return kb
