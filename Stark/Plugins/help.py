@@ -161,14 +161,14 @@ async def cb_handler(client, query):
     elif "about" in query.data:
         await query.message.edit_text(
             text=f"""
-<b>My name : </b><i>Mr.Stark</i>
-<b>Version : </b><i>{bot_version}</i>
-<b>○Made By :  </b> 
-    <a href='tg://user?id=1246467977'>Naveen_xD</a>
-    <a href='tg://user?id=1089528685'>Satya</a>
-    <a href='tg://user?id=1602293216'>Ashit</a>
-`<b>○Language : </b><code>Python3</code>
-`<b>○Library : </b><a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a></b>
+<b>✘ My name : </b><i>Mr.Stark</i>
+<b>✘ Version : </b><i>{bot_version}</i>
+<b>✘ Made By :  </b> 
+    • <a href='tg://user?id=1246467977'>Naveen_xD</a>
+    • <a href='tg://user?id=1089528685'>Satya</a>
+    • <a href='tg://user?id=1602293216'>Ashit</a>
+<b>✘ Language : </b><code>Python3</code>
+<b>✘ Library : </b><a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a>
 """,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
