@@ -6,8 +6,8 @@ from Stark import error_handler
 
 def keyboard(id):
     return ikb([
-        [("😎 About me 😎", f'{id}.about'), ('🖥System stats 🖥', f'{id}.sys_info')],
-        [('🤡Commands Help🤡', f'{id}.hlp')]
+        [("⭕ About me ⭕", f'{id}.about'), ('🖥 System stats 🖥', f'{id}.sys_info')],
+        [('💠 Commands Help 💠', f'{id}.hlp')]
     ])
 
 
