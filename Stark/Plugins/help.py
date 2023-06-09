@@ -108,8 +108,8 @@ async def cb_handler(client, query):
             item_title=item_title
         )
         index = page_
-        lines = 3
-        columns = 3
+        lines = 4
+        columns = 4
         kb = page.create(page=index, lines=lines, columns=columns)
         return kb
 
@@ -135,9 +135,9 @@ async def cb_handler(client, query):
 
             msg = msg + """
 
-𝗜𝗻𝗳𝗼: `{}­`
-𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀: `{}­`
-𝗨𝘀𝗮𝗴𝗲: `{}­`
+**Info**: `{}­`
+**Commands**: `{}­`
+**Usage**: `{}­`
             """.format(desc, cmds, usage)
 
         await query.edit_message_text(text=msg, reply_markup=
@@ -182,7 +182,7 @@ async def cb_handler(client, query):
     elif "back" in query.data:
         firstname = query.from_user.first_name
         await query.message.edit_text(
-            text=f"<i>Hello, {firstname} !\nNice To Meet You, Well I Am A Powerfull Assistant bot For My Master!`\nMade by </i>Naveen_xD",
+            text=f"<i>Hello, {firstname} !\nI Am Mr.Stark\nNice To Meet You, Well I Am A Powerfull bot.\nMade by </i> <a href='https://telegram.dog/Naveen_xD'>Naveen_xD</a>",
             reply_markup=keyboard(sent_by),
             disable_web_page_preview=True
         )
