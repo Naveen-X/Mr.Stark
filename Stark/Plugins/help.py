@@ -28,7 +28,7 @@ async def bot_sys_stats():
 Naveen_xD@Mr.Stark
 --------------------------
 ✘ VERSION: {version}
-✘ UPTIME: {bot_uptime}
+✘ UPTIME: {get_readable_time((time.time() - bot_start_time))}
 ✘ BOT: {round(process.memory_info()[0] / 1024 ** 2)} MB
 ✘ CPU: {cpu}%
 ✘ RAM: {mem}%
