@@ -1,11 +1,13 @@
 import time 
 import json 
 import requests
-from json import JSONDecodeError
+from io import BytesIO
 from pyrogram import enums
 from urllib.parse import quote
+from json import JSONDecodeError
 from pyrogram import Client, filters
 from pyrogram.types import InputMediaPhoto
+
 from Stark import error_handler
 from Stark.config import config
 
@@ -60,9 +62,15 @@ async def imagine(c,m):
     return
   x = await m.reply_text(f"`Processing`")
   results = generate_images(prompt, n=4)
-  result = [InputMediaPhoto(image) for image in results["data"]]
+  media = []
+  for image in results["data"]:
+    # Download the image data from the URL
+    response = requests.get(image["url"])
+    image_data = response.content
+    # Create an InputMediaPhoto object with the binary image data
+    media.append(InputMediaPhoto(BytesIO(image_data)))
   await c.send_media_group(
-            chat_id=m.chat.id,
-            media=result,
-        )
+    chat_id=m.chat.id,
+    media=media,
+  )
   await x.delete()
