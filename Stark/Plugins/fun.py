@@ -29,3 +29,10 @@ async def dog(bot, message):
     r = requests.get(url=link).json()
     image_s = r["link"]
     await bot.send_photo(message.chat.id, image_s, reply_to_message_id=message.id)
+
+@Client.on_message(filters.command(["bored"]))
+@error_handler
+async def bored(bot, message):
+    api = requests.get("https://nekos.best/api/v2/bored").json()
+    url = api["results"][0]['url']
+    await message.reply_animation(url)
