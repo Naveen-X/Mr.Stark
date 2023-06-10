@@ -54,7 +54,7 @@ async def pikachu(bot, message):
 @Client.on_message(filters.command(["pat"]))
 @error_handler
 async def pat(bot, message):
-    link = "https://some-random-api.com/img/pat"
+    link = "https://some-random-api.com/animu/pat"
     r = requests.get(url=link).json()
     url = r["link"]
     await message.reply_animation(url)
@@ -62,7 +62,7 @@ async def pat(bot, message):
 @Client.on_message(filters.command(["wink"]))
 @error_handler
 async def wink(bot, message):
-    link = "https://some-random-api.com/img/wink"
+    link = "https://some-random-api.com/animu/wink"
     r = requests.get(url=link).json()
     url = r["link"]
     await message.reply_animation(url)
@@ -70,7 +70,7 @@ async def wink(bot, message):
 @Client.on_message(filters.command(["hug"]))
 @error_handler
 async def hug(bot, message):
-    link = "https://some-random-api.com/img/hug"
+    link = "https://some-random-api.com/animu/hug"
     r = requests.get(url=link).json()
     url = r["link"]
     await message.reply_animation(url)
