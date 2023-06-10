@@ -23,7 +23,7 @@ async def wasted(bot, message):
 
 @Client.on_message(filters.command(["passed"]))
 @error_handler
-async def wasted(bot, message):
+async def mission_passed(bot, message):
     gta = await bot.send_message(message.chat.id, "`Processing...`")
     if not message.reply_to_message:
         await gta.edit("`Reply to a photo :(`")
