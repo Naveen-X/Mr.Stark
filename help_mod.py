@@ -70,7 +70,7 @@ class Script(object):
             "desc": "Get a hugging gif",
             "cmds": ["hug"],
              "usage": "/hug"
-        }
+        },
         {
             "desc": "Get a winking gif",
             "cmds": ["wink"],
