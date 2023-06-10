@@ -63,14 +63,17 @@ async def imagine(c,m):
   x = await m.reply_text(f"`Processing`")
   results = generate_images(prompt, n=4)
   media = []
-  for image in results["data"]:
-    # Download the image data from the URL
-    response = requests.get(image["url"])
-    image_data = response.content
-    # Create an InputMediaPhoto object with the binary image data
-    media.append(InputMediaPhoto(BytesIO(image_data)))
-  await c.send_media_group(
-    chat_id=m.chat.id,
-    media=media,
-  )
-  await x.delete()
+  try:
+    for image in results["data"]:
+      # Download the image data from the URL
+      response = requests.get(image["url"])
+      image_data = response.content
+      # Create an InputMediaPhoto object with the binary image data
+      media.append(InputMediaPhoto(BytesIO(image_data)))
+    await c.send_media_group(
+      chat_id=m.chat.id,
+      media=media,
+    )
+    await x.delete()
+  except KeyError:
+    await x.edit("`Ur Request has been blocked. Try removing bad words from ur prompt`")
