@@ -148,7 +148,7 @@ async def url_upload(c, m):
       m.reply_to_message
       and not m.reply_to_message.text
       or not m.reply_to_message
-      and m.text.split(None, 1)[1]
+      and not m.text.split(None, 1)[1]
       ):
         return await m.reply_text(
           "𝚁𝚎𝚙𝚕𝚢 𝚝𝚘 𝚊𝚗 𝚞𝚛𝚕 𝚘𝚛 𝚐𝚒𝚟𝚎 𝚞𝚛𝚕 𝚠𝚒𝚝𝚑 𝚝𝚑𝚒𝚜 𝚌𝚘𝚖𝚖𝚊𝚗𝚍!"
