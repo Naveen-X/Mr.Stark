@@ -50,6 +50,31 @@ class Script(object):
             "desc": "Get a panda image",
             "cmds": ["panda"],
              "usage": "/panda"
+        },
+        {
+            "desc": "Get a bored gif 🥱",
+            "cmds": ["bored"],
+             "usage": "/bored"
+        },
+        {
+            "desc": "get a image or gif of pikachu",
+            "cmds": ["pikachu"],
+             "usage": "/pikachu"
+        },
+        {
+            "desc": "Get a patting gif",
+            "cmds": ["pat"],
+             "usage": "/pat"
+        },
+        {
+            "desc": "Get a hugging gif",
+            "cmds": ["hug"],
+             "usage": "/hug"
+        }
+        {
+            "desc": "Get a winking gif",
+            "cmds": ["wink"],
+             "usage": "/wink"
         }
     ]
     FILETOOLS = [
