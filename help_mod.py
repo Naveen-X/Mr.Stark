@@ -96,7 +96,7 @@ class Script(object):
             "usage": "/gs [text to search]"
         },
     ]
-    GTA_5 = [
+    GTA5 = [
         {
             "desc": "Gta-V wasted effect on replied image",
             "cmds": ["wasted"],
