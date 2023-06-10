@@ -32,3 +32,11 @@ async def chatgpt(c, m):
       response = "`ChatGPT Error (401)`"
     await c.send_message(m.chat.id, response, reply_to_message_id=m.id)
     await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
+
+@Client.on_message(filters.command(["imagine"]))
+@error_handler
+async def imagine(c,m):
+  try:
+    prompt= m.text.split(None, 1)[1]
+  except IndexError:
+    await m.reply_text("`What should i imagine??\nHive some prompt along with the command /imagine`")
