@@ -18,3 +18,4 @@ class Config(object):
     WSA = os.environ.get("WSA", None)
     ARQ_API = os.environ.get("ARQ_API", None)
     OPEN_AI_KEY = os.environ.get("OPEN_AI_KEY", None)
+    RAPID_API = os.environ.get("RAPID_API", None)
