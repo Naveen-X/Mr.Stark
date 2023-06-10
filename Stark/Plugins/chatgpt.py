@@ -60,7 +60,7 @@ async def imagine(c,m):
   except IndexError:
     await m.reply_text("`What should i imagine??\nHive some prompt along with the command`")
     return
-  x = await m.reply_text(f"`Processing`")
+  x = await m.reply_text(f"`Processing...`")
   results = generate_images(prompt, n=4)
   media = []
   try:
