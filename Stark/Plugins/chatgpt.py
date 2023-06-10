@@ -5,7 +5,7 @@ from json import JSONDecodeError
 from pyrogram import enums
 from urllib.parse import quote
 from pyrogram import Client, filters
-
+from pyrogram.types import InputMediaPhoto
 from Stark import error_handler
 
 def generate_response(query: str):
@@ -13,7 +13,22 @@ def generate_response(query: str):
   response = requests.get(url).json()
   message = response['text']
   return message
-  
+
+def generate_images(prompt, n=1):
+    url = "https://openai80.p.rapidapi.com/images/generations"
+    payload = {
+     "prompt": prompt,
+     "n": n,
+    }
+    headers = {
+     "content-type": "application/json",
+     "X-RapidAPI-Key": "5e57d56681msh17cd173473d6efcp19404cjsn11bc6f524cd9",
+     "X-RapidAPI-Host": "openai80.p.rapidapi.com"
+    }
+    response = requests.post(url, json=payload, headers=headers)
+    return response.json()
+
+
 @Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
 @error_handler
 async def chatgpt(c, m):
@@ -41,4 +56,11 @@ async def imagine(c,m):
   except IndexError:
     await m.reply_text("`What should i imagine??\nHive some prompt along with the command`")
     return
-  x = await m.reply_text(f"`Processing {prompt}`")
+  x = await m.reply_text(f"`Processing`")
+  results = generate_images(prompt, n=4)
+  result = [InputMediaPhoto(image) for image in results["data"]]
+  await c.send_media_group(
+            chat_id=m.chat.id,
+            media=result,
+        )
+  await x.delete()
