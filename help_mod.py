@@ -96,6 +96,18 @@ class Script(object):
             "usage": "/gs [text to search]"
         },
     ]
+    GTA_5 = [
+        {
+            "desc": "Gta-V wasted effect on replied image",
+            "cmds": ["wasted"],
+            "usage": "/wasted [reply to a photo]"
+        },
+        {
+            "desc": "Gta-V mission passed effect on replied image",
+            "cmds": ["passed"],
+            "usage": "/passed [reply to a photo]"
+        }
+    ]
     IMDB = [
         {
             "desc": "Get information about a Movie/Series",
@@ -246,13 +258,6 @@ class Script(object):
             "desc": "download's file from given link",
             "cmds": ["urlupload"],
             "usage": "/urlupload [direct link of the file]"
-        }
-    ]
-    WASTED = [
-        {
-            "desc": "Gta-V wasted effect on replied image",
-            "cmds": ["wasted"],
-            "usage": "/wasted [reply to a photo]"
         }
     ]
     WHOIS = [
