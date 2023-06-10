@@ -9,7 +9,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InputMediaPhoto
 
 from Stark import error_handler
-from Stark.config import config
+from Stark.config import Config
 
 def generate_response(query: str):
   url = "http://gpt.kavya.workers.dev?message=" + str(query) +"&ssid=blah&sqk=r&stream=false"
