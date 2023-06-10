@@ -7,6 +7,7 @@ from urllib.parse import quote
 from pyrogram import Client, filters
 from pyrogram.types import InputMediaPhoto
 from Stark import error_handler
+from Stark.config import config
 
 def generate_response(query: str):
   url = "http://gpt.kavya.workers.dev?message=" + str(query) +"&ssid=blah&sqk=r&stream=false"
@@ -16,13 +17,14 @@ def generate_response(query: str):
 
 def generate_images(prompt, n=1):
     url = "https://openai80.p.rapidapi.com/images/generations"
+    RAPID_API = Config.RAPID_API
     payload = {
      "prompt": prompt,
      "n": n,
     }
     headers = {
      "content-type": "application/json",
-     "X-RapidAPI-Key": "5e57d56681msh17cd173473d6efcp19404cjsn11bc6f524cd9",
+     "X-RapidAPI-Key": RAPID_API,
      "X-RapidAPI-Host": "openai80.p.rapidapi.com"
     }
     response = requests.post(url, json=payload, headers=headers)
