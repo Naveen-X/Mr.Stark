@@ -40,16 +40,10 @@ async def bored(bot, message):
 @Client.on_message(filters.command(["pikachu"]))
 @error_handler
 async def pikachu(bot, message):
-    hmm_s = "https://some-random-api.ml/img/pikachu"
-    r = requests.get(url=hmm_s).json()
-    image_s = r["link"]
-    await message.reply_video(image_s)
-    if image_s.endswith(".png"):
-       await message.reply_photo(image_s)
-       return
-    if image_s.endswith(".jpg"):
-       await message.reply_photo(image_s)
-       return
+    link = "https://some-random-api.com/img/pikachu"
+    r = requests.get(url=link).json()
+    url = r["link"]
+    await message.reply_animation(url)
 
 @Client.on_message(filters.command(["pat"]))
 @error_handler
