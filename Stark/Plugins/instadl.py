@@ -163,12 +163,14 @@ async def instadl(c, m):
           duration_seconds = round(duration_seconds - (duration_minutes*60))
           # print duration in minutes:seconds format
           dr = f"{duration_minutes}:{duration_seconds:02}"
+          minutes, seconds = dr.split(':')
+          total_seconds = int(minutes) * 60 + int(seconds)
           # generate thumbnail using ffmpeg
           thumbnail_filename = 'thumbnail.jpg'
           thumbnail_cmd = ['ffmpeg', '-i', input_file, '-ss', '00:00:01.000', '-vframes', '1', thumbnail_filename]
           subprocess.run(thumbnail_cmd)
           await c.send_video(
-            m.chat.id, f, caption=caption, reply_to_message_id=m.id, thumb=thumbnail_filename, duration=dr, reply_markup=keyboard
+            m.chat.id, f, caption=caption, reply_to_message_id=m.id, thumb=thumbnail_filename, duration=total_seconds, reply_markup=keyboard
          )
         if f.name == 'instagram.jpg':
            await c.send_photo(
