@@ -17,20 +17,20 @@ def generate_response(query: str):
   message = response['text']
   return message
 
-def generate_images(prompt, n=1):
-    url = "https://openai80.p.rapidapi.com/images/generations"
-    RAPID_API = Config.RAPID_API
-    payload = {
-     "prompt": prompt,
-     "n": n,
-    }
-    headers = {
-     "content-type": "application/json",
-     "X-RapidAPI-Key": RAPID_API,
-     "X-RapidAPI-Host": "openai80.p.rapidapi.com"
-    }
-    response = requests.post(url, json=payload, headers=headers)
-    return response.json()
+#def generate_images(prompt, n=1):
+#    url = "https://openai80.p.rapidapi.com/images/generations"
+#    RAPID_API = Config.RAPID_API
+#    payload = {
+#    "prompt": prompt,
+#     "n": n,
+#    }
+#    headers = {
+#     "content-type": "application/json",
+#     "X-RapidAPI-Key": RAPID_API,
+#     "X-RapidAPI-Host": "openai80.p.rapidapi.com"
+#    }
+#    response = requests.post(url, json=payload, headers=headers)
+#    return response.json()
 
 
 @Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
@@ -52,28 +52,28 @@ async def chatgpt(c, m):
     await c.send_message(m.chat.id, response, reply_to_message_id=m.id)
     await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
 
-@Client.on_message(filters.command(["imagine"]))
-@error_handler
-async def imagine(c,m):
-  try:
-    prompt= m.text.split(None, 1)[1]
-  except IndexError:
-    await m.reply_text("`What should i imagine??\nHive some prompt along with the command`")
-    return
-  x = await m.reply_text(f"`Processing...`")
-  results = generate_images(prompt, n=4)
-  media = []
-  try:
-    for image in results["data"]:
-      # Download the image data from the URL
-      response = requests.get(image["url"])
-      image_data = response.content
-      # Create an InputMediaPhoto object with the binary image data
-      media.append(InputMediaPhoto(BytesIO(image_data)))
-    await c.send_media_group(
-      chat_id=m.chat.id,
-      media=media,
-    )
-    await x.delete()
-  except KeyError:
-    await x.edit("`Ur Request has been blocked. Try removing bad words from ur prompt`")
+#@Client.on_message(filters.command(["imagine"]))
+#@error_handler
+#async def imagine(c,m):
+#  try:
+#    prompt= m.text.split(None, 1)[1]
+#  except IndexError:
+#    await m.reply_text("`What should i imagine??\nHive some prompt along with the command`")
+#    return
+#  x = await m.reply_text(f"`Processing...`")
+#  results = generate_images(prompt, n=4)
+#  media = []
+#  try:
+#    for image in results["data"]:
+#      # Download the image data from the URL
+#      response = requests.get(image["url"])
+#      image_data = response.content
+#      # Create an InputMediaPhoto object with the binary image data
+#      media.append(InputMediaPhoto(BytesIO(image_data)))
+#    await c.send_media_group(
+#      chat_id=m.chat.id,
+#      media=media,
+#    )
+#    await x.delete()
+#  except KeyError:
+#    await x.edit("`Ur Request has been blocked. Try removing bad words from ur prompt`")
