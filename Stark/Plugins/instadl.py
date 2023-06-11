@@ -1,4 +1,5 @@
 import io
+import wget
 import subprocess
 from pyrogram import Client, filters
 from requests import JSONDecodeError, get
@@ -151,7 +152,7 @@ async def instadl(c, m):
     with io.BytesIO(get(dl_url, cookies=cookies).content) as f:
         f.name = "instagram.jpg" if media_type == 1 else "instagram.mp4"
         if f.name == 'instagram.mp4':
-          input_file = await c.download_media(dl_url)
+          input_file = wget.download(dl_url)
           # get duration using ffprobe
           duration_cmd = ['ffprobe', '-v', 'error', '-show_entries',
                           'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', input_file]
