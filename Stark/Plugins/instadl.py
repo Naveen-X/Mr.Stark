@@ -173,8 +173,8 @@ async def instadl(c, m):
           await c.send_video(
             m.chat.id, f, caption=caption, reply_to_message_id=m.id, thumb=thumbnail_filename, duration=total_seconds, reply_markup=keyboard
          )
-         os.remove(thumbnail_filename)
-         os.remove(input_file)
+          os.remove(thumbnail_filename)
+          os.remove(input_file)
         if f.name == 'instagram.jpg':
            await c.send_photo(
             m.chat.id, f, caption=caption, reply_to_message_id=m.id, reply_markup=keyboard
