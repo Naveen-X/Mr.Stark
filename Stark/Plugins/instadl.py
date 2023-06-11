@@ -1,5 +1,5 @@
 import io
-
+import subprocess
 from pyrogram import Client, filters
 from requests import JSONDecodeError, get
 
@@ -151,8 +151,23 @@ async def instadl(c, m):
     with io.BytesIO(get(dl_url, cookies=cookies).content) as f:
         f.name = "instagram.jpg" if media_type == 1 else "instagram.mp4"
         if f.name == 'instagram.mp4':
+          input_file = 'instagram.mp4'
+          # get duration using ffprobe
+          duration_cmd = ['ffprobe', '-v', 'error', '-show_entries',
+                          'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', input_file]
+          duration_output = subprocess.check_output(duration_cmd)
+          # convert duration from seconds to minutes:seconds format
+          duration_seconds = float(duration_output.strip())
+          duration_minutes = int(duration_seconds//60)
+          duration_seconds = round(duration_seconds - (duration_minutes*60))
+          # print duration in minutes:seconds format
+          dr = f"{duration_minutes}:{duration_seconds:02}"
+          # generate thumbnail using ffmpeg
+          thumbnail_filename = 'thumbnail.jpg'
+          thumbnail_cmd = ['ffmpeg', '-i', input_file, '-ss', '00:00:01.000', '-vframes', '1', thumbnail_filename]
+          subprocess.run(thumbnail_cmd)
           await c.send_video(
-            m.chat.id, f, caption=caption, reply_to_message_id=m.id, reply_markup=keyboard
+            m.chat.id, f, caption=caption, reply_to_message_id=m.id, thumb=thumbnail_filename, duration=dr, reply_markup=keyboard
          )
         if f.name == 'instagram.jpg':
            await c.send_photo(
