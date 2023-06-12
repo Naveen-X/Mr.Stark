@@ -83,7 +83,7 @@ async def chatgpt(c, m):
     try:
       response = generate_response(query)
     except JSONDecodeError:
-      response = "`ChatGPT Error (401)`"
+      response = "`ChatGPT Error`"
     await c.send_message(m.chat.id, response, reply_to_message_id=m.id)
     await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
 
