@@ -98,4 +98,10 @@ async def imagine(c,m):
   x = await m.reply_text("`Processing...`")
   cookie=Config.LEXICA_ART
   lex = Lexica(query=prompt, cookie=cookie).generate()
-  await x.edit(lex)
+  result = [InputMediaPhoto(image) for image in lex]
+  await c.send_media_group(
+            chat_id=m.chat.id,
+            media=result,
+            reply_to_message_id=m.id,
+        )
+  await x.delete()
