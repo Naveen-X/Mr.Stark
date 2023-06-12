@@ -52,6 +52,7 @@ app.start()
 logging.info("Starting Assistant...")
 logging.info(banner)
 mgt = ""
+mgr = ""
 total = 0
 loaded = 0
 failed = 0
@@ -82,6 +83,7 @@ for i in os.listdir("Stark/Plugins"):
                 lin = mg.link
                 os.remove(filename)
             mgt += f"Error Importing {name}: `{e}`\n [{name.capitalize()} ERROR HERE]({lin})\n\n"
+            mgr += f"[ Mr.Stark ] - Error Importing {name}: `{e}`\nFull Error: {traceback_msg}\n\n"
             continue
 
 mgs.edit('Importing Plugins Completed, Now installing. It won\'t take much time!')
@@ -98,15 +100,16 @@ for key in sys.modules.keys():
                         for h in member[1].handlers:
                             app.add_handler(*h)
                         mgt += f"[ Loaded Successfully ] - `{key}`\n"
+                        mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {key}\n"
                         loaded += 1
                     except Exception as e:
                         failed += 1
                         mgt += f"Failed Loading {key} due to {e}\n"
+                        mgr += f"[ Mr.Stark ] - Failed Loading {key} due to {e}\n"
 
 url = ""
 
 try:
-    logging.info(mgt)
     mg = app.send_message(-1001491739934, text=mgt)
     url = mg.link
 except:
@@ -153,13 +156,16 @@ def send_quote():
 	for chat_id in chat_ids:
 		app.send_message(chat_id=chat_id, text=quote)
 
-
+logging.info("[ Mr.Stark ] | [ Scheduler] - Adding tasks")
 scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Kolkata'))
 scheduler.add_job(send_quote, 'cron', hour=8, minute=0, second=0)
 scheduler.add_job(send_quote, 'cron', hour=18, minute=0, second=0)
 scheduler.start()
+logging.info("[ Mr.Stark ] | [ Scheduler] - Sucessfully added tasks and started the scheduler")
+logging.info("[ Mr.Stark ] | [ Plugins info] -")
+logging.info(mgr)
+logging.info("ᗩՏՏIՏTᗩᑎT ᕼᗩՏ ᗷᗴᗴᑎ ՏTᗩᖇTᗴᗪ ՏᑌᑕᑕᗴՏՏᖴᑌᒪᒪY")
 
-logging.info("𝑨𝒔𝒔𝒊𝒔𝒕𝒂𝒏𝒕 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒔𝒕𝒂𝒓𝒕𝒆𝒅 𝒔𝒖𝒄𝒄𝒆𝒔𝒔𝒇𝒖𝒍𝒍𝒚")
 idle()
 mgs.delete()
 app.stop()
