@@ -87,24 +87,28 @@ for i in os.listdir("Stark/Plugins"):
             continue
 
 mgs.edit('Importing Plugins Completed, Now installing. It won\'t take much time!')
+loaded_counts = {}
 for key in sys.modules.keys():
     if key.startswith("Stark.Plugins."):
         module = sys.modules[key]
         members = inspect.getmembers(module)
-        count = 0  # Counter for each key
         
         for member in members:
             if inspect.isfunction(member[1]):
                 if hasattr(member[1], "handlers"):
                     total = len(member[1].handlers)
                     key = key.replace("Stark.Plugins.", "")
-                    count += total
                     
+                    if key not in loaded_counts:
+                        loaded_counts[key] = total
+                    else:
+                        loaded_counts[key] += total
+                        
                     try:
                         for h in member[1].handlers:
                             app.add_handler(*h)
-                        mgt += f"[ Loaded Successfully ] - {count} from {key}\n"
-                        mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {count} from {key}\n"
+                        mgt += f"[ Loaded Successfully ] - {loaded_counts[key]} from {key}\n"
+                        mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {loaded_counts[key]} from {key}\n"
                         loaded += 1
                     except Exception as e:
                         failed += 1
