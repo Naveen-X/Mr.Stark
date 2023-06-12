@@ -151,7 +151,7 @@ async def get_random_quote():
 
     return reply_text
     
-def send_quote(app):
+def send_quote():
 	chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
 	quote = asyncio.run(get_random_quote())
 	for chat_id in chat_ids:
