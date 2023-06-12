@@ -91,22 +91,25 @@ for key in sys.modules.keys():
     if key.startswith("Stark.Plugins."):
         module = sys.modules[key]
         members = inspect.getmembers(module)
+        count = 0  # Counter for each key
+        
         for member in members:
             if inspect.isfunction(member[1]):
                 if hasattr(member[1], "handlers"):
-                    total += 1
+                    total = len(member[1].handlers)
                     key = key.replace("Stark.Plugins.", "")
+                    count += total
+                    
                     try:
                         for h in member[1].handlers:
                             app.add_handler(*h)
-                        mgt += f"[ Loaded Successfully ] - {total} from {key}\n"
-                        mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {total} from {key}\n"
+                        mgt += f"[ Loaded Successfully ] - {count} from {key}\n"
+                        mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {count} from {key}\n"
                         loaded += 1
                     except Exception as e:
                         failed += 1
                         mgt += f"Failed Loading {key} due to {e}\n"
                         mgr += f"[ Mr.Stark ] - Failed Loading {key} due to {e}\n"
-
 
 url = ""
 
