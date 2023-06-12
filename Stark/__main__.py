@@ -100,8 +100,9 @@ for key in sys.modules.keys():
                     try:
                         for h in member[1].handlers:
                             app.add_handler(*h)
-                        mgt += f"[ Loaded Successfully ] - {key} from {module.__name__}\n"
-                        mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {key} from {module.__name__}\n"
+                        mgt += f"[ Loaded Successfully ] - {key.split('.')[-1]} from {module.__name__.split('.')[-1]}\n"
+                        mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {key.split('.')[-1]} from {module.__name__.split('.')[-1]}\n"
+
                         loaded += 1
                     except Exception as e:
                         failed += 1
