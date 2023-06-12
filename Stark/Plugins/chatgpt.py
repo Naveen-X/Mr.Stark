@@ -96,5 +96,6 @@ async def imagine(c,m):
     await m.reply_text("`What should i imagine??\nHive some prompt along with the command`")
     return
   x = await m.reply_text("`Processing...`")
-  lex = Lexica(query=prompt).images()
+  cookie=Config.LEXICA_ART
+  lex = Lexica(query=prompt, cookie=cookie).generate()
   await x.edit(lex)
