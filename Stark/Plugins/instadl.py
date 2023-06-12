@@ -171,7 +171,7 @@ async def instadl(c, m):
           thumbnail_cmd = ['ffmpeg', '-i', input_file, '-ss', '00:00:01.000', '-vframes', '1', thumbnail_filename]
           subprocess.run(thumbnail_cmd)
           await c.send_video(
-            m.chat.id, f, caption=caption, reply_to_message_id=m.id, thumb=thumbnail_filename, duration=total_seconds, reply_markup=keyboard
+            m.chat.id, input_file, caption=caption, reply_to_message_id=m.id, thumb=thumbnail_filename, duration=total_seconds, reply_markup=keyboard
          )
           os.remove(thumbnail_filename)
           os.remove(input_file)
