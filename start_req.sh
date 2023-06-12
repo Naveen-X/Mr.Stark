@@ -4,4 +4,5 @@ apt-get update && apt upgrade -y
 apt-get install mediainfo -y
 apt-get install libgl1-mesa-glx
 apt-get install -y python3-opencv
+sudo apt-get install ffmpeg -y
 python3 -m "Stark"
