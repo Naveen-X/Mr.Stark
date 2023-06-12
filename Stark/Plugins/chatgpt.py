@@ -1,5 +1,9 @@
+import uuid
 import time 
 import json 
+import httpx
+import random
+import string
 import requests
 from io import BytesIO
 from pyrogram import enums
@@ -11,27 +15,58 @@ from pyrogram.types import InputMediaPhoto
 from Stark import error_handler
 from Stark.config import Config
 
+#Lexica Art thing ...
+class Lexica:
+    def __init__(self, query, negativePrompt="", guidanceScale: int = 7, portrait: bool = True, cookie=None):
+        self.query = query
+        self.negativePrompt = negativePrompt
+        self.guidanceScale = guidanceScale
+        self.portrait = portrait
+        self.cookie = cookie
+
+    def images(self):
+        response = httpx.post("https://lexica.art/api/infinite-prompts", json={
+            "text": self.query,
+            "searchMode": "images",
+            "source": "search",
+            "model": "lexica-aperture-v2"
+        })
+
+        prompts = [f"https://image.lexica.art/full_jpg/{ids['id']}" for ids in response.json()["images"]]
+
+        return prompts
+
+    def _generate_random_string(self, length):
+        chars = string.ascii_letters + string.digits
+        result_str = ''.join(random.choice(chars) for _ in range(length))
+
+        return result_str
+
+    def generate(self):
+        response = httpx.post("https://z.lexica.art/api/generator", headers={
+            "cookie": self.cookie
+        }, json={
+            "requestId": str(uuid.uuid4()),
+            "id": self._generate_random_string(20),
+            "prompt": self.query,
+            "negativePrompt": self.negativePrompt,
+            "guidanceScale": self.guidanceScale,
+            "width": 512 if self.portrait else 768,
+            "height": 768 if self.portrait else 512,
+            "enableHiresFix": False,
+            "model": "lexica-aperture-v2",
+            "generateSources": []
+        }, timeout=50
+        )
+
+        return [f"https://image.lexica.art/full_jpg/{ids['id']}" for ids in response.json()["images"]]
+
+#Generate gpt response...
 def generate_response(query: str):
   url = "http://gpt.kavya.workers.dev?message=" + str(query) +"&ssid=blah&sqk=r&stream=false"
   response = requests.get(url).json()
   message = response['text']
   return message
-
-#def generate_images(prompt, n=1):
-#    url = "https://openai80.p.rapidapi.com/images/generations"
-#    RAPID_API = Config.RAPID_API
-#    payload = {
-#    "prompt": prompt,
-#     "n": n,
-#    }
-#    headers = {
-#     "content-type": "application/json",
-#     "X-RapidAPI-Key": RAPID_API,
-#     "X-RapidAPI-Host": "openai80.p.rapidapi.com"
-#    }
-#    response = requests.post(url, json=payload, headers=headers)
-#    return response.json()
-
 
 @Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
 @error_handler
@@ -52,28 +87,14 @@ async def chatgpt(c, m):
     await c.send_message(m.chat.id, response, reply_to_message_id=m.id)
     await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
 
-#@Client.on_message(filters.command(["imagine"]))
-#@error_handler
-#async def imagine(c,m):
-#  try:
-#    prompt= m.text.split(None, 1)[1]
-#  except IndexError:
-#    await m.reply_text("`What should i imagine??\nHive some prompt along with the command`")
-#    return
-#  x = await m.reply_text(f"`Processing...`")
-#  results = generate_images(prompt, n=4)
-#  media = []
-#  try:
-#    for image in results["data"]:
-#      # Download the image data from the URL
-#      response = requests.get(image["url"])
-#      image_data = response.content
-#      # Create an InputMediaPhoto object with the binary image data
-#      media.append(InputMediaPhoto(BytesIO(image_data)))
-#    await c.send_media_group(
-#      chat_id=m.chat.id,
-#      media=media,
-#    )
-#    await x.delete()
-#  except KeyError:
-#    await x.edit("`Ur Request has been blocked. Try removing bad words from ur prompt`")
+@Client.on_message(filters.command(["imagine"]))
+@error_handler
+async def imagine(c,m):
+  try:
+    prompt= m.text.split(None, 1)[1]
+  except IndexError:
+    await m.reply_text("`What should i imagine??\nHive some prompt along with the command`")
+    return
+  x = await m.reply_text("`Processing...`")
+  lex = Lexica(query=prompt).images()
+  await x.edit(lex)
