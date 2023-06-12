@@ -106,6 +106,7 @@ for key in sys.modules.keys():
 url = ""
 
 try:
+    logging.info(mgt)
     mg = app.send_message(-1001491739934, text=mgt)
     url = mg.link
 except:
