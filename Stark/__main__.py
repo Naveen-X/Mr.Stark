@@ -101,10 +101,13 @@ for key in sys.modules.keys():
                         for h in member[1].handlers:
                             app.add_handler(*h)
                         mgt += f"[ Loaded Successfully ] - {key} from {module.__name__}\n"
+                        mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {key} from {module.__name__}\n"
                         loaded += 1
                     except Exception as e:
                         failed += 1
                         mgt += f"Failed Loading {key} due to {e}\n"
+                        mgr += f"[ Mr.Stark ] - Failed Loading {key} due to {e}\n"
+
 
 
 url = ""
