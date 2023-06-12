@@ -15,8 +15,8 @@ from Stark.db import DB
 from Stark.config import Config
 from Stark import db, error_handler
 from Stark import get_gitlab_snippet
-from main.helper_func.plugin_helpers import send_quote, get_random_quote
 from apscheduler.schedulers.background import BackgroundScheduler
+
 # Import all the Python modules in the 'Stark/Plugins' directory
 banner = (
         "\033[96m"
@@ -138,6 +138,23 @@ async def _1check_for_it(client, message):
         await db.add(client, message)
     except Exception as e:
         logging.exception(e)
+
+async def get_random_quote():
+    QUOTES_API_ENDPOINT = "https://api.quotable.io/random"
+    response = requests.get(QUOTES_API_ENDPOINT)
+    if response.status_code != 200:
+        return f"Error fetching quote ({response.status_code})"
+    data = response.json()
+    quote_text = data["content"]
+    quote_author = data["author"]
+    reply_text = f"__{quote_text}__\n\n- `{quote_author}`"
+
+    return reply_text
+def send_quote():
+	chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
+	quote = asyncio.run(get_random_quote())
+	for chat_id in chat_ids:
+		app.send_message(chat_id=chat_id, text=quote)
 
 logging.info("[ Mr.Stark ] | [ Scheduler] - Adding tasks")
 scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Kolkata'))
