@@ -7,8 +7,8 @@ import asyncio
 import inspect
 import logging
 import requests 
-
 import pyrogram
+from collections import defaultdict
 from pyrogram import idle, types, filters
 
 from Stark.db import DB
@@ -87,7 +87,7 @@ for i in os.listdir("Stark/Plugins"):
             continue
 
 mgs.edit('Importing Plugins Completed, Now installing. It won\'t take much time!')
-loaded_counts = {}  # Dictionary to store the count of loaded modules
+loaded_counts = defaultdict(int)  # Dictionary to store the count of loaded modules
 for key in sys.modules.keys():
     if key.startswith("Stark.Plugins."):
         module = sys.modules[key]
@@ -99,10 +99,10 @@ for key in sys.modules.keys():
                     try:
                         for h in member[1].handlers:
                             app.add_handler(*h)
-                        loaded_counts[key] = loaded_counts.get(key, 0) + 1
-                        mgt += f"[ Loaded Successfully ] - {loaded_counts[key]} from {key.split('.')[-1]} from {module.__name__.split('.')[-1]}\n"
-                        mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {loaded_counts[key]} from {key.split('.')[-1]} from {module.__name__.split('.')[-1]}\n"
-
+                        loaded_counts[key] += 1
+                        module_name = module.__name__.split('.')[-1]
+                        mgt += f"[ Loaded Successfully ] - {loaded_counts[key]} from {module_name}\n"
+                        mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {loaded_counts[key]} from {module_name}\n"
                         loaded += 1
                     except Exception as e:
                         failed += 1
