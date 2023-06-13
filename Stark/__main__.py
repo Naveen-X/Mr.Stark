@@ -115,7 +115,7 @@ for key in sys.modules.keys():
 
 mgs.edit('**Installing Plugins Completed, Now starting the bot**')
 for key in loaded_dict:
-    mgt += "**[ Loaded ]** `{}` **__plugin(s) from__** `{}`".format(loaded_dict[key], key)
+    mgt += "**[ Loaded ]** `{}` **-** `{}`".format(key, loaded_dict[key])
     mgt += "\n"
 
 print(loaded_dict)
