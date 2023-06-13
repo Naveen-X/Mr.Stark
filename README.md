@@ -10,6 +10,7 @@
 # Description
 Introducing Mr. Stark, the witty and versatile Telegram bot! This bot is your all-in-one companion, ready to translate messages, create stunning carbonized text images, paste text snippets, fetch logs, amuse you with memes and animal pictures, and much more. It can even generate fancy logos and apply a "wasted" effect to images. Explore its arsenal of commands for endless fun and utility. Don't forget to check out the system-related features and file tools. Get ready for a delightful chat experience with Mr. Stark, the bot that brings humor and usefulness together!
 
+
 # Features
 Here are the features of Mr. Stark, the Telegram bot:
 
