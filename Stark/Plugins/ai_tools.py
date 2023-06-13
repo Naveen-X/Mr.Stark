@@ -96,7 +96,7 @@ async def imagine(c,m):
     await m.reply_text("`What should i imagine??\nHive some prompt along with the command`")
     return
   x = await m.reply_text("`Processing...`")
-  cookie=Config.LEXICA_ART
+  cookie=Config.LEXICA_ART_1
   lex = Lexica(query=prompt, cookie=cookie).generate()
   result = [InputMediaPhoto(image) for image in lex]
   await c.send_media_group(
