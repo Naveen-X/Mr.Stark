@@ -115,6 +115,7 @@ for key in sys.modules.keys():
 
 mgs.edit('**Installing Plugins Completed, Now starting the bot**')
 sorted_data = sorted(loaded_dict.items())
+print("[ Mr.Stark ] | Loading plugins")
 for key, value in sorted_data:
     print("[ Mr.Stark ] | Loading plugins")
     print("[ Mr.Stark ] | [ Loaded ] {} - {}".format(key, value))
