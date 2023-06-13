@@ -87,7 +87,7 @@ for i in os.listdir("Stark/Plugins"):
             continue
 
 mgs.edit('Importing Plugins Completed, Now installing. It won\'t take much time!')
-loaded_counts = {}
+loaded_counts = {}  # Dictionary to store the count of loaded modules
 for key in sys.modules.keys():
     if key.startswith("Stark.Plugins."):
         module = sys.modules[key]
@@ -95,7 +95,6 @@ for key in sys.modules.keys():
         for member in members:
             if inspect.isfunction(member[1]):
                 if hasattr(member[1], "handlers"):
-                    total += 1
                     key = key.replace("Stark.Plugins.", "")
                     try:
                         for h in member[1].handlers:
@@ -103,13 +102,13 @@ for key in sys.modules.keys():
                         loaded_counts[key] = loaded_counts.get(key, 0) + 1
                         mgt += f"[ Loaded Successfully ] - {loaded_counts[key]} from {key.split('.')[-1]} from {module.__name__.split('.')[-1]}\n"
                         mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {loaded_counts[key]} from {key.split('.')[-1]} from {module.__name__.split('.')[-1]}\n"
+
                         loaded += 1
                     except Exception as e:
                         failed += 1
                         mgt += f"Failed Loading {key} due to {e}\n"
                         mgr += f"[ Mr.Stark ] - Failed Loading {key} due to {e}\n"
                         
-
 url = ""
 
 try:
