@@ -56,7 +56,7 @@ mgr = ""
 total = 0
 loaded = 0
 failed = 0
-
+loaded_dict = {}
 mgs.edit("**Connecting to db**")
 db.connect()
 mgs.edit('**Connection Success, Importing Plugins**')
@@ -101,7 +101,12 @@ for key in sys.modules.keys():
                             app.add_handler(*h)
                         loaded_counts[key] += 1
                         module_name = module.__name__.split('.')[-1]
-                        mgt += f"[ Loaded Successfully ] - {loaded_counts[key]} from {module_name}\n"
+#                         mgt += f"[ Loaded Successfully ] - {loaded_counts[key]} from {module_name}\n"
+			if loaded_dict.get(module_name) is None:
+				loaded_dict[module_name] = 0
+			loaded_dict[module_name] += 1
+			for key in leld:
+        			mgt += "Loaded {} plugins from {}".format(leld[key], key)
                         mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {loaded_counts[key]} from {module_name}\n"
                         loaded += 1
                     except Exception as e:
