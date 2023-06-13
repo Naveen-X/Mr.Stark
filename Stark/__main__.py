@@ -100,16 +100,15 @@ for key in sys.modules.keys():
                     try:
                         for h in member[1].handlers:
                             app.add_handler(*h)
-                        mgt += f"[ Loaded Successfully ] - {key.split('.')[-1]} from {module.__name__.split('.')[-1]}\n"
-                        mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {key.split('.')[-1]} from {module.__name__.split('.')[-1]}\n"
-
+                        loaded_counts[key] = loaded_counts.get(key, 0) + 1
+                        mgt += f"[ Loaded Successfully ] - {loaded_counts[key]} from {key.split('.')[-1]} from {module.__name__.split('.')[-1]}\n"
+                        mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {loaded_counts[key]} from {key.split('.')[-1]} from {module.__name__.split('.')[-1]}\n"
                         loaded += 1
                     except Exception as e:
                         failed += 1
                         mgt += f"Failed Loading {key} due to {e}\n"
                         mgr += f"[ Mr.Stark ] - Failed Loading {key} due to {e}\n"
-
-
+                        
 
 url = ""
 
