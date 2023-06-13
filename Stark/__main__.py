@@ -106,7 +106,7 @@ for key in sys.modules.keys():
                             loaded_dict[module_name] = 0
                         loaded_dict[module_name] += 1
                         for key in loaded_dict:
-        			        mgt += "Loaded {} plugins from {}".format(loaded_dict[key], key)
+                            mgt += "Loaded {} plugins from {}".format(loaded_dict[key], key)
                         mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {loaded_counts[key]} from {module_name}\n"
                         loaded += 1
                     except Exception as e:
@@ -159,11 +159,11 @@ async def get_random_quote():
     return reply_text
     
 def send_quote():
-	chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
-	quote = asyncio.run(get_random_quote())
-	for chat_id in chat_ids:
-		app.send_message(chat_id=chat_id, text=quote)
-		
+    chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
+    quote = asyncio.run(get_random_quote())
+    for chat_id in chat_ids:
+        app.send_message(chat_id=chat_id, text=quote)
+
 logging.info("[ Mr.Stark ] | [ Scheduler] - Adding tasks")
 scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Kolkata'))
 scheduler.add_job(send_quote, 'cron', hour=8, minute=0, second=0)
