@@ -104,16 +104,16 @@ for key in sys.modules.keys():
 #                         mgt += f"[ Loaded Successfully ] - {loaded_counts[key]} from {module_name}\n"
                         if loaded_dict.get(module_name) is None:
                             loaded_dict[module_name] = 0
-                            loaded_dict[module_name] += 1
-                            for key in leld:
-                                mgt += "Loaded {} plugins from {}".format(leld[key], key)
-                                mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {loaded_counts[key]} from {module_name}\n"
-                                loaded += 1
+                        loaded_dict[module_name] += 1
+                        for key in loaded_dict:
+        			        mgt += "Loaded {} plugins from {}".format(loaded_dict[key], key)
+                        mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {loaded_counts[key]} from {module_name}\n"
+                        loaded += 1
                     except Exception as e:
-                             failed += 1
-                             mgt += f"Failed Loading {key} due to {e}\n"      
-                             mgr += f"[ Mr.Stark ] - Failed Loading {key} due to {e}\n"
-                                              
+                        failed += 1
+                        mgt += f"Failed Loading {key} due to {e}\n"
+                        mgr += f"[ Mr.Stark ] - Failed Loading {key} due to {e}\n"
+                        
 url = ""
 
 try:
