@@ -114,8 +114,10 @@ for key in sys.modules.keys():
                         # mgr += f"[ Mr.Stark ] - Failed Loading {key} due to {e}\n"
 
 mgs.edit('**Installing Plugins Completed, Now starting the bot**')
-for key in loaded_dict:
-    mgt += "**[ Loaded ]** `{}` **-** `{}`".format(key, loaded_dict[key])
+sorted_data = sorted(loaded_dict.items())
+for key, value in sorted_data:
+    print("[ Loaded ] {} - {}".format(key, value))
+    mgt += "**• [Loaded]** `{}` **-** `{}`".format(key, value)
     mgt += "\n"
 
 print(loaded_dict)
