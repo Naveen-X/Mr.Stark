@@ -105,8 +105,7 @@ for key in sys.modules.keys():
                         if loaded_dict.get(module_name) is None:
                             loaded_dict[module_name] = 0
                         loaded_dict[module_name] += 1
-                        for key in loaded_dict:
-                            mgt += "Loaded {} plugins from {}".format(loaded_dict[key], key)
+
                         # mgr += f"[ Mr.Stark ] - [ Loaded Successfully ] - {loaded_counts[key]} from {module_name}\n"
                         loaded += 1
                     except Exception as e:
@@ -114,6 +113,10 @@ for key in sys.modules.keys():
                         mgt += f"Failed Loading {key} due to {e}\n"
                         # mgr += f"[ Mr.Stark ] - Failed Loading {key} due to {e}\n"
 
+mgs.edit('**Installing Plugins Completed, Now starting the bot**')
+for key in loaded_dict:
+    mgt += "**[ Loaded ]** `{}` **__plugin(s) from__** `{}`".format(loaded_dict[key], key)
+    mgt += "\n"
 
 print(loaded_dict)
 url = ""
