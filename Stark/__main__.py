@@ -116,11 +116,11 @@ for key in sys.modules.keys():
 mgs.edit('**Installing Plugins Completed, Now starting the bot**')
 sorted_data = sorted(loaded_dict.items())
 for key, value in sorted_data:
-    print("[ Loaded ] {} - {}".format(key, value))
-    mgt += "**• [Loaded]** `{}` **-** `{}`".format(key, value)
+    print("[ Mr.Stark ] | Loading plugins")
+    print("[ Mr.Stark ] | [ Loaded ] {} - {}".format(key, value))
+    mgt += "**• [ Loaded ]** `{}` **-** `{}`".format(key, value)
     mgt += "\n"
-
-print(loaded_dict)
+    
 url = ""
 
 try:
@@ -177,8 +177,6 @@ scheduler.add_job(send_quote, 'cron', hour=8, minute=0, second=0)
 scheduler.add_job(send_quote, 'cron', hour=18, minute=0, second=0)
 scheduler.start()
 logging.info("[ Mr.Stark ] | [ Scheduler] - Sucessfully added tasks and started the scheduler")
-logging.info("[ Mr.Stark ] | [ Plugins info] -")
-logging.info(mgr)
 logging.info("ᗩՏՏIՏTᗩᑎT ᕼᗩՏ ᗷᗴᗴᑎ ՏTᗩᖇTᗴᗪ ՏᑌᑕᑕᗴՏՏᖴᑌᒪᒪY")
 
 idle()
