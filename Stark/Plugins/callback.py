@@ -6,7 +6,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMedi
 ia = IMDb()
 
 
-@Client.on_callback_query(filters.regex("^more_details"))
+@Client.on_callback_query(filters.regex(r"^\d+\.more_details.*"))
 async def more_details_handler(client, callback_query):
     await callback_query.message.edit(callback_query.data)
     await client.send_message("Naveen_xd", callback_query.data)
