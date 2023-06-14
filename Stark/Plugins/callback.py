@@ -8,16 +8,9 @@ ia = IMDb()
 
 @Client.on_callback_query(filters.regex("^more_details"))
 async def more_details_handler(client, callback_query):
-    try:
-        sent_by = callback_query.data.split('.')[0]
-        clicked_by = callback_query.from_user.id
-        if int(sent_by) != int(clicked_by):
-            await query.answer('This is not for you!', show_alert=True)
-            return
-    except:
-        if int(callback_query.data.split("|")[-1].strip()) != int(query.from_user.id):
-            await callback_query.answer('This is not for you!', show_alert=True)
-            return
+    if int(callback_query.data.split("|")[-1].strip()) != int(callback_query.from_user.id):
+        await callback_query.answer('This is not for you!', show_alert=True)
+        return
     imdb_id = callback_query.data.split(" ")[1]
     await callback_query.answer("Hold on..", show_alert=True)
     back = callback_query.data.split(":")[1]
