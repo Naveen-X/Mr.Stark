@@ -8,7 +8,7 @@ ia = IMDb()
 
 @Client.on_callback_query(filters.regex("^more_details"))
 async def more_details_handler(client, callback_query):
-    sent_by = callback_query.data.split('.')[0]
+    sent_by = callback_query.data.split("|")[-1].strip()
     clicked_by = callback_query.from_user.id
     await callback_query.message.reply_text(callback_query.data)
     await callback_query.message.reply_text(sent_by)
