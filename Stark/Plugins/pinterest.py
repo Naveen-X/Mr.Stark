@@ -13,7 +13,7 @@ async def pinterest_dl(c, m):
       await m.reply_text("`Please provide a Pinterest URL.`")
       return
     url = x.strip()
-    if url.startswith("https://in.pinterest.com/pin/"):
+    if url.startswith("https://in.pinterest.com/pin/") or ("https://www.pinterest.com/pin/"):
         try:
             response = get(url)
             soup = s(response.text, "html.parser")
