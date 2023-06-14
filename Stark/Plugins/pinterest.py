@@ -27,7 +27,7 @@ async def pinterest_dl(c, m):
             print(f"Error: `{e}`")
             return
     if url.startswith("https://pin.it/"):
-        response = requests.get(url)
+        response = get(url)
         redirected_url = response.url
         t_url = redirected_url
         f_url = t_url.split("sent")[0]
