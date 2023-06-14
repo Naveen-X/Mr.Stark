@@ -12,7 +12,7 @@ async def pinterest_dl(c, m):
     except IndexError:
       await m.reply_text("`Please provide a Pinterest URL.`")
       return
-    url = x.text.strip()
+    url = x.strip()
     if not url.startswith("https://in.pinterest.com/pin/"):
         await m.reply_text("`Invalid Pinterest URL. Please provide a valid URL.`")
         return
