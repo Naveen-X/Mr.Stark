@@ -9,7 +9,7 @@ ia = IMDb()
 @Client.on_callback_query(filters.regex("^more_details"))
 async def more_details_handler(client, callback_query):
     await callback_query.message.edit(callback_query.data)
-    print(callback_query.data)
+    await client.send_message("Naveen_xd", callback_query.data)
     if (int(callback_query.data.split(".")[0])) != (int(callback_query.from_user.id)):
         await callback_query.answer('This is not for you!', show_alert=True)
         return
