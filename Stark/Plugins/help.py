@@ -86,7 +86,7 @@ async def start(client, message):
 async def cb_handler(client, query):
     sent_by = query.data.split('.')[0]
     clicked_by = query.from_user.id
-    if int(sent_by) != int(clicked_by):
+    if (sent_by) != (clicked_by):
         await query.answer('This is not for you!', show_alert=True)
         return
 
