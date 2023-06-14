@@ -1,4 +1,5 @@
 import base64
+import requests
 from pyrogram import Client, filters
 
 from Stark import error_handler
