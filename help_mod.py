@@ -207,7 +207,7 @@ class Script(object):
         {
             "desc": "Converts your text into a quote",
             "cmds": ["quote", "qt", "qu", "q"],
-            "usage": "/q [reply to a text message]"
+            "usage": "/q [reply to a text message / give text as input]\nNote:\n1. No need to use args like -r for reply | reply set as default\n2.Either give text as reply or input"
         }
     ]
     STICKER = [
