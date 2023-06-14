@@ -91,9 +91,9 @@ async def cb_handler(client, query):
             await query.answer('This is not for you!', show_alert=True)
             return
     except:
-      if int(query.data.split("|")[-1].strip()) != int(query.from_user.id):
-        await query.answer('This is not for you!', show_alert=True)
-        return
+        if int(query.data.split("|")[-1].strip()) != int(query.from_user.id):
+            await query.answer('This is not for you!', show_alert=True)
+            return
     def page_data(page):
         return f'{sent_by}.page_{page}'
 
