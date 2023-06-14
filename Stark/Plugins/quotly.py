@@ -13,38 +13,44 @@ async def quote(client, m):
     messages = []
 
     def create_user_dict(user):
-        if not user.first_name:
-            first_name = ""
-        else:
-            first_name = user.first_name
-        if not user.last_name:
-            last_name = ""
-        else:
-            last_name = user.last_name
-        if user.photo:
-            small_id = user.photo.small_file_id
-            small_unique = user.photo.small_photo_unique_id
-            big_id = user.photo.big_file_id
-            big_unique = user.photo.big_photo_unique_id
-        else:
-            small_id = small_unique = big_id = big_unique = None
+      if user is None:
+          return {}
+  
+      if not user.first_name:
+          first_name = ""
+      else:
+          first_name = user.first_name
+  
+      if not user.last_name:
+          last_name = ""
+      else:
+          last_name = user.last_name
+  
+      if user.photo:
+          small_id = user.photo.small_file_id
+          small_unique = user.photo.small_photo_unique_id
+          big_id = user.photo.big_file_id
+          big_unique = user.photo.big_photo_unique_id
+      else:
+          small_id = small_unique = big_id = big_unique = None
+  
+      return {
+          "id": user.id,
+          "first_name": first_name,
+          "last_name": last_name,
+          "username": user.username,
+          "language_code": "eu",
+          "title": f"{first_name} {last_name}",
+          "photo": {
+              "small_file_id": small_id,
+              "small_file_unique_id": small_unique,
+              "big_file_id": big_id,
+              "big_file_unique_id": big_unique
+          },
+          "type": "private",
+          "name": f"{first_name} {last_name}"
+      }
 
-        return {
-            "id": user.id,
-            "first_name": first_name,
-            "last_name": last_name,
-            "username": user.username,
-            "language_code": "eu",
-            "title": f"{first_name} {last_name}",
-            "photo": {
-                "small_file_id": small_id,
-                "small_file_unique_id": small_unique,
-                "big_file_id": big_id,
-                "big_file_unique_id": big_unique
-            },
-            "type": "private",
-            "name": f"{first_name} {last_name}"
-        }
 
     if m.text in ["/q", "/qu", "/qt", "/quote"] and m.reply_to_message:
         mes = m.reply_to_message
