@@ -1,23 +1,23 @@
-from SafoneAPI import SafoneAPI
 from pyrogram import Client, filters
+from pyrogram.types import Message
+from SafoneAPI import SafoneAPI
 from Stark import error_handler
 
 api = SafoneAPI()
 
-
 @Client.on_message(filters.command(["tr", "translate"]))
 @error_handler
-async def translate_me(_, message):
-    lol = await message.reply_text(f"`Translating please wait!`")
+async def translate_me(client: Client, message: Message):
     lang = message.text.split(None, 1)
-    if len(lang) > 1:
-        lang = lang[1]
-    else:
-        lang = "en"
-    text = message.reply_to_message.text
-    if not text:
-        await lol.edit("`Reply to a message to translate it`")
+    target_lang = lang[1] if len(lang) > 1 else "en"
+    
+    reply_message = message.reply_to_message
+    if not reply_message or not reply_message.text:
+        await message.reply_text("`Reply to a message containing text to translate it`")
         return
-    output = await api.translate(text, target=lang)
-    result = output.translated
-    await lol.edit(f"**➥Translated successfully:**\n\n➥`{result}`")
+    
+    text = reply_message.text
+    translated = await api.translate(text, target=target_lang)
+    result = translated.translated
+
+    await message.reply_text(f"**➥Translated successfully:**\n\n➥`{result}`")
