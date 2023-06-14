@@ -10,9 +10,8 @@ ia = IMDb()
 async def more_details_handler(client, callback_query):
     sent_by = callback_query.data.split("|")[-1].strip()
     clicked_by = callback_query.from_user.id
-    await callback_query.message.reply_text(callback_query.data)
-    await callback_query.message.reply_text(sent_by)
-    await callback_query.message.reply_text(clicked_by)
+    await callback_query.edit_message_caption(sent_by)
+    await callback_query.edit_message_caption(clicked_by)
     if int(sent_by) != int(clicked_by):
         await callback_query.answer('This is not for you!', show_alert=True)
         return
