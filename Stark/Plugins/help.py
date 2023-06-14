@@ -84,16 +84,10 @@ async def start(client, message):
 
 @Client.on_callback_query()
 async def cb_handler(client, query):
-    try:
-        sent_by = query.data.split('.')[0]
-        clicked_by = query.from_user.id
-        if int(sent_by) != int(clicked_by):
-            await query.answer('This is not for you!', show_alert=True)
-            return
-    except:
-        if int(query.data.split("|")[-1].strip()) != int(query.from_user.id):
-            await query.answer('This is not for you!', show_alert=True)
-            return
+    sent_by = query.data.split('.')[0]
+    if int(query.data.split('.')[0]) != int(query.from_user.id):
+        await query.answer('This is not for you!', show_alert=True)
+        return
     def page_data(page):
         return f'{sent_by}.page_{page}'
 
