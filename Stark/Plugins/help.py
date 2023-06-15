@@ -188,32 +188,9 @@ async def cb_handler(client, query):
         text = await bot_sys_stats()
         await query.answer(text, show_alert=True)
 
-from pyrogram import Client, filters
-from pyrogram.types import Message
-
-class Script(object):
-    AI = [
-        {
-            "desc": "Generates AI response from OpenAI",
-            "cmds": ["gpt", "askgpt", "chatgpt"],
-            "usage": "/gpt Who are you?"
-        }
-    ]
-    CARBON = [
-        {
-            "desc": "Creates a carbon in doc format",
-            "cmds": ["carbon"],
-            "usage": "/carbon reply to a text message or give some text as input"
-        },
-        {
-            "desc": "Creates a carbon in image format",
-            "cmds": ["icarbon"],
-            "usage": "/icarbon reply to a text message or give some text as input"
-        }
-    ]
 
 @Client.on_message(filters.command("ahelp"))
-def ahelp_command(client: Client, message: Message):
+def ahelp_command(client, message):
     # Get the command argument
     args = message.command[1:]
 
