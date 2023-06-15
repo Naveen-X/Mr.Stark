@@ -177,7 +177,7 @@ async def glitchtgi(client, message):
         await client.send_animation(
             message.chat.id,
             pathsn,
-            reply_to_message_id=message.reply_to_message.messageid,
+            reply_to_message_id=message.reply_to_message.message.id,
         )
     else:
         await client.send_animation(message.chat.id, pathsn)
