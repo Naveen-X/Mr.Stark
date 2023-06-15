@@ -2,6 +2,7 @@ import os
 import html
 import random
 import textwrap
+import subprocess
 from shutil import rmtree
 from datetime import datetime
 
@@ -173,12 +174,17 @@ async def glitchtgi(client, message):
     await pablo.edit("`Optimizing Now!`")
     optimize(pathsn)
     await pablo.edit("`Starting Upload!`")
+    thumbnail_filename = 'thumbnail.jpg'
+    thumbnail_cmd = ['ffmpeg', '-i', pathsn, '-ss', '00:00:01.000', '-vframes', '1', thumbnail_filename]
+    subprocess.run(thumbnail_cmd)
     if message.reply_to_message:
         await message.reply_animation(
-            pathsn
+            pathsn,
+            thumb=thumbnail_filename,
         )
     else:
-        await client.send_animation(message.chat.id, pathsn)
+        await client.send_animation(message.chat.id, pathsn, thumb=thumbnail_filename)
     if os.path.exists(pathsn):
         os.remove(pathsn)
+        os.remove(thumbnail_filename)
     await pablo.delete()
