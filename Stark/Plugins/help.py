@@ -221,5 +221,3 @@ def ahelp_command(client, message):
 
         response = f"Info: {desc}\nCmds: {cmds}\nUsage: {usage}"
         message.reply_text(response)
-
-app.run()
