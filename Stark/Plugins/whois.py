@@ -18,6 +18,10 @@ bullets = {
 b1 = bullets["bullet4"]
 b2 = bullets["bullet2"]
 b3 = bullets["bullet3"]
+b4 = bullets["bullet4"]
+b5 = bullets["bullet5"]
+b6 = bullets["bullet6"]
+b7 = bullets["bullet7"]
 
 dc_id = {
     1: "Miami FL, USA",
@@ -84,18 +88,18 @@ async def whois(bot, message):
 async def owo_chat_info(c, m):
     s = await m.reply_text("`Processing...`")
     cht = await c.get_chat(m.chat.id)
-    msg = "**Chat Info** \n\n"
-    msg += f"**Chat-ID :** __{cht.id}__ \n"
-    msg += f"**Verified :** __{cht.is_verified}__ \n"
-    msg += f"**Is Scam :** __{cht.is_scam}__ \n"
-    msg += f"**Chat Title :** __{cht.title}__ \n"
+    msg = f"**{b4} Chat Info** \n\n"
+    msg += f"**{b5} Chat Title :** __{cht.title}__ \n"
+    msg += f"**{b6} Chat-ID :** __{cht.id}__ \n"
+    msg += f"**{b6} Verified :** __{cht.is_verified}__ \n"
+    msg += f"**{b6} Is Scam :** __{cht.is_scam}__ \n"
     if cht.dc_id:
-        msg += f"**Chat DC :** __{cht.dc_id}__ \n"
+        msg += f"**{b6} Chat DC :** __{cht.dc_id}__ \n"
     if cht.username:
-        msg += f"**Chat Username :** __{cht.username}__ \n"
+        msg += f"**{b6} Chat Username :** __{cht.username}__ \n"
     if cht.description:
-        msg += f"**Chat Description :** __{cht.description}__ \n"
-    msg += f"**Chat Members Count :** __{cht.members_count}__ \n"
+        msg += f"**{b6} Chat Description :** __{cht.description}__ \n"
+    msg += f"**{b7} Chat Members Count :** __{cht.members_count}__ \n"
     if cht.photo:
         kek = await c.download_media(cht.photo.big_file_id)
         await c.send_photo(m.chat.id, photo=kek, caption=msg)
