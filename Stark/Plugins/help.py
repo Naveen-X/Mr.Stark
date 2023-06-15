@@ -8,7 +8,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyromod.helpers import ikb
 from pyromod.nav import Pagination
 
-from Stark import db
+from Stark import db, error_handler
 from Stark.Plugins.start import keyboard
 from help_mod import Script
 from main.helper_func.basic_helpers import get_readable_time
@@ -52,6 +52,7 @@ def item_title(item, page):
 
 
 @Client.on_message(filters.command(['help', 'h', 'hlp']))
+@error_handler
 async def start(client, message):
     id = message.from_user.id
 
@@ -190,34 +191,31 @@ async def cb_handler(client, query):
 
 
 @Client.on_message(filters.command("ahelp"))
-def ahelp_command(client, message):
+@error_handler
+async def ahelp_command(client, message):
     # Get the command argument
     args = message.command[1:]
-
     if len(args) == 0:
-        # No argument provided
-        message.reply_text("Please specify a category. e.g., /ahelp AI")
+        # No argument provided, list all available categories
+        categories = [attr for attr in dir(Script) if not attr.startswith("__")]
+        response = f"**Available Plugins:** \n`{', '.join(categories)}`"
+        await message.reply_text(response)
         return
-
     category = args[0].upper()
-
     if category not in dir(Script):
         # Invalid category provided
-        message.reply_text("Invalid category. Available categories: AI, CARBON")
+        await message.reply_text("**Invalid Plugin**\nCheck /ahelp for Plugin names")
         return
-
     # Get the list of commands based on the category
     category_commands = getattr(Script, category)
-
     if not category_commands:
         # Category has no commands
-        message.reply_text("No commands found for the specified category.")
+        message.reply_text("`No commands found for the specified plugin.`")
         return
-
     for command in category_commands:
         desc = command.get("desc", "")
         cmds = ', '.join(command.get("cmds", []))
         usage = command.get("usage", "")
 
-        response = f"Info: {desc}\nCmds: {cmds}\nUsage: {usage}"
-        message.reply_text(response)
+        response = f"*Plugin Info:** {category}\n **Info:** __{desc}__\n**Cmds:** `{cmds}`\n**Usage:** `{usage}`"
+        await message.reply_text(response)
