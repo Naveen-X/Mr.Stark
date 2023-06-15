@@ -54,7 +54,7 @@ async def whois(bot, message):
         return await msg.edit("`Failed to get user`")
     xio = f"{ui.dc_id} | {dc_id[ui.dc_id]}" if ui.dc_id else "Unknown"
     ui_text = [
-        f"{b3} <b>User-info of <i>"{ui.mention}"</i> :</b>\n\n",
+        f"  {b3} <b>User-info of <i>{ui.mention}</i> :</b>\n\n",
         f"  {b1} <b>Firstname : <i>{ui.first_name}</i></b>\n",
         f"  {b1} <b>Lastname : <i>{ui.last_name}</i></b>\n" if ui.last_name else "",
         (f"  {b1} <b>Username :</b> <code>@{ui.username}</code>\n" if ui.username else ""),
