@@ -98,7 +98,7 @@ async def owo_chat_info(c, m):
     msg += f"**Chat Members Count :** __{cht.members_count}__ \n"
     if cht.photo:
         kek = await c.download_media(cht.photo.big_file_id)
-        await c.send_photo(message.chat.id, photo=kek, caption=msg)
+        await c.send_photo(m.chat.id, photo=kek, caption=msg)
         await s.delete()
         os.remove(kek)
     else:
