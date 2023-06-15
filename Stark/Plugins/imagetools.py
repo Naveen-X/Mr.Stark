@@ -11,6 +11,7 @@ import requests
 import numpy as np 
 from pygifsicle import optimize
 from pyrogram import Client, filters
+from glitch_this import ImageGlitcher
 from NoteShrinker import NoteShrinker
 from PIL import Image, ImageDraw, ImageFont
 from main.helper_func.plugin_helpers import (
@@ -21,6 +22,7 @@ from main.helper_func.plugin_helpers import (
 )
 from Stark import error_handler
 
+glitcher = ImageGlitcher()
 DURATION = 200
 LOOP = 0 
 
@@ -148,4 +150,38 @@ async def hwn(client, message):
         img.save(imag_e)
     await client.send_photo(message.chat.id, imag_e)
     await pablo.delete()
-    os.remove(imag_e)
+
+@Client.on_message(filters.command("glitch"))
+@error_handler
+async def glitchtgi(client, message):
+    engine = message.Engine
+    pablo = await message.reply_text("`Processing...`")
+    if not message.reply_to_message:
+        await pablo.edit("`Reply to Image To Glitch It!`")
+        return
+    photolove = await convert_to_image(message, client)
+    #await pablo.edit("`Gli, Glitchiiingggg.....`")
+    pathsn = 'Glitched.gif'
+    glitch_imgs = glitcher.glitch_image(photolove, 2, gif=True, color_offset=True)
+    glitch_imgs[0].save(
+        pathsn,
+        format="GIF",
+        append_images=glitch_imgs[1:],
+        save_all=True,
+        duration=DURATION,
+        loop=LOOP,
+    )
+    await pablo.edit("`Optimizing Now!`")
+    optimize(pathsn)
+    await pablo.edit("`Starting Upload!`")
+    if message.reply_to_message:
+        await client.send_animation(
+            message.chat.id,
+            pathsn,
+            reply_to_message_id=message.reply_to_message.messageid,
+        )
+    else:
+        await client.send_animation(message.chat.id, pathsn)
+    if os.path.exists(pathsn):
+        os.remove(pathsn)
+    await pablo.delete()
