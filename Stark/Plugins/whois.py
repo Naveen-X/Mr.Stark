@@ -85,15 +85,12 @@ async def owo_chat_info(c, m):
     engine = message.Engine
     s = await m.reply_text("`Processing...`")
     cht = await c.get_chat(m.chat.id)
-    peer = await c.resolve_peer(m.chat.id)
-    online_ = await c.send(pyrogram.raw.functions.messages.GetOnlines(peer=peer))
     msg = "**Chat Info** \n\n"
     msg += f"**Chat-ID :** __{cht.id}__ \n"
     msg += f"**Verified :** __{cht.is_verified}__ \n"
     msg += f"**Is Scam :** __{cht.is_scam}__ \n"
     msg += f"**Chat Title :** __{cht.title}__ \n"
-    msg += f"**Users Online :** __{online_.onlines}__ \n"
-    if cht.photo:
+    if cht.dc_id:
         msg += f"**Chat DC :** __{cht.dc_id}__ \n"
     if cht.username:
         msg += f"**Chat Username :** __{cht.username}__ \n"
