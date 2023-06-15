@@ -212,10 +212,10 @@ async def ahelp_command(client, message):
         # Category has no commands
         await message.reply_text("`No commands found for the specified plugin.`")
         return
-    response = f"**Plugin Info:** {category}\n\n"
+    response = f"**Plugin Name:** {category}\n\n"
     for command in category_commands:
         desc = command.get("desc", "")
         cmds = ', '.join(command.get("cmds", []))
         usage = command.get("usage", "")
-        response += f"**Info:** {desc}\n**Cmds:** `{cmds}`\n**Usage:** `{usage}`\n\n---\n"
+        response += f"**Info:** {desc}\n**Cmds:** `{cmds}`\n**Usage:** `{usage}`\n\n______________\n"
     await message.reply_text(response)
