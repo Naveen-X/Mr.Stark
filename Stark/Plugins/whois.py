@@ -82,7 +82,6 @@ async def whois(bot, message):
 @Client.on_message(filters.command(["chatinfo", "cinfo"]))
 @error_handler
 async def owo_chat_info(c, m):
-    engine = message.Engine
     s = await m.reply_text("`Processing...`")
     cht = await c.get_chat(m.chat.id)
     msg = "**Chat Info** \n\n"
