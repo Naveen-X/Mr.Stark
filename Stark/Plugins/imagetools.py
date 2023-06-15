@@ -11,6 +11,7 @@ import requests
 import numpy as np 
 from pygifsicle import optimize
 from pyrogram import Client, filters
+from NoteShrinker import NoteShrinker
 from PIL import Image, ImageDraw, ImageFont
 from main.helper_func.plugin_helpers import (
     convert_to_image,
@@ -125,4 +126,26 @@ async def getfakecertificate(c, m):
     await pablo.delete()
     if os.path.exists(ok):
         os.remove(ok)
-        
+
+@Client.on_message(filters.command(["hwn"]))
+@error_handler
+async def hwn(client, message):
+    pablo = await message.reply_text("`Processing...`")
+    if not message.reply_to_message:
+        await pablo.edit("`Reply to Notes / Document To Enhance It!`")
+        return
+    cool = await convert_to_image(message, client)
+    if not cool:
+        await pablo.edit("`Reply to a valid media first`")
+        return
+    if not os.path.exists(cool):
+        await pablo.edit("**Invalid Media**")
+        return
+    ns = NoteShrinker([cool])
+    shrunk = ns.shrink()
+    imag_e = "enhanced_image.png"
+    for img in shrunk:
+        img.save(imag_e)
+    await client.send_photo(message.chat.id, imag_e)
+    await pablo.delete()
+    os.remove(imag_e)
