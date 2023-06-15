@@ -174,10 +174,8 @@ async def glitchtgi(client, message):
     optimize(pathsn)
     await pablo.edit("`Starting Upload!`")
     if message.reply_to_message:
-        await client.send_animation(
-            message.chat.id,
-            pathsn,
-            reply_to_message_id=message.reply_to_message.message.id,
+        await message.reply_animation(
+            pathsn
         )
     else:
         await client.send_animation(message.chat.id, pathsn)
