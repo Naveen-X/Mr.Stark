@@ -188,3 +188,33 @@ async def glitchtgi(client, message):
         os.remove(pathsn)
         os.remove(thumbnail_filename)
     await pablo.delete()
+
+
+@Client.on_message(filters.command("ghost"))
+@error_handler
+async def ghost(client, message):
+    owo = await message.reply_text("`Processing...`")
+    img = await convert_to_image(message, client)
+    if not img:
+        await pablo.edit("`Reply to a Valid Media!`")
+        return
+    if not os.path.exists(img):
+        await owo.edit("**Invalid Media**")
+        return
+    image = cv2.imread(img)
+    treshold, fridaydevs = cv2.threshold(image, 150, 225, cv2.THRESH_BINARY)
+    file_name = "Tresh.webp"
+    ok = file_name
+    cv2.imwrite(ok, fridaydevs)
+    if message.reply_to_message:
+        await client.send_sticker(
+            message.chat.id,
+            sticker=ok,
+            reply_to_message_id=message.reply_to_message.id,
+        )
+    else:
+        await client.send_sticker(message.chat.id, sticker=ok)
+    await owo.delete()
+    for files in (ok, img):
+        if files and os.path.exists(files):
+            os.remove(files)
