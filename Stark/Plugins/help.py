@@ -217,5 +217,5 @@ async def ahelp_command(client, message):
         desc = command.get("desc", "")
         cmds = ', '.join(command.get("cmds", []))
         usage = command.get("usage", "")
-        response += f"**Info:** {desc}\n**Cmds:** `{cmds}`\n**Usage:** `{usage}`\n\n______________\n"
+        response += f"**Info:** {desc}\n**Cmds:** `{cmds}`\n**Usage:** `{usage}`\n\n"
     await message.reply_text(response)
