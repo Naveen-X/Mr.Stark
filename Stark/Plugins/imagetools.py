@@ -1,15 +1,15 @@
 import os
-import html
-import random
-import textwrap
-import subprocess
-from shutil import rmtree
-from datetime import datetime
-
+import cv2
 import wget
 import pytz
+import html
+import random
 import requests
+import textwrap
+import subprocess
 import numpy as np 
+from shutil import rmtree
+from datetime import datetime
 from pygifsicle import optimize
 from pyrogram import Client, filters
 from glitch_this import ImageGlitcher
@@ -218,3 +218,45 @@ async def ghost(client, message):
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
+
+@Client.on_message(filters.command("sketch"))
+@error_handler
+async def nice(client, message):
+    owo = await message.reply_text("`Processing...`")
+    img = await convert_to_image(message, client)
+    if not img:
+        await owo.edit("`Reply to a Valid Media`")
+        return
+    if not os.path.exists(img):
+        await owo.edit("**Invalid Media**")
+        return
+    image = cv2.imread(img)
+    scale_percent = 0.60
+    width = int(image.shape[1] * scale_percent)
+    height = int(image.shape[0] * scale_percent)
+    dim = (width, height)
+    resized = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
+    kernel_sharpening = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
+    sharpened = cv2.filter2D(resized, -1, kernel_sharpening)
+    gray = cv2.cvtColor(sharpened, cv2.COLOR_BGR2GRAY)
+    inv = 255 - gray
+    gauss = cv2.GaussianBlur(inv, ksize=(15, 15), sigmaX=0, sigmaY=0)
+    pencil_image = dodgeV2(gray, gauss)
+    ok = "Drawn.webp"
+    cv2.imwrite(ok, pencil_image)
+    if message.reply_to_message:
+        await client.send_sticker(
+            message.chat.id,
+            sticker=ok,
+            reply_to_message_id=message.reply_to_message.id,
+        )
+    else:
+        await client.send_sticker(message.chat.id, sticker=ok)
+    await owo.delete()
+    for files in (ok, img):
+        if files and os.path.exists(files):
+            os.remove(files)
+
+
+def dodgeV2(image, mask):
+    return cv2.divide(image, 255 - mask, scale=256)
