@@ -187,3 +187,62 @@ async def cb_handler(client, query):
     elif 'sys_info' in query.data:
         text = await bot_sys_stats()
         await query.answer(text, show_alert=True)
+
+from pyrogram import Client, filters
+from pyrogram.types import Message
+
+class Script(object):
+    AI = [
+        {
+            "desc": "Generates AI response from OpenAI",
+            "cmds": ["gpt", "askgpt", "chatgpt"],
+            "usage": "/gpt Who are you?"
+        }
+    ]
+    CARBON = [
+        {
+            "desc": "Creates a carbon in doc format",
+            "cmds": ["carbon"],
+            "usage": "/carbon reply to a text message or give some text as input"
+        },
+        {
+            "desc": "Creates a carbon in image format",
+            "cmds": ["icarbon"],
+            "usage": "/icarbon reply to a text message or give some text as input"
+        }
+    ]
+
+@Client.on_message(filters.command("ahelp"))
+def ahelp_command(client: Client, message: Message):
+    # Get the command argument
+    args = message.command[1:]
+
+    if len(args) == 0:
+        # No argument provided
+        message.reply_text("Please specify a category. e.g., /ahelp AI")
+        return
+
+    category = args[0].upper()
+
+    if category not in dir(Script):
+        # Invalid category provided
+        message.reply_text("Invalid category. Available categories: AI, CARBON")
+        return
+
+    # Get the list of commands based on the category
+    category_commands = getattr(Script, category)
+
+    if not category_commands:
+        # Category has no commands
+        message.reply_text("No commands found for the specified category.")
+        return
+
+    for command in category_commands:
+        desc = command.get("desc", "")
+        cmds = ', '.join(command.get("cmds", []))
+        usage = command.get("usage", "")
+
+        response = f"Info: {desc}\nCmds: {cmds}\nUsage: {usage}"
+        message.reply_text(response)
+
+app.run()
