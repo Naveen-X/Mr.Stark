@@ -154,7 +154,6 @@ async def hwn(client, message):
 @Client.on_message(filters.command("glitch"))
 @error_handler
 async def glitchtgi(client, message):
-    engine = message.Engine
     pablo = await message.reply_text("`Processing...`")
     if not message.reply_to_message:
         await pablo.edit("`Reply to Image To Glitch It!`")
