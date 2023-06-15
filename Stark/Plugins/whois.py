@@ -7,12 +7,12 @@ from Stark import error_handler
 
 bullets = {
     "bullet1": ">",
-    "bullet2": "â€¢",
-    "bullet3": "â‹Ÿ",
-    "bullet4": "â—ˆ",
-    "bullet5": "â”",
-    "bullet6": "â”£",
-    "bullet7": "â”—",
+    "bullet2": "•",
+    "bullet3": "⋟",
+    "bullet4": "◈",
+    "bullet5": "┏",
+    "bullet6": "┣",
+    "bullet7": "┗",
 }
 
 b1 = bullets["bullet4"]
@@ -54,7 +54,7 @@ async def whois(bot, message):
         return await msg.edit("`Failed to get user`")
     xio = f"{ui.dc_id} | {dc_id[ui.dc_id]}" if ui.dc_id else "Unknown"
     ui_text = [
-        f"{b3} <b>User-info of <i>â€œ{ui.mention}â€</i> :</b>\n\n",
+        f"{b3} <b>User-info of <i>"{ui.mention}"</i> :</b>\n\n",
         f"  {b1} <b>Firstname : <i>{ui.first_name}</i></b>\n",
         f"  {b1} <b>Lastname : <i>{ui.last_name}</i></b>\n" if ui.last_name else "",
         (f"  {b1} <b>Username :</b> <code>@{ui.username}</code>\n" if ui.username else ""),
@@ -94,18 +94,18 @@ async def chat_info(c, m):
     s = await m.reply_text("`Processing...`")
     try:
         cht = await c.get_chat(chat_id)
-        msg = f"**â– Chat Info** \n\n"
-        msg += f"**â¦¾ Chat Title :** __{cht.title}__ \n"
-        msg += f"**â¦¾ Chat-ID :** __{cht.id}__ \n"
-        msg += f"**â¦¾ Verified :** __{cht.is_verified}__ \n"
-        msg += f"**â¦¾ Is Scam :** __{cht.is_scam}__ \n"
+        msg = f"**❖ Chat Info** \n\n"
+        msg += f"**⦾ Chat Title :** __{cht.title}__ \n"
+        msg += f"**⦾ Chat-ID :** __{cht.id}__ \n"
+        msg += f"**⦾ Verified :** __{cht.is_verified}__ \n"
+        msg += f"**⦾ Is Scam :** __{cht.is_scam}__ \n"
         if cht.dc_id:
-            msg += f"**â¦¾ Chat DC :** __{cht.dc_id}__ \n"
+            msg += f"**⦾ Chat DC :** __{cht.dc_id}__ \n"
         if cht.username:
-            msg += f"**â¦¾ Chat Username :** __{cht.username}__ \n"
+            msg += f"**⦾ Chat Username :** __{cht.username}__ \n"
         if cht.description:
             msg += f"**â¦¾ Chat Description :** __{cht.description}__ \n"
-        msg += f"**â¦¾ Chat Members Count :** __{cht.members_count}__ \n"
+        msg += f"**⦾ Chat Members Count :** __{cht.members_count}__ \n"
         if cht.photo:
             kek = await c.download_media(cht.photo.big_file_id)
             await c.send_photo(m.chat.id, photo=kek, caption=msg)
