@@ -85,25 +85,33 @@ async def whois(bot, message):
 
 @Client.on_message(filters.command(["chatinfo", "cinfo"]))
 @error_handler
-async def owo_chat_info(c, m):
-    s = await m.reply_text("`Processing...`")
-    cht = await c.get_chat(m.chat.id)
-    msg = f"**❖ Chat Info** \n\n"
-    msg += f"**⦾ Chat Title :** __{cht.title}__ \n"
-    msg += f"**⦾ Chat-ID :** __{cht.id}__ \n"
-    msg += f"**⦾ Verified :** __{cht.is_verified}__ \n"
-    msg += f"**⦾ Is Scam :** __{cht.is_scam}__ \n"
-    if cht.dc_id:
-        msg += f"**⦾ Chat DC :** __{cht.dc_id}__ \n"
-    if cht.username:
-        msg += f"**⦾ Chat Username :** __{cht.username}__ \n"
-    if cht.description:
-        msg += f"**⦾ Chat Description :** __{cht.description}__ \n"
-    msg += f"**⦾ Chat Members Count :** __{cht.members_count}__ \n"
-    if cht.photo:
-        kek = await c.download_media(cht.photo.big_file_id)
-        await c.send_photo(m.chat.id, photo=kek, caption=msg)
-        await s.delete()
-        os.remove(kek)
+async def chat_info(c, m):
+    # Check if the command has an argument (chat ID)
+    if len(m.command) > 1:
+        chat_id = m.command[1]
     else:
-        await s.edit(msg)
+        chat_id = m.chat.id
+    s = await m.reply_text("`Processing...`")
+    try:
+        cht = await c.get_chat(chat_id)
+        msg = f"**❖ Chat Info** \n\n"
+        msg += f"**⦾ Chat Title :** __{cht.title}__ \n"
+        msg += f"**⦾ Chat-ID :** __{cht.id}__ \n"
+        msg += f"**⦾ Verified :** __{cht.is_verified}__ \n"
+        msg += f"**⦾ Is Scam :** __{cht.is_scam}__ \n"
+        if cht.dc_id:
+            msg += f"**⦾ Chat DC :** __{cht.dc_id}__ \n"
+        if cht.username:
+            msg += f"**⦾ Chat Username :** __{cht.username}__ \n"
+        if cht.description:
+            msg += f"**⦾ Chat Description :** __{cht.description}__ \n"
+        msg += f"**⦾ Chat Members Count :** __{cht.members_count}__ \n"
+        if cht.photo:
+            kek = await c.download_media(cht.photo.big_file_id)
+            await c.send_photo(m.chat.id, photo=kek, caption=msg)
+            await s.delete()
+            os.remove(kek)
+        else:
+            await s.edit(msg)
+    except Exception as e:
+        await s.edit(f"**An error occurred:** `{str(e)}`")
