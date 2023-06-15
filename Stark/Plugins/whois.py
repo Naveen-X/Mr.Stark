@@ -1,5 +1,6 @@
 import os
 import asyncio
+import pyrogram
 from pyrogram import Client, filters
 
 from Stark import error_handler
@@ -77,3 +78,32 @@ async def whois(bot, message):
             os.remove(photo)
     else:
         await msg.edit("".join(ui_text))
+
+@Client.on_message(filters.command(["chatinfo", "cinfo"]))
+@error_handler
+async def owo_chat_info(c, m):
+    engine = message.Engine
+    s = await m.reply_text("`Processing...`")
+    cht = await c.get_chat(m.chat.id)
+    peer = await c.resolve_peer(m.chat.id)
+    online_ = await c.send(pyrogram.raw.functions.messages.GetOnlines(peer=peer))
+    msg = "**Chat Info** \n\n"
+    msg += f"**Chat-ID :** __{cht.id}__ \n"
+    msg += f"**Verified :** __{cht.is_verified}__ \n"
+    msg += f"**Is Scam :** __{cht.is_scam}__ \n"
+    msg += f"**Chat Title :** __{cht.title}__ \n"
+    msg += f"**Users Online :** __{online_.onlines}__ \n"
+    if cht.photo:
+        msg += f"**Chat DC :** __{cht.dc_id}__ \n"
+    if cht.username:
+        msg += f"**Chat Username :** __{cht.username}__ \n"
+    if cht.description:
+        msg += f"**Chat Description :** __{cht.description}__ \n"
+    msg += f"**Chat Members Count :** __{cht.members_count}__ \n"
+    if cht.photo:
+        kek = await c.download_media(cht.photo.big_file_id)
+        await c.send_photo(message.chat.id, photo=kek, caption=msg)
+        await s.delete()
+        os.remove(kek)
+    else:
+        await s.edit(msg)
