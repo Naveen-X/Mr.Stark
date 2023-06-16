@@ -79,7 +79,7 @@ async def more_details_handler(client, callback_query):
     try:
         writers = [writer.get('name') for writer in movie.get('writer', [])]
         movie_msg += f"🖋️ **Writers:** {', '.join(writers)}\n"
-    except KeyError:
+    except:
         movie_msg += "🖋️ **Writers:** N/A\n"
 
     # Cast
