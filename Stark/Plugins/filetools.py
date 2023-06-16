@@ -3,7 +3,7 @@ import time
 from Stark import error_handler
 from pyrogram import Client, filters
 
-from main.helpers.basic_helpers import progress
+from main.helper_func.basic_helpers import progress
 
 @Client.on_message(filters.command(["download"]))
 @error_handler
