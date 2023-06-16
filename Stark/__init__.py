@@ -66,7 +66,7 @@ logger = logging.getLogger(__name__)
 logger.addHandler(file_handler)
 
 # Set the logging level for the pyrogram module to ERROR
-logging.getLogger("pyrogram").setLevel(logging.INFO)
+logging.getLogger("pyrogram").setLevel(logging.ERROR)
 
 x = "Asia/Kolkata"
 TZ = pytz.timezone(x)
