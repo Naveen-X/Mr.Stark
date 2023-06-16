@@ -106,7 +106,7 @@ async def more_details_handler(client, callback_query):
             movie_msg += f"- {country}: {date}\n"
     # Send the message with the movie Details
     view_button = InlineKeyboardButton(text="View on IMDb", url=f"https://www.imdb.com/title/tt{movie.getID()}/")
-    back_button = InlineKeyboardButton(text="Back", callback_data=f"{callback_query.from_user.id}back_to_search:{back}")
+    back_button = InlineKeyboardButton(text="Back", callback_data=f"{callback_query.from_user.id}.back_to_search:{back}")
     # Add the buttons to an InlineKeyboardMarkup object
     keyboard = InlineKeyboardMarkup([[view_button], [back_button]])
     # await message.reply_to_message.edit_media(
