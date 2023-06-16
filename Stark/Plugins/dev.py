@@ -82,7 +82,7 @@ async def aexec(code, bot, message):
 
 
 @Client.on_message(filters.command(["bash", "sh"]) & filters.user(AUTH_LIST))
-@Client.on_edited_message(filters.command(["bash"]) & filters.user(AUTH_LIST))
+@Client.on_edited_message(filters.command(["bash", "sh"]) & filters.user(AUTH_LIST))
 @error_handler
 async def terminal(bot, message):
     stark = await message.reply_text("`Please Wait!`")
