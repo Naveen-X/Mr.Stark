@@ -1,6 +1,9 @@
 import os 
+import time
 from Stark import error_handler
 from pyrogram import Client, filters
+
+from main.helpers.basic_helpers import progress
 
 @Client.on_message(filters.command(["download"]))
 @error_handler
@@ -13,7 +16,9 @@ async def download(bot, message):
         await dl.edit("`Reply to a message to download!`")
         return
     if message.reply_to_message.media or message.reply_to_message.document or message.reply_to_message.photo:
-        file = await message.reply_to_message.download()
+        c_time=time.time()
+        file = await message.reply_to_message.download(progress=progress, progress_args=(dl, c_time, f"`Downloading This File!`")
+    )
     file_txt = "__Downloaded This File To__ `{}`."
     filename = os.path.basename(file)
     f_name = os.path.join("downloads", filename)
@@ -35,14 +40,17 @@ async def upload_file(c, m):
         else:
             msg = await m.reply_text("Uploading file please wait...")
             try:
-              await m.reply_document(file)
+              c_time=time.time()
+              await m.reply_document(file, progress=progress, progress_args=(pablo, c_time, f"`Uploading This File!`")
+    )
             except:
               await msg.edit("`No Such File Found`")
             await msg.delete()
     else:
         msg = await m.reply_text("Uploading file please wait...")
         try:
-          await m.reply_document(file)
+          c_time=time.time()
+          await m.reply_document(file, progress=progress, progress_args=(pablo, c_time, f"`Uploading This File!`")
         except:
           await msg.edit("`No Such File Found`")
         await msg.delete()
