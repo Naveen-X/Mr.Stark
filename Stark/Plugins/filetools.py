@@ -50,7 +50,7 @@ async def upload_file(c, m):
         msg = await m.reply_text("Uploading file please wait...")
         try:
           c_time=time.time()
-          await m.reply_document(file, progress=progress, progress_args=(msg, c_time, f"`Uploading This File!`")
+          await m.reply_document(file, progress=progress, progress_args=(msg, c_time, f"`Uploading This File!`"))
         except:
           await msg.edit("`No Such File Found`")
         await msg.delete()
