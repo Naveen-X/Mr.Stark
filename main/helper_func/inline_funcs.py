@@ -14,7 +14,7 @@ from pyrogram.types import (
     InputTextMessageContent,
     InlineKeyboardMarkup,
 )
-from arq import ARQ
+from Python_ARQ import ARQ
 from Stark.config import Config
 
 ARQ_URI = "https://arq.hamker.in"
