@@ -132,7 +132,7 @@ async def back_to_search_handler(client, callback_query):
     for i, movie in enumerate(movies[:10]):
         button_list.append(
             [InlineKeyboardButton(text=f"{movie['title']}",
-                                  callback_data=f"{callback_query.from_user.id}more_details {movie.movieID} :{movie_name}:")]
+                                  callback_data=f"{callback_query.from_user.id}.more_details {movie.movieID} :{movie_name}:")]
         )
 
     # Add the buttons to an InlineKeyboardMarkup object
