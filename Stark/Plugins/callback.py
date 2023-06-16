@@ -106,7 +106,7 @@ async def more_details_handler(client, callback_query):
             movie_msg += f"- {country}: {date}\n"
     # Send the message with the movie Details
     view_button = InlineKeyboardButton(text="View on IMDb", url=f"https://www.imdb.com/title/tt{movie.getID()}/")
-    back_button = InlineKeyboardButton(text="Back", callback_data=f"back_to_search:{back}")
+    back_button = InlineKeyboardButton(text="Back", callback_data=f"{callback_query.from_user.id}back_to_search:{back}")
     # Add the buttons to an InlineKeyboardMarkup object
     keyboard = InlineKeyboardMarkup([[view_button], [back_button]])
     # await message.reply_to_message.edit_media(
@@ -119,8 +119,11 @@ async def more_details_handler(client, callback_query):
     )
 
 
-@Client.on_callback_query(filters.regex("^back_to_search"))
+@Client.on_callback_query(filters.regex("^\d+\.back_to_search.*"))
 async def back_to_search_handler(client, callback_query):
+    if (int(callback_query.data.split(".")[0])) != (int(callback_query.from_user.id)):
+        await callback_query.answer('This is not for you!', show_alert=True)
+        return
     movie_name = callback_query.data.split(":")[1]
     await callback_query.answer(movie_name, show_alert=True)
     movies = ia.search_movie(movie_name, results=10)
@@ -129,7 +132,7 @@ async def back_to_search_handler(client, callback_query):
     for i, movie in enumerate(movies[:10]):
         button_list.append(
             [InlineKeyboardButton(text=f"{movie['title']}",
-                                  callback_data=f"more_details {movie.movieID} :{movie_name}:")]
+                                  callback_data=f"{callback_query.from_user.id}more_details {movie.movieID} :{movie_name}:")]
         )
 
     # Add the buttons to an InlineKeyboardMarkup object
