@@ -4,7 +4,7 @@ from telegraph import Telegraph
 from Stark import error_handler
 from pyrogram.types import Message
 from pyrogram import Client, filters
-from main.helper_func.basic_helpers import runcmd
+from main.helper_func.basic_helpers import runcmd, progress
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 telegraph = Telegraph()
@@ -16,7 +16,9 @@ async def media_info(_, message: Message):
     mi = await message.reply_text("Processing...")
     if message.reply_to_message and message.reply_to_message.video:
         await mi.edit("Downloading media to get info. Please wait...")
-        file_path = await message.reply_to_message.download()
+        c_time = time.time()
+        file_path = await message.reply_to_message.download(progress=progress, progress_args=(mi, c_time, f"`Downloading This File!`")
+    )
         out, err, ret, pid = await runcmd(f"mediainfo '{file_path}'")
         if not out:
             await mi.edit("Unable to determine file info.")
