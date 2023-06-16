@@ -1,5 +1,4 @@
 import aiohttp
-import play_scraper
 from Python_ARQ import ARQ
 from pyrogram import Client
 from pyrogram.enums import ParseMode as pm
@@ -12,7 +11,7 @@ from pyrogram.types import (
 )
 from youtubesearchpython import SearchVideos
 from main.helper_func.inline_funcs import *
-from Stark.config import Config 
+from Stark.config import Config
 
 ARQ_URI = "https://arq.hamker.in"
 API_KEY = Config.ARQ_API
@@ -20,27 +19,22 @@ aiohttpsession = aiohttp.ClientSession()
 arq = ARQ(ARQ_URI, API_KEY, aiohttpsession)
 
 buttons = [
-
     [
         InlineKeyboardButton("Youtube", switch_inline_query_current_chat="yt "),
-        InlineKeyboardButton("Torrent",
-          switch_inline_query_current_chat="torrent ")
+        InlineKeyboardButton("Torrent", switch_inline_query_current_chat="torrent "),
     ],
     [
-        InlineKeyboardButton("Apps",switch_inline_query_current_chat="app "),
-        InlineKeyboardButton("Image",
-          switch_inline_query_current_chat="torrent "
-          )
+        InlineKeyboardButton("Apps", switch_inline_query_current_chat="app "),
+        InlineKeyboardButton("Image", switch_inline_query_current_chat="image "),
     ],
     [
-        InlineKeyboardButton("Wallpaper",
-          switch_inline_query_current_chat="wall ")
+        InlineKeyboardButton("Wallpaper", switch_inline_query_current_chat="wall "),
     ]
 ]
 
 
 @Client.on_inline_query()
-async def searh(client, query):
+async def search(client, query):
     string_given = query.query.strip()
     iq = string_given.lower()
     print(iq)
@@ -48,8 +42,8 @@ async def searh(client, query):
         answer = [
             InlineQueryResultArticle(
                 title="Inline tools.",
-                description="Inline search !",
-                input_message_content=InputTextMessageContent("here are inline tools of this bot"),
+                description="Inline search!",
+                input_message_content=InputTextMessageContent("Here are the inline tools of this bot"),
                 reply_markup=InlineKeyboardMarkup(buttons)
             )
         ]
@@ -57,8 +51,8 @@ async def searh(client, query):
 
     elif iq.startswith("yt"):
         result = []
-        input = (iq.split("yt", maxsplit=1)[1]).strip()
-        if not input:
+        input_query = (iq.split("yt", maxsplit=1)[1]).strip()
+        if not input_query:
             result.append(
                 InlineQueryResultPhoto(
                     title="Yt Search",
@@ -75,24 +69,22 @@ async def searh(client, query):
                     )
                 )
             )
-            await query.answer(results=result, cache_time=5, switch_pm_text="🎥 Youtube Search",
-                               switch_pm_parameter="help")
+            await query.answer(results=result, cache_time=5, switch_pm_text="🎥 Youtube Search", switch_pm_parameter="help")
             return
-        search = SearchVideos(str(input), offset=1, mode="dict", max_results=50)
-        rt = search.result()
-        result_s = rt["search_result"]
+        search = SearchVideos(str(input_query), offset=1, mode="dict", max_results=10)
+        result_s = search.result()["search_result"]
         for i in result_s:
             link = i["link"]
             vid_title = i["title"]
             yt_id = i["id"]
-            uploade_r = i["channel"]
+            uploader = i["channel"]
             views = i["views"]
             time = i["duration"]
             publish = i["publishTime"]
             thumb = f"https://img.youtube.com/vi/{yt_id}/hqdefault.jpg"
-            capt = f"""
+            caption = f"""
 ➥ **Title:** `{vid_title}`
-➥ **Channel:** `{uploade_r}`
+➥ **Channel:** `{uploader}`
 ➥ **Views:** `{views}`
 ➥ **Duration:** `{time}`
 ➥ **Published:** `{publish}`
@@ -101,17 +93,17 @@ async def searh(client, query):
                 InlineQueryResultPhoto(
                     photo_url=thumb,
                     title=vid_title,
-                    description=f"{uploade_r} | {time}",
-                    caption=capt,
+                    description=f"{uploader} | {time}",
+                    caption=caption,
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
                                 InlineKeyboardButton(
-                                    text="🎥Watch-Now",
+                                    text="🎥 Watch Now",
                                     url=link
                                 ),
                                 InlineKeyboardButton(
-                                    text="🔎Search-Again🔍",
+                                    text="🔎 Search Again",
                                     switch_inline_query_current_chat="yt "
                                 ),
                             ]
@@ -123,8 +115,8 @@ async def searh(client, query):
 
     elif iq.startswith("app"):
         result = []
-        input = (iq.split("app", maxsplit=1)[1]).strip()
-        if not input:
+        input_query = (iq.split("app", maxsplit=1)[1]).strip()
+        if not input_query:
             result.append(
                 InlineQueryResultPhoto(
                     title="App Search",
@@ -142,21 +134,16 @@ async def searh(client, query):
             )
             await query.answer(results=result, cache_time=5, switch_pm_text="📱 App Search", switch_pm_parameter="help")
             return
-        res = play_scraper.search(input)
+        res = play_scraper.search(input_query)[:10]
         for result in res:
             app_name = result["title"]
             app_dev = result["developer"]
-            dev_link = (
-                    "https://play.google.com/store/apps/dev?id="
-                    + result["developer_id"]
-            )
+            dev_link = "https://play.google.com/store/apps/dev?id=" + result["developer_id"]
             app_desc = result["description"]
-            app_rating = (
-                f"{result['score']}/5 ⭐️" if result["score"] else "3.5/5 ⭐️"
-            )
+            app_rating = f"{result['score']}/5 ⭐️" if result["score"] else "3.5/5 ⭐️"
             app_link = "https://play.google.com" + result["url"]
             app_icon = result["icon"]
-            app_details = f"[📲]({app_icon}) **{app_name}**\n\n**𝖱𝖺𝗍𝗂𝗇𝗀:** `{app_rating}`\n**𝖣𝖾𝗏𝖾𝗅𝗈𝗉𝖾𝗋:** [{app_dev}]({dev_link})\n**𝖣𝖾𝗌𝖼𝗋𝗂𝗉𝗍𝗂𝗈𝗇:** `{app_desc}`\n**𝖥𝗎𝗅𝗅 𝖣𝖾𝗍𝖺𝗂𝗅𝗌:** [𝖵𝗂𝖾𝗐 𝖮𝗇 𝖯𝗅𝖺𝗒 𝖲𝗍𝗈𝗋𝖾]({app_link})"
+            app_details = f"[📲]({app_icon}) **{app_name}**\n\n**Rating:** `{app_rating}`\n**Developer:** [{app_dev}]({dev_link})\n**Description:** `{app_desc}`\n**Full Details:** [𝖵𝗂𝖾𝗐 𝖮𝗇 𝖯𝗅𝖺𝗒 𝖲𝗍𝗈𝗋𝖾]({app_link})"
             result.append(
                 InlineQueryResultArticle(
                     title=app_name,
@@ -172,11 +159,11 @@ async def searh(client, query):
                         [
                             [
                                 InlineKeyboardButton(
-                                    text="Download-Now",
+                                    text="Download Now",
                                     url=app_link
                                 ),
                                 InlineKeyboardButton(
-                                    text="🔎Search-Again🔍",
+                                    text="🔎 Search Again",
                                     switch_inline_query_current_chat="app "
                                 ),
                             ]
@@ -188,9 +175,8 @@ async def searh(client, query):
 
     elif iq.startswith("wall"):
         result = []
-        answers = []
-        input = (iq.split("wall", maxsplit=1)[1]).strip()
-        if not input:
+        input_query = (iq.split("wall", maxsplit=1)[1]).strip()
+        if not input_query:
             result.append(
                 InlineQueryResultPhoto(
                     title="🖼️ Wallpaper Search",
@@ -210,37 +196,37 @@ async def searh(client, query):
             await query.answer(results=result, cache_time=5, switch_pm_text="🖼️ Wallpaper Search",
                                switch_pm_parameter="help")
             return
-        answerss = await wall_func(answers, input)
-        await client.answer_inline_query(query.id, results=answerss, cache_time=2)
+        answers = await wall_func([], input_query)
+        await client.answer_inline_query(query.id, results=answers, cache_time=2)
         
     elif iq.split()[0] == "torrent":
-            hanswers = []
-            if len(iq.split()) < 2:
-                return await client.answer_inline_query(
-                    query.id,
-                    results=answers,
-                    switch_pm_text="Torrent Search | torrent [QUERY]",
-                    switch_pm_parameter="inline",
-                )
-            tex = text.split(None, 1)[1].strip()
-            answerss = await torrent_func(answers, tex)
-            await client.answer_inline_query(
+        answers = []
+        if len(iq.split()) < 2:
+            return await client.answer_inline_query(
                 query.id,
-                results=answerss,
+                results=answers,
+                switch_pm_text="Torrent Search | torrent [QUERY]",
+                switch_pm_parameter="inline",
             )
+        tex = iq.split(None, 1)[1].strip()
+        answers = await torrent_func(answers, tex)
+        await client.answer_inline_query(
+            query.id,
+            results=answers,
+        )
     
     elif iq.split()[0] == "image":
-            answers = []
-            if len(iq.split()) < 2:
-                return await client.answer_inline_query(
-                    query.id,
-                    results=answers,
-                    is_gallery=True,
-                    switch_pm_text="Image Search | image [QUERY]",
-                    switch_pm_parameter="inline",
-                )
-            tex = text.split(None, 1)[1].strip()
-            answerss = await image_func(answers, tex)
-            await client.answer_inline_query(
-                query.id, results=answerss, cache_time=3600
+        answers = []
+        if len(iq.split()) < 2:
+            return await client.answer_inline_query(
+                query.id,
+                results=answers,
+                is_gallery=True,
+                switch_pm_text="Image Search | image [QUERY]",
+                switch_pm_parameter="inline",
             )
+        tex = iq.split(None, 1)[1].strip()
+        answers = await image_func(answers, tex)
+        await client.answer_inline_query(
+            query.id, results=answers, cache_time=3600
+        )
