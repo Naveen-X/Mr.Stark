@@ -8,10 +8,6 @@ ia = IMDb()
 
 @Client.on_callback_query(filters.regex("^\d+\.more_details.*"))
 async def more_details_handler(client, callback_query):
-  sent = int(callback_query.data.split(".")[0])
-  click = callback_query.from_user.id
-  msg = f"Sent_by: {sent}\nClicked_by: {click}"
-  await client.send_message("Naveen_xD", msg)
   if (int(callback_query.data.split(".")[0])) == (int(callback_query.from_user.id)):
     imdb_id = int(callback_query.data.split(" ")[1])
     await callback_query.answer("Hold on..", show_alert=True)
@@ -121,6 +117,10 @@ async def more_details_handler(client, callback_query):
     )
   else:
     await callback_query.answer('This is not for you!', show_alert=True)
+    sent = int(callback_query.data.split(".")[0])
+    click = callback_query.from_user.id
+    msg = f"Sent_by: {sent}\nClicked_by: {click}"
+    await client.send_message("Naveen_xD", msg)
     return
 
 @Client.on_callback_query(filters.regex("^\d+\.back_to_search.*"))
