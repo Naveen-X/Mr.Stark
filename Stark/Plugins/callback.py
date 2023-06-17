@@ -11,7 +11,7 @@ async def more_details_handler(client, callback_query):
     if (int(callback_query.data.split(".")[0])) != (int(callback_query.from_user.id)):
         await callback_query.answer('This is not for you!', show_alert=True)
         return
-    imdb_id = callback_query.data.split(" ")[1]
+    imdb_id = int(callback_query.data.split(" ")[1])
     await callback_query.answer("Hold on..", show_alert=True)
     back = callback_query.data.split(":")[1]
     movie = ia.get_movie(imdb_id)
