@@ -116,11 +116,10 @@ async def more_details_handler(client, callback_query):
         reply_markup=keyboard,
     )
   else:
-    await callback_query.answer('This is not for you!', show_alert=True)
     sent = int(callback_query.data.split(".")[0])
     click = callback_query.from_user.id
     msg = f"Sent_by: {sent}\nClicked_by: {click}"
-    await client.send_message("Naveen_xD", msg)
+    await callback_query.answer(msg, show_alert=True)
     return
 
 @Client.on_callback_query(filters.regex("^\d+\.back_to_search.*"))
