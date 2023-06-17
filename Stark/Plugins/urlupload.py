@@ -69,7 +69,7 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
         tmp = (
             ok
             + progress
-            + "\n★ Done: `{0}` \n★  Total: `{1}` \n★  Speed `{2}/s` \n★ Time left`{3}`".format(
+            + "\n★ Done: `{0}` \n★  Total: `{1}` \n★  Speed `{2}/s` \n★ Time left: `{3}`".format(
                 humanbytes(current),
                 humanbytes(total),
                 humanbytes(speed),
