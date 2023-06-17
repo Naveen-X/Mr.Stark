@@ -117,7 +117,7 @@ async def more_details_handler(client, callback_query):
     )
   else:
     await callback_query.answer('This is not for you!', show_alert=True)
-      return
+    return
 
 @Client.on_callback_query(filters.regex("^\d+\.back_to_search.*"))
 async def back_to_search_handler(client, callback_query):
