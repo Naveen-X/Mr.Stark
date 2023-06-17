@@ -8,10 +8,7 @@ ia = IMDb()
 
 @Client.on_callback_query(filters.regex("^\d+\.more_details.*"))
 async def more_details_handler(client, callback_query):
-  if (int(callback_query.data.split(".")[0])) != (int(callback_query.from_user.id)):
-      await callback_query.answer('This is not for you!', show_alert=True)
-      return
-  elif (int(callback_query.data.split(".")[0])) == (int(callback_query.from_user.id)):
+  if (int(callback_query.data.split(".")[0])) == (int(callback_query.from_user.id)):
     imdb_id = int(callback_query.data.split(" ")[1])
     await callback_query.answer("Hold on..", show_alert=True)
     back = callback_query.data.split(":")[1]
@@ -118,7 +115,9 @@ async def more_details_handler(client, callback_query):
         # disable_web_page_preview=True,
         reply_markup=keyboard,
     )
-
+  else:
+    await callback_query.answer('This is not for you!', show_alert=True)
+      return
 
 @Client.on_callback_query(filters.regex("^\d+\.back_to_search.*"))
 async def back_to_search_handler(client, callback_query):
