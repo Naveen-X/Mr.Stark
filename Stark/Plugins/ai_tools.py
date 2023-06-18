@@ -7,6 +7,7 @@ import string
 import requests
 from io import BytesIO
 from pyrogram import enums
+from random import sample
 from urllib.parse import quote
 from json import JSONDecodeError
 from pyrogram import Client, filters
@@ -108,3 +109,25 @@ async def imagine(c,m):
     await x.delete()
   except:
     await x.edit("`Failed to get images`\n try /img [prompt]")
+
+@Client.on_message(filters.command(["img"]))
+@error_handler
+async def imagine(c,m):
+  try:
+    prompt= m.text.split(None, 1)[1]
+  except IndexError:
+    await m.reply_text("`What should i imagine??\nHive some prompt along with the command`")
+    return
+  x = await m.reply_text("`Processing...`")
+  try:
+    lex = Lexica(query=prompt).images()
+    k = sample(lex, 4)
+    result = [InputMediaPhoto(image) for image in k]
+    await c.send_media_group(
+              chat_id=m.chat.id,
+              media=result,
+              reply_to_message_id=m.id,
+          )
+    await x.delete()
+  except:
+    await x.edit("`Failed to get images`")
