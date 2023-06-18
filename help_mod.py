@@ -189,13 +189,6 @@ class Script(object):
             "usage": "/paste [reply to message/text file]"
         }
     ]
-    PINTEREST = [
-        {
-            "desc": "Uploads photo from the given pinterest url",
-            "cmds": ["pinterest"],
-            "usage": "/pinterest [link of the pin on pinterest]"
-        }
-    ]
     QR = [
         {
             "desc": "Generates qr for given text",
