@@ -94,7 +94,7 @@ async def imagine(c,m):
   try:
     prompt= m.text.split(None, 1)[1]
   except IndexError:
-    await m.reply_text("`What should i imagine??\nHive some prompt along with the command`")
+    await m.reply_text("`What should i imagine??\nGive some prompt along with the command`")
     return
   x = await m.reply_text("`Processing...`")
   cookie=Config.LEXICA_ART_2
@@ -116,7 +116,7 @@ async def imagine(c,m):
   try:
     prompt= m.text.split(None, 1)[1]
   except IndexError:
-    await m.reply_text("`What should i imagine??\nHive some prompt along with the command`")
+    await m.reply_text("`What should i imagine??\nGive some prompt along with the command`")
     return
   x = await m.reply_text("`Processing...`")
   try:
