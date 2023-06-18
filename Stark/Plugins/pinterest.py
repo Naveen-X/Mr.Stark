@@ -1,8 +1,18 @@
-from requests import get
-from bs4 import BeautifulSoup as bs
+import requests
+import asyncio
+from urllib import request
+from pyquery import PyQuery as pq
 from pyrogram import Client, filters
 
 from Stark import error_handler
+
+def get_download_url(link):
+    post_request = requests.post('https://www.expertsphp.com/download.php', data={'url': link})
+    request_content = post_request.content
+    str_request_content = str(request_content, 'utf-8')
+    download_url = pq(str_request_content)('table.table-condensed')('tbody')('td')('a').attr('href')
+    return download_url
+
 
 @Client.on_message(filters.command(["pinterest"]))
 @error_handler
@@ -12,34 +22,15 @@ async def pinterest_dl(c, m):
     except IndexError:
         await m.reply_text("`Please provide a Pinterest URL.`")
         return
-    
-    url = x.strip()
-    if url.startswith(("https://in.pinterest.com/pin/", "https://www.pinterest.com/pin/")):
-        try:
-            response = get(url)
-            soup = bs(response.text, "html.parser")
-            image_urls = [n.get('src') for n in soup.find_all("img")]
-            if image_urls:
-                await c.send_photo(chat_id=m.chat.id, photo=image_urls[0])
-            else:
-                await m.reply_text("`No images found on the given Pinterest URL.`")
-        except Exception as e:
-            await m.reply_text("`An error occurred while fetching and sending the image. Please try again later.`")
-            print(f"Error: {e}")
-    elif url.startswith("https://pin.it/"):
-        response = get(url)
-        redirected_url = response.url
-        t_url = redirected_url
-        f_url = t_url.split("sent")[0]
-        try:
-            response = get(f_url)
-            soup = bs(response.text, "html.parser")
-            image_urls = [n.get('src') for n in soup.find_all("img")]
-            if image_urls:
-                await c.send_photo(chat_id=m.chat.id, photo=image_urls[0])
-            else:
-                await m.reply_text("`No images found on the given Pinterest URL.`")
-        except Exception as e:
-            await m.reply_text(f"`An error occurred while fetching and sending the image. Please try again later.`\n**Error:** {e}")
+    pt = await m.reply_text("`Processing...`")
+    if x:
+      url = get_download_url(x)
     else:
-        await m.reply_text("`Invalid Pinterest URL. Please provide a valid URL.`")
+      return await pt.edit(event, "`Provide a Pinterest link along with cmd`")
+    if x and "pint" not in x:
+      await pt.edit("`Need a Vakid Pinterest link`")
+      return
+    else:
+      pass
+    await m.reply(url)
+    await pt.delete()
