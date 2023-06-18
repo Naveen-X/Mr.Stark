@@ -21,7 +21,6 @@ Markdown
 motor
 NoteShrinker
 numpy
-opencv-contrib-python
 openai
 Pillow
 play_scraper
@@ -59,3 +58,5 @@ imdbpy
 one-piece-wanted-poster
 opencv-python-headless
 pyquery
+opencv-contrib-python
+opencv-python
