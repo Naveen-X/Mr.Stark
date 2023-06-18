@@ -97,11 +97,14 @@ async def imagine(c,m):
     return
   x = await m.reply_text("`Processing...`")
   cookie=Config.LEXICA_ART_2
-  lex = Lexica(query=prompt, cookie=cookie).generate()
-  result = [InputMediaPhoto(image) for image in lex]
-  await c.send_media_group(
-            chat_id=m.chat.id,
-            media=result,
-            reply_to_message_id=m.id,
-        )
-  await x.delete()
+  try:
+    lex = Lexica(query=prompt, cookie=cookie).generate()
+    result = [InputMediaPhoto(image) for image in lex]
+    await c.send_media_group(
+              chat_id=m.chat.id,
+              media=result,
+              reply_to_message_id=m.id,
+          )
+    await x.delete()
+  except:
+    await x.edit("`Failed to get images`")
