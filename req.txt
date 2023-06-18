@@ -58,3 +58,4 @@ pytz
 imdbpy
 one-piece-wanted-poster
 opencv-python-headless
+pyquery
