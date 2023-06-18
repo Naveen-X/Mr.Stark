@@ -107,4 +107,4 @@ async def imagine(c,m):
           )
     await x.delete()
   except:
-    await x.edit("`Failed to get images`")
+    await x.edit("`Failed to get images`\n try /img [prompt]")
