@@ -56,7 +56,7 @@ pymongo[srv]
 pytz
 imdbpy
 one-piece-wanted-poster
-opencv-python-headless
 pyquery
 opencv-contrib-python
 opencv-python
+opencv-python-headless==4.5.3.56
