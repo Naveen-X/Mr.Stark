@@ -13,7 +13,7 @@ from youtubesearchpython import SearchVideos
 from main.helper_func.inline_funcs import *
 from Stark.config import Config
 
-ARQ_URI = "https://arq.hamker.in"
+ARQ_URI = "http://arq.hamker.dev"
 API_KEY = Config.ARQ_API
 aiohttpsession = aiohttp.ClientSession()
 arq = ARQ(ARQ_URI, API_KEY, aiohttpsession)
