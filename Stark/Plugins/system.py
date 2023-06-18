@@ -39,4 +39,5 @@ async def restart(_, message):
     await message.reply_text("`𝙱𝚘𝚝 𝚒𝚜 𝚁𝚎𝚜𝚝𝚊𝚛𝚝𝚒𝚗𝚐...!`")
     args = [sys.executable, "-m", "Stark"]
     execle(sys.executable, *args, environ)
+    await res.edit("`Restarted Sucessfully...")
     exit()
