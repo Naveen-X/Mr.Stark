@@ -125,6 +125,26 @@ class Script(object):
             "desc": "Get Fake Certificate With Given Name!",
             "cmds": ["genca", "gencertificate"],
             "usage": "/genca [Name on the certificate]"
+        },
+        {
+            "desc": "Enhance the replied notes!",
+            "cmds": ["hwn"],
+            "usage": "/hwn [Reply to Notes To Enhance It!]"
+        },
+        {
+            "desc": "Add Glitch effect to replied image",
+            "cmds": ["glitch"],
+            "usage": "/glitch [Reply to a image]"
+        },
+        {
+            "desc": "ghost the replied image/sticker",
+            "cmds": ["ghost"],
+            "usage": "/ghost [reply to a image or sticker]"
+        },
+        {
+            "desc": "Sketch the replied image",
+            "cmds": ["sketch"],
+            "usage": "/genca [reply to a image or sticker]"
         }
     ]
     INSTADL = [
