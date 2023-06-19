@@ -117,28 +117,39 @@ async def image_func(answers, query):
     return answers
 
 async def app_search(answers, query):
-    app_list=search(query)
+    app_list = search(query)
     if not app_list:
         answers.append(
             InlineQueryResultArticle(
                 title="Error",
-                description="Something Unexpected Error Occured",
+                description="Something Unexpected Error Occurred",
+                input_message_content=InputTextMessageContent(
+                    message_text="Something Unexpected Error Occurred"
+                )
             )
         )
         return answers
     for app in app_list:
-       title = app["title"]
-       icon = app["icon"]
-       desp = app["description"]
-       rating = app["score"]
-       genre = app["genre"]
-       price = app["price"]
-       app_id = app["appId"]
-       answers.append(
-         InlineQueryResultPhoto(
-           title=title,
-           caption="desp",
-           photo_url=icon,
-           )
-         )
+        title = app["title"]
+        icon = app["icon"]
+        desp = app["description"]
+        rating = app["score"]
+        genre = app["genre"]
+        price = app["price"]
+        app_id = app["appId"]
+        answers.append(
+            InlineQueryResultArticle(
+                title=title,
+                description=desp,
+                input_message_content=InputTextMessageContent(
+                    message_text=f"Title: {title}\n"
+                                f"Description: {desp}\n"
+                                f"Rating: {rating}\n"
+                                f"Genre: {genre}\n"
+                                f"Price: {price}\n"
+                                f"App ID: {app_id}"
+                ),
+                thumb_url=icon
+            )
+        )
     return answers
