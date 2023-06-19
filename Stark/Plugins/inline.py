@@ -1,4 +1,5 @@
 import aiohttp
+import play_scraper
 from Python_ARQ import ARQ
 from pyrogram import Client
 from pyrogram.enums import ParseMode as pm
