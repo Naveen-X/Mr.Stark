@@ -66,12 +66,12 @@ async def torrent_func(answers, query):
         upload_date = i.uploaded
         magnet = i.magnet
         caption = f"""
-        **Title:** __{title}__
-        **Size:** __{size}__
-        **Seeds:** __{seeds}__
-        **Leechs:** __{leechs}__
-        **Uploaded:** __{upload_date}__
-        **Magnet:** `{magnet}`"""
+**Title:** __{title}__
+**Size:** __{size}__
+**Seeds:** __{seeds}__
+**Leechs:** __{leechs}__
+**Uploaded:** __{upload_date}__
+**Magnet:** `{magnet}`"""
 
         description = f"{size} | {upload_date} | Seeds: {seeds}"
         answers.append(
