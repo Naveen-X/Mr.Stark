@@ -152,9 +152,7 @@ __{desp}__
                 title=title,
                 description=desp,
                 photo_url=icon,
-                input_message_content=InputTextMessageContent(
-                    message_text=details
-                ),
+                caption=details
             )
         )
     return answers
