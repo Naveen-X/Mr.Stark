@@ -1,5 +1,5 @@
-import os 
-import cv2
+import os
+
 import pyqrcode
 from pyrogram import Client, filters
 
@@ -9,6 +9,7 @@ from Stark import error_handler
 @Client.on_message(filters.command('qr'))
 @error_handler
 async def qr(c, m):
+    global qr_code
     if " " in m.text:
         tdl = await m.reply('Plz Wait brouh!')
         text = str(m.text).split(" ", 1)[1]
@@ -26,12 +27,13 @@ async def qr(c, m):
     elif m.reply_to_message.photo:
         x = await m.reply_text("`Processing...`")
         try:
-          d = cv2.QRCodeDetector()
-          qr_code = await m.reply_to_message.download()
-          val, p, s = d.detectAndDecode(cv2.imread(qr_code))
-          await x.edit(val)
+            import cv2
+            d = cv2.QRCodeDetector()
+            qr_code = await m.reply_to_message.download()
+            val, p, s = d.detectAndDecode(cv2.imread(qr_code))
+            await x.edit(val)
         except:
-          await x.edit("`Failed to get data`")
+            await x.edit("`Failed to get data`")
         os.remove(qr_code)
     else:
         await m.reply('`Unsupported!`')

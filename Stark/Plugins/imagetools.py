@@ -1,5 +1,4 @@
 import os
-import cv2
 import wget
 import pytz
 import html
@@ -201,6 +200,7 @@ async def ghost(client, message):
     if not os.path.exists(img):
         await owo.edit("**Invalid Media**")
         return
+    import cv2
     image = cv2.imread(img)
     treshold, fridaydevs = cv2.threshold(image, 150, 225, cv2.THRESH_BINARY)
     file_name = "Tresh.webp"
@@ -230,6 +230,7 @@ async def nice(client, message):
     if not os.path.exists(img):
         await owo.edit("**Invalid Media**")
         return
+    import cv2
     image = cv2.imread(img)
     scale_percent = 0.60
     width = int(image.shape[1] * scale_percent)
@@ -259,4 +260,5 @@ async def nice(client, message):
 
 
 def dodgeV2(image, mask):
+    import cv2
     return cv2.divide(image, 255 - mask, scale=256)
