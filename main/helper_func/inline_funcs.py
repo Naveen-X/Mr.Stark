@@ -130,15 +130,17 @@ async def app_search(answers, query):
             )
         )
         return answers
-    for app in app_list:
-        title = app.get("title")
-        icon = app.get("icon")
-        desp = app.get("description").replace("\n", " ")[:250]
-        rating = app.get("score")
-        genre = app.get("genre")
-        price = app.get("price")
-        app_id = app.get("appId")
-        dev = app.get("developer")
+    for x in app_list:
+        title = x.get("title")
+        icon = x.get("icon")
+        desp = x.get("description").replace("\n", " ")[:250]
+        rating = x.get("score")
+        genre = x.get("genre")
+        price = x.get("price")
+        app_id = x.get("appId")
+        dev = x.get("developer")
+        install = x.get("installs")
+        ss = x.get("screenshots")
         details = f"""
 📱 **{title}**
 __{desp}...__
@@ -147,6 +149,15 @@ __{desp}...__
 **🆔 App ID:** {app_id}
 **🎮 Genre:** {genre}
 """
+        if price == 0:
+          details += "**💰 Price:** __Free of Cost__"
+        else:
+          details += f"**💰 Price:** __{price}__"
+        details += f"**🌟 Rating:** __{rating}__"
+        details += f"**📈 Installs:** __{install}__"
+        details += " "
+       for i in ss:
+         details += f"**🖼️ Screenshots:** {[i]},"
         answers.append(
             InlineQueryResultPhoto(
                 title=title,
