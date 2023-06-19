@@ -137,7 +137,7 @@ async def app_search(answers, query):
        answers.append(
          InlineQueryResultPhoto(
            title=title,
-           description="desp",
+           caption="desp",
            photo_url=icon,
            )
          )
