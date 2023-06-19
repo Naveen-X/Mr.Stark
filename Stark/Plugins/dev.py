@@ -35,6 +35,7 @@ AUTH_LIST = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
 @Client.on_edited_message(filters.command(["eval", "e"]) & filters.user(AUTH_LIST))
 @error_handler
 async def eval(bot, message):
+    p = print
     stark = await message.reply_text(f"`ʀᴜɴɴɪɴɢ ᴄᴏᴅᴇ... ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ!`")
     try:
         cmd = message.text.split(None, 1)[1]
