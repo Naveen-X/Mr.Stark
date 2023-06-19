@@ -230,14 +230,14 @@ async def search(client, query):
         await client.answer_inline_query(
             query.id, results=answers, is_gallery=True, cache_time=3600
         )
-    elif iq.split()[0] == "app":
+    elif iq.split()[0] == "app2":
         answers = []
         if len(iq.split()) < 2:
             return await client.answer_inline_query(
                 query.id,
                 results=answers,
                 is_gallery=True,
-                switch_pm_text="Image Search | image [QUERY]",
+                switch_pm_text="📱App Search | app [QUERY]",
                 switch_pm_parameter="inline",
             )
         tex = iq.split(None, 1)[1].strip()
