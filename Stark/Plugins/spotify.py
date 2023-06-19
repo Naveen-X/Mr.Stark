@@ -1,4 +1,4 @@
-import os 
+import os
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
@@ -28,5 +28,5 @@ async def spotify_search(c, m):
       lnk = track['external_urls']['spotify']
       name = f"{track['name']} - {track['artists'][0]['name']}"
       msg = f"‎‎  ➣ __**[{name} 🎧]({lnk})**__\n"
-      m = m+msg 
+      m = m+msg
   await spt.edit(m, disable_web_page_preview=True, parse_mode = ParseMode.MARKDOWN)

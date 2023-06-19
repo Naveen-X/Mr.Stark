@@ -1,4 +1,4 @@
-import os 
+import os
 from telegraph import Telegraph, exceptions, upload_file
 
 from Stark import error_handler

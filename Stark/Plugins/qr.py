@@ -1,5 +1,5 @@
 import os 
-# import cv2
+import cv2
 import pyqrcode
 from pyrogram import Client, filters
 
@@ -25,13 +25,13 @@ async def qr(c, m):
             'hah! what to do with empty command?\nReply an image to scan or send text along with command to make qr.')
     elif m.reply_to_message.photo:
         x = await m.reply_text("`Processing...`")
-    #     try:
-    #       d = cv2.QRCodeDetector()
-    #       qr_code = await m.reply_to_message.download()
-    #       val, p, s = d.detectAndDecode(cv2.imread(qr_code))
-    #       await x.edit(val)
-    #     except:
-    #       await x.edit("`Failed to get data`")
-    #     os.remove(qr_code)
-    # else:
-    #     await m.reply('`Unsupported!`')
+        try:
+          d = cv2.QRCodeDetector()
+          qr_code = await m.reply_to_message.download()
+          val, p, s = d.detectAndDecode(cv2.imread(qr_code))
+          await x.edit(val)
+        except:
+          await x.edit("`Failed to get data`")
+        os.remove(qr_code)
+    else:
+        await m.reply('`Unsupported!`')

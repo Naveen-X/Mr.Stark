@@ -1,6 +1,6 @@
 import os
 import time
-from telegraph import Telegraph 
+from telegraph import Telegraph
 
 from Stark import error_handler
 from pyrogram.types import Message
