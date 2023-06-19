@@ -59,7 +59,7 @@ async def search(client, query):
                     title="Yt Search",
                     description="An inline tool to search YouTube videos",
                     thumb_url ="https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
-                    input_message_content=InputTextMessageContent("**Help:** An inline tool to search YouTube videos\n**Usage:** `@MrStark_Bot yt [query]`"),
+                    input_message_content=InputTextMessageContent("Inline tool to Search YouTube videos"),
                     parse_mode=pm.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton(
@@ -124,7 +124,7 @@ async def search(client, query):
                     description="An inline tool to search Apps",
                     thumb_url="https://telegra.ph//file/c9045df2755c5f51916e9.jpg",
                     input_message_content=InputTextMessageContent(
-                        message_text="**Help:** An inline tool to search Apps\n**Usage:** `@MrStark_Bot app <query>`"
+                        message_text="Inline tool to Search for Apps"
                     ),
                 )
             )
@@ -144,7 +144,7 @@ async def search(client, query):
                     title="🖼️ Wallpaper Search",
                     description="An inline tool to search Wallpaper",
                     thumb_url="https://cdn.wallpapersafari.com/29/95/xXs2LH.png",
-                    input_message_content=InputTextMessageContent("**Help:** An inline tool to search Wallpaper\n**Usage:** `@MrStark_Bot wall <query>`"),
+                    input_message_content=InputTextMessageContent("Inline too to Search for wallpapers"),
                     parse_mode=pm.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton(
