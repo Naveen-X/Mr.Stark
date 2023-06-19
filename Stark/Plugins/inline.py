@@ -119,61 +119,20 @@ async def search(client, query):
         input_query = (iq.split("app", maxsplit=1)[1]).strip()
         if not input_query:
             result.append(
-                InlineQueryResultPhoto(
+                InlineQueryResultArticle(
                     title="App Search",
                     description="An inline tool to search Apps",
-                    photo_url="https://telegra.ph//file/c9045df2755c5f51916e9.jpg",
-                    caption="**Help:** An inline tool to search Apps\n**Usage:** `@MrStark_Bot app <query>`",
-                    reply_markup=InlineKeyboardMarkup([
-                        [InlineKeyboardButton(
-                            text="Search Now🔎",
-                            switch_inline_query_current_chat="app ",
-                        )]
-                    ]
-                    )
-                )
-            )
+                    thumb_url="https://telegra.ph//file/c9045df2755c5f51916e9.jpg",
+                    input_message_content=InputTextMessageContent(
+                    message_text="**Help:** An inline tool to search Apps\n**Usage:** `@MrStark_Bot app <query>`"
+                ),
             await query.answer(results=result, cache_time=5, switch_pm_text="📱 App Search", switch_pm_parameter="help")
             return
-        res = play_scraper.search(input_query)[:10]
-        for result in res:
-            app_name = result["title"]
-            app_dev = result["developer"]
-            dev_link = "https://play.google.com/store/apps/dev?id=" + result["developer_id"]
-            app_desc = result["description"]
-            app_rating = f"{result['score']}/5 ⭐️" if result["score"] else "3.5/5 ⭐️"
-            app_link = "https://play.google.com" + result["url"]
-            app_icon = result["icon"]
-            app_details = f"[📲]({app_icon}) **{app_name}**\n\n**Rating:** `{app_rating}`\n**Developer:** [{app_dev}]({dev_link})\n**Description:** `{app_desc}`\n**Full Details:** [𝖵𝗂𝖾𝗐 𝖮𝗇 𝖯𝗅𝖺𝗒 𝖲𝗍𝗈𝗋𝖾]({app_link})"
-            result.append(
-                InlineQueryResultArticle(
-                    title=app_name,
-                    description=app_desc,
-                    thumb_url=app_icon,
-                    url=app_link,
-                    input_message_content=InputTextMessageContent(
-                        message_text=app_details,
-                        parse_mode="Markdown",
-                        disable_web_page_preview=False,
-                    ),
-                    reply_markup=InlineKeyboardMarkup(
-                        [
-                            [
-                                InlineKeyboardButton(
-                                    text="Download Now",
-                                    url=app_link
-                                ),
-                                InlineKeyboardButton(
-                                    text="🔎 Search Again",
-                                    switch_inline_query_current_chat="app "
-                                ),
-                            ]
-                        ]
-                    )
-                )
-            )
-        await query.answer(results=result, cache_time=0)
-
+        res = await app_search(result, input_query)
+        await client.answer_inline_query(
+            query.id, results=res, cache_time=3600
+        )
+        
     elif iq.startswith("wall"):
         result = []
         input_query = (iq.split("wall", maxsplit=1)[1]).strip()
