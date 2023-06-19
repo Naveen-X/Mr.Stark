@@ -156,8 +156,8 @@ __{desp}...__
         details += f"**🌟 Rating:** __{rating}__"
         details += f"**📈 Installs:** __{install}__"
         details += " "
-       for i in ss:
-         details += f"**🖼️ Screenshots:** {[i]},"
+        for index, screenshot in enumerate(ss):
+          details += f"🖼️ Screenshots:  [{index + 1}]({screenshot}), "
         answers.append(
             InlineQueryResultPhoto(
                 title=title,
