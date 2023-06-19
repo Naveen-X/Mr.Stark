@@ -57,7 +57,5 @@ pytz
 imdbpy
 one-piece-wanted-poster
 pyquery
-opencv-contrib-python
-opencv-python
-opencv-python-headless==4.5.3.56
+opencv-python-headless
 google-play-scraper
