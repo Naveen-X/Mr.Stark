@@ -112,7 +112,7 @@ async def imagine(c,m):
 
 @Client.on_message(filters.command(["img"]))
 @error_handler
-async def imagine(c,m):
+async def ai_img_search(c,m):
   try:
     prompt= m.text.split(None, 1)[1]
   except IndexError:
