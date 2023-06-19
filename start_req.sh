@@ -45,9 +45,6 @@ sudo apt-get install mediainfo -y
 echo -e "\e[32mInstalling libgl1-mesa-glx...\e[0m"
 sudo apt-get install libgl1-mesa-glx -y
 
-echo -e "\e[32mInstalling python3-opencv...\e[0m"
-sudo apt-get install python3-opencv -y
-
 echo -e "\e[32mInstalling ffmpeg...\e[0m"
 sudo apt-get install ffmpeg -y
 
