@@ -124,8 +124,9 @@ async def search(client, query):
                     description="An inline tool to search Apps",
                     thumb_url="https://telegra.ph//file/c9045df2755c5f51916e9.jpg",
                     input_message_content=InputTextMessageContent(
-                    message_text="**Help:** An inline tool to search Apps\n**Usage:** `@MrStark_Bot app <query>`"
-                ),
+                        message_text="**Help:** An inline tool to search Apps\n**Usage:** `@MrStark_Bot app <query>`"
+                    ),
+                )
             )
             await query.answer(results=result, cache_time=5, switch_pm_text="📱 App Search", switch_pm_parameter="help")
             return
