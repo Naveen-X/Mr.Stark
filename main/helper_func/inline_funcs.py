@@ -131,25 +131,29 @@ async def app_search(answers, query):
         )
         return answers
     for app in app_list:
-        title = app["title"]
-        icon = app["icon"]
-        desp = app["description"].replace("\n", " ")[:250]
-        rating = app["score"]
-        genre = app["genre"]
-        price = app["price"]
-        app_id = app["appId"]
+        title = app.get("title")
+        icon = app.get("icon")
+        desp = app.get("description").replace("\n", " ")[:250]
+        rating = app.get("score")
+        genre = app.get("genre")
+        price = app.get("price")
+        app_id = app.get("appId")
+        dev = app.get("developer")
+        details = f"""
+📱 **{title}**
+__{desp}__
+
+**👨‍💻 Developer:** {dev}
+**🆔 App ID:** {app_id}
+**🎮 Genre:** {genre}
+"""
         answers.append(
             InlineQueryResultPhoto(
                 title=title,
                 description=desp,
                 photo_url=icon,
                 input_message_content=InputTextMessageContent(
-                    message_text=f"Title: {title}\n"
-                                f"Description: {desp}\n"
-                                f"Rating: {rating}\n"
-                                f"Genre: {genre}\n"
-                                f"Price: {price}\n"
-                                f"App ID: {app_id}"
+                    message_text=details
                 ),
             )
         )
