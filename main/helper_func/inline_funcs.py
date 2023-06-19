@@ -5,6 +5,7 @@ import sys
 
 from pyrogram import filters
 from pyrogram.raw.functions import Ping
+from google_play_scraper import search, app
 from pyrogram.types import (
     CallbackQuery,
     InlineKeyboardButton,
