@@ -59,8 +59,7 @@ async def search(client, query):
                     title="Yt Search",
                     description="An inline tool to search YouTube videos",
                     thumb_url ="https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
-                    input_message_content=InputTextMessageContent("**Help:** An inline tool to search YouTube videos\n**Usage:** `@MrStark_Bot yt [query]`")
-                    caption=
+                    input_message_content=InputTextMessageContent("**Help:** An inline tool to search YouTube videos\n**Usage:** `@MrStark_Bot yt [query]`"),
                     parse_mode=pm.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton(
