@@ -32,24 +32,24 @@
 #echo "This is a normal message."
 echo -e "\e[32mCloning repository...\e[0m"
 git clone https://github.com/Naveen-X/Mr.Stark
-
-echo -e "\e[32mUpdating system packages...\e[0m"
-sudo apt-get update && sudo apt-get upgrade -y
-
-echo -e "\e[32mInstalling mediainfo...\e[0m"
-sudo apt-get install mediainfo -y
-
-echo -e "\e[32mInstalling libgl1-mesa-glx...\e[0m"
-sudo apt-get install libgl1-mesa-glx -y
-
-echo -e "\e[32mInstalling python3-opencv...\e[0m"
-sudo apt-get install python3-opencv -y
-
-echo -e "\e[32mInstalling ffmpeg...\e[0m"
-sudo apt-get install ffmpeg -y
-
-echo -e "\e[32mInstalling gifsicle...\e[0m"
-sudo apt-get install gifsicle -y
+#
+#echo -e "\e[32mUpdating system packages...\e[0m"
+#sudo apt-get update && sudo apt-get upgrade -y
+#
+#echo -e "\e[32mInstalling mediainfo...\e[0m"
+#sudo apt-get install mediainfo -y
+#
+#echo -e "\e[32mInstalling libgl1-mesa-glx...\e[0m"
+#sudo apt-get install libgl1-mesa-glx -y
+#
+#echo -e "\e[32mInstalling python3-opencv...\e[0m"
+#sudo apt-get install python3-opencv -y
+#
+#echo -e "\e[32mInstalling ffmpeg...\e[0m"
+#sudo apt-get install ffmpeg -y
+#
+#echo -e "\e[32mInstalling gifsicle...\e[0m"
+#sudo apt-get install gifsicle -y
 
 echo -e "\e[32mUpdating repository...\e[0m"
 cd "Mr.Stark" && git pull && pip install -r req.txt
