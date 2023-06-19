@@ -141,11 +141,11 @@ async def search(client, query):
         input_query = (iq.split("wall", maxsplit=1)[1]).strip()
         if not input_query:
             result.append(
-                InlineQueryResultPhoto(
+                InlineQueryResultArticle(
                     title="🖼️ Wallpaper Search",
                     description="An inline tool to search Wallpaper",
-                    photo_url="https://cdn.wallpapersafari.com/29/95/xXs2LH.png",
-                    caption="**Help:** An inline tool to search Wallpaper\n**Usage:** `@MrStark_Bot wall <query>`",
+                    thumb_url="https://cdn.wallpapersafari.com/29/95/xXs2LH.png",
+                    input_message_content=InputTextMessageContent(="**Help:** An inline tool to search Wallpaper\n**Usage:** `@MrStark_Bot wall <query>`"),
                     parse_mode=pm.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton(
