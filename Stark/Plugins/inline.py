@@ -55,11 +55,12 @@ async def search(client, query):
         input_query = (iq.split("yt", maxsplit=1)[1]).strip()
         if not input_query:
             result.append(
-                InlineQueryResultPhoto(
+                InlineQueryResultArticle(
                     title="Yt Search",
                     description="An inline tool to search YouTube videos",
-                    photo_url="https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
-                    caption="**Help:** An inline tool to search YouTube videos\n**Usage:** `@MrStark_Bot yt <query>`",
+                    thumb_url ="https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
+                    input_message_content=InputTextMessageContent("**Help:** An inline tool to search YouTube videos\n**Usage:** `@MrStark_Bot yt [query]`")
+                    caption=
                     parse_mode=pm.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton(
