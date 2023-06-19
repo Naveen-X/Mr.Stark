@@ -60,7 +60,6 @@ async def search(client, query):
                     description="An inline tool to search YouTube videos",
                     thumb_url ="https://telegra.ph//file/c98e88beb2df61704f4df.jpg",
                     input_message_content=InputTextMessageContent("Inline tool to Search YouTube videos"),
-                    parse_mode=pm.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton(
                             text="Search Now🔎",
@@ -145,7 +144,6 @@ async def search(client, query):
                     description="An inline tool to search Wallpaper",
                     thumb_url="https://cdn.wallpapersafari.com/29/95/xXs2LH.png",
                     input_message_content=InputTextMessageContent("Inline too to Search for wallpapers"),
-                    parse_mode=pm.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton(
                             text="Search Now🔎",
