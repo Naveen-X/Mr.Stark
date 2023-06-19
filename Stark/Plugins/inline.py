@@ -144,7 +144,7 @@ async def search(client, query):
                     title="🖼️ Wallpaper Search",
                     description="An inline tool to search Wallpaper",
                     thumb_url="https://cdn.wallpapersafari.com/29/95/xXs2LH.png",
-                    input_message_content=InputTextMessageContent(="**Help:** An inline tool to search Wallpaper\n**Usage:** `@MrStark_Bot wall <query>`"),
+                    input_message_content=InputTextMessageContent("**Help:** An inline tool to search Wallpaper\n**Usage:** `@MrStark_Bot wall <query>`"),
                     parse_mode=pm.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton(
