@@ -197,7 +197,7 @@ async def search(client, query):
                                switch_pm_parameter="help")
             return
         answers = await wall_func([], input_query)
-        await client.answer_inline_query(query.id, results=answers, cache_time=2)
+        await client.answer_inline_query(query.id, results=answers, is_gallery=True, cache_time=2)
         
     elif iq.split()[0] == "torrent":
         answers = []
@@ -228,5 +228,5 @@ async def search(client, query):
         tex = iq.split(None, 1)[1].strip()
         answers = await image_func(answers, tex)
         await client.answer_inline_query(
-            query.id, results=answers, cache_time=3600
+            query.id, results=answers, is_gallery=True, cache_time=3600
         )
