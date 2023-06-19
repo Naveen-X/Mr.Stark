@@ -148,16 +148,16 @@ __{desp}...__
 **👨‍💻 Developer:** {dev}
 **🆔 App ID:** {app_id}
 **🎮 Genre:** {genre}
+
 """
         if price == 0:
-          details += "**💰 Price:** __Free of Cost__"
+            details += "**💰 Price:** __Free of Cost__\n"
         else:
-          details += f"**💰 Price:** __{price}__"
-        details += f"**🌟 Rating:** __{rating}__"
-        details += f"**📈 Installs:** __{install}__"
-        details += " "
+            details += f"**💰 Price:** __{price}__\n"
+        details += f"**🌟 Rating:** __{rating}__\n"
+        details += f"**📈 Installs:** __{install}__\n\n"
         for index, screenshot in enumerate(ss):
-          details += f"🖼️ Screenshots:  [{index + 1}]({screenshot}), "
+            details += f"🖼️ Screenshots: [{index + 1}]({screenshot})\n"
         answers.append(
             InlineQueryResultPhoto(
                 title=title,
@@ -165,6 +165,9 @@ __{desp}...__
                 photo_url=icon,
                 thumb_url=icon,
                 caption=details,
+                photo_width=300,
+                photo_height=300,
             )
         )
     return answers
+    
