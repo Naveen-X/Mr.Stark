@@ -77,6 +77,8 @@ for i in os.listdir("Stark/Plugins"):
             failed += 1
             lin = ""
             try:
+                print(app)
+                print(type(app))
                 mg = app.send_message(-1001491739934, traceback_msg)
                 lin = mg.link
             except Exception:
@@ -135,12 +137,10 @@ except:
     url_ = get_gitlab_snippet("Plugins info", str(mgt), filename)
     with open(filename, "w", encoding='utf-8') as f:
         f.write(str(mgt))
-    try:
-        mg = app.send_document(chat_id=-1001491739934, document=filename, reply_markup=types.InlineKeyboardMarkup(
+
+    mg = app.send_document(chat_id=-1001491739934, document=filename, reply_markup=types.InlineKeyboardMarkup(
             [[types.InlineKeyboardButton("View on Gitlab", url=url_)]]
         ))
-    except:
-        pass
     url = mg.link
     os.remove(filename)
 
