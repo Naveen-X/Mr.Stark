@@ -148,16 +148,20 @@ __{desp}...__
 **👨‍💻 Developer:** {dev}
 **🆔 App ID:** {app_id}
 **🎮 Genre:** {genre}
+{'**💰 Price:** __Free of Cost__' if price == 0 else f"**💰 Price:** __{price}__"}
+**🌟 Rating:** __{rating}__
+**📈 Installs:** __{install}__
 
+{"\n".join([f"**🖼️ Screenshots:** [{index + 1}]({screenshot})" for index, screenshot in enumerate(ss)])}
 """
-        if price == 0:
-            details += "**💰 Price:** __Free of Cost__\n"
-        else:
-            details += f"**💰 Price:** __{price}__\n"
-        details += f"**🌟 Rating:** __{rating}__\n"
-        details += f"**📈 Installs:** __{install}__\n\n"
-        for index, screenshot in enumerate(ss):
-            details += f"🖼️ Screenshots: [{index + 1}]({screenshot})\n"
+      #  if price == 0:
+      #      details += "**💰 Price:** __Free of Cost__\n"
+      #  else:
+      #      details += f"**💰 Price:** __{price}__\n"
+      #  details += f"**🌟 Rating:** __{rating}__\n"
+      #  details += f"**📈 Installs:** __{install}__\n\n"
+      #  for index, screenshot in enumerate(ss):
+      #      details += f"🖼️ Screenshots: [{index + 1}]({screenshot})\n"
         answers.append(
             InlineQueryResultPhoto(
                 title=title,
