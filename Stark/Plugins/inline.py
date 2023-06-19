@@ -153,8 +153,7 @@ async def search(client, query):
                     )
                 )
             )
-            await query.answer(results=result, cache_time=5, switch_pm_text="🖼️ Wallpaper Search",
-                               switch_pm_parameter="help")
+            await query.answer(results=result, cache_time=5, switch_pm_text="🖼️ Wallpaper Search", switch_pm_parameter="help")
             return
         answers = await wall_func([], input_query)
         await client.answer_inline_query(query.id, results=answers, is_gallery=True, cache_time=2)
