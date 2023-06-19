@@ -139,9 +139,10 @@ async def app_search(answers, query):
         price = app["price"]
         app_id = app["appId"]
         answers.append(
-            InlineQueryResultArticle(
+            InlineQueryResultPhoto(
                 title=title,
                 description=desp,
+                photo_url=icon,
                 input_message_content=InputTextMessageContent(
                     message_text=f"Title: {title}\n"
                                 f"Description: {desp}\n"
@@ -150,7 +151,6 @@ async def app_search(answers, query):
                                 f"Price: {price}\n"
                                 f"App ID: {app_id}"
                 ),
-                thumb_url=icon
             )
         )
     return answers
