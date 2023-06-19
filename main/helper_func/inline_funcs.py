@@ -34,7 +34,7 @@ async def wall_func(answers, query):
             )
         )
         return answers
-    results = results.result[:10]
+    results = results.result[:50]
     for i in results:
         answers.append(
             InlineQueryResultPhoto(
@@ -57,7 +57,7 @@ async def torrent_func(answers, query):
             )
         )
         return answers
-    results = results.result[:10]
+    results = results.result[:20]
     for i in results:
         title = i.name
         size = i.size
@@ -97,7 +97,7 @@ async def image_func(answers, query):
             )
         )
         return answers
-    results = results.result[:10]
+    results = results.result[:50]
     buttons = InlineKeyboardMarkup(row_width=2)
     buttons.add(
         InlineKeyboardButton(
