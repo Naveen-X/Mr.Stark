@@ -33,9 +33,6 @@
 echo -e "\e[32mCloning repository...\e[0m"
 git clone https://github.com/Naveen-X/Mr.Stark
 
-echo -e "\e[32mUpdating repository...\e[0m"
-cd "Mr.Stark" && git pull && pip install -r req.txt
-
 echo -e "\e[32mUpdating system packages...\e[0m"
 sudo apt-get update && sudo apt-get upgrade -y
 
@@ -53,6 +50,9 @@ sudo apt-get install ffmpeg -y
 
 echo -e "\e[32mInstalling gifsicle...\e[0m"
 sudo apt-get install gifsicle -y
+
+echo -e "\e[32mUpdating repository...\e[0m"
+cd "Mr.Stark" && git pull && pip install -r req.txt
 
 echo -e "\e[32mRunning Stark...\e[0m"
 python3 -m "Stark"
