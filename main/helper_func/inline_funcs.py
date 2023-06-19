@@ -141,7 +141,7 @@ async def app_search(answers, query):
         dev = app.get("developer")
         details = f"""
 📱 **{title}**
-__{desp}__
+__{desp}...__
 
 **👨‍💻 Developer:** {dev}
 **🆔 App ID:** {app_id}
@@ -152,7 +152,8 @@ __{desp}__
                 title=title,
                 description=desp,
                 photo_url=icon,
-                caption=details
+                thumb_url=icon,
+                caption=details,
             )
         )
     return answers
