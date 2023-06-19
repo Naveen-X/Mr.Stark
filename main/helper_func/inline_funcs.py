@@ -132,7 +132,7 @@ async def app_search(answers, query):
     for app in app_list:
         title = app["title"]
         icon = app["icon"]
-        desp = app["description"]
+        desp = app["description"].replace("\n", " ")[:250]
         rating = app["score"]
         genre = app["genre"]
         price = app["price"]
