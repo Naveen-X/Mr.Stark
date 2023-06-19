@@ -2,11 +2,11 @@ import os
 import sys
 import pytz
 import string
-import random 
+import random
 import asyncio
 import inspect
 import logging
-import requests 
+import requests
 import pyrogram
 from collections import defaultdict
 from pyrogram import idle, types, filters
@@ -16,6 +16,9 @@ from Stark.config import Config
 from Stark import db, error_handler
 from Stark import get_gitlab_snippet
 from apscheduler.schedulers.background import BackgroundScheduler
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Import all the Python modules in the 'Stark/Plugins' directory
 banner = (
@@ -38,6 +41,7 @@ app = pyrogram.Client(
     api_id=Config.API_ID,
     api_hash=Config.API_HASH,
 )
+
 
 def my_error_handler(client, update, error):
     print("An error occurred:", error)
@@ -101,7 +105,7 @@ for key in sys.modules.keys():
                             app.add_handler(*h)
                         loaded_counts[key] += 1
                         module_name = module.__name__.split('.')[-1]
-#                         mgt += f"[ Loaded Successfully ] - {loaded_counts[key]} from {module_name}\n"
+                        #                         mgt += f"[ Loaded Successfully ] - {loaded_counts[key]} from {module_name}\n"
                         if loaded_dict.get(module_name) is None:
                             loaded_dict[module_name] = 0
                         loaded_dict[module_name] += 1
@@ -120,7 +124,7 @@ for key, value in sorted_data:
     print("[ Mr.Stark ] | [ Loaded ] {} - {}".format(key, value))
     mgt += "**• [ Loaded ]** `{}` **-** `{}`".format(key, value)
     mgt += "\n"
-    
+
 url = ""
 
 try:
@@ -133,8 +137,8 @@ except:
         f.write(str(mgt))
     try:
         mg = app.send_document(chat_id=-1001491739934, document=filename, reply_markup=types.InlineKeyboardMarkup(
-        [[types.InlineKeyboardButton("View on Gitlab", url=url_)]]
-    ))
+            [[types.InlineKeyboardButton("View on Gitlab", url=url_)]]
+        ))
     except:
         pass
     url = mg.link
@@ -155,7 +159,8 @@ async def _1check_for_it(client, message):
         await db.add(client, message)
     except Exception as e:
         logging.exception(e)
-        
+
+
 async def get_random_quote():
     QUOTES_API_ENDPOINT = "https://api.quotable.io/random"
     response = requests.get(QUOTES_API_ENDPOINT)
@@ -167,12 +172,14 @@ async def get_random_quote():
     reply_text = f"__{quote_text}__\n\n- `{quote_author}`"
 
     return reply_text
-    
+
+
 def send_quote():
     chat_ids = [x["chat_id"] for x in DB.qt.find({}, {"chat_id": 1})]
     quote = asyncio.run(get_random_quote())
     for chat_id in chat_ids:
         app.send_message(chat_id=chat_id, text=quote)
+
 
 logging.info("[ Mr.Stark ] | [ Scheduler] - Adding tasks")
 scheduler = BackgroundScheduler(timezone=pytz.timezone('Asia/Kolkata'))
