@@ -126,6 +126,7 @@ async def search(client, query):
                     input_message_content=InputTextMessageContent(
                     message_text="**Help:** An inline tool to search Apps\n**Usage:** `@MrStark_Bot app <query>`"
                 ),
+            )
             await query.answer(results=result, cache_time=5, switch_pm_text="📱 App Search", switch_pm_parameter="help")
             return
         res = await app_search(result, input_query)
