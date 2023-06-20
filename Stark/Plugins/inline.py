@@ -203,3 +203,19 @@ async def search(client, query):
         await client.answer_inline_query(
             query.id, results=answers, cache_time=3600
         )
+    elif iq.split()[0] == "flipkart":
+        answers = []
+        if len(iq.split()) < 2:
+            return await client.answer_inline_query(
+                query.id,
+                results=answers,
+                is_gallery=True,
+                switch_pm_text="📱 FlipkartSearch | flipkart [QUERY]",
+                switch_pm_parameter="inline",
+            )
+        tex = iq.split(None, 1)[1].strip()
+        answers = await flipkart_search(answers, tex)
+        await client.answer_inline_query(
+            query.id, results=answers, cache_time=3600
+        )
+        
