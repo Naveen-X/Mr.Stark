@@ -151,6 +151,7 @@ __{desp}...__
 **🌟 Rating:** __{rating}__
 **📈 Installs:** __{install}__
 
+{" ".join([f"**🖼️ Screenshots:** [{index + 1}]({screenshot})" for index, screenshot in enumerate(ss)])}
 '''
         answers.append(
             InlineQueryResultPhoto(
