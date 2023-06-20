@@ -174,16 +174,17 @@ async def app_search(answers, query):
         details = f'''📱 **{title}**
 __{desp}...__
 
-**Developer:** {dev}
-**App ID:** {app_id}
-**Genre:** {genre}
-{'**Price:** __Free of Cost__' if price == 0 else f"**Price:** __{price}__"}
-**Rating:** __{rating}__
-**Installs:** __{install}__
+**{b5} Developer:** {dev}
+**{b6} App ID:** {app_id}
+**{b6} Genre:** {genre}
+{f'**{b6} Price:** __Free of Cost__' if price == 0 else f"**{b6} Price:** __{price}__"}
+**{b6} Rating:** __{rating}__
+**{b7} Installs:** __{install}__
 
-{f'**Video:** [Video]({video})' if video else ''}
-{screenshots_formatted}
 '''
+        if video is not None:
+            details += f'**{b4} Video:** [Video]({video})\n'
+        details += screenshots_formatted
         answers.append(
             InlineQueryResultPhoto(
                 title=title,
