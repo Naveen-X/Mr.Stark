@@ -168,8 +168,8 @@ async def app_search(answers, query):
                 InlineKeyboardButton(text="📱 View on PlayStore", url=link)
             ],
             [
-                InlineKeyboardButton(text="Previous App", callback_data=f"{query}=app_prev_{index}"),
-                InlineKeyboardButton(text="Next App", callback_data=f"{query}app_next_{index}")
+                InlineKeyboardButton(text="Previous App", callback_data=f"prev"),
+                InlineKeyboardButton(text="Next App", callback_data=f"next")
             ]
         ])
         details = f'''📱 **{title}**
@@ -200,38 +200,38 @@ __{desp}...__
         )
     return answers
 
-@Client.on_callback_query()
-async def handle_callback(client, callback_query):
-    callback_data = callback_query.data
-    callback_query_id = callback_query.id
+# @Client.on_callback_query()
+# async def handle_callback(client, callback_query):
+#     callback_data = callback_query.data
+#     callback_query_id = callback_query.id
     
-    # Extract the callback data
-    parts = callback_data.split('_')
-    action = parts[1]
-    index = int(parts[2])
-    query = callback_data.split('=')[0]
-    app_list = search(query)
+#     # Extract the callback data
+#     parts = callback_data.split('_')
+#     action = parts[1]
+#     index = int(parts[2])
+#     query = callback_data.split('=')[0]
+#     app_list = search(query)
     
-    if action == 'prev':
-        prev_index = index - 1
-        if prev_index >= 0:
-            prev_app = await app_search([], query)
-            updated_details = prev_app[prev_index].caption
-            updated_keyboard = prev_app[prev_index].reply_markup
-            await client.edit_message_caption(
-                message_id=callback_query.message.id,
-                caption=updated_details,
-                reply_markup=updated_keyboard
-            )
+#     if action == 'prev':
+#         prev_index = index - 1
+#         if prev_index >= 0:
+#             prev_app = await app_search([], query)
+#             updated_details = prev_app[prev_index].caption
+#             updated_keyboard = prev_app[prev_index].reply_markup
+#             await client.edit_message_caption(
+#                 message_id=callback_query.message.id,
+#                 caption=updated_details,
+#                 reply_markup=updated_keyboard
+#             )
     
-    elif action == 'next':
-        next_index = index + 1
-        if next_index < len(app_list):
-            next_app = await app_search([], query)
-            updated_details = next_app[next_index].caption
-            updated_keyboard = next_app[next_index].reply_markup
-            await client.edit_message_caption(
-                message_id=callback_query.message.id,
-                caption=updated_details,
-                reply_markup=updated_keyboard
-            )
+#     elif action == 'next':
+#         next_index = index + 1
+#         if next_index < len(app_list):
+#             next_app = await app_search([], query)
+#             updated_details = next_app[next_index].caption
+#             updated_keyboard = next_app[next_index].reply_markup
+#             await client.edit_message_caption(
+#                 message_id=callback_query.message.id,
+#                 caption=updated_details,
+#                 reply_markup=updated_keyboard
+#             )
