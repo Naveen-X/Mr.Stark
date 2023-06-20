@@ -173,9 +173,10 @@ __{desp}...__
 **{b6} Rating:** __{rating}__
 **{b7} Installs:** __{install}__
 
-**{b4} Video:** [Video]({video})
-{screenshots_formatted}
 '''
+        if video is not None:
+            details += f'**{b4} Video:** [Video]({video})\n'
+        details += screenshots_formatted
         answers.append(
             InlineQueryResultPhoto(
                 title=title,
