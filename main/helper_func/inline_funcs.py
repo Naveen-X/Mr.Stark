@@ -200,6 +200,29 @@ __{desp}...__
         )
     return answers
 
+async def flipkart_search(answers, query):
+    """ Api: https://flipkart.dvishal485.workers.dev/ """
+    result = "https://flipkart.dvishal485.workers.dev/search/" + str(query)
+    if not result:
+        answers.append(
+            InlineQueryResultArticle(
+                title="Error",
+                description="Something Unexpected Error Occurred",
+                input_message_content=InputTextMessageContent(
+                    message_text="Something Unexpected Error Occurred"
+                )
+            )
+        )
+        return answers
+    for x in result:
+      photo=x.get("thumnail")
+      link = x.get("link")
+      name = x.get("nane")
+      c_price = x.get("current_price")
+      o_price = x.get("original_price")
+
+
+
 # @Client.on_callback_query()
 # async def handle_callback(client, callback_query):
 #     callback_data = callback_query.data
