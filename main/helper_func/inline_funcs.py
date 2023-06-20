@@ -141,8 +141,10 @@ async def app_search(answers, query):
         dev = x.get("developer")
         install = x.get("installs")
         ss = x.get("screenshots")
+        link = f"https://play.google.com/store/apps/details?id={app_id}"
         screenshots = ", ".join([f"[{index + 1}]({screenshot})" for index, screenshot in enumerate(ss)])
         screenshots_formatted = f"🖼️ Screenshots: {screenshots}"
+        keyboard = InlineKeyboardMarkup([[InlineKeyboardButton(text="📱 View on PlayStore", url=link)]])
         details = f'''📱 **{title}**
 __{desp}...__
 
@@ -162,6 +164,7 @@ __{desp}...__
                 photo_url=icon,
                 thumb_url=icon,
                 caption=details,
+                reply_markup=keyboard,
                 photo_width=300,
                 photo_height=300,
             )
