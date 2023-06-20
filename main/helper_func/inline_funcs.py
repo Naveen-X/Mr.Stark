@@ -141,8 +141,7 @@ async def app_search(answers, query):
         dev = x.get("developer")
         install = x.get("installs")
         ss = x.get("screenshots")
-        details = f"""
-📱 **{title}**
+        details = f'''📱 **{title}**
 __{desp}...__
 
 **👨‍💻 Developer:** {dev}
@@ -153,15 +152,7 @@ __{desp}...__
 **📈 Installs:** __{install}__
 
 {"\n".join([f"**🖼️ Screenshots:** [{index + 1}]({screenshot})" for index, screenshot in enumerate(ss)])}
-"""
-      #  if price == 0:
-      #      details += "**💰 Price:** __Free of Cost__\n"
-      #  else:
-      #      details += f"**💰 Price:** __{price}__\n"
-      #  details += f"**🌟 Rating:** __{rating}__\n"
-      #  details += f"**📈 Installs:** __{install}__\n\n"
-      #  for index, screenshot in enumerate(ss):
-      #      details += f"🖼️ Screenshots: [{index + 1}]({screenshot})\n"
+'''
         answers.append(
             InlineQueryResultPhoto(
                 title=title,
@@ -174,4 +165,3 @@ __{desp}...__
             )
         )
     return answers
-    
