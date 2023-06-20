@@ -158,7 +158,7 @@ async def app_search(answers, query):
         dev = x.get("developer")
         install = x.get("installs")
         ss = x.get("screenshots")
-        video = app.get("video")
+        video = x.get("video")
         link = f"https://play.google.com/store/apps/details?id={app_id}"
         screenshots = ", ".join([f"[{index + 1}]({screenshot})" for index, screenshot in enumerate(ss)])
         screenshots_formatted = f"**{b4} Screenshots:** {screenshots}"
