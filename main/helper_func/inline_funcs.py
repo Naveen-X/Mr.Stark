@@ -168,8 +168,8 @@ async def app_search(answers, query):
                 InlineKeyboardButton(text="📱 View on PlayStore", url=link)
             ],
             [
-                InlineKeyboardButton(text="Previous App", callback_data=f"app_prev_{index}"),
-                InlineKeyboardButton(text="Next App", callback_data=f"app_next_{index}")
+                InlineKeyboardButton(text="Previous App", callback_data=f"{query}=app_prev_{index}"),
+                InlineKeyboardButton(text="Next App", callback_data=f"{query}app_next_{index}")
             ]
         ])
         details = f'''📱 **{title}**
@@ -209,6 +209,8 @@ async def handle_callback(client, callback_query):
     parts = callback_data.split('_')
     action = parts[1]
     index = int(parts[2])
+    query = callback_data.split('=')[0]
+    app_list = search(query)
     
     if action == 'prev':
         prev_index = index - 1
