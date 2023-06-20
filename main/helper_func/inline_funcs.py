@@ -203,7 +203,7 @@ __{desp}...__
 async def flipkart_search(answers, query):
     """ Api: https://flipkart.dvishal485.workers.dev/ """
     result1 = "https://flipkart.dvishal485.workers.dev/search/" + str(query)
-    if not result:
+    if not result1:
         answers.append(
             InlineQueryResultArticle(
                 title="Error",
