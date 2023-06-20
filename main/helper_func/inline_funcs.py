@@ -204,7 +204,6 @@ __{desp}...__
 async def handle_callback(client, callback_query):
     callback_data = callback_query.data
     callback_query_id = callback_query.id
-    chat_id = callback_query.message.chat.id
     
     # Extract the callback data
     parts = callback_data.split('_')
@@ -218,8 +217,7 @@ async def handle_callback(client, callback_query):
             updated_details = prev_app[prev_index].caption
             updated_keyboard = prev_app[prev_index].reply_markup
             await client.edit_message_caption(
-                chat_id=chat_id,
-                message_id=callback_query.message.message_id,
+                message_id=callback_query.message.id,
                 caption=updated_details,
                 reply_markup=updated_keyboard
             )
@@ -231,8 +229,7 @@ async def handle_callback(client, callback_query):
             updated_details = next_app[next_index].caption
             updated_keyboard = next_app[next_index].reply_markup
             await client.edit_message_caption(
-                chat_id=chat_id,
-                message_id=callback_query.message.message_id,
+                message_id=callback_query.message.id,
                 caption=updated_details,
                 reply_markup=updated_keyboard
             )
