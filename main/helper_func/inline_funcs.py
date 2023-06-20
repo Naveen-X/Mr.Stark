@@ -23,6 +23,23 @@ API_KEY = Config.ARQ_API
 aiohttpsession = aiohttp.ClientSession()
 arq = ARQ(ARQ_URI, API_KEY, aiohttpsession)
 
+bullets = {
+    "bullet1": ">",
+    "bullet2": "•",
+    "bullet3": "⋟",
+    "bullet4": "◈",
+    "bullet5": "┏",
+    "bullet6": "┣",
+    "bullet7": "┗",
+}
+
+b1 = bullets["bullet4"]
+b2 = bullets["bullet2"]
+b3 = bullets["bullet3"]
+b4 = bullets["bullet4"]
+b5 = bullets["bullet5"]
+b6 = bullets["bullet6"]
+b7 = bullets["bullet7"]
 
 async def wall_func(answers, query):
     results = await arq.wall(query)
@@ -143,17 +160,17 @@ async def app_search(answers, query):
         ss = x.get("screenshots")
         link = f"https://play.google.com/store/apps/details?id={app_id}"
         screenshots = ", ".join([f"[{index + 1}]({screenshot})" for index, screenshot in enumerate(ss)])
-        screenshots_formatted = f"🖼️ Screenshots: {screenshots}"
+        screenshots_formatted = f"{b4} Screenshots: {screenshots}"
         keyboard = InlineKeyboardMarkup([[InlineKeyboardButton(text="📱 View on PlayStore", url=link)]])
         details = f'''📱 **{title}**
 __{desp}...__
 
-**👨‍💻 Developer:** {dev}
-**🆔 App ID:** {app_id}
-**🎮 Genre:** {genre}
-{'**💰 Price:** __Free of Cost__' if price == 0 else f"**💰 Price:** __{price}__"}
-**🌟 Rating:** __{rating}__
-**📈 Installs:** __{install}__
+**{b5} Developer:** {dev}
+**{b6} App ID:** {app_id}
+**{b6} Genre:** {genre}
+{f'**{b6} Price:** __Free of Cost__' if price == 0 else f"**{b6} Price:** __{price}__"}
+**{b6} Rating:** __{rating}__
+**{b7} Installs:** __{install}__
 
 {screenshots_formatted}
 '''
