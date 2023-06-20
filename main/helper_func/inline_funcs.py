@@ -216,11 +216,34 @@ async def flipkart_search(answers, query):
         return answers
     response = result1["result"]
     for x in response:
-      photo=x.get("thumnail")
+      photo = x.get("thumnail")
       link = x.get("link")
       name = x.get("nane")
       c_price = x.get("current_price")
       o_price = x.get("original_price")
+      keyboard = InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton(text="📱 View on Flipkart", url=link)
+            ],
+        ])
+      output= f"""
+**Title:** {name}
+**Price:** ~~{o_price}~~__{c_price}__
+"""
+      answers.append(
+            InlineQueryResultPhoto(
+                title=name,
+                description=title,
+                photo_url=photo,
+                thumb_url=photo,
+                caption=output,
+                reply_markup=keyboard,
+                photo_width=300,
+                photo_height=300,
+            )
+        )
+    return answers
+
 
 
 
