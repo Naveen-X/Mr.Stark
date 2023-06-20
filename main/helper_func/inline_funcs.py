@@ -5,6 +5,7 @@ import sys
 
 from pyrogram import filters
 from pyrogram.raw.functions import Ping
+from pyrogram import Client
 from google_play_scraper import search, app
 from pyrogram.types import (
     CallbackQuery,
@@ -198,3 +199,40 @@ __{desp}...__
             )
         )
     return answers
+
+@Client.on_callback_query()
+async def handle_callback(client, callback_query):
+    callback_data = callback_query.data
+    callback_query_id = callback_query.id
+    chat_id = callback_query.message.chat.id
+    
+    # Extract the callback data
+    parts = callback_data.split('_')
+    action = parts[1]
+    index = int(parts[2])
+    
+    if action == 'prev':
+        prev_index = index - 1
+        if prev_index >= 0:
+            prev_app = await app_search([], query)
+            updated_details = prev_app[prev_index].caption
+            updated_keyboard = prev_app[prev_index].reply_markup
+            await client.edit_message_caption(
+                chat_id=chat_id,
+                message_id=callback_query.message.message_id,
+                caption=updated_details,
+                reply_markup=updated_keyboard
+            )
+    
+    elif action == 'next':
+        next_index = index + 1
+        if next_index < len(app_list):
+            next_app = await app_search([], query)
+            updated_details = next_app[next_index].caption
+            updated_keyboard = next_app[next_index].reply_markup
+            await client.edit_message_caption(
+                chat_id=chat_id,
+                message_id=callback_query.message.message_id,
+                caption=updated_details,
+                reply_markup=updated_keyboard
+            )
