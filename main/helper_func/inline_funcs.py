@@ -202,7 +202,7 @@ __{desp}...__
 
 async def flipkart_search(answers, query):
     """ Api: https://flipkart.dvishal485.workers.dev/ """
-    result = "https://flipkart.dvishal485.workers.dev/search/" + str(query)
+    result1 = "https://flipkart.dvishal485.workers.dev/search/" + str(query)
     if not result:
         answers.append(
             InlineQueryResultArticle(
@@ -214,7 +214,8 @@ async def flipkart_search(answers, query):
             )
         )
         return answers
-    for x in result:
+    response = result1["result"]
+    for x in response:
       photo=x.get("thumnail")
       link = x.get("link")
       name = x.get("nane")
