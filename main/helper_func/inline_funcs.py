@@ -147,7 +147,7 @@ async def app_search(answers, query):
             )
         )
         return answers
-    for x in app_list:
+    for index, x in enumerate(app_list):
         title = x.get("title")
         icon = x.get("icon")
         desp = x.get("description").replace("\n", " ")[:250]
@@ -161,22 +161,29 @@ async def app_search(answers, query):
         video = x.get("video")
         link = f"https://play.google.com/store/apps/details?id={app_id}"
         screenshots = ", ".join([f"[{index + 1}]({screenshot})" for index, screenshot in enumerate(ss)])
-        screenshots_formatted = f"**{b4} Screenshots:** {screenshots}"
-        keyboard = InlineKeyboardMarkup([[InlineKeyboardButton(text="📱 View on PlayStore", url=link)]])
+        screenshots_formatted = f"**Screenshots:** {screenshots}"
+        keyboard = InlineKeyboardMarkup([
+            [
+                InlineKeyboardButton(text="📱 View on PlayStore", url=link)
+            ],
+            [
+                InlineKeyboardButton(text="Previous App", callback_data=f"app_prev_{index}"),
+                InlineKeyboardButton(text="Next App", callback_data=f"app_next_{index}")
+            ]
+        ])
         details = f'''📱 **{title}**
 __{desp}...__
 
-**{b5} Developer:** {dev}
-**{b6} App ID:** {app_id}
-**{b6} Genre:** {genre}
-{f'**{b6} Price:** __Free of Cost__' if price == 0 else f"**{b6} Price:** __{price}__"}
-**{b6} Rating:** __{rating}__
-**{b7} Installs:** __{install}__
+**Developer:** {dev}
+**App ID:** {app_id}
+**Genre:** {genre}
+{'**Price:** __Free of Cost__' if price == 0 else f"**Price:** __{price}__"}
+**Rating:** __{rating}__
+**Installs:** __{install}__
 
+{f'**Video:** [Video]({video})\n' if video else ''}
+{screenshots_formatted}
 '''
-        if video is not None:
-            details += f'**{b4} Video:** [Video]({video})\n'
-        details += screenshots_formatted
         answers.append(
             InlineQueryResultPhoto(
                 title=title,
