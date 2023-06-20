@@ -38,7 +38,6 @@ buttons = [
 async def search(client, query):
     string_given = query.query.strip()
     iq = string_given.lower()
-    print(iq)
     if iq == "":
         answer = [
             InlineQueryResultArticle(
