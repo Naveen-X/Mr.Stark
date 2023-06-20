@@ -181,7 +181,7 @@ __{desp}...__
 **Rating:** __{rating}__
 **Installs:** __{install}__
 
-{f'**Video:** [Video]({video})\n' if video else ''}
+{f'**Video:** [Video]({video})' if video else ''}
 {screenshots_formatted}
 '''
         answers.append(
