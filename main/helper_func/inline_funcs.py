@@ -1,5 +1,6 @@
 import re
 import sys
+import json
 import aiohttp
 import asyncio
 import requests
@@ -201,11 +202,9 @@ __{desp}...__
         )
     return answers
 
-
 def quote_text(text):
   plus = text.replace(" ", "+")
   return plus
-
 
 async def flipkart_search(answers, query):
     """ Api: https://flipkart.dvishal485.workers.dev/ """
@@ -233,8 +232,8 @@ async def flipkart_search(answers, query):
             photo = x.get("thumbnail")
             link = x.get("link")
             name = x.get("name")
-            more_details = x.get("query_url")
-            for y in more_details:
+            more_details = json.loads(x.get("query_url"))
+            for y in [more_details]:
                 c_price = y.get("current_price")
                 o_price = y.get("original_price")
                 discount= y.get("discounted")
@@ -245,11 +244,11 @@ async def flipkart_search(answers, query):
                 highlights =  y.get("highlights")
                 
             keyboard = InlineKeyboardMarkup([
-            [
-                InlineKeyboardButton(text="📱 View on Flipkart", url=link)
-            ],
-        ])
-            output= f"""
+                [
+                    InlineKeyboardButton(text="📱 View on Flipkart", url=link)
+                ],
+            ])
+            output = f"""
 **Title:** {name}
 **Price:** ~~{o_price}~~ ‎ __{c_price}__
 **In Stock:** __{stock}
@@ -259,22 +258,23 @@ async def flipkart_search(answers, query):
 {highlights}
 """
             answers.append(
-                  InlineQueryResultPhoto(
-                      title=name,
-                      description=name,
-                      photo_url=photo,
-                      thumb_url=photo,
-                      caption=output,
-                      reply_markup=keyboard,
-                      photo_width=300,
-                      photo_height=300,
-                  )
-              )
+                InlineQueryResultPhoto(
+                    title=name,
+                    description=name,
+                    photo_url=photo,
+                    thumb_url=photo,
+                    caption=output,
+                    reply_markup=keyboard,
+                    photo_width=300,
+                    photo_height=300,
+                )
+            )
         return answers
             
     except requests.exceptions.RequestException as e:
         print("Error occurred during data retrieval:", e)
         return answers
+
 
 
 
