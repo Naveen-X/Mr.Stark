@@ -232,7 +232,7 @@ async def flipkart_search(answers, query):
             photo = x.get("thumbnail")
             link = x.get("link")
             name = x.get("name")
-            more_details = json.loads(x.get("query_url"))
+            more_details = x.get("query_url")
             for y in [more_details]:
                 c_price = y.get("current_price")
                 o_price = y.get("original_price")
