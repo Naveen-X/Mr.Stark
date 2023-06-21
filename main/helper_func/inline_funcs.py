@@ -241,7 +241,7 @@ async def flipkart_search(answers, query):
             answers.append(
                   InlineQueryResultPhoto(
                       title=name,
-                      description=title,
+                      description=name,
                       photo_url=photo,
                       thumb_url=photo,
                       caption=output,
