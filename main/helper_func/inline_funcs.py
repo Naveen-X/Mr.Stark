@@ -235,6 +235,7 @@ async def flipkart_search(answers, query):
             name = x.get("name")
             c_price = x.get("current_price")
             o_price = x.get("original_price")
+            more_details = x.get("query_url")
             keyboard = InlineKeyboardMarkup([
             [
                 InlineKeyboardButton(text="📱 View on Flipkart", url=link)
