@@ -233,9 +233,17 @@ async def flipkart_search(answers, query):
             photo = x.get("thumbnail")
             link = x.get("link")
             name = x.get("name")
-            c_price = x.get("current_price")
-            o_price = x.get("original_price")
             more_details = x.get("query_url")
+            for y in more_details:
+                c_price = y.get("current_price")
+                o_price = y.get("original_price")
+                discount= y.get("discounted")
+                discount_percent = y.get("discount_percent")
+                stock = y.get("in_stock")
+                seller = y.get("seller_name")
+                s_rating = y.get("seller_rating")
+                highlights =  y.get("highlights")
+                
             keyboard = InlineKeyboardMarkup([
             [
                 InlineKeyboardButton(text="📱 View on Flipkart", url=link)
@@ -243,7 +251,12 @@ async def flipkart_search(answers, query):
         ])
             output= f"""
 **Title:** {name}
-**Price:** ~~{o_price}~~__‎ {c_price}__
+**Price:** ~~{o_price}~~ ‎ __{c_price}__
+**In Stock:** __{stock}
+**Discount:** __{discount}__ ‎  `{discount_percent}`
+**Seller:** __{seller}__‎ ({s_rating})
+**Highlights:**
+{highlights}
 """
             answers.append(
                   InlineQueryResultPhoto(
