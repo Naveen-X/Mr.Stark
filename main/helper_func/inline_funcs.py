@@ -234,14 +234,14 @@ async def flipkart_search(answers, query):
             name = x.get("name")
             more_details = x.get("query_url")
             for y in [more_details]:
-                c_price = y.get("current_price")
-                o_price = y.get("original_price")
-                discount= y.get("discounted")
-                discount_percent = y.get("discount_percent")
-                stock = y.get("in_stock")
-                seller = y.get("seller_name")
-                s_rating = y.get("seller_rating")
-                highlights =  y.get("highlights")
+                c_price = dict(y).get("current_price")
+                o_price = dict(y).get("original_price")
+                discount= dict(y).get("discounted")
+                discount_percent = dict(y).get("discount_percent")
+                stock = dict(y).get("in_stock")
+                seller = dict(y).get("seller_name")
+                s_rating = dict(y).get("seller_rating")
+                highlights =  dict(y).get("highlights")
                 
             keyboard = InlineKeyboardMarkup([
                 [
