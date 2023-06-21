@@ -206,7 +206,7 @@ async def flipkart_search(answers, query):
     url = f"https://flipkart.dvishal485.workers.dev/search/{query}"
     
     try:
-        response = await requests.get(url)
+        response = requests.get(url)
         response.raise_for_status()
         data = response.json()
         
