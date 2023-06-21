@@ -1,11 +1,12 @@
-import aiohttp
-import asyncio
 import re
 import sys
+import aiohttp
+import asyncio
+import requests
 
+from pyrogram import Client
 from pyrogram import filters
 from pyrogram.raw.functions import Ping
-from pyrogram import Client
 from google_play_scraper import search, app
 from pyrogram.types import (
     CallbackQuery,
@@ -202,47 +203,58 @@ __{desp}...__
 
 async def flipkart_search(answers, query):
     """ Api: https://flipkart.dvishal485.workers.dev/ """
-    result1 = "https://flipkart.dvishal485.workers.dev/search/" + str(query)
-    if not result1:
-        answers.append(
-            InlineQueryResultArticle(
-                title="Error",
-                description="Something Unexpected Error Occurred",
-                input_message_content=InputTextMessageContent(
-                    message_text="Something Unexpected Error Occurred"
+    url = f"https://flipkart.dvishal485.workers.dev/search/{query}"
+    
+    try:
+        response = await requests.get(url)
+        response.raise_for_status()
+        data = response.json()
+        
+        result1 = data.get("result")
+        if not result1:
+            answers.append(
+                InlineQueryResultArticle(
+                    title="Error",
+                    description="Something Unexpected Error Occurred",
+                    input_message_content=InputTextMessageContent(
+                        message_text="Something Unexpected Error Occurred"
+                    )
                 )
             )
-        )
-        return answers
-    response = result1["result"]
-    for x in response:
-      photo = x.get("thumnail")
-      link = x.get("link")
-      name = x.get("nane")
-      c_price = x.get("current_price")
-      o_price = x.get("original_price")
-      keyboard = InlineKeyboardMarkup([
+            return answers
+        
+        for x in result1:
+            photo = x.get("thumbnail")
+            link = x.get("link")
+            name = x.get("name")
+            c_price = x.get("current_price")
+            o_price = x.get("original_price")
+            keyboard = InlineKeyboardMarkup([
             [
                 InlineKeyboardButton(text="📱 View on Flipkart", url=link)
             ],
         ])
-      output= f"""
-**Title:** {name}
-**Price:** ~~{o_price}~~__{c_price}__
-"""
-      answers.append(
-            InlineQueryResultPhoto(
-                title=name,
-                description=title,
-                photo_url=photo,
-                thumb_url=photo,
-                caption=output,
-                reply_markup=keyboard,
-                photo_width=300,
-                photo_height=300,
-            )
-        )
-    return answers
+            output= f"""
+        **Title:** {name}
+        **Price:** ~~{o_price}~~__{c_price}__
+        """
+            answers.append(
+                  InlineQueryResultPhoto(
+                      title=name,
+                      description=title,
+                      photo_url=photo,
+                      thumb_url=photo,
+                      caption=output,
+                      reply_markup=keyboard,
+                      photo_width=300,
+                      photo_height=300,
+                  )
+              )
+        return answers
+            
+    except requests.exceptions.RequestException as e:
+        print("Error occurred during data retrieval:", e)
+        return answers
 
 
 
