@@ -242,7 +242,7 @@ async def flipkart_search(answers, query):
         ])
             output= f"""
 **Title:** {name}
-**Price:** ~~{o_price}~~__  {c_price}__
+**Price:** ~~{o_price}~~__‎ {c_price}__
 """
             answers.append(
                   InlineQueryResultPhoto(
