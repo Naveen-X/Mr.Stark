@@ -6,10 +6,10 @@ from Stark import error_handler
 from pyrogram.types import Message
 from pyrogram import Client, filters
 from main.helper_func.basic_helpers import runcmd, progress
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from main.helper_func.mediainfo_paste import mediainfo_paste
 
-telegraph = Telegraph()
-tgnoob = telegraph.create_account(short_name="Stark")
+
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 @Client.on_message(filters.command(['mediainfo', 'mediadata']))
 @error_handler
@@ -25,16 +25,14 @@ async def media_info(_, message: Message):
             await mi.edit("Unable to determine file info.")
             return
         media_info = f"{out}"
-        title_of_page = "Media Info 🎬"
-        ws = media_info.replace("\n", "<br>")
-        response = telegraph.create_page(title_of_page, html_content=ws)
-        km = response["path"]
+        title = "Media Info 🎬"
+        link = mediainfo_paste(text=media_info, title=title)
         keyboard = InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton(
                     text="Mediainfo",
-                    url=f"https://telegra.ph/{km}",
+                    url=link,
                 )
             ]
         ]
