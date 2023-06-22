@@ -232,7 +232,7 @@ async def flipkart_search(answers, query):
             c_price = x.get("current_price")
             o_price = x.get("original_price")
             more_details = x.get("query_url")
-            link2 = requests.post("https://da.gd/s/", more_details).text
+            link2 = requests.get(f"https://da.gd/s?url={more_details}").text
             output = f"""
 **Title:** {name}
 **Price:** ~~{o_price}~~ ‎  __{c_price}__
