@@ -232,30 +232,21 @@ async def flipkart_search(answers, query):
             photo = x.get("thumbnail")
             link = x.get("link")
             name = x.get("name")
-            more_details = requests.get(x.get("query_url")).json()
-            c_price = more_details.get("current_price")
-            o_price = more_details.get("original_price")
-            discount= more_details.get("discounted")
-            discount_percent = more_details.get("discount_percent")
-            stock = more_details.get("in_stock")
-            seller = more_details.get("seller_name")
-            s_rating = more_details.get("seller_rating")
-            highlights =  more_details.get("highlights")
-                
+            c_price = x.get("current_price")
+            o_price = x.get("original_price")
+            more_details = x.get("query_url")
+            output = f"""
+**Title:** {name}
+**Price:** ~~{o_price}~~ ‎  __{c_price}__
+"""
             keyboard = InlineKeyboardMarkup([
                 [
                     InlineKeyboardButton(text="📱 View on Flipkart", url=link)
                 ],
+                [
+                    InlineKeyboardButton(text="More Details", callback_data=f"flipkart | {more_details}")
+                ]
             ])
-            output = f"""
-**Title:** {name}
-**Price:** ~~{o_price}~~ ‎ __{c_price}__
-**In Stock:** __{stock}
-**Discount:** __{discount}__ ‎  `{discount_percent}`
-**Seller:** __{seller}__‎ ({s_rating})
-**Highlights:**
-{highlights}
-"""
             answers.append(
                 InlineQueryResultPhoto(
                     title=name,
@@ -274,9 +265,38 @@ async def flipkart_search(answers, query):
         print("Error occurred during data retrieval:", e)
         return answers
 
-
-
-
+@Client.on_callback_query(filter.regex("^flipkart \| (.+)"))
+async def flipkart_handler(client, cb):
+    await cb.answer("Hold on..", show_alert=True)
+    link = cb.data.split("|")[1]
+    more_details = requests.get(link).json()
+    name = more_details.get("name")
+    url = more_details.get("share_url")
+    f_a = more_details.get("f_assured")
+    c_price = more_details.get("current_price")
+    o_price = more_details.get("original_price")
+    discount= more_details.get("discounted")
+    discount_percent = more_details.get("discount_percent")
+    stock = more_details.get("in_stock")
+    seller = more_details.get("seller_name")
+    s_rating = more_details.get("seller_rating")
+    highlights =  more_details.get("highlights")
+    kboard = InlineKeyboardMarkup([
+                [
+                    InlineKeyboardButton(text="📱 View on Flipkart", url=url)
+                ],
+            ])
+    output = f"""
+**Title:** {name}
+**Price:** ~~{o_price}~~ ‎  __{c_price}__
+**In Stock:** __{stock}
+**Discount:** __{discount}__ ‎  `{discount_percent}`
+**Seller:** __{seller}__‎ ({s_rating})
+**Flipkart Assured:** __{f_a}__
+**Highlights:**
+{highlights}
+"""
+    await cb.edit_messsge_caption(output, reply_markup=kboard)
 
 # @Client.on_callback_query()
 # async def handle_callback(client, callback_query):
