@@ -233,16 +233,14 @@ async def flipkart_search(answers, query):
             link = x.get("link")
             name = x.get("name")
             more_details = requests.get(x.get("query_url")).json()
-            for y in more_details:
-                print(y)
-                c_price = y.get("current_price")
-                o_price = y.get("original_price")
-                discount= y.get("discounted")
-                discount_percent = y.get("discount_percent")
-                stock = y.get("in_stock")
-                seller = y.get("seller_name")
-                s_rating = y.get("seller_rating")
-                highlights =  y.get("highlights")
+            c_price = more_details.get("current_price")
+            o_price = more_details.get("original_price")
+            discount= more_details.get("discounted")
+            discount_percent = more_details.get("discount_percent")
+            stock = more_details.get("in_stock")
+            seller = more_details.get("seller_name")
+            s_rating = more_details.get("seller_rating")
+            highlights =  more_details.get("highlights")
                 
             keyboard = InlineKeyboardMarkup([
                 [
