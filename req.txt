@@ -59,3 +59,4 @@ one-piece-wanted-poster
 pyquery
 opencv-python-headless
 google-play-scraper
+qrcode
