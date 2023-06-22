@@ -195,14 +195,13 @@ async def search(client, query):
             return await client.answer_inline_query(
                 query.id,
                 results=answers,
-                is_gallery=True,
                 switch_pm_text="📱App Search | app [QUERY]",
                 switch_pm_parameter="inline",
             )
         tex = iq.split(None, 1)[1].strip()
         answers = await app_search(answers, tex)
         await client.answer_inline_query(
-            query.id, results=answers, cache_time=3600
+            query.id, results=answers
         )
     elif iq.split()[0] == "flipkart":
         answers = []
@@ -210,13 +209,12 @@ async def search(client, query):
             return await client.answer_inline_query(
                 query.id,
                 results=answers,
-                is_gallery=True,
                 switch_pm_text="📱 FlipkartSearch | flipkart [QUERY]",
                 switch_pm_parameter="inline",
             )
         tex = iq.split(None, 1)[1].strip()
         answers = await flipkart_search(answers, tex)
         await client.answer_inline_query(
-            query.id, results=answers, cache_time=3600
+            query.id, results=answers
         )
         
