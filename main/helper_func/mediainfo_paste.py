@@ -146,6 +146,7 @@ margin-right: 5px;
 }
 
 .footer {
+display: none;
 position: fixed;
 bottom: 0;
 right: 0;
@@ -157,7 +158,7 @@ background-color: #212121;
 }
 
 .footer-text{
-display: block;
+display: none;
 justify-content: space-between;
 font-size: 0.9rem;
 padding-left: 0.7rem;
