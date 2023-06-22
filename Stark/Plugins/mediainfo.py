@@ -15,7 +15,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 @error_handler
 async def media_info(_, message: Message):
     mi = await message.reply_text("Processing...")
-    if message.reply_to_message and message.reply_to_message.video:
+    if (message.reply_to_message) and (message.reply_to_message.video) or (message.reply_to_message.audio) or (message.reply_to_message.voice) or (message.reply_to_message.document):
         await mi.edit("Downloading media to get info. Please wait...")
         c_time = time.time()
         file_path = await message.reply_to_message.download(progress=progress, progress_args=(mi, c_time, f"`Downloading This File!`")
