@@ -22,7 +22,7 @@ async def qr(c, m):
         except:
             await c.send_document(m.chat.id, 'qr.png')
         os.remove('qr.png')
-    elif m.reply_to_message:
+    elif m.reply_to_message.text:
         text = m.reply_to_message.text
         qr = qrcode.QRCode(version=None,
                            error_correction=qrcode.constants.ERROR_CORRECT_L,
