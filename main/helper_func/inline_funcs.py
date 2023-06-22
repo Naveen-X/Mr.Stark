@@ -265,7 +265,7 @@ async def flipkart_search(answers, query):
         print("Error occurred during data retrieval:", e)
         return answers
 
-@Client.on_callback_query(filter.regex("^flipkart \| (.+)"))
+@Client.on_callback_query(filters.regex("^flipkart \| (.+)"))
 async def flipkart_handler(client, cb):
     await cb.answer("Hold on..", show_alert=True)
     link = cb.data.split("|")[1]
