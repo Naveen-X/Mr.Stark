@@ -67,10 +67,7 @@ async def eval(bot, message):
     else:
         evaluation = "Success!"
     final_output = EVAL.format(code=cmd, result=evaluation)
-    if len(cmd) >= 4502:
-        capt = "Eval Result!"
-    else:
-        capt = cmd
+    capt = "Eval Result!"
     await edit_or_send_as_file(final_output, stark, bot, capt, "Eval-result")
 
 
