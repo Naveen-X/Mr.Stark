@@ -202,13 +202,10 @@ __{desp}...__
         )
     return answers
 
-def quote_text(text):
-  plus = text.replace(" ", "+")
-  return plus
 
 async def flipkart_search(answers, query):
     """ Api: https://flipkart.dvishal485.workers.dev/ """
-    query = quote_text(query)
+    query = query.replace(" ", "+")
     url = f"https://flipkart.dvishal485.workers.dev/search/{query}"
     try:
         response = requests.get(url)
