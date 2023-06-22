@@ -25,11 +25,12 @@ buttons = [
         InlineKeyboardButton("Torrent", switch_inline_query_current_chat="torrent "),
     ],
     [
-        InlineKeyboardButton("Apps", switch_inline_query_current_chat="app "),
+        InlineKeyboardButton("Apps", switch_inline_query_current_chat="app2 "),
         InlineKeyboardButton("Image", switch_inline_query_current_chat="image "),
     ],
     [
         InlineKeyboardButton("Wallpaper", switch_inline_query_current_chat="wall "),
+        InlineKeyboardButton("Flipkart", switch_inline_query_current_chat="flipkart "),
     ]
 ]
 
