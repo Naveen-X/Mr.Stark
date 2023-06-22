@@ -214,7 +214,7 @@ async def search(client, query):
             )
         tex = iq.split(None, 1)[1].strip()
         answers = await flipkart_search(answers, tex)
-        await client.answer_inline_query(
-            query.id, results=answers
+        await query.answer(
+             results=answers
         )
         
