@@ -69,7 +69,7 @@ async def search(client, query):
                     )
                 )
             )
-            await query.answer(results=result, cache_time=5, switch_pm_text="🎥 Youtube Search", switch_pm_parameter="help")
+            await query.answer(results=result, cache_time=5, switch_pm_text="Inline Tools", switch_pm_parameter="help")
             return
         search = SearchVideos(str(input_query), offset=1, mode="dict", max_results=10)
         result_s = search.result()["search_result"]
