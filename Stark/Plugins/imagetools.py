@@ -21,7 +21,7 @@ from main.helper_func.plugin_helpers import (
     generate_meme
 )
 from Stark import error_handler
-o
+
 glitcher = ImageGlitcher()
 DURATION = 200
 LOOP = 0 
