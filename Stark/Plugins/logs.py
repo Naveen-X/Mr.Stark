@@ -69,7 +69,7 @@ async def error_log_cmd(bot, message):
             )
             await processing.delete()
         except:
-            await message.edit("`The File has No data in it`")
+            await processing.edit("`The File has No data in it`")
     else:
         await processing.edit("`File not found`")
         
