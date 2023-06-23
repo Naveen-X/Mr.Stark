@@ -42,3 +42,37 @@ async def log_cmd(bot, message):
             )
     else:
         await processing.edit("`File not found`")
+
+@Client.on_message(filters.command(["elog", "elogs"]))
+@error_handler
+async def error_log_cmd(bot, message):
+    processing = await message.reply_text("Processing")
+    if os.path.exists("error_log.txt"):
+        try:
+            logs = open("error_log.txt", "r").read()
+            ext = "py"
+            x = await s_paste(logs, ext)
+            link = x["url"]
+            await message.reply_document(
+                "error_log.txt",
+                caption="__**Error Logs of Mr.Stark**__",
+                reply_markup=InlineKeyboardMarkup(
+                    [
+                        [
+                            InlineKeyboardButton(
+                                text="Error Logs",
+                                url=f"{link}",
+                            ),
+                        ],
+                    ]
+                )
+            )
+            await processing.delete()
+        except:
+            await message.reply_document(
+                "error_log.txt",
+                caption="__**Error Logs of Mr.Stark**__",
+            )
+    else:
+        await processing.edit("`File not found`")
+        
