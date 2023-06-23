@@ -39,6 +39,12 @@ apt-get install apt-utils -y
 echo -e "\e[32mUpdating system packages...\e[0m"
 sudo apt-get update && sudo apt-get upgrade -y
 
+echo -e "\e[32mInstalling Wget...\e[0m"
+sudo apt install wget
+
+echo -e "\e[32mInstalling AI MODEL...\e[0m"
+wget https://people.eecs.berkeley.edu/~rich.zhang/projects/2016_colorization/files/demo_v2/colorization_release_v2.caffemodel -P ./resources/ai_helpers/
+
 echo -e "\e[32mInstalling mediainfo...\e[0m"
 sudo apt-get install mediainfo -y
 
