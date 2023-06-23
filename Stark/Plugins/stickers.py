@@ -84,7 +84,7 @@ async def kang(c, m):
                         hash=0
                     )
                 )
-                        packs += f"[pack{packnum}](t.me/addstickers/{packname})\n"
+                        packs += f"[Pack{packnum}](t.me/addstickers/{packname})\n"
 
                     except:
                         onlypack = 1
