@@ -229,11 +229,12 @@ async def color_magic(client, message):
     if not os.path.exists(img):
         await owo.edit("`Invalid Media`")
         return
+    import cv2
     net = cv2.dnn.readNetFromCaffe(
-        "./bot_utils_files/ai_helpers/colouregex.prototxt",
-        "./bot_utils_files/ai_helpers/colorization_release_v2.caffemodel",
+        "./resources/ai_helpers/colouregex.prototxt",
+        "./resources/ai_helpers/colorization_release_v2.caffemodel",
     )
-    pts = np.load("./bot_utils_files/ai_helpers/pts_in_hull.npy")
+    pts = np.load("./resources/ai_helpers/pts_in_hull.npy")
     class8 = net.getLayerId("class8_ab")
     conv8 = net.getLayerId("conv8_313_rh")
     pts = pts.transpose().reshape(2, 313, 1, 1)
@@ -259,7 +260,7 @@ async def color_magic(client, message):
         await client.send_photo(
             message.chat.id,
             photo=ok,
-            reply_to_message_id=message.reply_to_message.message_id,
+            reply_to_message_id=message.reply_to_message.id,
         )
     else:
         await client.send_photo(message.chat.id, photo=ok)
@@ -267,6 +268,8 @@ async def color_magic(client, message):
     for files in (ok, img):
         if files and os.path.exists(files):
             os.remove(files)
+
+
 @Client.on_message(filters.command("sketch"))
 @error_handler
 async def nice(client, message):
