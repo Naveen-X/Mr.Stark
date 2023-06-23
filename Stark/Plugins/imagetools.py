@@ -290,6 +290,7 @@ async def color_magic(client, message):
 )
     x = r.json()
     pic = x.get("output_url")
+    await owo.delete()
     await message.reply_photo(pic)
     if os.path.exists(img):
       os.remove(img)
