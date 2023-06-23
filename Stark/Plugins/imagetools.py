@@ -286,7 +286,7 @@ async def color_magic(client, message):
     files={
         'image': open(img, 'rb'),
     },
-    headers={'api-key': 'quickstart-QUdJIGlzIGNvbWluZy4uLi4K'}
+    headers={'api-key': '3b60d5d7-91aa-40b2-a5db-cef37cfb3adb'}
 )
     x = r.json()
     pic = x.get("output_url")
