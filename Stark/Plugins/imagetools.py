@@ -219,6 +219,54 @@ async def ghost(client, message):
         if files and os.path.exists(files):
             os.remove(files)
 
+@Client.on_message(filters.command("color"))
+async def color_magic(client, message):
+    owo = await message.reply_texr("`Processing....`")
+    img = await convert_to_image(message, client)
+    if not img:
+        await owo.edit("`Reply to a valid media`")
+        return
+    if not os.path.exists(img):
+        await owo.edit("`Invalid Media`")
+        return
+    net = cv2.dnn.readNetFromCaffe(
+        "./bot_utils_files/ai_helpers/colouregex.prototxt",
+        "./bot_utils_files/ai_helpers/colorization_release_v2.caffemodel",
+    )
+    pts = np.load("./bot_utils_files/ai_helpers/pts_in_hull.npy")
+    class8 = net.getLayerId("class8_ab")
+    conv8 = net.getLayerId("conv8_313_rh")
+    pts = pts.transpose().reshape(2, 313, 1, 1)
+    net.getLayer(class8).blobs = [pts.astype("float32")]
+    net.getLayer(conv8).blobs = [np.full([1, 313], 2.606, dtype="float32")]
+    image = cv2.imread(img)
+    scaled = image.astype("float32") / 255.0
+    lab = cv2.cvtColor(scaled, cv2.COLOR_BGR2LAB)
+    resized = cv2.resize(lab, (224, 224))
+    L = cv2.split(resized)[0]
+    L -= 50
+    net.setInput(cv2.dnn.blobFromImage(L))
+    ab = net.forward()[0, :, :, :].transpose((1, 2, 0))
+    ab = cv2.resize(ab, (image.shape[1], image.shape[0]))
+    L = cv2.split(lab)[0]
+    colorized = np.concatenate((L[:, :, np.newaxis], ab), axis=2)
+    colorized = cv2.cvtColor(colorized, cv2.COLOR_LAB2BGR)
+    colorized = np.clip(colorized, 0, 1)
+    colorized = (255 * colorized).astype("uint8")
+    ok = "Colour.png"
+    cv2.imwrite(ok, colorized)
+    if message.reply_to_message:
+        await client.send_photo(
+            message.chat.id,
+            photo=ok,
+            reply_to_message_id=message.reply_to_message.message_id,
+        )
+    else:
+        await client.send_photo(message.chat.id, photo=ok)
+    await owo.delete()
+    for files in (ok, img):
+        if files and os.path.exists(files):
+            os.remove(files)
 @Client.on_message(filters.command("sketch"))
 @error_handler
 async def nice(client, message):
