@@ -145,7 +145,12 @@ class Script(object):
             "desc": "Sketch the replied image",
             "cmds": ["sketch"],
             "usage": "/genca [reply to a image or sticker]"
-        }
+        },
+        {
+            "desc": "Colorize the replied photo",
+            "cmds": ["color"],
+            "usage": "/color [reply to a image or sticker]"
+        },
     ]
     INSTADL = [
         {
