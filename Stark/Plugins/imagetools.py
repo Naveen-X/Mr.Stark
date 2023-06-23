@@ -220,6 +220,7 @@ async def ghost(client, message):
             os.remove(files)
 
 @Client.on_message(filters.command("color"))
+@error_handler
 async def color_magic(client, message):
     owo = await message.reply_texr("`Processing....`")
     img = await convert_to_image(message, client)
