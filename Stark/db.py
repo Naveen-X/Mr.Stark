@@ -21,10 +21,11 @@ async def add(client, message):
     global DB
     global users
     id_ = message.from_user.id
-    name = message.from_user.username
+    name = message.from_user.first_name
+    user_name = message.from_user.username
     k = DB.users.find_one({'_id': id_})
     if k is None:
-        await client.send_message(-1001491739934, f"New User\n\nName: {name}\nID: {id_}\n\n#newuser")
+        await client.send_message(-1001491739934, f"**__New User**__\n\n**Name:** {name}\n**UserName:**{user_name}ID: {id_}\n\n#newuser")
         DB.users.insert_one({"_id": id_, "username": name})
     else:
         pass
