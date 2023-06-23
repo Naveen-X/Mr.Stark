@@ -9,6 +9,7 @@ from pyrogram import enums
 from datetime import datetime
 from random import randint as rain
 from pyrogram import Client, filters
+from pyrogram.raw import types, functions 
 from os import environ, execle, path, remove
 
 from Stark import error_handler
@@ -59,7 +60,14 @@ async def kang(c, m):
             packname = "kang_" + str(user_id) + "_by_" + \
                 str(BOT_USERNAME)
             try:
-                stickerset = context.bot.get_sticker_set(packname)
+                stickerset = stickerset = await c.invoke(
+                    functions.messages.GetStickerSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        hash=0
+                    )
+                )
                 packnum = 1
             except:
                 packnum = 0
@@ -68,7 +76,14 @@ async def kang(c, m):
                 onlypack = 0
                 while onlypack == 0:
                     try:
-                        stickerset = context.bot.get_sticker_set(packname)
+                        stickerset = await c.invoke(
+                    functions.messages.GetStickerSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        hash=0
+                    )
+                )
                         packs += f"[pack{packnum}](t.me/addstickers/{packname})\n"
 
                     except:
