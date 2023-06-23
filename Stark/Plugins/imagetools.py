@@ -270,6 +270,30 @@ async def color_magic(client, message):
         if files and os.path.exists(files):
             os.remove(files)
 
+@Client.on_message(filters.command("color2"))
+@error_handler
+async def color_magic(client, message):
+    owo = await message.reply_text("`Processing....`")
+    img = await convert_to_image(message, client)
+    if not img:
+        await owo.edit("`Reply to a valid media`")
+        return
+    if not os.path.exists(img):
+        await owo.edit("`Invalid Media`")
+        return
+    r = requests.post(
+    "https://api.deepai.org/api/colorizer",
+    files={
+        'image': open(img, 'rb'),
+    },
+    headers={'api-key': 'quickstart-QUdJIGlzIGNvbWluZy4uLi4K'}
+)
+    x = r.json()
+    pic = x.get("output_url")
+    await message.reply_photo(pic)
+    if os.path.exists(img):
+      os.remove(img)
+
 
 @Client.on_message(filters.command("sketch"))
 @error_handler
