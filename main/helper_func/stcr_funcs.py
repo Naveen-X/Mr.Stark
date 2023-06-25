@@ -17,6 +17,11 @@ emojiss = ["🌚", "😎", "😃", "😁", "😅", "🤗", "😇", "👀",
            "😐", "🤨", "😒", "😱", "🤣", "👌", "😆", "😍", "🧐", "😑"]
 
 
+async def create_sticker(
+    sticker: raw.base.InputDocument, emoji: str
+) -> raw.base.InputStickerSetItem:
+    return raw.types.InputStickerSetItem(document=sticker, emoji=emoji)
+    
 async def kangMyAss(m, c, chat_id):
     await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
     msg = m
@@ -33,7 +38,14 @@ async def kangMyAss(m, c, chat_id):
     max_stickers = 120
     while packname_found == 0:
         try:
-            stickerset = context.bot.get_sticker_set(packname)
+            stickerset = await c.invoke(
+                    functions.messages.GetStickerSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        hash=0
+                    )
+                )
             if len(stickerset.stickers) >= max_stickers:
                 packnum += 1
                 packname = "kang_" + \
@@ -85,68 +97,63 @@ async def kangMyAss(m, c, chat_id):
                 im.thumbnail(maxsize)
           #  if not msg.reply_to_message.sticker:
             im.save(f'{idk}.png')
-            context.bot.add_sticker_to_set(user_id=user.id,
-                                           name=packname,
-                                           png_sticker=open(
-                                               f'{idk}.png', 'rb'),
-                                           emojis=sticker_emoji)
-            hm1 = context.bot.editMessageText(chat_id=chat_id,
-                                              message_id=msg_id,
-                                              parse_mode='markdown',
-                                              text=f"*Sticker successfully added to*: [pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
+            stcr = await create_sticker(f'{idk}.png', sticker_emoji)
+            await c.invoke(
+                    functions.stickers.AddStickerToSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        sticker=stcr
+                        hash=0
+                    )
+                )
+            hm1 = await hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
         except OSError as e:
-            hm1 = context.bot.editMessageText(chat_id=chat_id,
-                                              message_id=msg_id,
-                                              parse_mode='markdown',
-                                              text=f"I can kang only images")
+            hm1 = hm.edit(f"I can kang only images")
             print(e)
             return
         except Exception as e:
             if str(e) == "Stickerset_invalid":
-                hm2 = context.bot.editMessageText(chat_id=chat_id,
-                                                  message_id=msg_id,
-                                                  parse_mode='markdown',
-                                                  text=f"`Brewing a new pack ...`")
-                context.bot.sendChatAction(chat_id, 'choose_sticker')
+                hm2 = hm.edit(cf"`Brewing a new pack ...`")
+                await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
                 makekang_internal(msg, user, open(f'{idk}.png', 'rb'),
                                   sticker_emoji, context, packname, packnum, chat_id, msg_id, idk)
             elif str(e) == "Sticker_png_dimensions":
                 im.save(f'{idk}.png')
-                context.bot.add_sticker_to_set(user_id=user.id,
-                                               name=packname,
-                                               png_sticker=open(
-                                                   f'{idk}.png', 'rb'),
-                                               emojis=sticker_emoji)
-                hm1 = context.bot.editMessageText(chat_id=chat_id,
-                                                  message_id=msg_id,
-                                                  parse_mode='markdown',
-                                                  text=f"*Sticker successfully added to*: [pack](t.me/addstickers/%s)" % packname + "\n"
+                stcr = await create_sticker(f'{idk}.png', sticker_emoji)
+                await c.invoke(
+                    functions.stickers.AddStickerToSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        sticker=stcr
+                        hash=0
+                    )
+                )
+                hm1 = hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/%s)" % packname + "\n"
                                                   "*Emoji is:*" + " " + sticker_emoji)
             elif str(e) == "Stickers_too_much":
                 msg.reply_text("Max pack size reached")
             elif str(e) == "Internal Server Error: sticker set not found (500)":
-                hm1 = context.bot.editMessageText(chat_id=chat_id,
-                                                  message_id=msg_id,
-                                                  parse_mode='markdown',
-                                                  text=f"*Sticker successfully added to*: [pack](t.me/addstickers/%s)" % packname + "\n"
-                                                  "*Emoji is:*" + " " + sticker_emoji)
+                hm1 = hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/%s)" % packname + "\n"
+                                                  "**Emoji is:**" + " " + sticker_emoji)
 
             elif str(e) == "Invalid sticker emojis":
                 sticker_emoji = random.choice(emojiss)
-                context.bot.add_sticker_to_set(user_id=user.id,
-                                               name=packname,
-                                               png_sticker=open(
-                                                   f'{idk}.png', 'rb'),
-                                               emojis=sticker_emoji)
-                hm1 = context.bot.editMessageText(chat_id=chat_id,
-                                                  message_id=msg_id,
-                                                  parse_mode='markdown',
-                                                  text=f"*Sticker successfully added to*: [pack](t.me/addstickers/%s)" % packname + "\n"
-                                                  "*Emoji is:*" + " " + sticker_emoji)
+                await c.invoke(
+                    functions.stickers.AddStickerToSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        sticker=stcr
+                        hash=0
+                    )
+                )
+                hm1 = hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/%s)" % packname + "\n"
+                                                  "**Emoji is:**" + " " + sticker_emoji)
             else:
                 print("tg error", str(e))
         except Exception as e:
             print("last exp", e)
     if os.path.isfile(f"{idk}.png"):
         os.remove(f"{idk}.png")
-        
