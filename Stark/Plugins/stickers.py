@@ -3,7 +3,6 @@ from random import choice
 from main.helper_func.stcr_funcs import *
 from pyrogram import Client, filters 
 from Stark import error_handler
-
 BOT_USERNAME = "Mr_StarkBot"
 
 @Client.on_message(filters.command(["kang"]))
@@ -128,3 +127,5 @@ async def kang(c, m):
         )
         await msg.edit_text(
             f"Kanged the sticker\nPack name: {kangpack}\nEmoji: {sticker_emoji}\n U can find ur [Pack Here](t.me/addstickers/{packname}")
+    except BaseException as e:
+      await msg.edit(f"{e}")
