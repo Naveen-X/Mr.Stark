@@ -47,14 +47,14 @@ async def kang(c, m):
             if msg.reply_to_message.sticker:
                 if msg.reply_to_message.sticker.is_animated == True:
                     file_id = msg.reply_to_message.sticker.file_id
-                    kangani(update, context)
+                    kangani(m, c)
                 elif msg.reply_to_message.sticker.is_video == True:
                     file_id = msg.reply_to_message.sticker.file_id
-                    kangwebm(update, context)
+                    kangwebm(m, c)
                 else:
-                    kangMyAss(update, context, chat_id)
+                    kangMyAss(m, c, chat_id)
             elif msg.reply_to_message.sticker or msg.reply_to_message.photo:
-                kangMyAss(update, context, chat_id)
+                kangMyAss(m, c, chat_id)
         else:
             packs = "`Please reply to a sticker or image to kang it!\nBtw here are your packs:\n"
             packname = "kang_" + str(user_id) + "_by_" + \
@@ -96,3 +96,128 @@ async def kang(c, m):
             else:
                 packs += f"[Pack](t.me/addstickers/{packname})"
             await m.reply_text(packs)
+
+@Client.on_message(filters.command("mypacks"))
+async def my_packs(c, m):
+    user_id = None
+    if m.from_user:
+        user_id = str(m.from_user.id)
+        user = m.from_user
+    else:
+        await m.reply_text("Message as a user !")
+        return
+    packs = f"**{m.from_user.first_name}'s sticker packs:**\n"
+    packs1 = ""
+    packs2 = ""
+    packname = "kang_" + str(user_id) + "_by_"+str(BOT_USERNAME)
+    try:
+        stickerset = await c.invoke(
+                    functions.messages.GetStickerSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        hash=0
+                    )
+                )
+        packnum = 1
+    except:
+        packnum = 0
+
+    if packnum > 0:
+        onlypack = 0
+        while onlypack == 0:
+            try:
+                stickerset = await c.invoke(
+                    functions.messages.GetStickerSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        hash=0
+                    )
+                )
+                packs += f"[Pack{packnum}](t.me/addstickers/{packname})\n"
+
+            except:
+                onlypack = 1
+
+            packnum += 1
+            packname = "kang_" + \
+                str(packnum - 1) + "_" + str(user_id) + \
+                "_by_"+str(BOT_USERNAME)
+
+    packname = "kang_" + str(user.id) + "animated_by_" + \
+        str(BOT_USERNAME)
+    try:
+        stickerset = await c.invoke(
+                    functions.messages.GetStickerSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        hash=0
+                    )
+                )
+        packnum = 1
+    except:
+        packnum = 0
+
+    if packnum > 0:
+        onlypack = 0
+        packs1 += "**Animatied packs:**\n"
+        while onlypack == 0:
+            try:
+                stickerset = await c.invoke(
+                    functions.messages.GetStickerSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        hash=0
+                    )
+                )
+                packs1 += f"[Pack{packnum}](t.me/addstickers/{packname})\n"
+
+            except:
+                onlypack = 1
+
+            packnum += 1
+            packname = "kang_" + \
+                str(packnum) + "_" + str(user.id) + \
+                "animated_by_"+str(BOT_USERNAME)
+
+    packname = "kang_" + str(user.id) + "video_by_"+str(BOT_USERNAME) 
+    try:
+        stickerset = await c.invoke(
+                    functions.messages.GetStickerSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        hash=0
+                    )
+                )
+        packnum = 1
+    except:
+        packnum = 0
+
+    if packnum > 0:
+        onlypack = 0
+        packs2 += "**Video sticker pack:**\n"
+        while onlypack == 0:
+            try:
+                stickerset = await c.invoke(
+                    functions.messages.GetStickerSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        hash=0
+                    )
+                )
+                packs2 += f"[Pack{packnum}](t.me/addstickers/{packname})\n"
+
+            except:
+                onlypack = 1
+
+            packnum += 1
+            packname = "kang_" + \
+                str(packnum) + "_" + str(user.id) + \
+                "video_by_"+str(BOT_USERNAME)
+
+    await m.reply_text(f"\n{packs}{packs1}{packs2}")
