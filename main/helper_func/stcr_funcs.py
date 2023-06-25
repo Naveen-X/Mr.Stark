@@ -12,19 +12,20 @@ from pyrogram import Client, filters
 from pyrogram.raw import types, functions 
 from os import environ, execle, path, remove
 
+BOT_USERNAME = "Mr_StarkBot"
 
-def kangMyAss(m, c, chat_id):
-    context.bot.sendChatAction(update.message.chat_id, 'choose_sticker')
-    msg = update.message
-    user = update.message.from_user
-    user_id = str(update.message.from_user.id)
+async def kangMyAss(m, c, chat_id):
+    await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
+    msg = m
+    user = m.from_user
+    user_id = str(m.from_user.id)
     chat_id = chat_id
     packnum = 0
-    packname = "kang_" + str(user.id) + "_by_"+str(context.bot.username)
-    hm = update.message.reply_text(
-        f"`Processing  ⏳ ...`", parse_mode='markdown')
-    context.bot.sendChatAction(chat_id, 'choose_sticker')
-    msg_id = f'{hm.message_id}'
+    packname = "kang_" + str(user.id) + "_by_"+str(BOT_USERNAME)
+    hm = await m.reply_text(
+        f"`Processing  ⏳ ...`")
+    await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
+    msg_id = f'{hm.id}'
     packname_found = 0
     max_stickers = 120
     while packname_found == 0:
@@ -34,7 +35,7 @@ def kangMyAss(m, c, chat_id):
                 packnum += 1
                 packname = "kang_" + \
                     str(packnum) + "_" + str(user.id) + \
-                    "_by_"+str(context.bot.username)
+                    "_by_"+str(BOT_USERNAME)
             else:
                 packname_found = 1
         except Exception as e:
