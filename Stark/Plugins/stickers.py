@@ -126,7 +126,6 @@ async def kang(c, m):
         )
         await msg.edit_text(
             f"Kanged the sticker\nPack name: {kangpack}\nEmoji: {sticker_emoji}\n U can find ur [Pack Here](t.me/addstickers/{packname}")
-        )
     except (PeerIdInvalid, UserIsBlocked):
         keyboard = IKM(
             [[IKB("Start me first", url=f"t.me/{BOT_USERNAME}")]]
