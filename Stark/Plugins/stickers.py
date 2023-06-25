@@ -3,6 +3,7 @@ from random import choice
 from main.helper_func.stcr_funcs import *
 from pyrogram import Client, filters 
 from Stark import error_handler
+
 BOT_USERNAME = "Mr_StarkBot"
 
 @Client.on_message(filters.command(["kang"]))
@@ -127,29 +128,3 @@ async def kang(c, m):
         )
         await msg.edit_text(
             f"Kanged the sticker\nPack name: {kangpack}\nEmoji: {sticker_emoji}\n U can find ur [Pack Here](t.me/addstickers/{packname}")
-    except (PeerIdInvalid, UserIsBlocked):
-        keyboard = IKM(
-            [[IKB("Start me first", url=f"t.me/{BOT_USERNAME}")]]
-        )
-        await msg.edit_text(
-            "You Need To Start A Private Chat With Me.",
-        )
-    except StickerPngNopng:
-        await msg.delete()
-        await m.reply_text(
-            "Stickers must be png files but the provided image was not a png"
-        )
-    except StickerPngDimensions:
-        await msg.delete()
-        await m.reply_text("The sticker png dimensions are invalid.")
-    except StickerTgsNotgs:
-        await msg.delete()
-        await m.reply_text("Sticker must be tgs file but the provided file was not tgs")
-    except StickerVideoNowebm:
-        await msg.delete()
-        await m.reply_text("Sticker must be webm file but the provided file was not webm")
-    except Exception as e:
-        await msg.delete()
-        await m.reply_text(f"Error occured\n{e}")
-    return
-  
