@@ -1,7 +1,7 @@
 import os
 from random import choice
 from main.helper_func.stcr_funcs import *
-from pyrogram import Client, filters 
+from pyrogram import Client, filters, errors
 from Stark import error_handler
 BOT_USERNAME = "Mr_StarkBot"
 
@@ -61,7 +61,7 @@ async def kang(c, m):
                 ),
                 sticker_emoji
             )
-    except ShortnameOccupyFailed:
+    except errors.ShortnameOccupyFailed:
         await m.reply_text("Change Your Name Or Username")
         return
 
