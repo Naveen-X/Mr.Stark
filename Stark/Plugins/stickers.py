@@ -2,10 +2,11 @@ import os
 from random import choice
 from main.helper_func.stcr_funcs import *
 from pyrogram import Client, filters 
-
+from Stark import error_handler
 BOT_USERNAME = "Mr_StarkBot"
 
 @Client.on_message(filters.command(["kang"]))
+@error_handler
 async def kang(c, m):
     if not m.reply_to_message:
         return await m.reply_text("Reply to a sticker or image to kang it.")
