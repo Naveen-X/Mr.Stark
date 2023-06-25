@@ -1,4 +1,5 @@
 import os
+import os
 import sys
 import time
 import math
@@ -13,6 +14,8 @@ from pyrogram.raw import types, functions
 from os import environ, execle, path, remove
 
 from Stark import error_handler
+from main.helper_func.stcr_funcs import kangMyAss, kangwebm, kangani
+
 
 emojiss = ["🌚", "😎", "😃", "😁", "😅", "🤗", "😇", "👀",
            "😐", "🤨", "😒", "😱", "🤣", "👌", "😆", "😍", "🧐", "😑"]
