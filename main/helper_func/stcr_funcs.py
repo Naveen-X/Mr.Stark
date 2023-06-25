@@ -13,6 +13,9 @@ from pyrogram.raw import types, functions
 from os import environ, execle, path, remove
 
 BOT_USERNAME = "Mr_StarkBot"
+emojiss = ["🌚", "😎", "😃", "😁", "😅", "🤗", "😇", "👀",
+           "😐", "🤨", "😒", "😱", "🤣", "👌", "😆", "😍", "🧐", "😑"]
+
 
 async def kangMyAss(m, c, chat_id):
     await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
@@ -52,8 +55,7 @@ async def kangMyAss(m, c, chat_id):
             file_id = msg.reply_to_message.document.file_id
         else:
             msg.reply_text("I can't kang that")
-        kang_file = context.bot.get_file(file_id)
-        kang_file.download(f'{idk}.png')
+        await c.download_media(file_id, f'{idk}.png')
         try:
             sticker_emoji = msg.text.split(' ')[1]
         except:
