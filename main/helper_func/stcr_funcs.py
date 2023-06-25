@@ -168,6 +168,14 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         extra_version = ""
         if packnum > 0:
             extra_version = " " + str(packnum)
+        success = await c.invoke(
+          functions.stickers.CreateStickerSet(
+            user_id=types.InputUser(user_id, 0),
+            title=f"{name}'s kang pack",
+            short_name=packname,
+            stickers=png_sticker,
+            )
+          )
         success = context.bot.create_new_sticker_set(user.id, packname, f"{name}'s kang pack" + extra_version,
                                                      png_sticker=png_sticker,
                                                      emojis=emoji)
