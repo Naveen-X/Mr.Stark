@@ -95,17 +95,17 @@ async def chat_info(c, m):
     try:
         cht = await c.get_chat(chat_id)
         msg = f"**❖ Chat Info** \n\n"
-        msg += f"**⦾ Chat Title :** __{cht.title}__ \n"
-        msg += f"**⦾ Chat-ID :** __{cht.id}__ \n"
-        msg += f"**⦾ Verified :** __{cht.is_verified}__ \n"
-        msg += f"**⦾ Is Scam :** __{cht.is_scam}__ \n"
+        msg += f"**⦾ Chat Title :** `{cht.title}` \n"
+        msg += f"**⦾ Chat-ID :** `{cht.id}` \n"
+        msg += f"**⦾ Verified :** `{cht.is_verified}` \n"
+        msg += f"**⦾ Is Scam :** `{cht.is_scam}` \n"
         if cht.dc_id:
-            msg += f"**⦾ Chat DC :** __{cht.dc_id}__ \n"
+            msg += f"**⦾ Chat DC :** `{cht.dc_id}` \n"
         if cht.username:
-            msg += f"**⦾ Chat Username :** __{cht.username}__ \n"
+            msg += f"**⦾ Chat Username :** `{cht.username}` \n"
         if cht.description:
-            msg += f"**â¦¾ Chat Description :** __{cht.description}__ \n"
-        msg += f"**⦾ Chat Members Count :** __{cht.members_count}__ \n"
+            msg += f"**â¦¾ Chat Description :** `{cht.description}` \n"
+        msg += f"**⦾ Chat Members Count :** `{cht.members_count}` \n"
         if cht.photo:
             kek = await c.download_media(cht.photo.big_file_id)
             await c.send_photo(m.chat.id, photo=kek, caption=msg)
