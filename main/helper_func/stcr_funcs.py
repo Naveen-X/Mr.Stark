@@ -168,17 +168,15 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         extra_version = ""
         if packnum > 0:
             extra_version = " " + str(packnum)
+        stcr = await create_sticker(png_sticker, emoji)
         success = await c.invoke(
           functions.stickers.CreateStickerSet(
             user_id=types.InputUser(user_id, 0),
             title=f"{name}'s kang pack",
             short_name=packname,
-            stickers=png_sticker,
+            stickers=stcr,
             )
           )
-        success = context.bot.create_new_sticker_set(user.id, packname, f"{name}'s kang pack" + extra_version,
-                                                     png_sticker=png_sticker,
-                                                     emojis=emoji)
     except Exception as e:
         if str(e) == "Sticker set name is already occupied":
             hm1 = c.edit_message(chat_id=chat_id, message_id=msg_id, text="Your pack can be found [Here](t.me/addstickers/%s)" % packname)
@@ -202,10 +200,15 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
                 )
             except Exception as e:
                 if str(e) == "Stickerset_invalid":
-                    success = context.bot.create_new_sticker_set(user.id, packname, f"{name}'s kang pack" + extra_version,
-                                                                 png_sticker=open(
-                                                                     f'{idk}.png', 'rb'),
-                                                                 emojis=sticker_emoji)
+                    stcr = await create_sticker(png_sticker, emoji)
+                    success = await c.invoke(
+                      functions.stickers.CreateStickerSet(
+                        user_id=types.InputUser(user_id, 0),
+                        title=f"{name}'s kang pack",
+                        short_name=packname,
+                        stickers=stcr,
+                        )
+                      )
             hm1 = c.edit_message(chat_id=chat_id,message_id=msg_id, text="**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
         elif str(e) == "Sticker_png_dimensions":
             im = Image.open(png_sticker)
@@ -228,9 +231,15 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
             else:
                 im.thumbnail(maxsize)
             im.save(f'{idk}.png')
-            success = context.bot.create_new_sticker_set(user.id, packname, f"{name}'s kang pack" + extra_version,
-                                                         png_sticker=png_sticker,
-                                                         emojis=emoji)
+            stcr = await create_sticker(png_sticker, emoji)
+            success = await c.invoke(
+              functions.stickers.CreateStickerSet(
+                user_id=types.InputUser(user_id, 0),
+                title=f"{name}'s kang pack",
+                short_name=packname,
+                stickers=stcr,
+                )
+              )
         else:
             print("make pack", e)
     if success:
