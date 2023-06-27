@@ -1,16 +1,11 @@
 import os
-import sys
-import time
 import math
 import random
-import logging
 from PIL import Image
 from pyrogram import enums
-from datetime import datetime
 from random import randint as rain
-from pyrogram import Client, filters
+from pyrogram import Client, raw
 from pyrogram.raw import types, functions
-from os import environ, execle, path, remove
 
 BOT_USERNAME = "Mr_StarkBot"
 emojiss = ["🌚", "😎", "😃", "😁", "😅", "🤗", "😇", "👀",
@@ -48,7 +43,7 @@ async def kangMyAss(m, c, chat_id):
     user_id = str(m.from_user.id)
     chat_id = chat_id
     packnum = 0
-    packname = "kang_" + str(user.id) + "_by_" + str(BOT_USERNAME)
+    packname = "kang_" + str(user_id) + "_by_" + str(BOT_USERNAME)
     hm = await m.reply_text(f"`Processing  ⏳ ...`")
     await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
     msg_id = f'{hm.id}'
@@ -116,7 +111,7 @@ async def kangMyAss(m, c, chat_id):
             im.save(f'{idk}.png')
             stcr = await create_sticker(
                 await upload_document(
-                    bot, f'{idk}.png', message.chat.id
+                    c, f'{idk}.png', message.chat.id
                 ),
                 sticker_emoji
             )
@@ -142,7 +137,7 @@ async def kangMyAss(m, c, chat_id):
                 im.save(f'{idk}.png')
                 stcr = await create_sticker(
                     await upload_document(
-                        bot, f'{idk}.png', message.chat.id
+                        c, f'{idk}.png', message.chat.id
                     ),
                     sticker_emoji
                 )
@@ -181,6 +176,7 @@ async def kangMyAss(m, c, chat_id):
             print("last exp", e)
     if os.path.isfile(f"{idk}.png"):
         os.remove(f"{idk}.png")
+
 async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum, chat_id, msg_id, idk):
     name = user.first_name
     name = name[:50]
@@ -192,11 +188,11 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
             extra_version = " " + str(packnum)
         user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
         stcr = await create_sticker(
-            await upload_document(c, png_sticker, message.chat.id),
-            sticker_emoji
+            await upload_document(c, png_sticker, msg.chat.id),
+            emoji
         )
         # Create the sticker set
-        success = await bot.invoke(
+        success = await c.invoke(
             functions.stickers.CreateStickerSet(
                 user_id=user_peer,
                 title=f"{name}'s kang pack",
@@ -215,7 +211,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         elif str(e) == "Invalid sticker emojis":
             sticker_emoji = random.choice(emojiss)
             stcr = await create_sticker(
-                await upload_document(bot, f'{idk}.png', message.chat.id),
+                await upload_document(c, f'{idk}.png', message.chat.id),
                 sticker_emoji
             )
             try:
@@ -238,7 +234,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
                         sticker_emoji
                     )
                     # Create the sticker set
-                    success = await bot.invoke(
+                    success = await c.invoke(
                         functions.stickers.CreateStickerSet(
                             user_id=user_peer,
                             title=f"{name}'s kang pack",
@@ -277,7 +273,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
                 sticker_emoji
             )
             # Create the sticker set
-            success = await bot.invoke(
+            success = await c.invoke(
                 functions.stickers.CreateStickerSet(
                     user_id=user_peer,
                     title=f"{name}'s kang pack",
@@ -340,7 +336,7 @@ async def kangani(m, c):
             hm1 = c.edit_message(message_id=hm.id, text=f"`With emoji` '{sticker_emoji}'")
             await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
             stcr = await create_sticker(
-                await upload_document(bot, f'{idk}.tgs', message.chat.id),
+                await upload_document(c, f'{idk}.tgs', message.chat.id),
                 sticker_emoji
             )
             try:
@@ -366,7 +362,7 @@ async def kangani(m, c):
                             sticker_emoji
                         )
                         # Create the sticker set
-                        success = await bot.invoke(
+                        success = await c.invoke(
                             functions.stickers.CreateStickerSet(
                                 user_id=user_peer,
                                 title=f"{name}'s kang pack",
@@ -380,7 +376,7 @@ async def kangani(m, c):
                             msg.reply_text("Your pack can be found [Here](t.me/addstickers/%s)" % packname)
                         elif str(e) == "Peer_id_invalid":
                             msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
-                                text="Start", url=f"t.me/{context.bot.username}")]]))
+                                text="Start", url=f"t.me/{BOT_USERNAME}")]]))
                         elif str(e) == "Internal Server Error: created sticker set not found (500)":
                             hm1 = await hm.edit(text="**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
                     if success:
@@ -398,6 +394,7 @@ async def kangani(m, c):
                     os.remove(f"{idk}.tgs")
         except:
             await hm.edit("Something went wrong LOL")
+
 async def kangwebm(m, c):
     await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
     msg = m
@@ -449,10 +446,10 @@ async def kangwebm(m, c):
             hm1 = await hm.edit(f"`With emoji` '{sticker_emoji}'")
             await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
             stcr = await create_sticker(
-                await upload_document(bot, f'{idk}.webm', message.chat.id),
+                await upload_document(c, f'{idk}.webm', message.chat.id),
                 sticker_emoji
             )
-            x = await bot.invoke(
+            x = await c.invoke(
                 functions.stickers.AddStickerToSet(
                     stickerset=types.InputStickerSetShortName(short_name=packname),
                     sticker=stcr,
@@ -474,7 +471,7 @@ async def kangwebm(m, c):
                         sticker_emoji
                     )
                     # Create the sticker set
-                    success = await bot.invoke(
+                    success = await c.invoke(
                         functions.stickers.CreateStickerSet(
                             user_id=user_peer,
                             title=f"{name}'s kang pack",
