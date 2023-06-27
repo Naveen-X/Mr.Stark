@@ -467,7 +467,7 @@ async def kangwebm(m, c):
                         extra_version = " " + str(packnum)
                     user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
                     stcr = await create_sticker(
-                        await upload_document(c, f'{idk}.tgs', message.chat.id),
+                        await upload_document(c, f'{idk}.tgs', msg.chat.id),
                         sticker_emoji
                     )
                     # Create the sticker set
