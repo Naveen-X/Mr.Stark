@@ -144,7 +144,7 @@ async def kangMyAss(m, c, chat_id):
             return
         except Exception as e:
             if str(e) == "Stickerset_invalid":
-                hm2 = await hm.edit(cf"`Creating a new pack ...`")
+                hm2 = await hm.edit(f"`Creating a new pack ...`")
                 await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
                 await makekang_internal(msg, user, open(f'{idk}.png', 'rb'),
                                   sticker_emoji, context, packname, packnum, chat_id, msg_id, idk)
