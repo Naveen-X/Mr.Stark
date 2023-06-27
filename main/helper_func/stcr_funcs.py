@@ -321,7 +321,7 @@ async def kangani(m, c):
     packname = "kang_" + str(user.id) + "animated_by_" + \
         str(BOT_USERNAME)
     hm = await msg.reply_text(
-        f"`Processing ⏳ ...`",
+        f"`Processing ⏳ ...`")
     await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
     packname_found = 0
     max_stickers = 120
