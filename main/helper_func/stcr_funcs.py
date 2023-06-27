@@ -381,55 +381,55 @@ async def kangani(m, c):
                 )
                 hm1 = await hm.edit(f"*Sticker successfully added to*: [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
             except Exception as e:
-            if str(e) == "Stickerset_invalid":
-                hm1 = await hm.edit("`Brewing a new pack ...`")
-                await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
-                try:
-                    extra_version = ""
-                    if packnum > 0:
-                        extra_version = " " + str(packnum)
-                    user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
-                    stcr = await create_sticker(
-                            await upload_document(
-                                c, f'{idk}.tgs', message.chat.id
-                            ),
-                            sticker_emoji
-                        )
-                    # Create the sticker set
-                    success = await bot.invoke(
-                        functions.stickers.CreateStickerSet(
-                            user_id=user_peer,
-                            title=f"{name}'s kang pack",
-                            short_name=packname,
-                            animated=True,
-                            stickers=[stcr],  # Wrap stcr in a list
-                        )
-                    )
-                except Exception as e:
-
-                    if str(e) == "Sticker set name is already occupied":
-                        msg.reply_text(
-                            "Your pack can be found [Here](t.me/addstickers/%s)" % packname)
-                    elif str(e) == "Peer_id_invalid":
-                        msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
-                            text="Start", url=f"t.me/{context.bot.username}")]]))
-                    elif str(e) == "Internal Server Error: created sticker set not found (500)":
-                        hm1 = await hm.edit(text="**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
-                if success:
-                    hm2 = await hm.edit(f"*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
-                else:
-                    hm2 = await hm.edit("Failed to create sticker pack. Possibly due to blek mejik.")
-                                                      
-            elif str(e) == "Sticker set name is already occupied":
-                        msg.reply_text(
-                            "Your pack can be found [Here](t.me/addstickers/%s)" % packname)
-            elif str(e) == "Peer_id_invalid":
-                        msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
-                            text="Start", url=f"t.me/{BOT_USERNAME}")]]))
-            elif str(e) == "Internal Server Error: created sticker set not found (500)":
-                        hm1 = await hm.edit("*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
-        if os.path.isfile(f"{idk}.tgs"):
-                    os.remove(f"{idk}.tgs")
+                 if str(e) == "Stickerset_invalid":
+                            hm1 = await hm.edit("`Brewing a new pack ...`")
+                            await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
+                            try:
+                                extra_version = ""
+                                if packnum > 0:
+                                    extra_version = " " + str(packnum)
+                                user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
+                                stcr = await create_sticker(
+                                        await upload_document(
+                                            c, f'{idk}.tgs', message.chat.id
+                                        ),
+                                        sticker_emoji
+                                    )
+                                # Create the sticker set
+                                success = await bot.invoke(
+                                    functions.stickers.CreateStickerSet(
+                                        user_id=user_peer,
+                                        title=f"{name}'s kang pack",
+                                        short_name=packname,
+                                        animated=True,
+                                        stickers=[stcr],  # Wrap stcr in a list
+                                    )
+                                )
+                            except Exception as e:
+            
+                                if str(e) == "Sticker set name is already occupied":
+                                    msg.reply_text(
+                                        "Your pack can be found [Here](t.me/addstickers/%s)" % packname)
+                                elif str(e) == "Peer_id_invalid":
+                                    msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
+                                        text="Start", url=f"t.me/{context.bot.username}")]]))
+                                elif str(e) == "Internal Server Error: created sticker set not found (500)":
+                                    hm1 = await hm.edit(text="**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
+                            if success:
+                                hm2 = await hm.edit(f"*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
+                            else:
+                                hm2 = await hm.edit("Failed to create sticker pack. Possibly due to blek mejik.")
+                                                                  
+                        elif str(e) == "Sticker set name is already occupied":
+                                    msg.reply_text(
+                                        "Your pack can be found [Here](t.me/addstickers/%s)" % packname)
+                        elif str(e) == "Peer_id_invalid":
+                                    msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
+                                        text="Start", url=f"t.me/{BOT_USERNAME}")]]))
+                        elif str(e) == "Internal Server Error: created sticker set not found (500)":
+                                    hm1 = await hm.edit("*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
+                    if os.path.isfile(f"{idk}.tgs"):
+                                os.remove(f"{idk}.tgs")
 
 async def kangwebm(m, c):
     await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
