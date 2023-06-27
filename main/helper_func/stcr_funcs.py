@@ -420,13 +420,13 @@ async def kangani(m, c):
                             else:
                                 hm2 = await hm.edit("Failed to create sticker pack. Possibly due to blek mejik.")
                                                                   
-                        elif str(e) == "Sticker set name is already occupied":
+                 elif str(e) == "Sticker set name is already occupied":
                                     msg.reply_text(
                                         "Your pack can be found [Here](t.me/addstickers/%s)" % packname)
-                        elif str(e) == "Peer_id_invalid":
+                 elif str(e) == "Peer_id_invalid":
                                     msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
                                         text="Start", url=f"t.me/{BOT_USERNAME}")]]))
-                        elif str(e) == "Internal Server Error: created sticker set not found (500)":
+                 elif str(e) == "Internal Server Error: created sticker set not found (500)":
                                     hm1 = await hm.edit("*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
                     if os.path.isfile(f"{idk}.tgs"):
                                 os.remove(f"{idk}.tgs")
