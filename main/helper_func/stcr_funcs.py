@@ -160,7 +160,7 @@ async def kangMyAss(m, c, chat_id):
                         stickerset=types.InputStickerSetShortName(
                             short_name=packname
                         ),
-                        sticker=stcr
+                        sticker=stcr,
                         hash=0
                     )
                 )
@@ -179,7 +179,7 @@ async def kangMyAss(m, c, chat_id):
                         stickerset=types.InputStickerSetShortName(
                             short_name=packname
                         ),
-                        sticker=stcr
+                        sticker=stcr,
                         hash=0
                     )
                 )
@@ -241,7 +241,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
                         stickerset=types.InputStickerSetShortName(
                             short_name=packname
                         ),
-                        sticker=stcr
+                        sticker=stcr,
                         hash=0
                     )
                 )
@@ -375,7 +375,7 @@ async def kangani(m, c):
                         stickerset=types.InputStickerSetShortName(
                             short_name=packname
                         ),
-                        sticker=stcr
+                        sticker=stcr,
                         hash=0
                     )
                 )
