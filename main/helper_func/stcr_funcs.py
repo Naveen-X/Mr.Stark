@@ -122,15 +122,19 @@ async def kangMyAss(m, c, chat_id):
             else:
                 im.thumbnail(maxsize)
           #  if not msg.reply_to_message.sticker:
-            im.save(f'{idk}.png')
-            stcr = await create_sticker(f'{idk}.png', sticker_emoji)
+            ok =  im.save(f'{idk}.png')
+            stcr = await create_sticker(
+                  await upload_document(
+                      bot, ok, message.chat.id
+                  ),
+                  sticker_emoji
+              )
             await c.invoke(
                     functions.stickers.AddStickerToSet(
                         stickerset=types.InputStickerSetShortName(
                             short_name=packname
                         ),
                         sticker=stcr
-                        hash=0
                     )
                 )
             hm1 = await hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
