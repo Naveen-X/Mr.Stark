@@ -70,7 +70,6 @@ async def kangMyAss(m, c, chat_id):
             if str(e) == "Stickerset_invalid":
                 packname_found = 1
     idk = str(rain(0000000000, 9999999999))
-    kangsticker = f"{idk}.png"
     if msg.reply_to_message:
         if msg.reply_to_message.sticker:
             file_id = msg.reply_to_message.sticker.file_id
