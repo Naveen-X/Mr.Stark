@@ -1,5 +1,4 @@
 import os
-import os
 import sys
 import time
 import math
@@ -10,16 +9,18 @@ from pyrogram import enums
 from datetime import datetime
 from random import randint as rain
 from pyrogram import Client, filters
-from pyrogram.raw import types, functions 
+from pyrogram.raw import types, functions
 from os import environ, execle, path, remove
 
 from Stark import error_handler
 from main.helper_func.stcr_funcs import *
 
-
-emojiss = ["🌚", "😎", "😃", "😁", "😅", "🤗", "😇", "👀",
-           "😐", "🤨", "😒", "😱", "🤣", "👌", "😆", "😍", "🧐", "😑"]
+emojiss = [
+    "🌚", "😎", "😃", "😁", "😅", "🤗", "😇", "👀",
+    "😐", "🤨", "😒", "😱", "🤣", "👌", "😆", "😍", "🧐", "😑"
+]
 BOT_USERNAME = "Mr_StarkBot"
+
 
 @Client.on_message(filters.command(["kang"]))
 @error_handler
@@ -32,7 +33,7 @@ async def kang(c, m):
         await m.reply_text("`Message as a user !`")
         return
     if user_id:
-        await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
+        await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
         msg = m
         user = m.from_user
         chat_id = m.chat.id
@@ -60,8 +61,7 @@ async def kang(c, m):
                 kangMyAss(m, c, chat_id)
         else:
             packs = "`Please reply to a sticker or image to kang it!\nBtw here are your packs:\n"
-            packname = "kang_" + str(user_id) + "_by_" + \
-                str(BOT_USERNAME)
+            packname = "kang_" + str(user_id) + "_by_" + str(BOT_USERNAME)
             try:
                 stickerset = stickerset = await c.invoke(
                     functions.messages.GetStickerSet(
@@ -74,19 +74,19 @@ async def kang(c, m):
                 packnum = 1
             except:
                 packnum = 0
-               # update.message.reply_text("Please reply to a sticker, or image to kang it!")
+                # update.message.reply_text("Please reply to a sticker, or image to kang it!")
             if packnum > 0:
                 onlypack = 0
                 while onlypack == 0:
                     try:
                         stickerset = await c.invoke(
-                    functions.messages.GetStickerSet(
-                        stickerset=types.InputStickerSetShortName(
-                            short_name=packname
-                        ),
-                        hash=0
-                    )
-                )
+                            functions.messages.GetStickerSet(
+                                stickerset=types.InputStickerSetShortName(
+                                    short_name=packname
+                                ),
+                                hash=0
+                            )
+                        )
                         packs += f"[Pack{packnum}](t.me/addstickers/{packname})\n"
 
                     except:
@@ -99,6 +99,7 @@ async def kang(c, m):
             else:
                 packs += f"[Pack](t.me/addstickers/{packname})"
             await m.reply_text(packs)
+
 
 @Client.on_message(filters.command("mypacks"))
 async def my_packs(c, m):
@@ -115,13 +116,13 @@ async def my_packs(c, m):
     packname = "kang_" + str(user_id) + "_by_"+str(BOT_USERNAME)
     try:
         stickerset = await c.invoke(
-                    functions.messages.GetStickerSet(
-                        stickerset=types.InputStickerSetShortName(
-                            short_name=packname
-                        ),
-                        hash=0
-                    )
-                )
+            functions.messages.GetStickerSet(
+                stickerset=types.InputStickerSetShortName(
+                    short_name=packname
+                ),
+                hash=0
+            )
+        )
         packnum = 1
     except:
         packnum = 0
@@ -148,17 +149,16 @@ async def my_packs(c, m):
                 str(packnum - 1) + "_" + str(user_id) + \
                 "_by_"+str(BOT_USERNAME)
 
-    packname = "kang_" + str(user.id) + "animated_by_" + \
-        str(BOT_USERNAME)
+    packname = "kang_" + str(user.id) + "animated_by_" + str(BOT_USERNAME)
     try:
         stickerset = await c.invoke(
-                    functions.messages.GetStickerSet(
-                        stickerset=types.InputStickerSetShortName(
-                            short_name=packname
-                        ),
-                        hash=0
-                    )
-                )
+            functions.messages.GetStickerSet(
+                stickerset=types.InputStickerSetShortName(
+                    short_name=packname
+                ),
+                hash=0
+            )
+        )
         packnum = 1
     except:
         packnum = 0
@@ -186,16 +186,16 @@ async def my_packs(c, m):
                 str(packnum) + "_" + str(user.id) + \
                 "animated_by_"+str(BOT_USERNAME)
 
-    packname = "kang_" + str(user.id) + "video_by_"+str(BOT_USERNAME) 
+    packname = "kang_" + str(user.id) + "video_by_"+str(BOT_USERNAME)
     try:
         stickerset = await c.invoke(
-                    functions.messages.GetStickerSet(
-                        stickerset=types.InputStickerSetShortName(
-                            short_name=packname
-                        ),
-                        hash=0
-                    )
-                )
+            functions.messages.GetStickerSet(
+                stickerset=types.InputStickerSetShortName(
+                    short_name=packname
+                ),
+                hash=0
+            )
+        )
         packnum = 1
     except:
         packnum = 0
