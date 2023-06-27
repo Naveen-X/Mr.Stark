@@ -58,7 +58,7 @@ async def kang(c, m):
                 else:
                     await kangMyAss(m, c, chat_id)
             elif msg.reply_to_message.sticker or msg.reply_to_message.photo:
-                kangMyAss(m, c, chat_id)
+                await kangMyAss(m, c, chat_id)
         else:
             packs = "`Please reply to a sticker or image to kang it!\nBtw here are your packs:\n"
             packname = "kang_" + str(user_id) + "_by_" + str(BOT_USERNAME)
