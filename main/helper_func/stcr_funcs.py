@@ -362,7 +362,7 @@ async def kangani(m, c):
                 sticker_emoji = random.choice(emojiss)
         try:
             hm1 = c.edit_message(message_id=hm.id, text=f"`With emoji` '{sticker_emoji}'")
-            await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER
+            await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
             stcr = await create_sticker(
                   await upload_document(
                       bot, f'{idk}.tgs', message.chat.id
@@ -379,7 +379,7 @@ async def kangani(m, c):
                         hash=0
                     )
                 )
-            hm1 = await hm.edit(f"*Sticker successfully added to*: [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
+                hm1 = await hm.edit(f"*Sticker successfully added to*: [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
         except Exception as e:
             if str(e) == "Stickerset_invalid":
                 hm1 = await hm.edit("`Brewing a new pack ...`")
@@ -539,9 +539,9 @@ async def kangwebm(m, c):
                     elif str(e) == "Internal Server Error: created sticker set not found (500)":
                         hm1 = awaiy hm.edit("**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
                 if success:
-                    hm2 = await hm.editf"**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
+                    hm2 = await hm.edit(f"**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
                 else:
-                    hm2 = await hm.edit"Failed to create sticker pack. Possibly due to black magic.")
+                    hm2 = await hm.edit("Failed to create sticker pack. Possibly due to black magic.")
 
             elif str(e) == "Sticker_video_nowebm":
                 await hm.edit,("`An unexpected error arrived, try again !`")
