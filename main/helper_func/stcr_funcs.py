@@ -380,10 +380,10 @@ def kangani(m, c):
                         hash=0
                     )
                 )
-            hm1 = hm.edit(message_id=hm1.id, text=f"*Sticker successfully added to*: [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
+            hm1 = hm.edit(f"*Sticker successfully added to*: [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
         except Exception as e:
             if str(e) == "Stickerset_invalid":
-                hm1 = hm.edit(message_id=hm.message_id,text="`Brewing a new pack ...`")
+                hm1 = hm.edit("`Brewing a new pack ...`")
                 await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
                 try:
                     extra_version = ""
@@ -429,6 +429,5 @@ def kangani(m, c):
                             text="Start", url=f"t.me/{BOT_USERNAME}")]]))
             elif str(e) == "Internal Server Error: created sticker set not found (500)":
                         hm1 = hm.edit("*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
-                                                                                                             
         if os.path.isfile(f"{idk}.tgs"):
                     os.remove(f"{idk}.tgs")
