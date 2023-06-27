@@ -320,7 +320,7 @@ async def kangani(m, c):
     packnum = 0
     packname = "kang_" + str(user.id) + "animated_by_" + \
         str(BOT_USERNAME)
-    hm = await m.(
+    hm = await msg.reply_text(
         f"`Processing ⏳ ...`",
     await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
     packname_found = 0
