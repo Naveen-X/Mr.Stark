@@ -396,6 +396,8 @@ async def kangani(m, c):
                     hm1 = await hm.edit("*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
                 if os.path.isfile(f"{idk}.tgs"):
                     os.remove(f"{idk}.tgs")
+        except:
+            await hm.edit("Something went wrong LOL")
 async def kangwebm(m, c):
     await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
     msg = m
