@@ -122,10 +122,10 @@ async def kangMyAss(m, c, chat_id):
             else:
                 im.thumbnail(maxsize)
           #  if not msg.reply_to_message.sticker:
-            ok =  im.save(f'{idk}.png')
+            im.save(f'{idk}.png')
             stcr = await create_sticker(
                   await upload_document(
-                      bot, ok, message.chat.id
+                      bot, f'{idk}.png', message.chat.id
                   ),
                   sticker_emoji
               )
@@ -150,7 +150,12 @@ async def kangMyAss(m, c, chat_id):
                                   sticker_emoji, context, packname, packnum, chat_id, msg_id, idk)
             elif str(e) == "Sticker_png_dimensions":
                 im.save(f'{idk}.png')
-                stcr = await create_sticker(f'{idk}.png', sticker_emoji)
+                stcr = await create_sticker(
+                  await upload_document(
+                      bot, f'{idk}.png', message.chat.id
+                  ),
+                  sticker_emoji
+              )
                 await c.invoke(
                     functions.stickers.AddStickerToSet(
                         stickerset=types.InputStickerSetShortName(
@@ -225,27 +230,40 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
             hm1 = c.edit_message(chat_id=chat_id,message_id=msg_id, text="*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
         elif str(e) == "Invalid sticker emojis":
             sticker_emoji = random.choice(emojiss)
+            stcr = await create_sticker(
+                  await upload_document(
+                      bot, f'{idk}.png', message.chat.id
+                  ),
+                  sticker_emoji
+              )
             try:
                 await c.invoke(
                     functions.stickers.AddStickerToSet(
                         stickerset=types.InputStickerSetShortName(
                             short_name=packname
                         ),
-                        sticker=png_sticker
+                        sticker=stcr
                         hash=0
                     )
                 )
             except Exception as e:
                 if str(e) == "Stickerset_invalid":
-                    stcr = await create_sticker(png_sticker, emoji)
-                    success = await c.invoke(
-                      functions.stickers.CreateStickerSet(
-                        user_id=types.InputUser(user_id, 0),
-                        title=f"{name}'s kang pack",
-                        short_name=packname,
-                        stickers=stcr,
+                    user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
+                    stcr = await create_sticker(
+                            await upload_document(
+                                c, png_sticker, message.chat.id
+                            ),
+                            sticker_emoji
                         )
-                      )
+                    # Create the sticker set
+                    success = await bot.invoke(
+                        functions.stickers.CreateStickerSet(
+                            user_id=user_peer,
+                            title=f"{name}'s kang pack",
+                            short_name=packname,
+                            stickers=[stcr],  # Wrap stcr in a list
+                        )
+                    )
             hm1 = c.edit_message(chat_id=chat_id,message_id=msg_id, text="**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
         elif str(e) == "Sticker_png_dimensions":
             im = Image.open(png_sticker)
