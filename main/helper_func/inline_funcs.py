@@ -267,7 +267,9 @@ async def flipkart_search(answers, query):
 async def flipkart_handler(client, cb):
     await cb.answer("Hold on..", show_alert=True)
     link = cb.data.split("|")[1]
-    more_details = requests.get(link).json()
+    response = requests.get(link, allow_redirects=True)
+    final_url = response.url
+    more_details = requests.get(final_url).json()
     name = more_details.get("name")
     url = more_details.get("share_url")
     f_a = more_details.get("f_assured")
