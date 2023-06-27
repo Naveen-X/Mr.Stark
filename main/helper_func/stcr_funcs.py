@@ -310,30 +310,37 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
     else:
         hm1 = c.edit_message(chat_id=chat_id, message_id=msg_id, text="`Failed to create sticker pack. Possibly due to black magic.`")
 
-def kangani(update, context):
-    context.bot.sendChatAction(update.message.chat_id, 'choose_sticker')
-    msg = update.message
-    user = update.message.from_user
+def kangani(m, c):
+    await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
+    msg = m
+    user = m.from_user
     name = user.first_name
-    chat_id = update.message.chat_id
-    user_id = str(update.message.from_user.id)
+    chat_id = m.chat_id
+    user_id = str(m.from_user.id)
     name = name[:50]
     packnum = 0
     packname = "kang_" + str(user.id) + "animated_by_" + \
-        str(context.bot.username)
-    hm = update.message.reply_text(
-        f"`Processing ⏳ ...`", parse_mode='markdown')
-    context.bot.sendChatAction(chat_id, 'choose_sticker')
+        str(BOT_USERNAME)
+    hm = await m.(
+        f"`Processing ⏳ ...`",
+    await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
     packname_found = 0
     max_stickers = 120
     while packname_found == 0:
         try:
-            stickerset = context.bot.get_sticker_set(packname)
+            stickerset = await c.invoke(
+                    functions.messages.GetStickerSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        hash=0
+                    )
+                )
             if len(stickerset.stickers) >= max_stickers:
                 packnum += 1
                 packname = "kang_" + \
                     str(packnum) + "_" + str(user.id) + \
-                    "animated_by_"+str(context.bot.username)
+                    "animated_by_"+str(BOT_USERNAME)
             else:
                 packname_found = 1
         except Exception as e:
@@ -346,8 +353,7 @@ def kangani(update, context):
             file_id = msg.reply_to_message.sticker.file_id
         else:
             msg.reply_text("I can't kang that")
-        kang_file = context.bot.get_file(file_id)
-        kang_file.download(f'{idk}.tgs')
+        await c.download_media(file_id, f'{idk}.tgs')
         try:
             sticker_emoji = msg.text.split(' ')[1]
         except:
@@ -356,71 +362,73 @@ def kangani(update, context):
             except:
                 sticker_emoji = random.choice(emojiss)
         try:
-            hm1 = context.bot.editMessageText(chat_id=update.message.chat_id,
-                                              message_id=hm.message_id,
-                                              parse_mode='markdown',
-                                              text=f"`With emoji` '{sticker_emoji}'")
-            context.bot.sendChatAction(chat_id, 'choose_sticker')
-            context.bot.add_sticker_to_set(user_id=user.id,
-                                           name=packname,
-                                           tgs_sticker=open(
-                                               f'{idk}.tgs', 'rb'),
-                                           emojis=sticker_emoji)
-            hm1 = context.bot.editMessageText(chat_id=update.message.chat_id,
-                                              message_id=hm1.message_id,
-                                              parse_mode='markdown',
-                                              text=f"*Sticker successfully added to*: [pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
+            hm1 = c.edit_message(message_id=hm.id, text=f"`With emoji` '{sticker_emoji}'")
+            await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER
+            stcr = await create_sticker(
+                  await upload_document(
+                      bot, f'{idk}.tgs', message.chat.id
+                  ),
+                  sticker_emoji
+              )
+            try:
+                await c.invoke(
+                    functions.stickers.AddStickerToSet(
+                        stickerset=types.InputStickerSetShortName(
+                            short_name=packname
+                        ),
+                        sticker=stcr
+                        hash=0
+                    )
+                )
+            hm1 = hm.edit(message_id=hm1.id, text=f"*Sticker successfully added to*: [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
         except Exception as e:
             if str(e) == "Stickerset_invalid":
-                hm1 = context.bot.editMessageText(chat_id=update.message.chat_id,
-                                                  message_id=hm.message_id,
-                                                  parse_mode='markdown',
-                                                  text="`Brewing a new pack ...`")
-                context.bot.sendChatAction(chat_id, 'choose_sticker')
+                hm1 = hm.edit(message_id=hm.message_id,text="`Brewing a new pack ...`")
+                await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
                 try:
                     extra_version = ""
                     if packnum > 0:
                         extra_version = " " + str(packnum)
-                    success = context.bot.create_new_sticker_set(user.id, packname, f"{name}'s animated kang pack" + extra_version,
-                                                                 tgs_sticker=open(
-                                                                     f'{idk}.tgs', 'rb'),
-                                                                 emojis=random.choice(emojiss))
+                    user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
+                    stcr = await create_sticker(
+                            await upload_document(
+                                c, f'{idk}.tgs', message.chat.id
+                            ),
+                            sticker_emoji
+                        )
+                    # Create the sticker set
+                    success = await bot.invoke(
+                        functions.stickers.CreateStickerSet(
+                            user_id=user_peer,
+                            title=f"{name}'s kang pack",
+                            short_name=packname,
+                            animated=True,
+                            stickers=[stcr],  # Wrap stcr in a list
+                        )
+                    )
                 except Exception as e:
 
                     if str(e) == "Sticker set name is already occupied":
                         msg.reply_text(
-                            "Your pack can be found [here](t.me/addstickers/%s)" % packname)
+                            "Your pack can be found [Here](t.me/addstickers/%s)" % packname)
                     elif str(e) == "Peer_id_invalid":
                         msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
                             text="Start", url=f"t.me/{context.bot.username}")]]))
                     elif str(e) == "Internal Server Error: created sticker set not found (500)":
-                        hm1 = context.bot.editMessageText(chat_id=update.message.chat_id,
-                                                          message_id=hm.message_id,
-                                                          parse_mode='markdown',
-                                                          text="*Sticker pack successfully created.* `Get it`  [here](t.me/addstickers/%s)" % packname)
+                        hm1 = hm.edit(text="**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
                 if success:
-                    hm2 = context.bot.editMessageText(chat_id=update.message.chat_id,
-                                                      message_id=hm1.message_id,
-                                                      parse_mode='markdown',
-                                                      text=f"*Sticker pack successfully created.* `Get it`  [here](t.me/addstickers/%s)" % packname)
+                    hm2 = hm.edit(f"*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
                 else:
-                    hm2 = context.bot.editMessageText(chat_id=update.message.chat_id,
-                                                      message_id=hm1.message_id,
-                                                      parse_mode='markdown',
-                                                      text="Failed to create sticker pack. Possibly due to blek mejik.")
+                    hm2 = hm.edit("Failed to create sticker pack. Possibly due to blek mejik.")
                                                       
             elif str(e) == "Sticker set name is already occupied":
                         msg.reply_text(
-                            "Your pack can be found [here](t.me/addstickers/%s)" % packname)
+                            "Your pack can be found [Here](t.me/addstickers/%s)" % packname)
             elif str(e) == "Peer_id_invalid":
                         msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
-                            text="Start", url=f"t.me/{context.bot.username}")]]))
+                            text="Start", url=f"t.me/{BOT_USERNAME}")]]))
             elif str(e) == "Internal Server Error: created sticker set not found (500)":
-                        hm1 = context.bot.editMessageText(chat_id=update.message.chat_id,
-                                                          message_id=hm.message_id,
-                                                          parse_mode='markdown',
-                                                          text="*Sticker pack successfully created.* `Get it`  [here](t.me/addstickers/%s)" % packname)
+                        hm1 = hm.edit("*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
                                                                                                              
         if os.path.isfile(f"{idk}.tgs"):
                     os.remove(f"{idk}.tgs")
-                    
