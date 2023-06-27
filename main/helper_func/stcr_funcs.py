@@ -380,7 +380,7 @@ async def kangani(m, c):
                     )
                 )
                 hm1 = await hm.edit(f"*Sticker successfully added to*: [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
-        except Exception as e:
+            except Exception as e:
             if str(e) == "Stickerset_invalid":
                 hm1 = await hm.edit("`Brewing a new pack ...`")
                 await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
