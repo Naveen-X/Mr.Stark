@@ -36,7 +36,7 @@ async def upload_document(client: Client, file_path: str, chat_id: int) -> raw.b
         access_hash=media.document.access_hash,
         file_reference=media.document.file_reference,
     )
-async def kangMyAss(m, c, chat_id, file_id):
+async def kangMyAss(m, c, chat_id):
     await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
     msg = m
     user = m.from_user
@@ -70,7 +70,15 @@ async def kangMyAss(m, c, chat_id, file_id):
             if str(e) == "Stickerset_invalid":
                 packname_found = 1
     idk = str(rain(0000000000, 9999999999))
-    if file_id:
+    if msg.reply_to_message:
+        if msg.reply_to_message.sticker:
+            file_id = msg.reply_to_message.sticker.file_id
+        elif msg.reply_to_message.photo:
+            file_id = msg.reply_to_message.photo[1].file_id
+        elif msg.reply_to_message.document:
+            file_id = msg.reply_to_message.document.file_id
+        else:
+            msg.reply_text("I can't kang that")
         await c.download_media(file_id, f'{idk}.png')
         try:
             sticker_emoji = msg.text.split(' ')[1]
