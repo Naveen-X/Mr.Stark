@@ -137,7 +137,7 @@ async def kangMyAss(m, c, chat_id):
                         sticker=stcr
                     )
                 )
-            hm1 = await await hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
+            hm1 = await hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
         except OSError as e:
             hm1 = await hm.edit(f"I can kang only images")
             print(e)
