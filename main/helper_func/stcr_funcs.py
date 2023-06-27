@@ -21,6 +21,32 @@ async def create_sticker(
     sticker: raw.base.InputDocument, emoji: str
 ) -> raw.base.InputStickerSetItem:
     return raw.types.InputStickerSetItem(document=sticker, emoji=emoji)
+
+
+
+async def upload_document(
+    client: Client, file_path: str, chat_id: int
+) -> raw.base.InputDocument:
+    media = await client.invoke(
+        raw.functions.messages.UploadMedia(
+            peer=await client.resolve_peer(chat_id),
+            media=raw.types.InputMediaUploadedDocument(
+                mime_type=client.guess_mime_type(file_path) or "application/zip",
+                file=await client.save_file(file_path),
+                attributes=[
+                    raw.types.DocumentAttributeFilename(
+                        file_name=os.path.basename(file_path)
+                    )
+                ],
+            ),
+        )
+    )
+    return raw.types.InputDocument(
+        id=media.document.id,
+        access_hash=media.document.access_hash,
+        file_reference=media.document.file_reference,
+    )
+
     
 async def kangMyAss(m, c, chat_id):
     await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
@@ -168,15 +194,22 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         extra_version = ""
         if packnum > 0:
             extra_version = " " + str(packnum)
-        stcr = await create_sticker(png_sticker, emoji)
-        success = await c.invoke(
-          functions.stickers.CreateStickerSet(
-            user_id=types.InputUser(user_id, 0),
-            title=f"{name}'s kang pack",
-            short_name=packname,
-            stickers=stcr,
+        user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
+        stcr = await create_sticker(
+                await upload_document(
+                    c, png_sticker, message.chat.id
+                ),
+                sticker_emoji
             )
-          )
+        # Create the sticker set
+        success = await bot.invoke(
+            functions.stickers.CreateStickerSet(
+                user_id=user_peer,
+                title=f"{name}'s kang pack",
+                short_name=packname,
+                stickers=[stcr],  # Wrap stcr in a list
+            )
+        )
     except Exception as e:
         if str(e) == "Sticker set name is already occupied":
             hm1 = c.edit_message(chat_id=chat_id, message_id=msg_id, text="Your pack can be found [Here](t.me/addstickers/%s)" % packname)
@@ -232,14 +265,22 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
                 im.thumbnail(maxsize)
             im.save(f'{idk}.png')
             stcr = await create_sticker(png_sticker, emoji)
-            success = await c.invoke(
-              functions.stickers.CreateStickerSet(
-                user_id=types.InputUser(user_id, 0),
-                title=f"{name}'s kang pack",
-                short_name=packname,
-                stickers=stcr,
+            user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
+            stcr = await create_sticker(
+                    await upload_document(
+                        c, png_sticker, message.chat.id
+                    ),
+                    sticker_emoji
                 )
-              )
+            # Create the sticker set
+            success = await bot.invoke(
+                functions.stickers.CreateStickerSet(
+                    user_id=user_peer,
+                    title=f"{name}'s kang pack",
+                    short_name=packname,
+                    stickers=[stcr],  # Wrap stcr in a list
+                )
+            )
         else:
             print("make pack", e)
     if success:
