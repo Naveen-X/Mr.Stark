@@ -1,19 +1,10 @@
 import os
-import sys
-import time
-import math
-import random
-import logging
-from PIL import Image
 from pyrogram import enums
-from datetime import datetime
-from random import randint as rain
 from pyrogram import Client, filters
 from pyrogram.raw import types, functions
-from os import environ, execle, path, remove
 
 from Stark import error_handler
-from main.helper_func.stcr_funcs import *
+from main.helper_func.stcr_funcs import kangani, kangwebm, kangMyAss
 
 emojiss = [
     "🌚", "😎", "😃", "😁", "😅", "🤗", "😇", "👀",
