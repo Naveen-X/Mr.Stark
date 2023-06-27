@@ -81,8 +81,8 @@ async def kangMyAss(m, c, chat_id):
                 packname_found = 1
         except Exception as e:
             if str(e) == "Stickerset_invalid":
-    idk = str(rain(0000000000, 9999999999))
                 packname_found = 1
+    idk = str(rain(0000000000, 9999999999))
     kangsticker = f"{idk}.png"
     if msg.reply_to_message:
         if msg.reply_to_message.sticker:
