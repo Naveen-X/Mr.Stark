@@ -111,7 +111,7 @@ async def kangMyAss(m, c, chat_id):
             im.save(f'{idk}.png')
             stcr = await create_sticker(
                 await upload_document(
-                    c, f'{idk}.png', message.chat.id
+                    c, f'{idk}.png', m.chat.id
                 ),
                 sticker_emoji
             )
@@ -132,12 +132,12 @@ async def kangMyAss(m, c, chat_id):
             if str(e) == "Stickerset_invalid":
                 hm2 = await hm.edit(f"`Creating a new pack ...`")
                 await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
-                await makekang_internal(msg, user, f'{idk}.png', sticker_emoji, context, packname, packnum, chat_id, msg_id, idk)
+                await makekang_internal(msg, user, f'{idk}.png', sticker_emoji, c, packname, packnum, chat_id, msg_id, idk)
             elif str(e) == "Sticker_png_dimensions":
                 im.save(f'{idk}.png')
                 stcr = await create_sticker(
                     await upload_document(
-                        c, f'{idk}.png', message.chat.id
+                        c, f'{idk}.png', m.chat.id
                     ),
                     sticker_emoji
                 )
