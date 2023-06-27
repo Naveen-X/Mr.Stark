@@ -200,7 +200,9 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
                 stickers=[stcr],  # Wrap stcr in a list
             )
         )
+        print(success)
     except Exception as e:
+        print(e)
         if str(e) == "Sticker set name is already occupied":
             await c.edit_message(chat_id=chat_id, message_id=msg_id, text="Your pack can be found [Here](t.me/addstickers/%s)" % packname)
         elif str(e) == "Peer_id_invalid":
