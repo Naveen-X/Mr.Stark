@@ -309,3 +309,118 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         hm1 = c.edit_message(chat_id=chat_id, message_id=msg_id, text=f"*Sticker pack successfully created.* ` Get it`  [here](t.me/addstickers/%s)" % packname)
     else:
         hm1 = c.edit_message(chat_id=chat_id, message_id=msg_id, text="`Failed to create sticker pack. Possibly due to black magic.`")
+
+def kangani(update, context):
+    context.bot.sendChatAction(update.message.chat_id, 'choose_sticker')
+    msg = update.message
+    user = update.message.from_user
+    name = user.first_name
+    chat_id = update.message.chat_id
+    user_id = str(update.message.from_user.id)
+    name = name[:50]
+    packnum = 0
+    packname = "kang_" + str(user.id) + "animated_by_" + \
+        str(context.bot.username)
+    hm = update.message.reply_text(
+        f"`Processing ⏳ ...`", parse_mode='markdown')
+    context.bot.sendChatAction(chat_id, 'choose_sticker')
+    packname_found = 0
+    max_stickers = 120
+    while packname_found == 0:
+        try:
+            stickerset = context.bot.get_sticker_set(packname)
+            if len(stickerset.stickers) >= max_stickers:
+                packnum += 1
+                packname = "kang_" + \
+                    str(packnum) + "_" + str(user.id) + \
+                    "animated_by_"+str(context.bot.username)
+            else:
+                packname_found = 1
+        except Exception as e:
+            if str(e) == "Stickerset_invalid":
+                packname_found = 1
+    idk = str(rain(0000000000, 9999999999))
+    kangsticker = f"{idk}.tgs"
+    if msg.reply_to_message:
+        if msg.reply_to_message.sticker:
+            file_id = msg.reply_to_message.sticker.file_id
+        else:
+            msg.reply_text("I can't kang that")
+        kang_file = context.bot.get_file(file_id)
+        kang_file.download(f'{idk}.tgs')
+        try:
+            sticker_emoji = msg.text.split(' ')[1]
+        except:
+            try:
+                sticker_emoji = msg.reply_to_message.sticker.emoji
+            except:
+                sticker_emoji = random.choice(emojiss)
+        try:
+            hm1 = context.bot.editMessageText(chat_id=update.message.chat_id,
+                                              message_id=hm.message_id,
+                                              parse_mode='markdown',
+                                              text=f"`With emoji` '{sticker_emoji}'")
+            context.bot.sendChatAction(chat_id, 'choose_sticker')
+            context.bot.add_sticker_to_set(user_id=user.id,
+                                           name=packname,
+                                           tgs_sticker=open(
+                                               f'{idk}.tgs', 'rb'),
+                                           emojis=sticker_emoji)
+            hm1 = context.bot.editMessageText(chat_id=update.message.chat_id,
+                                              message_id=hm1.message_id,
+                                              parse_mode='markdown',
+                                              text=f"*Sticker successfully added to*: [pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
+        except Exception as e:
+            if str(e) == "Stickerset_invalid":
+                hm1 = context.bot.editMessageText(chat_id=update.message.chat_id,
+                                                  message_id=hm.message_id,
+                                                  parse_mode='markdown',
+                                                  text="`Brewing a new pack ...`")
+                context.bot.sendChatAction(chat_id, 'choose_sticker')
+                try:
+                    extra_version = ""
+                    if packnum > 0:
+                        extra_version = " " + str(packnum)
+                    success = context.bot.create_new_sticker_set(user.id, packname, f"{name}'s animated kang pack" + extra_version,
+                                                                 tgs_sticker=open(
+                                                                     f'{idk}.tgs', 'rb'),
+                                                                 emojis=random.choice(emojiss))
+                except Exception as e:
+
+                    if str(e) == "Sticker set name is already occupied":
+                        msg.reply_text(
+                            "Your pack can be found [here](t.me/addstickers/%s)" % packname)
+                    elif str(e) == "Peer_id_invalid":
+                        msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
+                            text="Start", url=f"t.me/{context.bot.username}")]]))
+                    elif str(e) == "Internal Server Error: created sticker set not found (500)":
+                        hm1 = context.bot.editMessageText(chat_id=update.message.chat_id,
+                                                          message_id=hm.message_id,
+                                                          parse_mode='markdown',
+                                                          text="*Sticker pack successfully created.* `Get it`  [here](t.me/addstickers/%s)" % packname)
+                if success:
+                    hm2 = context.bot.editMessageText(chat_id=update.message.chat_id,
+                                                      message_id=hm1.message_id,
+                                                      parse_mode='markdown',
+                                                      text=f"*Sticker pack successfully created.* `Get it`  [here](t.me/addstickers/%s)" % packname)
+                else:
+                    hm2 = context.bot.editMessageText(chat_id=update.message.chat_id,
+                                                      message_id=hm1.message_id,
+                                                      parse_mode='markdown',
+                                                      text="Failed to create sticker pack. Possibly due to blek mejik.")
+                                                      
+            elif str(e) == "Sticker set name is already occupied":
+                        msg.reply_text(
+                            "Your pack can be found [here](t.me/addstickers/%s)" % packname)
+            elif str(e) == "Peer_id_invalid":
+                        msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(
+                            text="Start", url=f"t.me/{context.bot.username}")]]))
+            elif str(e) == "Internal Server Error: created sticker set not found (500)":
+                        hm1 = context.bot.editMessageText(chat_id=update.message.chat_id,
+                                                          message_id=hm.message_id,
+                                                          parse_mode='markdown',
+                                                          text="*Sticker pack successfully created.* `Get it`  [here](t.me/addstickers/%s)" % packname)
+                                                                                                             
+        if os.path.isfile(f"{idk}.tgs"):
+                    os.remove(f"{idk}.tgs")
+                    
