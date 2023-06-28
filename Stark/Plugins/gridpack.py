@@ -109,7 +109,7 @@ async def make_grid(client, message):
         await asyncio.sleep(e.value)
     user_peer = raw.types.InputPeerUser(user_id=message.from_user.id, access_hash=0)
     await client.invoke(
-              raw.unctions.stickers.CreateStickerSet(
+              raw.functions.stickers.CreateStickerSet(
                   user_id=user_peer,
                   title="GridPack ",
                   short_name=name2,
