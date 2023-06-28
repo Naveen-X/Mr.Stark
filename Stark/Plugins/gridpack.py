@@ -88,9 +88,15 @@ async def make_grid(client, message):
         img = io.BytesIO(im)
         img.name = name + ".png"
         img.seek(0)
+    
+        # Save the image to a file
+        f_img = f"{name}_{i}.png"  # Generate a unique filename for each image
+        with open(f_img, "wb") as f:
+            f.write(img.getvalue())
+        
         stckr = await create_sticker(
                 await upload_document(
-                    client, img, message.chat.id
+                    client, f_img, message.chat.id
                 ),
                 emj
             )
