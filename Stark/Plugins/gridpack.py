@@ -102,7 +102,7 @@ async def make_grid(client, message):
                 ),
                 emj
             )
-        all_stickers.append(stcr)
+        all_stickers.append(stckr)
         i += 1
         await stark.edit(
             f"__Making the pack.\nProgress: {i}/{len(images)}__"
