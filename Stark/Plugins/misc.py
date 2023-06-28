@@ -287,7 +287,7 @@ async def send_msg(c,m):
 @Client.on_message(filters.command(['emoji']))
 @error_handler
 async def emoji(client, message):
-    op = await edit_or_reply(message, "`Emojifying the text..`")
+    op = await message.reply_text("`Emojifying the text..`")
     try:
       args = message.text.split(None, 1)[1]
     except IndexError:
