@@ -156,7 +156,7 @@ async def weebify(c, m):
 @Client.on_message(filters.command("send"))
 @error_handler
 async def send_msg(c,m):
-  text = m.text.split(None, 1)[1]
+  text = m.text.split(None, 1)
   try:
     await c.send_message(m.chat.id, text)
   except:
