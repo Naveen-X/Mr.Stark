@@ -6,12 +6,6 @@ from pyrogram import Client, filters
 
 from Stark.db import DB
 from Stark import error_handler
-#~ Ported from Cat
-
-
-from main_startup.core.decorators import friday_on_cmd
-from main_startup.helper_func.basic_helpers import edit_or_reply, get_text
-
 
 kakashitext = [
     "a",
@@ -132,7 +126,7 @@ itachiemoji = [
     "⁭\n        {cj}{cj}{cj}{cj}\n   {cj}{cj}{cj}{cj}{cj}{cj}\n{cj}{cj}               {cj}{cj}\n{cj}{cj}               {cj}{cj}\n {cj}{cj}{cj}{cj}{cj}{cj}{cj}\n      {cj}{cj}{cj}{cj}{cj}{cj}\n                         {cj}{cj}\n                        {cj}{cj}\n  {cj}{cj}{cj}{cj}{cj}{cj}\n       {cj}{cj}{cj}{cj}\n",
 ]
 
-# List of sad quotes # Because there should be a list to get random.
+
 normiefont = [
     "a",
     "b",
@@ -189,7 +183,7 @@ weebyfont = [
     "丫",
     "乙",
 ]
-
+# List of sad quotes # Because there should be a list to get random.
 sad_quotes = [
     "The worst kind of sad is not being able to explain why.",
     "Tears are words that need to be written.",
@@ -297,6 +291,8 @@ async def emoji(client, message):
     try:
       args = message.text.split(None, 1)[1]
     except IndexError:
+      args = None
+    if not args:
         if not message.reply_to_message:
            return await ok.edit("__What am I Supposed to do with this idiot, Give me a text.__")
         if not message.reply_to_message.text:
@@ -322,6 +318,8 @@ async def c_emoji(client, message):
     try:
       args = message.text.split(None, 1)[1]
     except IndexError:
+      args = None
+    if not args:
         if not message.reply_to_message:
            return await ok.edit("__What am I Supposed to do with this idiot, Give me a text.__")
         if not message.reply_to_message.text:
