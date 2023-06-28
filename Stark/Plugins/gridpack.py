@@ -113,7 +113,7 @@ async def make_grid(client, message):
     await client.invoke(
               raw.functions.stickers.CreateStickerSet(
                   user_id=user_peer,
-                  title="GridPack ",
+                  title=pack,
                   short_name=name2,
                   stickers=all_stickers,  # Wrap stcr in a list
               )
