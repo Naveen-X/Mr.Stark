@@ -156,10 +156,11 @@ async def weebify(c, m):
 @Client.on_message(filters.command("send"))
 @error_handler
 async def send_msg(c,m):
-  text = m.text.split(None, 1)
-  try:
-    await c.send_message(m.chat.id, text)
-  except:
-    pass
-  if m.reply_to_message:
-    await m.reply_to_message.copy(m.chat.id)
+    try:
+       text = m.text.split(None, 1)[1]
+    except IndexError:
+      text=None
+    if text:
+       await m.reply(text)
+    else:
+       await m.reply_to_message.copy(m.chat.id)
