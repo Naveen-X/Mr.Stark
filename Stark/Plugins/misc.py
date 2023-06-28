@@ -156,7 +156,10 @@ async def weebify(c, m):
 @Client.on_message(filters.command("send"))
 @error_handler
 async def send_msg(c,m):
-  text = m.text.split(None, 1)[1]
+  try:
+    text = m.text.split(None, 1)[1]
+  except IndexError:
+    pass
   if text:
     await m.reply_text(text)
   elif m.reply_to_message:
