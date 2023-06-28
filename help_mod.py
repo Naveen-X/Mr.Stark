@@ -186,6 +186,21 @@ class Script(object):
    "desc": "sends quote daily at 8:00 am and 6:00 pm",
    "cmds": ["no cmd"],
    "usage": "works automatically"
+        },
+        {
+   "desc": "sends the message u input or reply",
+   "cmds": ["send"],
+   "usage": "/send [ message / reply to message ]"
+        },
+                {
+   "desc": "Emojify text",
+   "cmds": ["emoji"],
+   "usage": "/emoji Stark"
+        },
+                {
+   "desc": "Emojify text with custom emoji",
+   "cmds": ["cmoji"],
+   "usage": "/send 🔥 Stark"
         }
     ]
     MEDIAINFO = [
