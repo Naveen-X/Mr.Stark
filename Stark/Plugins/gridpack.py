@@ -4,10 +4,10 @@ import string
 import random
 import asyncio
 from PIL import Image
-
-from Stark import error_handler
 from pyrogram import raw
+from Stark import error_handler
 from pyrogram import Client, filters
+from pyrogram.errors import FloodWait
 from main.helper_func.stcr_funcs import create_sticker, upload_document
 
 
@@ -85,6 +85,7 @@ async def make_grid(client, message):
     stark = await gp.edit("__Making the pack.__")
     i = 0
     for im in images:
+      try:
         img = io.BytesIO(im)
         img.name = name + ".png"
         img.seek(0)
@@ -104,7 +105,8 @@ async def make_grid(client, message):
         await stark.edit(
             f"__Making the pack.\nProgress: {i}/{len(images)}__"
         )
-        
+      except FloodWait as e:
+        await asyncio.sleep(e.value)
     user_peer = raw.types.InputPeerUser(user_id=message.from_user.id, access_hash=0)
     await client.invoke(
               raw.unctions.stickers.CreateStickerSet(
