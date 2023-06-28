@@ -152,3 +152,12 @@ async def weebify(c, m):
             weebycharacter = weebyfont[normiefont.index(normiecharacter)]
             string = string.replace(normiecharacter, weebycharacter)
     await wb.edit(string)
+
+@Client.on_message(filters.command("send"))
+@error_handler
+async def send_msg(c,m):
+  text = m.text.split(None, 1)[1]
+  if text:
+    await m.reply_text(text)
+  elif m.reply_to_message:
+    await m.reply_to_message.copy(m.chat.id)
