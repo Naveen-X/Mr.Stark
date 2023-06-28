@@ -294,9 +294,9 @@ async def emoji(client, message):
       args = None
     if not args:
         if not message.reply_to_message:
-           return await ok.edit("__What am I Supposed to do with this idiot, Give me a text.__")
+           return await op.edit("__What am I Supposed to do with this idiot, Give me a text.__")
         if not message.reply_to_message.text:
-           return await ok.edit("__What am I Supposed to do with this idiot, Give me a text.__")
+           return await op.edit("__What am I Supposed to do with this idiot, Give me a text.__")
     args = args or message.reply_to_message.text
     
     result = ""
