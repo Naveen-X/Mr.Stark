@@ -162,5 +162,5 @@ async def send_msg(c,m):
       text=None
     if text:
        await m.reply(text)
-    else:
+    elif m.reply_to_message:
        await m.reply_to_message.copy(m.chat.id)
