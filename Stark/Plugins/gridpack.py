@@ -84,6 +84,7 @@ async def make_grid(client, message):
     new_img.seek(0)
     stark = await gp.edit("__Making the pack.__")
     i = 0
+    all_stickers = []
     for im in images:
       try:
         img = io.BytesIO(im)
@@ -101,6 +102,7 @@ async def make_grid(client, message):
                 ),
                 emj
             )
+        all_stickers.append(stcr)
         i += 1
         await stark.edit(
             f"__Making the pack.\nProgress: {i}/{len(images)}__"
@@ -113,7 +115,7 @@ async def make_grid(client, message):
                   user_id=user_peer,
                   title="GridPack ",
                   short_name=name2,
-                  stickers=[stckr],  # Wrap stcr in a list
+                  stickers=all_stickers,  # Wrap stcr in a list
               )
           )
     link = f"https://t.me/addstickers/{name2}"
