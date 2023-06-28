@@ -161,6 +161,6 @@ async def send_msg(c,m):
     except IndexError:
       text=None
     if text:
-       await c.send_message(text)
+       await c.send_message(m.chat.id, text)
     elif m.reply_to_message:
        await m.reply_to_message.copy(m.chat.id)
