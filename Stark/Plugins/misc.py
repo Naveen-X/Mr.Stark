@@ -451,7 +451,7 @@ async def ryt_comment(client, message):
           return
      text = urllib.parse.quote_plus(input_str)
      name0 = message.from_user.first_name
-     text = urllib.parse.quote_plus(name0)
+     name = urllib.parse.quote_plus(name0)
      link = random.choice(AVATARS)    
      lol = f"https://some-random-api.com/canvas/youtube-comment?avatar={link}&username={name}&comment={text}"
    #  await ytc.edit(lol)
