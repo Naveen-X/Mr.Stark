@@ -434,7 +434,8 @@ async def yt_comment(client, message):
    kk = upload_file(pic)
    imglink = f"https://telegra.ph{kk[0]}"
    lol = f"https://some-random-api.com/canvas/youtube-comment?avatar={imglink}&username={name}&comment={text}"
-   await client.send_photo(message.chat.id, lol, caption=f"__**Made using @Mr_StarkBot**__")
+   await ytc.edit(lol)
+   #await client.send_photo(message.chat.id, lol, caption=f"__**Made using @Mr_StarkBot**__")
    os.remove(pic)
    await ytc.delete()
 
@@ -451,5 +452,6 @@ async def ryt_comment(client, message):
      name = message.from_user.first_name
      link = random.choice(AVATARS)    
      lol = f"https://some-random-api.com/canvas/youtube-comment?avatar={link}&username={name}&comment={text}"
-     await client.send_photo(message.chat.id, lol, caption=f"__**Made using @Mr_StarkBot**__")
+     await ytc.edit(lol)
+     #await client.send_photo(message.chat.id, lol, caption=f"__**Made using @Mr_StarkBot**__")
      await ytc.delete()
