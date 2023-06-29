@@ -437,3 +437,19 @@ async def yt_comment(client, message):
    await client.send_photo(message.chat.id, lol, caption=f"__**Made using @Mr_StarkBot**__")
    os.remove(pic)
    await ytc.delete()
+
+@Client.on_message(filters.command(["rytc"]))
+@error_handler
+async def ryt_comment(client, message):
+     ytc = await message.reply_text("`Making Comment`")
+     try:
+          input_str = message.text.split(None, 1)[1]
+     except IndexError:
+          await ytc.edit("`Gib Some text to Make yt comment, U Dumb!`")
+          return
+     text = urllib.parse.quote_plus(input_str)
+     name = message.from_user.first_name
+     link = random.choice(AVATARS)    
+     lol = f"https://some-random-api.ml/canvas/youtube-comment?avatar={link}&username={name}&comment={text}"
+     await client.send_photo(message.chat.id, lol, caption=f"__**Made using @Mr_StarkBot**__")
+     await ytc.delete()
