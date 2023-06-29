@@ -135,7 +135,7 @@ async def kangMyAss(m, c, chat_id):
             if "STICKERSET_INVALID" in str(e):
                 hm2 = await hm.edit(f"`Creating a new pack ...`")
     #            await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
-                await makekang_internal(msg, user, f'{idk}.png', sticker_emoji, c, packname, packnum, chat_id, msg_id, idk)
+                await makekang_internal(msg, user, f'{idk}.png', sticker_emoji, c, packname, packnum, chat_id, hm2, idk)
             elif str(e) == "Sticker_png_dimensions":
                 im.save(f'{idk}.png')
                 stcr = await create_sticker(
@@ -180,7 +180,7 @@ async def kangMyAss(m, c, chat_id):
     if os.path.isfile(f"{idk}.png"):
         os.remove(f"{idk}.png")
 
-async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum, chat_id, msg_id, idk):
+async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum, chat_id, hm2, idk):
     name = user.first_name
     name = name[:50]
     user_id = str(user.id)
@@ -209,10 +209,10 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         if str(e) == "Sticker set name is already occupied":
             await msg.edit("Your pack can be found [Here](t.me/addstickers/%s)" % packname)
         elif str(e) == "Peer_id_invalid":
-            await msg.edit("Contact me in PM first.", reply_markup=types.InlineKeyboardMarkup([[types.InlineKeyboardButton(text="Start", url=f"t.me/{BOT_USERNAME}?start")]]))
+            await hm2.edit("Contact me in PM first.", reply_markup=types.InlineKeyboardMarkup([[types.InlineKeyboardButton(text="Start", url=f"t.me/{BOT_USERNAME}?start")]]))
             return
         elif str(e) == "Internal Server Error: created sticker set not found (500)":
-            await msg.edit("*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
+            await hm2.edit("*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
         elif str(e) == "Invalid sticker emojis":
             sticker_emoji = random.choice(emojiss)
             stcr = await create_sticker(
@@ -247,7 +247,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
                             stickers=[stcr],  # Wrap stcr in a list
                         )
                     )
-            await c.edit_message(chat_id=chat_id, message_id=msg_id, text="**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
+            await hm2.edit("**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
         elif str(e) == "Sticker_png_dimensions":
             im = Image.open(png_sticker)
             maxsize = (512, 512)
@@ -289,9 +289,11 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         else:
             print("make pack", e)
     if success:
-        await msg.edit(f"**Sticker pack successfully created.** ` Get it`  [here](t.me/addstickers/%s)" % packname)
+        await hm2.edit(f"**Sticker pack successfully created.** ` Get it`  [here](t.me/addstickers/%s)" % packname)
     else:
-        await msg.edit("`Failed to create sticker pack. Possibly due to black magic.`")
+        await hm2.edit("`Failed to create sticker pack. Possibly due to black magic.`")
+
+
 async def kangani(m, c):
     await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
     msg = m
