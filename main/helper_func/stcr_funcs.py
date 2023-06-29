@@ -78,7 +78,7 @@ async def kangMyAss(m, c, chat_id):
         if msg.reply_to_message.sticker:
             file_id = msg.reply_to_message.sticker.file_id
         elif msg.reply_to_message.photo:
-            file_id = msg.reply_to_message.photo[1].file_id
+            file_id = msg.reply_to_message.photo.file_id
         elif msg.reply_to_message.document:
             file_id = msg.reply_to_message.document.file_id
         else:
@@ -297,7 +297,7 @@ async def kangani(m, c):
     msg = m
     user = m.from_user
     name = user.first_name
-    chat_id = m.chat_id
+    chat_id = m.chat.id
     user_id = str(m.from_user.id)
     name = name[:50]
     packnum = 0
