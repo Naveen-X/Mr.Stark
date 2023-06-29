@@ -289,9 +289,9 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         else:
             print("make pack", e)
     if success:
-        await c.edit_message(chat_id=chat_id, message_id=msg_id, text=f"*Sticker pack successfully created.* ` Get it`  [here](t.me/addstickers/%s)" % packname)
+        await hm.edit(f"**Sticker pack successfully created.** ` Get it`  [here](t.me/addstickers/%s)" % packname)
     else:
-        await c.edit_message(chat_id=chat_id, message_id=msg_id, text="`Failed to create sticker pack. Possibly due to black magic.`")
+        await hm.edit("`Failed to create sticker pack. Possibly due to black magic.`")
 async def kangani(m, c):
     await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
     msg = m
