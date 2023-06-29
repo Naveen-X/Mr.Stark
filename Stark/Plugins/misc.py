@@ -339,3 +339,32 @@ async def c_emoji(client, message):
         else:
             result += a
     await ok.edit(result)
+
+@Client.on_message(filters.command(["ftext", "f"]))
+async def ftext(client, message):
+    try:
+        input_str = message.text.split(None, 1)[1]
+    except IndexError:
+        input_str = None
+    if input_str:
+        paytext = input_str
+        pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
+            paytext * 8,
+            paytext * 8,
+            paytext * 2,
+            paytext * 2,
+            paytext * 2,
+            paytext * 6,
+            paytext * 6,
+            paytext * 2,
+            paytext * 2,
+            paytext * 2,
+            paytext * 2,
+            paytext * 2,
+        )
+    else:
+        pay = "╭━━━╮\n┃╭━━╯\n┃╰━━╮\n┃╭━━╯\n┃┃\n╰╯\n"
+    if message.reply_to_message:
+        await message.reply_to_message.reply_text(pay)
+    else:
+        await message.reply_text(pay)
