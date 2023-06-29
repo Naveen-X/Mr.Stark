@@ -44,7 +44,7 @@ async def kangMyAss(m, c, chat_id):
     user_id = str(m.from_user.id)
     chat_id = chat_id
     packnum = 0
-    packname = "ekang_" + str(user_id) + "_by_" + str(BOT_USERNAME)
+    packname = "kang_" + str(user_id) + "_by_" + str(BOT_USERNAME)
     hm = await m.reply_text(f"`Processing   ...`")
    # await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
     msg_id = f'{hm.id}'
