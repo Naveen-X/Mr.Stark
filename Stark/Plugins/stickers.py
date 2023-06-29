@@ -24,7 +24,7 @@ async def kang(c, m):
         await m.reply_text("`Message as a user !`")
         return
     if user_id:
-        await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
+#        await c.send_chat_action(m.chat.id, CHOOSE_STICKER)
         msg = m
         user = m.from_user
         chat_id = m.chat.id
