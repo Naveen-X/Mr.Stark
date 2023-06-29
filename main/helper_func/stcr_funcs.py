@@ -36,16 +36,17 @@ async def upload_document(client: Client, file_path: str, chat_id: int) -> raw.b
         access_hash=media.document.access_hash,
         file_reference=media.document.file_reference,
     )
+
 async def kangMyAss(m, c, chat_id):
-    await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
+   # await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
     msg = m
     user = m.from_user
     user_id = str(m.from_user.id)
     chat_id = chat_id
     packnum = 0
-    packname = "kang_" + str(user_id) + "_by_" + str(BOT_USERNAME)
-    hm = await m.reply_text(f"`Processing  ⏳ ...`")
-    await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
+    packname = "ekang_" + str(user_id) + "_by_" + str(BOT_USERNAME)
+    hm = await m.reply_text(f"`Processing   ...`")
+   # await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
     msg_id = f'{hm.id}'
     packname_found = 0
     max_stickers = 120
@@ -59,7 +60,7 @@ async def kangMyAss(m, c, chat_id):
                     hash=0
                 )
             )
-            if len(stickerset.stickers) >= max_stickers:
+            if int(stickerset.set.count) >= max_stickers:
                 packnum += 1
                 packname = "kang_" + \
                     str(packnum) + "_" + str(user.id) + \
@@ -67,9 +68,12 @@ async def kangMyAss(m, c, chat_id):
             else:
                 packname_found = 1
         except Exception as e:
-            if str(e) == "Stickerset_invalid":
+            print(e)
+            packname_found = 1
+            if "STICKERSET_INVALID" in str(e):
                 packname_found = 1
     idk = str(rain(0000000000, 9999999999))
+    kangsticker = f"{idk}.png"
     if msg.reply_to_message:
         if msg.reply_to_message.sticker:
             file_id = msg.reply_to_message.sticker.file_id
@@ -79,7 +83,7 @@ async def kangMyAss(m, c, chat_id):
             file_id = msg.reply_to_message.document.file_id
         else:
             msg.reply_text("I can't kang that")
-        await c.download_media(file_id, f'{idk}.png')
+        await c.download_media(file_id, f'./{idk}.png')
         try:
             sticker_emoji = msg.text.split(' ')[1]
         except:
@@ -128,9 +132,9 @@ async def kangMyAss(m, c, chat_id):
             print(e)
             return
         except Exception as e:
-            if str(e) == "Stickerset_invalid":
+            if "STICKERSET_INVALID" in str(e):
                 hm2 = await hm.edit(f"`Creating a new pack ...`")
-                await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
+    #            await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
                 await makekang_internal(msg, user, f'{idk}.png', sticker_emoji, c, packname, packnum, chat_id, msg_id, idk)
             elif str(e) == "Sticker_png_dimensions":
                 im.save(f'{idk}.png')
