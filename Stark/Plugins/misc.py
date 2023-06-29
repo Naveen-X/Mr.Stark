@@ -430,7 +430,7 @@ async def yt_comment(client, message):
    name = message.from_user.first_name
    async for photo in client.get_chat_photos(message.from_user.id, limit=1):
       img = photo 
-      pic = await client.download_media(img[0].file_id)
+      pic = await client.download_media(img.file_id)
    kk = upload_file(pic)
    imglink = f"https://telegra.ph{kk[0]}"
    lol = f"https://some-random-api.com/canvas/youtube-comment?avatar={imglink}&username={name}&comment={text}"
