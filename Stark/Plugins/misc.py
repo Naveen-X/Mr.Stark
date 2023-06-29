@@ -427,15 +427,16 @@ async def yt_comment(client, message):
         await ytc.edit("`Gib Some text to Make yt comment, U Dumb!`")
         return
    text = urllib.parse.quote_plus(input_str)
-   name = message.from_user.first_name
+   name0 = message.from_user.first_name
+   name = urllib.parse.quote_plus(name0)
    async for photo in client.get_chat_photos(message.from_user.id, limit=1):
       img = photo 
       pic = await client.download_media(img.file_id)
    kk = upload_file(pic)
    imglink = f"https://telegra.ph{kk[0]}"
    lol = f"https://some-random-api.com/canvas/youtube-comment?avatar={imglink}&username={name}&comment={text}"
-   await ytc.edit(lol)
-   #await client.send_photo(message.chat.id, lol, caption=f"__**Made using @Mr_StarkBot**__")
+  # await ytc.edit(lol)
+   await client.send_photo(message.chat.id, lol, caption=f"__**Made using @Mr_StarkBot**__")
    os.remove(pic)
    await ytc.delete()
 
@@ -449,9 +450,10 @@ async def ryt_comment(client, message):
           await ytc.edit("`Gib Some text to Make yt comment, U Dumb!`")
           return
      text = urllib.parse.quote_plus(input_str)
-     name = message.from_user.first_name
+     name0 = message.from_user.first_name
+     text = urllib.parse.quote_plus(name0)
      link = random.choice(AVATARS)    
      lol = f"https://some-random-api.com/canvas/youtube-comment?avatar={link}&username={name}&comment={text}"
-     await ytc.edit(lol)
-     #await client.send_photo(message.chat.id, lol, caption=f"__**Made using @Mr_StarkBot**__")
+   #  await ytc.edit(lol)
+     await client.send_photo(message.chat.id, lol, caption=f"__**Made using @Mr_StarkBot**__")
      await ytc.delete()
