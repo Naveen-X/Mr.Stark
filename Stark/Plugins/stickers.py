@@ -42,10 +42,10 @@ async def kang(c, m):
             if msg.reply_to_message.sticker:
                 if msg.reply_to_message.sticker.is_animated == True:
                     file_id = msg.reply_to_message.sticker.file_id
-                    await kangani(m, c)
+                    await kangani(c, m)
                 elif msg.reply_to_message.sticker.is_video == True:
                     file_id = msg.reply_to_message.sticker.file_id
-                    await kangwebm(m, c)
+                    await kangwebm(c, m)
                 else:
                     await kangMyAss(m, c, chat_id)
             elif msg.reply_to_message.sticker or msg.reply_to_message.photo:
