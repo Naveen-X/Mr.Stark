@@ -26,3 +26,4 @@ class Config(object):
     LEXICA_ART_8 = os.environ.get("LEXICA_ART_8", None)
     LEXICA_ART_9 = os.environ.get("LEXICA_ART_9", None)
     LEXICA_ART_10 = os.environ.get("LEXICA_ART_10", None)
+    CHROME_BIN = os.environ.get("CHROME_BIN",  "/usr/bin/google-chrome-stable")
