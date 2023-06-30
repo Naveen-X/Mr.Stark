@@ -16,6 +16,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
 
 from Stark import error_handler
+from Stark.config import Config
 from pyrogram import Client, filters
 
 THEMES = [
