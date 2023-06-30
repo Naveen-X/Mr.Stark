@@ -151,7 +151,7 @@ async def rayso_by_pro_odi(c, m):
     except IndexError:
       query = None
     if m.reply_to_message:
-      rquery = m.reply_to_message.id
+      rquery = m.reply_to_message
     else:
       rquery = None
     rayso = await m.reply_text("**Processing...**")
