@@ -149,12 +149,11 @@ async def rayso_by_pro_odi(c, m):
       query = m.text.split(None, 1)[1]
     except IndexError:
       query = None
-    rquery = await event.get_reply_message()
+    rquery = m.reply_to_message.id
     rayso = await m.reply_text("**Processing...**")
     checker = query.split(maxsplit=1) if query else None
     # Add Theme
     if checker and (checker[0].lower() in THEMES or checker[0].lower() == "random"):
-        addgvar("RAYSO_THEME", checker[0].lower())
         if checker[0] == query and not rquery:
             return await rayso.edit("`Theme changed to {query.title()}.`")
         query = checker[1] if len(checker) > 1 else None
