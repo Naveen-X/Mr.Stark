@@ -34,7 +34,7 @@ class chromeDriver:
     @staticmethod
     def start_driver():
         if Config.CHROME_BIN is None:
-            return None, "Need to install Google Chrome or Chromium. Module Stopping."
+            return None, "Need to install Google Chrome or Chromium. Module Stopping.
         try:
             chrome_options = ChromeOptions()
             chrome_options.binary_location = Config.CHROME_BIN
@@ -131,54 +131,53 @@ async def rayso_by_pro_odi(c, m):
     except IndexError:
       query = None
     rquery = await event.get_reply_message()
-    catevent = await m.reply_text("**Processing...**")
+    rayso = await m.reply_text("**Processing...**")
     checker = query.split(maxsplit=1) if query else None
     # Add Theme
     if checker and (checker[0].lower() in THEMES or checker[0].lower() == "random"):
         addgvar("RAYSO_THEME", checker[0].lower())
         if checker[0] == query and not rquery:
-            return await edit_delete(catevent, f"`Theme changed to {query.title()}.`")
+            return await rayso.edit("`Theme changed to {query.title()}.`")
         query = checker[1] if len(checker) > 1 else None
 
     # Add Mode
-    if checker and checker[0].lower() in MODES:
-        addgvar("RAYSO_MODES", checker[0].lower())
-        if checker[0] == query and not rquery:
-            return await edit_delete(
-                catevent, f"`Theme Mode changed to {query.title()}.`"
-            )
-        query = checker[1] if len(checker) > 1 else None
+    # if checker and checker[0].lower() in MODES:
+    #     if checker[0] == query and not rquery:
+    #         return await edit_delete(
+    #             catevent, f"`Theme Mode changed to {query.title()}.`"
+    #         )
+    #     query = checker[1] if len(checker) > 1 else None
 
     # Themes List
     if query == "-l":
         ALLTHEME = "**🎈Modes:**\n**1.**  `Mode-Day`\n**2.**  `Mode-Night`\n\n**🎈Themes:**\n**1.**  `Random`"
         for i, each in enumerate(THEMES, start=2):
             ALLTHEME += f"\n**{i}.**  `{each.title()}`"
-        return await edit_delete(catevent, ALLTHEME, 60)
+        return await rayso.edit(ALLTHEME, 60)
 
     # Get Theme
-    theme = gvarstatus("RAYSO_THEME") or "random"
+    theme = checker or "random"
     if theme == "random":
         theme = random.choice(THEMES)
 
     # Get Mode
-    mode = gvarstatus("RAYSO_MODES") or "mode-night"
+    mode = random.choice(MODES)
     darkMode = mode == "mode-night"
 
     if query:
         text = query
     elif rquery:
-        if rquery.file and rquery.file.mime_type.startswith("text"):
-            filename = await rquery.download_media()
+        if rquery.document and rquery.document.mime_type.startswith("text"):
+            filename = await rquery.download()
             with open(filename, "r") as f:
                 text = str(f.read())
             os.remove(filename)
         elif rquery.text:
             text = rquery.txt
         else:
-            return await edit_delete(catevent, "`Unsupported.`")
+            return await rayso.edit"`Unsupported.`")
     else:
-        return await edit_delete(catevent, "`What should I do?`")
+        return await rayso.edit("`What should I do?`")
 
     # // Max size 30000 byte but that breaks thumb so making on 28000 byte
     text_list = text_chunk_list(text, 28000)
