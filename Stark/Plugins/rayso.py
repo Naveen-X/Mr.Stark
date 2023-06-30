@@ -177,7 +177,7 @@ async def rayso_by_pro_odi(c, m):
     mode = random.choice(MODES)
     darkMode = mode == "mode-night"
 
-    elif rquery:
+    if rquery:
         if rquery.text:
             text = rquery.text
         elif rquery.caption:
