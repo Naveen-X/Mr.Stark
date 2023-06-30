@@ -97,13 +97,13 @@ class chromeDriver:
         return file_name, None
 
     @staticmethod
-    async def get_screenshot(inputstr, message):
+    async def get_screenshot(inputstr, message=None):
         start = datetime.now()
         driver, error = chromeDriver.bypass_cache(inputstr)
         if not driver:
             return None, error
         if message:
-            await message.reply_text(
+            x = await message.reply_text(
                 "`Calculating Page Dimensions with Google Chrome BIN`"
             )
         height = driver.execute_script(
@@ -115,7 +115,7 @@ class chromeDriver:
         driver.set_window_size(width + 100, height + 100)
         im_png = driver.get_screenshot_as_png()
         if message:
-            await message.replace("`Stoppping Chrome Bin`")
+            await x.edit("`Stoppping Chrome Bin`")
         driver.close()
         end = datetime.now()
         ms = (end - start).seconds
