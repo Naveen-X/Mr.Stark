@@ -38,7 +38,7 @@ async def upload_document(client: Client, file_path: str, chat_id: int) -> raw.b
     )
 
 async def kangMyAss(m, c, chat_id):
-   # await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
+    await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
     msg = m
     user = m.from_user
     user_id = str(m.from_user.id)
@@ -46,7 +46,7 @@ async def kangMyAss(m, c, chat_id):
     packnum = 0
     packname = "kang_" + str(user_id) + "_by_" + str(BOT_USERNAME)
     hm = await m.reply_text(f"`Processing   ...`")
-   # await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
+    await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
     msg_id = f'{hm.id}'
     packname_found = 0
     max_stickers = 120
@@ -132,15 +132,15 @@ async def kangMyAss(m, c, chat_id):
             print(e)
             return
         except Exception as e:
+            print(e)
             if "STICKERSET_INVALID" in str(e):
                 hm2 = await hm.edit(f"`Creating a new pack ...`")
-    #            await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
-                await makekang_internal(msg, user, f'{idk}.png', sticker_emoji, c, packname, packnum, chat_id, hm2, idk)
+                await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
+                await makekang_internal(msg, user, f'{idk}.png', sticker_emoji, c, packname, packnum, chat_id, msg_id, idk)
             elif str(e) == "Sticker_png_dimensions":
                 im.save(f'{idk}.png')
                 stcr = await create_sticker(
-                    await upload_document(
-                        c, f'{idk}.png', m.chat.id
+                    await upload_document(c, f'{idk}.png', m.chat.id
                     ),
                     sticker_emoji
                 )
