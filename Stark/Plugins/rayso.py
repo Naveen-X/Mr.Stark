@@ -176,7 +176,7 @@ async def rayso_by_pro_odi(c, m):
         ALLTHEME = "**🎈Modes:**\n**1.**  `Mode-Day`\n**2.**  `Mode-Night`\n\n**🎈Themes:**\n**1.**  `Random`"
         for i, each in enumerate(THEMES, start=2):
             ALLTHEME += f"\n**{i}.**  `{each.title()}`"
-        return await rayso.edit(ALLTHEME, 60)
+        return await rayso.edit(ALLTHEME)
 
     # Get Theme
     theme = checker or "random"
