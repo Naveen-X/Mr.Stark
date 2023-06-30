@@ -157,9 +157,9 @@ async def rayso_by_pro_odi(c, m):
     rayso = await m.reply_text("**Processing...**")
     if not query:
       theme = "random"
-    if query and (query.lower in THEMES):
+    if query and (query.lower() in THEMES):
       theme = query
-    if query and (query.lower not in THEMES):
+    if query and (query.lower() not in THEMES) and (query != "-l"):
       await rayso.edit("`Invalid Theme selected")
       return
     # Themes List
