@@ -81,7 +81,7 @@ class chromeDriver:
 
     @staticmethod
     def get_rayso(
-        inputstr, file_name="Rayso.png", title="CatUB", theme="crimson", darkMode=True
+        inputstr, file_name="Rayso.png", title="Mr.Stark", theme="crimson", darkMode=True
     ):
         url = f'https://ray.so/#code={base64.b64encode(inputstr.encode()).decode().replace("+","-")}&title={title}&theme={theme}&padding=64&darkMode={darkMode}&language=python'
         driver, error = chromeDriver.start_driver()
@@ -97,14 +97,14 @@ class chromeDriver:
         return file_name, None
 
     @staticmethod
-    async def get_screenshot(inputstr, event=None):
+    async def get_screenshot(inputstr, message):
         start = datetime.now()
         driver, error = chromeDriver.bypass_cache(inputstr)
         if not driver:
             return None, error
-        if event:
-            await edit_or_reply(
-                event, "`Calculating Page Dimensions with Google Chrome BIN`"
+        if message:
+            await message.reply_text(
+                "`Calculating Page Dimensions with Google Chrome BIN`"
             )
         height = driver.execute_script(
             "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);"
@@ -114,8 +114,8 @@ class chromeDriver:
         )
         driver.set_window_size(width + 100, height + 100)
         im_png = driver.get_screenshot_as_png()
-        if event:
-            await edit_or_reply(event, "`Stoppping Chrome Bin`")
+        if message:
+            await message.replace("`Stoppping Chrome Bin`")
         driver.close()
         end = datetime.now()
         ms = (end - start).seconds
