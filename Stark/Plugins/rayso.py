@@ -190,7 +190,7 @@ async def rayso_by_pro_odi(c, m):
     for i, text in enumerate(text_list, start=1):
         await rayso.edit(f"`Making Rayso Image: {i}/{len(text_list)} `")
         outfile, error = chromeDriver.get_rayso(
-            text, file_name=f"rayso{i}.png", title=user, theme=theme, darkMode=True
+            text, darkMode=True, file_name=f"rayso{i}.png", title=user, theme=theme
         )
         if error:
             return await rayso.edit(error)
@@ -258,7 +258,7 @@ async def light_mode_rayso(c, m):
     for i, text in enumerate(text_list, start=1):
         await rayso.edit(f"`Making Rayso Image: {i}/{len(text_list)} `")
         outfile, error = chromeDriver.get_rayso(
-            text, file_name=f"rayso{i}.png", title=user, theme=theme, darkMode=False
+            text, darkMode=False, file_name=f"rayso{i}.png", title=user, theme=theme
         )
         if error:
             return await rayso.edit(error)
