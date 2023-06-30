@@ -144,7 +144,7 @@ async def rayso_by_pro_odi(c, m):
     "To paste text or file into image."
     files = []
     captions = []
-    reply_to_id = m.get_reply_message.id
+    reply_to_id = m.reply_to_message.id
     try:
       query = m.text.split(None, 1)[1]
     except IndexError:
