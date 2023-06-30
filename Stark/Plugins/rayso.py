@@ -151,7 +151,10 @@ async def rayso_by_pro_odi(c, m):
       query = m.text.split(None, 1)[1]
     except IndexError:
       query = None
-    rquery = m.reply_to_message.id
+    if m.reply_to_message:
+      rquery = m.reply_to_message.id
+    else:
+      rquery = None
     rayso = await m.reply_text("**Processing...**")
     checker = query.split(maxsplit=1) if query else None
     # Add Theme
