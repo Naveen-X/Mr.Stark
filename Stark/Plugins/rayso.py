@@ -81,7 +81,7 @@ class chromeDriver:
 
     @staticmethod
     def get_rayso(
-        inputstr, file_name="Rayso.png", title="Mr.Stark", theme="crimson", darkMode
+        inputstr, darkMode:bool, file_name="Rayso.png", title="Mr.Stark", theme="crimson"
     ):
         url = f'https://ray.so/#code={base64.b64encode(inputstr.encode()).decode().replace("+","-")}&title={title}&theme={theme}&padding=64&darkMode={darkMode}&language=python'
         driver, error = chromeDriver.start_driver()
