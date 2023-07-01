@@ -65,7 +65,7 @@ async def rayso_by_pro_odi(c, m):
       return
     # Themes List
     if query == "-l":
-        ALLTHEME = "**🎈Modes:**\n**1.**  `Mode-Day`\n**2.**  `Mode-Night`\n\n**🎈Themes:**\n**1.**  `Random`"
+        ALLTHEME = "**⭕Modes:**\n**⭕Themes:**\n**1.**  `Random`"
         for i, each in enumerate(THEMES, start=2):
             ALLTHEME += f"\n**{i}.**  `{each.title()}`"
         return await rayso.edit(ALLTHEME)
@@ -133,7 +133,7 @@ async def light_mode_rayso(c, m):
       return
     # Themes List
     if query == "-l":
-        ALLTHEME = "**🎈Modes:**\n**1.**  `Mode-Day`\n**2.**  `Mode-Night`\n\n**🎈Themes:**\n**1.**  `Random`"
+        ALLTHEME = "**⭕Modes:**\n**⭕Themes:**\n**1.**  `Random`"
         for i, each in enumerate(THEMES, start=2):
             ALLTHEME += f"\n**{i}.**  `{each.title()}`"
         return await rayso.edit(ALLTHEME)
@@ -159,7 +159,7 @@ async def light_mode_rayso(c, m):
     for i, text in enumerate(text_list, start=1):
         await rayso.edit(f"`Making Rayso Image: {i}/{len(text_list)} `")
         outfile, error = chromeDriver.get_rayso(
-            text, darkMode=false, file_name=f"rayso{i}.png", title=user, theme=theme
+            text, darkMode='false', file_name=f"rayso{i}.png", title=user, theme=theme
         )
         if error:
             return await rayso.edit(error)
