@@ -215,3 +215,42 @@ async def my_packs(c, m):
                 "video_by_"+str(BOT_USERNAME)
 
     await m.reply_text(f"\n{packs}{packs1}{packs2}")
+
+@Client.on_message(filters.command("mypacks"))
+async def delsticker(c, m):
+    user_id = None
+    if m.from_user:
+        user_id = str(m.from_user.id)
+        print(f"del {user_id}, {m.from_user.first_name}")
+    else:
+        await m.reply_text("Message as a user !")
+        return
+    if user_id:
+        if m.reply_to_message and m.reply_to_message.sticker:
+            stickerset = m.reply_to_message.sticker.set_name
+        else:
+            await m.reply_text(
+                "`What Should i delete!`")
+            return
+        if str(stickerset)[5:].startswith(str(user_id)) or user_id == "1602293216":
+            context.bot.sendChatAction(
+                update.message.chat_id, 'choose_sticker')
+            try:
+                await c.invoke(
+                  
+                  )
+                await m.reply_text(
+                    "`Successfully deleted the sticker from your pack`"
+                    )
+            except Exception as e:
+                if str(e) == "'NoneType' object has no attribute 'sticker'":
+                    await m.reply_text(
+                        "`Sticker to delete not found !`")
+                elif str(e) == "Stickerset_not_modified":
+                    await m.reply_text(
+                        "`Sticker to delete not found !`")
+                else:
+                    await m.reply_text((str(e))
+        else:
+            await m.reply_text(
+                "`This isn't your sticker pack !`")
