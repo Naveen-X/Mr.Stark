@@ -181,6 +181,7 @@ async def kangMyAss(m, c, chat_id):
     if os.path.isfile(f"{idk}.png"):
         os.remove(f"{idk}.png")
 
+
 async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum, chat_id, msg2, idk):
     name = user.first_name
     name = name[:50]
