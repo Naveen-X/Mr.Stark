@@ -159,7 +159,7 @@ async def light_mode_rayso(c, m):
     for i, text in enumerate(text_list, start=1):
         await rayso.edit(f"`Making Rayso Image: {i}/{len(text_list)} `")
         outfile, error = chromeDriver.get_rayso(
-            text, darkMode=False, file_name=f"rayso{i}.png", title=user, theme=theme
+            text, darkMode=false, file_name=f"rayso{i}.png", title=user, theme=theme
         )
         if error:
             return await rayso.edit(error)
