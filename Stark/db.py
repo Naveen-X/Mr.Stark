@@ -30,7 +30,6 @@ async def add(client, message):
     else:
         pass
 
-
 async def get_user_count():
     global DB
     global users

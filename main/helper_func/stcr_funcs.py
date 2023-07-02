@@ -211,7 +211,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         
         print('Sticker created succesfully')
     except Exception as e:
-        print(e)
+        print(traceback.format_exc())
         if str(e) == "Sticker set name is already occupied":
             await msg2.edit("Your pack can be found [Here](t.me/addstickers/%s)" % packname)
         elif "user_id_invalid" in str(e).lower():
@@ -238,11 +238,12 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
                     )
                 )
             except Exception as e:
+                print(traceback.format_exc())
                 if str(e) == "Stickerset_invalid":
                     user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
                     stcr = await create_sticker(
                         await upload_document(
-                            c, png_sticker, msg.chat.id
+                            c, f'{idk}.png', msg.chat.id
                         ),
                         sticker_emoji
                     )
@@ -277,7 +278,6 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
             else:
                 im.thumbnail(maxsize)
             im.save(f'{idk}.png')
-            stcr = await create_sticker(png_sticker, emoji)
             user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
             stcr = await create_sticker(
                 await upload_document(
