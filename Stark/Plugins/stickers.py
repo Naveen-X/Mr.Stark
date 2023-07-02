@@ -1,4 +1,5 @@
 import os
+import pyrogram
 from pyrogram import enums
 from pyrogram import Client, filters
 from pyrogram.raw import types, functions
@@ -232,9 +233,8 @@ async def delsticker(c, m):
             await m.reply_text(
                 "`What Should i delete!`")
             return
-        if str(stickerset)[5:].startswith(str(user_id)) or user_id == "1602293216":
-            context.bot.sendChatAction(
-                update.message.chat_id, 'choose_sticker')
+        if str(stickerset)[5:].startswith(str(user_id)):
+            await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
             try:
                 C = functions.stickers.RemoveStickerFromSet(sticker=pyrogram.utils.get_input_media_from_file_id(m.reply_to_message.sticker.file_id))
                 sticker_info = C.sticker
@@ -244,7 +244,7 @@ async def delsticker(c, m):
                     access_hash = sticker_info.id.access_hash,
                     file_reference = sticker_info.id.file_reference,
                 )
-                await bot.invoke(functions.stickers.RemoveStickerFromSet(sticker=input_document)) 
+                await c.invoke(functions.stickers.RemoveStickerFromSet(sticker=input_document)) 
                 await m.reply_text(
                     "`Successfully deleted the sticker from your pack`"
                     )
