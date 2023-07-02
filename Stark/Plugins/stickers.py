@@ -216,7 +216,7 @@ async def my_packs(c, m):
 
     await m.reply_text(f"\n{packs}{packs1}{packs2}")
 
-@Client.on_message(filters.command("mypacks"))
+@Client.on_message(filters.command(["delsticker", "delete_sticker"]))
 async def delsticker(c, m):
     user_id = None
     if m.from_user:
