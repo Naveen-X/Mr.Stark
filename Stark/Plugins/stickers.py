@@ -256,7 +256,7 @@ async def delsticker(c, m):
                     await m.reply_text(
                         "`Sticker to delete not found !`")
                 else:
-                    await m.reply_text((str(e))
+                    await m.reply_text((str(e)))
         else:
             await m.reply_text(
                 "`This isn't your sticker pack !`")
