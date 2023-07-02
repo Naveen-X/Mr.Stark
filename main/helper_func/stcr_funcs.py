@@ -203,7 +203,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         success = await c.invoke(
             functions.stickers.CreateStickerSet(
                 user_id=user_peer,
-                title=f"{name}'s kang pack",
+                title=f"{name}'s kang pack" + extra_version,
                 short_name=packname,
                 stickers=[stcr],  # Wrap stcr in a list
             )
@@ -211,11 +211,13 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         
         print('Sticker created succesfully')
     except Exception as e:
-        print(traceback.format_exc())
+        print(e)
         if str(e) == "Sticker set name is already occupied":
             await msg2.edit("Your pack can be found [Here](t.me/addstickers/%s)" % packname)
         elif "user_id_invalid" in str(e).lower():
-            await msg2.edit("Contact me in PM first.", reply_markup=types.InlineKeyboardMarkup([[types.InlineKeyboardButton(text="Start", url=f"t.me/{BOT_USERNAME}?start")]]))
+            await msg2.edit("Contact me in PM first.", 
+                            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Start", 
+                                                                                                 url=f"t.me/{BOT_USERNAME}?start")]]))
             return
         elif "internal server error" in str(e).lower():
             await msg2.edit("*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
@@ -236,7 +238,6 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
                     )
                 )
             except Exception as e:
-                print(traceback.format_exc())
                 if str(e) == "Stickerset_invalid":
                     user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
                     stcr = await create_sticker(
