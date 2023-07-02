@@ -1,6 +1,7 @@
 import os
 import math
 import random
+import traceback
 from PIL import Image
 from pyrogram import enums
 from random import randint as rain
@@ -210,7 +211,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         
         print('Sticker created succesfully')
     except Exception as e:
-        print(e)
+        print(traceback.format_exc())
         if str(e) == "Sticker set name is already occupied":
             await msg2.edit("Your pack can be found [Here](t.me/addstickers/%s)" % packname)
         elif "user_id_invalid" in str(e).lower():
@@ -235,6 +236,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
                     )
                 )
             except Exception as e:
+                print(traceback.format_exc())
                 if str(e) == "Stickerset_invalid":
                     user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
                     stcr = await create_sticker(
