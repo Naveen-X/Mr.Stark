@@ -65,7 +65,7 @@ async def rayso_by_pro_odi(c, m):
       return
     # Themes List
     if query == "-l":
-        ALLTHEME = "**⭕Modes:**\n**⭕Themes:**\n**1.**  `Random`"
+        ALLTHEME = "**⭕Themes:**\n**1.**  `Random`"
         for i, each in enumerate(THEMES, start=2):
             ALLTHEME += f"\n**{i}.**  `{each.title()}`"
         return await rayso.edit(ALLTHEME)
@@ -80,6 +80,11 @@ async def rayso_by_pro_odi(c, m):
             text = rquery.text
         elif rquery.caption:
             text = rquery.caption
+        elif rquery.document:
+            file = await rquery.download()
+            m_list = open(file, "r").read()
+            text = m_list
+            os.remove(file)
         else:
             return await rayso.edit("`Unsupported.`")
     else:
@@ -133,7 +138,7 @@ async def light_mode_rayso(c, m):
       return
     # Themes List
     if query == "-l":
-        ALLTHEME = "**⭕Modes:**\n**⭕Themes:**\n**1.**  `Random`"
+        ALLTHEME = "**⭕Themes:**\n**1.**  `Random`"
         for i, each in enumerate(THEMES, start=2):
             ALLTHEME += f"\n**{i}.**  `{each.title()}`"
         return await rayso.edit(ALLTHEME)
@@ -148,6 +153,11 @@ async def light_mode_rayso(c, m):
             text = rquery.text
         elif rquery.caption:
             text = rquery.caption
+        elif rquery.document:
+            file = await rquery.download()
+            m_list = open(file, "r").read()
+            text = m_list
+            os.remove(file)
         else:
             return await rayso.edit("`Unsupported.`")
     else:
