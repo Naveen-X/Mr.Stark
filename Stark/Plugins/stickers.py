@@ -236,9 +236,15 @@ async def delsticker(c, m):
             context.bot.sendChatAction(
                 update.message.chat_id, 'choose_sticker')
             try:
-                await c.invoke(
-                  
-                  )
+                C = functions.stickers.RemoveStickerFromSet(sticker=pyrogram.utils.get_input_media_from_file_id(m.reply_to_message.sticker.file_id))
+                sticker_info = C.sticker
+                
+                input_document = types.InputDocument(
+                    id=sticker_info.id.id,
+                    access_hash = sticker_info.id.access_hash,
+                    file_reference = sticker_info.id.file_reference,
+                )
+                await bot.invoke(functions.stickers.RemoveStickerFromSet(sticker=input_document)) 
                 await m.reply_text(
                     "`Successfully deleted the sticker from your pack`"
                     )
