@@ -73,7 +73,13 @@ async def eval(bot, message):
 
 async def aexec(code, bot, message):
     exec(
-        f"async def __aexec(bot, message): "
+        (
+            "async def __aexec(bot, message): "
+            + "\n p = print"
+            + "\n c = client = Client = bot"
+            + "\n m = msg = message"
+            + "\n r = reply = message.reply_to_message"
+        )
         + "".join(f"\n {l}" for l in code.split("\n"))
     )
     return await locals()["__aexec"](bot, message)
