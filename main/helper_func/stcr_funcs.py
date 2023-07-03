@@ -4,9 +4,10 @@ import random
 import traceback
 from PIL import Image
 from pyrogram import enums
-from random import randint as rain
 from pyrogram import Client, raw
+from random import randint as rain
 from pyrogram.raw import types, functions
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 BOT_USERNAME = "Mr_StarkBot"
 emojiss = ["🌚", "😎", "😃", "😁", "😅", "🤗", "😇", "👀",
@@ -216,8 +217,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
             await msg2.edit("Your pack can be found [Here](t.me/addstickers/%s)" % packname)
         elif "user_id_invalid" in str(e).lower():
             await msg2.edit("Contact me in PM first.", 
-                            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Start", 
-                                                                                                 url=f"t.me/{BOT_USERNAME}?start")]]))
+                            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Start", url=f"t.me/{BOT_USERNAME}?start")]]))
             return
         elif "internal server error" in str(e).lower():
             await msg2.edit("*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)

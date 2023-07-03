@@ -37,7 +37,8 @@ async def media_info(_, message: Message):
             ]
         ]
     )
-        await mi.edit("**MediaInfo Gathered**", reply_markup=keyboard)
+        await mi.delete()
+        await message.reply_text("**MediaInfo Gathered**", reply_markup=keyboard)
         if os.path.exists(file_path):
             os.remove(file_path)
     else:
