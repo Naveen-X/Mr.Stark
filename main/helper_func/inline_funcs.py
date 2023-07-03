@@ -200,7 +200,6 @@ __{desp}...__
         )
     return answers
 
-
 async def flipkart_search(answers, query):
     """ Api: https://flipkart.dvishal485.workers.dev/ """
     query = query.replace(" ", "+")
@@ -229,69 +228,29 @@ async def flipkart_search(answers, query):
             name = x.get("name")
             c_price = x.get("current_price")
             o_price = x.get("original_price")
-      #      more_details = x.get("query_url")
-      #      link2 = requests.get(f"https://da.gd/s?url={more_details}").text
-            output = f"""
-**Title:** {name}
-**Price:** ~~{o_price}~~ ‎  __{c_price}__
-"""
             keyboard = InlineKeyboardMarkup([
-                [
-                    InlineKeyboardButton(text="📱 View on Flipkart", url=link)
-                ],
-                # [
-                #     InlineKeyboardButton(text="More Details", callback_data=f"flipkart | {link2}")
-                # ]
-            ])
+            [
+                InlineKeyboardButton(text="📱 View on Flipkart", url=link)
+            ],
+        ])
+            output= f"""
+**Title:** {name}
+**Price:** ~~{o_price}~~__‎  {c_price}__
+"""
             answers.append(
-                InlineQueryResultPhoto(
-                    title=name,
-                    description=name,
-                    photo_url=photo,
-                    thumb_url=photo,
-                    caption=output,
-                    reply_markup=keyboard,
-                    photo_width=300,
-                    photo_height=300,
-                )
-            )
+                  InlineQueryResultPhoto(
+                      title=name,
+                      description=name,
+                      photo_url=photo,
+                      thumb_url=photo,
+                      caption=output,
+                      reply_markup=keyboard,
+                      photo_width=300,
+                      photo_height=300,
+                  )
+              )
         return answers
             
     except requests.exceptions.RequestException as e:
         print("Error occurred during data retrieval:", e)
         return answers
-
-# @Client.on_callback_query(filters.regex("^flipkart \| (.+)"))
-# async def flipkart_handler(client, cb):
-#     await cb.answer("Hold on..", show_alert=True)
-#     link = cb.data.split("|")[1]
-#     response = requests.get(link, allow_redirects=True)
-#     final_url = response.url
-#     more_details = requests.get(final_url).json()
-#     name = more_details.get("name")
-#     url = more_details.get("share_url")
-#     f_a = more_details.get("f_assured")
-#     c_price = more_details.get("current_price")
-#     o_price = more_details.get("original_price")
-#     discount= more_details.get("discounted")
-#     discount_percent = more_details.get("discount_percent")
-#     stock = more_details.get("in_stock")
-#     seller = more_details.get("seller_name")
-#     s_rating = more_details.get("seller_rating")
-#     highlights =  more_details.get("highlights")
-#     kboard = InlineKeyboardMarkup([
-#                 [
-#                     InlineKeyboardButton(text="📱 View on Flipkart", url=url)
-#                 ],
-#             ])
-#     output = f"""
-# **Title:** {name}
-# **Price:** ~~{o_price}~~ ‎  __{c_price}__
-# **In Stock:** __{stock}
-# **Discount:** __{discount}__ ‎  `{discount_percent}`
-# **Seller:** __{seller}__‎ ({s_rating})
-# **Flipkart Assured:** __{f_a}__
-# **Highlights:**
-# {highlights}
-# """
-#     await cb.edit_messsge_caption(output, reply_markup=kboard)
