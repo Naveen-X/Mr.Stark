@@ -21,7 +21,7 @@ async def create_sticker(sticker: raw.base.InputDocument, emoji: str) -> raw.bas
 async def upload_document(client: Client, file_path: str, chat_id: int) -> raw.base.InputDocument:
     media = await client.invoke(
         raw.functions.messages.UploadMedia(
-            peer=await client.resolve_peer(chat_id),
+            peer=await client.resolve_peer(peer_id=chat_id),
             media=raw.types.InputMediaUploadedDocument(
                 mime_type=client.guess_mime_type(file_path) or "application/zip",
                 file=await client.save_file(file_path),
