@@ -3,6 +3,7 @@ import sys
 import time
 import pyrogram
 import traceback
+from time import time 
 from datetime import datetime
 from shutil import disk_usage
 from os import environ, execle
