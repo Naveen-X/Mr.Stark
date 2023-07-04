@@ -39,7 +39,7 @@ def get_rt(seconds: int) -> str:
     return result
 
 
-start_time = time.time()
+start_time = time()
 pyrover = pyrogram.__version__
 assistant_version = "V2.0"
 AUTH_LIST = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
