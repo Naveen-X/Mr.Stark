@@ -20,6 +20,25 @@ from main.helper_func.basic_helpers import (
     get_readable_file_size
 )
 
+def get_rt(seconds: int) -> str:
+    result = ""
+    (days, remainder) = divmod(seconds, 86400)
+    days = int(days)
+    if days != 0:
+        result += f"{days}d "
+    (hours, remainder) = divmod(remainder, 3600)
+    hours = int(hours)
+    if hours != 0:
+        result += f"{hours}h "
+    (minutes, seconds) = divmod(remainder, 60)
+    minutes = int(minutes)
+    if minutes != 0:
+        result += f"{minutes}m "
+    seconds = int(seconds)
+    result += f"{seconds}s "
+    return result
+
+
 start_time = time.time()
 pyrover = pyrogram.__version__
 assistant_version = "V2.0"
@@ -52,7 +71,7 @@ async def restart(_, message):
     await res.edit("`Restarted Sucessfully...")
     exit()
 
-@Client.on_message(filters.command("/stats"))
+@Client.on_message(filters.command("stats"))
 @error_handler
 async def server_stats(client, message):
     await message.reply_text("ok")
@@ -71,8 +90,8 @@ async def server_stats(client, message):
         total, used, free = disk_usage(".")
         process = Process(os.getpid())
     
-        botuptime = get_readable_time(time() - start_time)
-        osuptime = get_readable_time(time() - boot_time())
+        botuptime = get_rt(time() - start_time)
+        osuptime = get_rt(time() - boot_time())
         currentTime = get_readable_time(time() - start_time)
         botusage = f"{round(process.memory_info()[0]/1024 ** 2)} MB"
     
