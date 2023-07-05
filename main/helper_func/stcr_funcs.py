@@ -21,7 +21,7 @@ async def create_sticker(sticker: raw.base.InputDocument, emoji: str) -> raw.bas
 async def upload_document(client: Client, file_path: str, chat_id: int) -> raw.base.InputDocument:
     media = await client.invoke(
         raw.functions.messages.UploadMedia(
-            peer=await client.resolve_peer(chat_id),
+            peer=await client.resolve_peer(peer_id=chat_id),
             media=raw.types.InputMediaUploadedDocument(
                 mime_type=client.guess_mime_type(file_path) or "application/zip",
                 file=await client.save_file(file_path),
@@ -240,7 +240,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
             except Exception as e:
                 print(traceback.format_exc())
                 if str(e) == "Stickerset_invalid":
-                    user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
+                    user_peer = raw.types.InputPeerUser(user_id=int(user_id), access_hash=0)
                     stcr = await create_sticker(
                         await upload_document(
                             c, f'{idk}.png', msg.chat.id
@@ -278,7 +278,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
             else:
                 im.thumbnail(maxsize)
             im.save(f'{idk}.png')
-            user_peer = raw.types.InputPeerUser(user_id=user_id, access_hash=0)
+            user_peer = raw.types.InputPeerUser(user_id=int(user_id), access_hash=0)
             stcr = await create_sticker(
                 await upload_document(
                     c, png_sticker, msg.chat.id
@@ -321,8 +321,9 @@ async def kangani(c, m):
                 functions.messages.GetStickerSet(
                     stickerset=types.InputStickerSetShortName(
                         short_name=packname
-                    ),
-                    hash=0
+                    )
+                           
+                   # hash=0
                 )
             )
             if int(stickerset.set.count) >= max_stickers:

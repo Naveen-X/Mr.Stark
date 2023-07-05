@@ -1,9 +1,8 @@
 import os
 import sys
-import time
 import pyrogram
 import traceback
-from time import time 
+from time import time
 from datetime import datetime
 from shutil import disk_usage
 from os import environ, execle
@@ -40,7 +39,7 @@ def get_rt(seconds: int) -> str:
     return result
 
 
-start_time = time.time()
+start_time = time()
 pyrover = pyrogram.__version__
 assistant_version = "V2.0"
 AUTH_LIST = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
@@ -50,7 +49,7 @@ AUTH_LIST = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
 async def ping(_, message):
     lol = await message.reply_text(f"**Pong!**")
     start = datetime.now()
-    uptime = get_readable_time((time.time() - start_time))
+    uptime = get_readable_time((time() - start_time))
     end = datetime.now()
     ms = (end - start).microseconds / 1000
     await lol.edit(
