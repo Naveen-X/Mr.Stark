@@ -84,9 +84,9 @@ async def unzip_files(c, m):
             try:
                await c.send_message(m.from_user.id, "**Files will be sent here**")
             except errors.PeerIdInvalid:
-                 await dl.edit("**Start Me in Pm First**")
+                 await m.reply_text("**Start Me in Pm First**")
             except errors.UserIsBlocked:
-                 await dl.edit("**Start Me in Pm First**")
+                 await m.reply_text("**Start Me in Pm First**")
             dl = await m.reply_text("`Downloading file...`")
             zip_file = await reply.download(progress=progress, progress_args=(dl, c_time, "`Downloading File!`"))
             await dl.edit("`Downloading Done!!\nNow Unzipping it...`")
