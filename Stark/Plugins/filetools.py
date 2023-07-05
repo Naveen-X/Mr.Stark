@@ -86,11 +86,11 @@ async def unzip_files(c, m):
             await dl.edit("`Downloading Done!!\nNow Unzipping it...`")
             extracted_file_paths = unzip_file(zip_file, target_dir)
             await dl.edit(f"**Found {len(extracted_file_paths)} files**\n`Now Uploading...")
-            for i in extracted_file_paths:
+            for index, file in enumerate(extracted_file_paths, 1):
                  try:
-                   await m.reply_document(i)
-                   await dl.edit(f"**Uploaded** `{i}/{len(extracted_file_paths)}`")
-                   if not i:
+                   await m.reply_document(file)
+                   await dl.edit(f"**Uploaded** `{index}/{len(extracted_file_paths)}`")
+                   if not file:
                       continue
                  except FloodWait as e:
                      await asyncio.sleep(e.value)
