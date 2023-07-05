@@ -1,5 +1,6 @@
 import os 
 import time
+import zipfile
 from Stark import error_handler
 from pyrogram import Client, filters
 
@@ -32,25 +33,54 @@ async def upload_file(c, m):
     except IndexError:
         await m.reply_text("What should I upload??")
         return
-    if m.from_user.id not in [1246467977, 1089528685]:
-        if not file.startswith('downloads/'):
-            await m.reply_text("You are unauthorized..")
-        if not file.startswith('/app/Mr.Stark/downloads/'):
-            await m.reply_text("`You are unauthorized`")
-        else:
-            msg = await m.reply_text("Uploading file please wait...")
-            try:
-              c_time=time.time()
-              await m.reply_document(file, progress=progress, progress_args=(msg, c_time, f"`Uploading This File!`")
-    )
-            except:
-              await msg.edit("`No Such File Found`")
-            await msg.delete()
-    else:
-        msg = await m.reply_text("Uploading file please wait...")
-        try:
-          c_time=time.time()
-          await m.reply_document(file, progress=progress, progress_args=(msg, c_time, f"`Uploading This File!`"))
-        except:
-          await msg.edit("`No Such File Found`")
+    
+    authorized_users = [1246467977, 1089528685]
+    authorized_paths = ['downloads/', '/app/Mr.Stark/downloads/']
+    
+    if m.from_user.id not in authorized_users:
+        if not any(file.startswith(path) for path in authorized_paths):
+            await m.reply_text("You are unauthorized.")
+            return
+
+    msg = await m.reply_text("Uploading file, please wait...")
+    try:
+        c_time = time.time()
+        await m.reply_document(file, progress=progress, progress_args=(msg, c_time, "Uploading This File!"))
+    except FileNotFoundError:
+        await msg.edit("No such file found.")
+    finally:
         await msg.delete()
+
+def unzip_file(zip_path, extract_dir):
+    extracted_files = []
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall(extract_dir)
+        for file_info in zip_ref.infolist():
+            extracted_files.append(os.path.join(extract_dir, file_info.filename))
+    return extracted_files
+
+@Client.on_message(filters.command(["unzip"]))
+@error_handler
+async def unzip_files(c, m):
+    reply = m.reply_to_message if m.reply_to_message else None
+    try:
+      zip_file = m.text.split(None, 1)[1]
+    except IndexError:
+      zip_file = None
+    if not zipfile and reply:
+      await m.reply_text("`What should I Unzip?`")
+      return
+    if reply and reply.document:
+        document = message.reply_to_message.document
+        if document.mime_type == 'application/zip':
+            c_time=time.time()
+            target_dir = f"downloads/unzip/{m.from_user.id}"
+            dl = await m.reply_text("`Downloading file...`")
+            zip_file = await reply.dowmload(progress=progress, progress_args=(dl, c_time, "`Downloading File!`"))
+            extracted_file_paths = unzip_file(zip_file, target_dir)
+            for i in extracted_file_paths:
+                 await m.reply_document(i)
+        else:
+            await m.reply_text("`The replied file is not a zip.`")
+    else:
+      await m.reply_text("`Reply to a Zip File to UnZip`")
