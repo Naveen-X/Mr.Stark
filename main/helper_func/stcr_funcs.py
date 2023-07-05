@@ -197,7 +197,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         user_peer = raw.types.InputPeerUser(user_id=int(user_id), access_hash=0)
         print(user_peer)
         stcr = await create_sticker(
-            await upload_document(Client, png_sticker, msg.chat.id),
+            await upload_document(c, png_sticker, msg.chat.id),
             emoji
         )
         # Create the sticker set
