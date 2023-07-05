@@ -2,8 +2,10 @@ import os
 import time
 import shutil
 import zipfile
+import asyncio
 from Stark import error_handler
 from pyrogram import Client, filters
+from pyrogram.errors import FloodWait
 
 from main.helper_func.basic_helpers import progress
 
@@ -80,10 +82,18 @@ async def unzip_files(c, m):
             zip_file = await reply.download(progress=progress, progress_args=(dl, c_time, "`Downloading File!`"))
             await dl.edit("`Downloading Done!!\nNow Unzipping it...`")
             extracted_file_paths = unzip_file(zip_file, target_dir)
+            for x in extracted_file_paths:
+              if x.endswith("/"):
+                extracted_file_paths.remove(x)
             await dl.edit(f"**Found {len(extracted_file_paths)} files**\n`Now Uploading...")
             for i in extracted_file_paths:
-                 await m.reply_document(i)
-                 await dl.edit(f"**Uploaded** `{i/len(extracted_file_paths)}`")
+                 try:
+                   await m.reply_document(i, progress=progress, progress_args=(m, c_time, "Uploading This File!"))
+                   await dl.edit(f"**Uploaded** `{i/len(extracted_file_paths)}`")
+                 except ValueError:
+                   pass
+                 except FloodWait as e:
+                     await asyncio.sleep(e.value)
             shutil.rmtree(target_dir)
             os.remove(zip_file)
         else:
