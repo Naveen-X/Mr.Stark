@@ -3,9 +3,9 @@ import time
 import shutil
 import zipfile
 import asyncio
+from pyrogram import errors
 from Stark import error_handler
 from pyrogram import Client, filters
-from pyrogram.errors import FloodWait
 
 from main.helper_func.basic_helpers import progress
 
@@ -88,13 +88,18 @@ async def unzip_files(c, m):
             await dl.edit(f"**Found {len(extracted_file_paths)} files**\n`Now Uploading...")
             for index, file in enumerate(extracted_file_paths, 1):
                  try:
-                   await m.reply_document(file)
+                   await c.send_document(m.from_user.id, file)
                    await dl.edit(f"**Uploaded** `{index}/{len(extracted_file_paths)}`")
-                 except FloodWait as e:
+                 except errors.PeerIdInvalid:
+                     await dl.edit("**Start Me in Pm First**")
+                 except errors.UserIsBlocked:
+                     await dl.edit("**Start Me in Pm First**")
+                 except errors.FloodWait as e:
                      await asyncio.sleep(e.value)
                      await m.reply_document(file)
                  except:
                      continue
+            await dl.edit("**All files have been sent to ur PM**")
             shutil.rmtree(target_dir)
             os.remove(zip_file)
         else:
