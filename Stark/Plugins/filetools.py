@@ -1,5 +1,6 @@
 import os 
 import time
+import shutil
 import zipfile
 from Stark import error_handler
 from pyrogram import Client, filters
@@ -77,9 +78,14 @@ async def unzip_files(c, m):
             target_dir = f"downloads/unzip/{m.from_user.id}"
             dl = await m.reply_text("`Downloading file...`")
             zip_file = await reply.download(progress=progress, progress_args=(dl, c_time, "`Downloading File!`"))
+            await dl.edit("`Downloading Done!!\nNow Unzipping it...`")
             extracted_file_paths = unzip_file(zip_file, target_dir)
+            await dl.edit(f"**Found {len(extracted_file_paths)} files**\n`Now Uploading...")
             for i in extracted_file_paths:
                  await m.reply_document(i)
+                 await dl.edit(f"**Uploaded** `{i/len(extracted_file_paths)}`")
+            shutil.rmtree(target_dir)
+            os.remove(zip_file)
         else:
             await m.reply_text("`The replied file is not a zip.`")
     else:
