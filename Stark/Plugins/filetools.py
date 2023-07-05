@@ -76,7 +76,7 @@ async def unzip_files(c, m):
             c_time=time.time()
             target_dir = f"downloads/unzip/{m.from_user.id}"
             dl = await m.reply_text("`Downloading file...`")
-            zip_file = await reply.dowmload(progress=progress, progress_args=(dl, c_time, "`Downloading File!`"))
+            zip_file = await reply.download(progress=progress, progress_args=(dl, c_time, "`Downloading File!`"))
             extracted_file_paths = unzip_file(zip_file, target_dir)
             for i in extracted_file_paths:
                  await m.reply_document(i)
