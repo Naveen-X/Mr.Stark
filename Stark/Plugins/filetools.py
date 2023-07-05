@@ -81,6 +81,12 @@ async def unzip_files(c, m):
         if document.mime_type == 'application/zip':
             c_time=time.time()
             target_dir = f"downloads/unzip/{m.from_user.id}"
+            try:
+               await c.send_message(m.from_user.id, "**Files will be sent here**")
+            except errors.PeerIdInvalid:
+                 await dl.edit("**Start Me in Pm First**")
+            except errors.UserIsBlocked:
+                 await dl.edit("**Start Me in Pm First**")
             dl = await m.reply_text("`Downloading file...`")
             zip_file = await reply.download(progress=progress, progress_args=(dl, c_time, "`Downloading File!`"))
             await dl.edit("`Downloading Done!!\nNow Unzipping it...`")
@@ -90,10 +96,10 @@ async def unzip_files(c, m):
                  try:
                    await c.send_document(m.from_user.id, file)
                    await dl.edit(f"**Uploaded** `{index}/{len(extracted_file_paths)}`")
-                 except errors.PeerIdInvalid:
-                     await dl.edit("**Start Me in Pm First**")
-                 except errors.UserIsBlocked:
-                     await dl.edit("**Start Me in Pm First**")
+                # except errors.PeerIdInvalid:
+                #     await dl.edit("**Start Me in Pm First**")
+                # except errors.UserIsBlocked:
+                #     await dl.edit("**Start Me in Pm First**")
                  except errors.FloodWait as e:
                      await asyncio.sleep(e.value)
                      await m.reply_document(file)
