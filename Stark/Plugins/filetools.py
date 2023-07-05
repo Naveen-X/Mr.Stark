@@ -90,8 +90,8 @@ async def unzip_files(c, m):
                  try:
                    await m.reply_document(i, progress=progress, progress_args=(m, c_time, "Uploading This File!"))
                    await dl.edit(f"**Uploaded** `{i/len(extracted_file_paths)}`")
-                 except ValueError:
-                   pass
+                   if not i:
+                      continue
                  except FloodWait as e:
                      await asyncio.sleep(e.value)
             shutil.rmtree(target_dir)
