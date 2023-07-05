@@ -90,10 +90,11 @@ async def unzip_files(c, m):
                  try:
                    await m.reply_document(file)
                    await dl.edit(f"**Uploaded** `{index}/{len(extracted_file_paths)}`")
-                   if not file:
-                      continue
                  except FloodWait as e:
                      await asyncio.sleep(e.value)
+                     await m.reply_document(file)
+                 except:
+                     continue
             shutil.rmtree(target_dir)
             os.remove(zip_file)
         else:
