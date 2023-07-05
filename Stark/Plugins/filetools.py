@@ -89,7 +89,7 @@ async def unzip_files(c, m):
             for i in extracted_file_paths:
                  try:
                    await m.reply_document(i)
-                   await dl.edit(f"**Uploaded** `{int(i)/len(extracted_file_paths)}`")
+                   await dl.edit(f"**Uploaded** `{i}/{len(extracted_file_paths)}`")
                    if not i:
                       continue
                  except FloodWait as e:
