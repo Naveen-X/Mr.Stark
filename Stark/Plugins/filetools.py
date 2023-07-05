@@ -88,7 +88,7 @@ async def unzip_files(c, m):
             await dl.edit(f"**Found {len(extracted_file_paths)} files**\n`Now Uploading...")
             for i in extracted_file_paths:
                  try:
-                   await m.reply_document(i, progress=progress, progress_args=(m, c_time, "Uploading This File!"))
+                   await m.reply_document(i)
                    await dl.edit(f"**Uploaded** `{i/len(extracted_file_paths)}`")
                    if not i:
                       continue
