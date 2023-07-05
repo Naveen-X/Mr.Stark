@@ -59,8 +59,11 @@ def unzip_file(zip_path, extract_dir):
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
         zip_ref.extractall(extract_dir)
         for file_info in zip_ref.infolist():
-            extracted_files.append(os.path.join(extract_dir, file_info.filename))
+            # Exclude directories from the extracted files
+            if not file_info.is_dir():
+                extracted_files.append(os.path.join(extract_dir, file_info.filename))
     return extracted_files
+
 
 @Client.on_message(filters.command(["unzip"]))
 @error_handler
@@ -82,9 +85,6 @@ async def unzip_files(c, m):
             zip_file = await reply.download(progress=progress, progress_args=(dl, c_time, "`Downloading File!`"))
             await dl.edit("`Downloading Done!!\nNow Unzipping it...`")
             extracted_file_paths = unzip_file(zip_file, target_dir)
-            for x in extracted_file_paths:
-              if x.endswith("/"):
-                extracted_file_paths.remove(x)
             await dl.edit(f"**Found {len(extracted_file_paths)} files**\n`Now Uploading...")
             for i in extracted_file_paths:
                  try:
