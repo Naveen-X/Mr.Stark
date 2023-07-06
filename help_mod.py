@@ -173,21 +173,6 @@ class Script(object):
     ]
     MISC = [
         {
-   "desc": "Add chat to quote db",
-   "cmds": ["ad_qt"],
-   "usage": "/add_qt"
-        },
-        {
-   "desc": "remove chat from quote db",
-   "cmds": ["del_qt"],
-   "usage": "/del_qt"
-        },
-        {
-   "desc": "sends quote daily at 8:00 am and 6:00 pm",
-   "cmds": ["no cmd"],
-   "usage": "works automatically"
-        },
-        {
    "desc": "sends the message u input or reply",
    "cmds": ["send"],
    "usage": "/send [ message / reply to message ]"
@@ -243,7 +228,34 @@ class Script(object):
             "usage": "/q [reply to a text message / give text as input]\nNote:\n1. No need to use args like -r for reply | reply set as default\n2.Either give text as reply or input"
         }
     ]
-    STICKER = [
+    RAYSO = [
+        {
+            "desc": "Create cool code snippets [Dark Mode]",
+            "cmds": ["rayso"],
+            "usage": "/rayso [ theme / do not specify for ramdom | reply to a message or a text file ]\nUse /rayso -l to list available themes"
+        },
+                {
+            "desc": "Create cool code snippets [Light Mode]",
+            "cmds": ["lrayso"],
+            "usage": "/lrayso [ theme / do not specify for ramdom | reply to a message or a text file ]\nUse /rayso -l to list available themes"
+        }
+    ]
+    STICKERS = [
+        {
+            "desc": "Kang the replied sticker",
+            "cmds": ["kang"],
+            "usage": "/kang [ emoji | reply to the sticker ]"
+        },
+        {
+            "desc": "Delete sticker from ur pack",
+            "cmds": ["delsticker", "del_sticker"],
+            "usage": "/delsticker [ reply to sticker u want to delete ]"
+        },
+        {
+            "desc": "List all ur pack's",
+            "cmds": ["mypacks"],
+            "usage": "/mypacks"
+        },
         {
             "desc": "Creates a sticker with given text",
             "cmds": ["stcr"],
