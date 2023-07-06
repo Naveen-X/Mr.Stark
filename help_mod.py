@@ -177,15 +177,35 @@ class Script(object):
    "cmds": ["send"],
    "usage": "/send [ message / reply to message ]"
         },
-                {
+        {
    "desc": "Emojify text",
    "cmds": ["emoji"],
    "usage": "/emoji Stark"
         },
-                {
+        {
    "desc": "Emojify text with custom emoji",
    "cmds": ["cmoji"],
    "usage": "/send 🔥 Stark"
+        },
+        {
+   "desc": "Weebify ur text",
+   "cmds": ["weeb", "weebify"],
+   "usage": "/weebify [ input or reply to a message ]"
+        },
+        {
+   "desc": "Sends F",
+   "cmds": ["f", "ftext"],
+   "usage": "/f or /f [ custom emoji or a small text ]"
+        },
+        {
+   "desc": "Make a yt comment",
+   "cmds": ["ytc"],
+   "usage": "/ytc Hello I'm Stark"
+        },
+        {
+   "desc": "Makes a yt comment with random pfp",
+   "cmds": ["rytc"],
+   "usage": "/rytc Hello Im Stark"
         }
     ]
     MEDIAINFO = [
