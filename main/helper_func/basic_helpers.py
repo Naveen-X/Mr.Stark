@@ -112,30 +112,6 @@ def get_readable_time(seconds: int) -> int:
     return ping_time
     
 
-def inline_wrapper(func):
-    async def wrapper(client, inline_query):
-        users = await get_all_pros()
-        if inline_query.from_user.id not in users:
-            await client.answer_inline_query(
-                inline_query.id,
-                cache_time=1,
-                results=[
-                    (
-                        InlineQueryResultArticle(
-                            title="Sorry, Friend You Can't Use Me!",
-                            input_message_content=InputTextMessageContent(
-                                "**Hai!** Well, I am Not For You, I Only Work For My Master. Why Don't You Deploy Your Own @FridayOT ?"
-                            ),
-                        )
-                    )
-                ],
-            )
-        else:
-            await func(client, inline_query)
-
-    return wrapper
-
-
 def humanbytes(size):
     """Convert Bytes To Bytes So That Human Can Read It"""
     if not size:
