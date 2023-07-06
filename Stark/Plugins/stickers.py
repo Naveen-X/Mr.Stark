@@ -25,10 +25,9 @@ async def kang(c, m):
         await m.reply_text("`Message as a user !`")
         return
     if user_id:
-#        await c.send_chat_action(m.chat.id, CHOOSE_STICKER)
-        msg = m
         user = m.from_user
         chat_id = m.chat.id
+        msg = m
         if os.path.isfile(f"{user_id}.png"):
             try:
                 os.remove("{user_id}.png")
@@ -49,11 +48,11 @@ async def kang(c, m):
                     await kangwebm(m, c)
                 else:
                     await kangMyAss(m, c, chat_id)
-            elif msg.reply_to_message.sticker or msg.reply_to_message.photo:
+            elif msg.reply_to_message.photo:
                 await kangMyAss(m, c, chat_id)
         else:
             packs = "`Please reply to a sticker or image to kang it!\nBtw here are your packs:\n"
-            packname = "kang_" + str(user_id) + "_by_" + str(BOT_USERNAME)
+            packname = f"kang_{str(user_id)}_by_{str(BOT_USERNAME)}"
             try:
                 stickerset = stickerset = await c.invoke(
                     functions.messages.GetStickerSet(
@@ -85,9 +84,7 @@ async def kang(c, m):
                         onlypack = 1
 
                     packnum += 1
-                    packname = "kang_" + \
-                        str(packnum - 1) + "_" + str(user_id) + \
-                        "_by_"+str(BOT_USERNAME)
+                    packname = f"kang_{str(packnum - 1)}_{str(user_id)}_by_{str(BOT_USERNAME)}"
             else:
                 packs += f"[Pack](t.me/addstickers/{packname})"
             await m.reply_text(packs)
@@ -103,9 +100,8 @@ async def my_packs(c, m):
         await m.reply_text("Message as a user !")
         return
     packs = f"**{m.from_user.first_name}'s sticker packs:**\n"
-    packs1 = ""
     packs2 = ""
-    packname = "kang_" + str(user_id) + "_by_"+str(BOT_USERNAME)
+    packname = f"kang_{str(user_id)}_by_{str(BOT_USERNAME)}"
     try:
         stickerset = await c.invoke(
             functions.messages.GetStickerSet(
@@ -137,11 +133,9 @@ async def my_packs(c, m):
                 onlypack = 1
 
             packnum += 1
-            packname = "kang_" + \
-                str(packnum - 1) + "_" + str(user_id) + \
-                "_by_"+str(BOT_USERNAME)
+            packname = f"kang_{str(packnum - 1)}_{str(user_id)}_by_{str(BOT_USERNAME)}"
 
-    packname = "kang_" + str(user.id) + "animated_by_" + str(BOT_USERNAME)
+    packname = f"kang_{str(user.id)}animated_by_{str(BOT_USERNAME)}"
     try:
         stickerset = await c.invoke(
             functions.messages.GetStickerSet(
@@ -155,6 +149,7 @@ async def my_packs(c, m):
     except:
         packnum = 0
 
+    packs1 = ""
     if packnum > 0:
         onlypack = 0
         packs1 += "**Animatied packs:**\n"
@@ -174,11 +169,9 @@ async def my_packs(c, m):
                 onlypack = 1
 
             packnum += 1
-            packname = "kang_" + \
-                str(packnum) + "_" + str(user.id) + \
-                "animated_by_"+str(BOT_USERNAME)
+            packname = f"kang_{packnum}_{str(user.id)}animated_by_{str(BOT_USERNAME)}"
 
-    packname = "kang_" + str(user.id) + "video_by_"+str(BOT_USERNAME)
+    packname = f"kang_{str(user.id)}video_by_{str(BOT_USERNAME)}"
     try:
         stickerset = await c.invoke(
             functions.messages.GetStickerSet(
@@ -211,9 +204,7 @@ async def my_packs(c, m):
                 onlypack = 1
 
             packnum += 1
-            packname = "kang_" + \
-                str(packnum) + "_" + str(user.id) + \
-                "video_by_"+str(BOT_USERNAME)
+            packname = f"kang_{packnum}_{str(user.id)}video_by_{str(BOT_USERNAME)}"
 
     await m.reply_text(f"\n{packs}{packs1}{packs2}")
 
@@ -238,7 +229,7 @@ async def delsticker(c, m):
             try:
                 C = functions.stickers.RemoveStickerFromSet(sticker=pyrogram.utils.get_input_media_from_file_id(m.reply_to_message.sticker.file_id))
                 sticker_info = C.sticker
-                
+
                 input_document = types.InputDocument(
                     id=sticker_info.id.id,
                     access_hash = sticker_info.id.access_hash,
@@ -249,10 +240,10 @@ async def delsticker(c, m):
                     "`Successfully deleted the sticker from your pack`"
                     )
             except Exception as e:
-                if str(e) == "'NoneType' object has no attribute 'sticker'":
-                    await m.reply_text(
-                        "`Sticker to delete not found !`")
-                elif str(e) == "Stickerset_not_modified":
+                if str(e) in {
+                    "'NoneType' object has no attribute 'sticker'",
+                    "Stickerset_not_modified",
+                }:
                     await m.reply_text(
                         "`Sticker to delete not found !`")
                 else:

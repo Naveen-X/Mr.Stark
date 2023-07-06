@@ -15,16 +15,8 @@ async def quote(client, m):
         if user is None:
             return {}
 
-        if not user.first_name:
-            first_name = ""
-        else:
-            first_name = user.first_name
-
-        if not user.last_name:
-            last_name = ""
-        else:
-            last_name = user.last_name
-
+        first_name = "" if not user.first_name else user.first_name
+        last_name = "" if not user.last_name else user.last_name
         if user.photo:
             small_id = user.photo.small_file_id
             small_unique = user.photo.small_photo_unique_id
@@ -56,14 +48,8 @@ async def quote(client, m):
             for i in range(int(m.command[1])):
                 mes = await client.get_messages(m.chat.id, num + i)
                 u = mes.from_user
-                if not u.first_name:
-                    first_name = ""
-                else:
-                    first_name = u.first_name
-                if not u.last_name:
-                    last_name = ""
-                else:
-                    last_name = u.last_name
+                first_name = "" if not u.first_name else u.first_name
+                last_name = "" if not u.last_name else u.last_name
                 if u.photo:
                     small_id = u.photo.small_file_id
                     small_unique = u.photo.small_photo_unique_id
@@ -108,17 +94,11 @@ async def quote(client, m):
         }
         messages.append(me)
 
-    elif (m.text == "/q" or m.text == "/qu" or m.text == "/qt" or m.text == "/quote") and (m.reply_to_message):
+    elif m.text in ["/q", "/qu", "/qt", "/quote"] and m.reply_to_message:
         mes = m.reply_to_message
         u = mes.from_user
-        if not u.first_name:
-            first_name = ""
-        else:
-            first_name = u.first_name
-        if not u.last_name:
-            last_name = ""
-        else:
-            last_name = u.last_name
+        first_name = "" if not u.first_name else u.first_name
+        last_name = "" if not u.last_name else u.last_name
         if mes.reply_to_message:
             uu = create_user_dict(u)
             reply_message = {

@@ -256,8 +256,7 @@ sad_quotes = [
 #Call client to say cmd, otherwise it wont listen --Unknown
     #idk why i made this function instead of directly using random in message
 def sed_gen(sad_quotes):
-	qt = random.choice(sad_quotes)
-	return qt 
+	return random.choice(sad_quotes) 
 	
 @Client.on_message(filters.command(["sed", "sad"]))
 @error_handler
@@ -266,9 +265,8 @@ async def sed_qoute(c, m):
 	if not m.reply_to_message:
 		await m.reply_text(qt)
 		return
-	if m.reply_to_message:
-		await c.send_message(m.chat.id, qt, reply_to_message_id=m.reply_to_message.id)
-		return
+	await c.send_message(m.chat.id, qt, reply_to_message_id=m.reply_to_message.id)
+	return
 
 #Code finished ntg to see now...
 qt = DB.qt
@@ -390,70 +388,61 @@ async def c_emoji(client, message):
 @Client.on_message(filters.command(["ftext", "f"]))
 @error_handler
 async def ftext(client, message):
-    try:
-        input_str = message.text.split(None, 1)[1]
-    except IndexError:
-        input_str = None
-    if input_str:
-        paytext = input_str
-        pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
-            paytext * 8,
-            paytext * 8,
-            paytext * 2,
-            paytext * 2,
-            paytext * 2,
-            paytext * 6,
-            paytext * 6,
-            paytext * 2,
-            paytext * 2,
-            paytext * 2,
-            paytext * 2,
-            paytext * 2,
-        )
-    else:
-        pay = "╭━━━╮\n┃╭━━╯\n┃╰━━╮\n┃╭━━╯\n┃┃\n╰╯\n"
-    if message.reply_to_message:
-        await message.reply_to_message.reply_text(pay)
-    else:
-        await message.reply_text(pay)
+	try:
+	    input_str = message.text.split(None, 1)[1]
+	except IndexError:
+	    input_str = None
+	if input_str:
+		paytext = input_str
+		pay = f"{paytext * 8}\n{paytext * 8}\n{paytext * 2}\n{paytext * 2}\n{paytext * 2}\n{paytext * 6}\n{paytext * 6}\n{paytext * 2}\n{paytext * 2}\n{paytext * 2}\n{paytext * 2}\n{paytext * 2}"
+	else:
+		pay = "╭━━━╮\n┃╭━━╯\n┃╰━━╮\n┃╭━━╯\n┃┃\n╰╯\n"
+	if message.reply_to_message:
+	    await message.reply_to_message.reply_text(pay)
+	else:
+	    await message.reply_text(pay)
 
 @Client.on_message(filters.command(["ytc"]))
 @error_handler
 async def yt_comment(client, message):
-   ytc = await message.reply_text("`Making Comment`")
-   try:
-        input_str = message.text.split(None, 1)[1]
-   except IndexError:
-        await ytc.edit("`Gib Some text to Make yt comment, U Dumb!`")
-        return
-   text = urllib.parse.quote_plus(input_str)
-   name0 = message.from_user.first_name
-   name = urllib.parse.quote_plus(name0)
-   async for photo in client.get_chat_photos(message.from_user.id, limit=1):
-      img = photo 
-      pic = await client.download_media(img.file_id)
-   kk = upload_file(pic)
-   imglink = f"https://telegra.ph{kk[0]}"
-   lol = f"https://some-random-api.com/canvas/youtube-comment?avatar={imglink}&username={name}&comment={text}"
+	ytc = await message.reply_text("`Making Comment`")
+	try:
+	     input_str = message.text.split(None, 1)[1]
+	except IndexError:
+	     await ytc.edit("`Gib Some text to Make yt comment, U Dumb!`")
+	     return
+	text = urllib.parse.quote_plus(input_str)
+	name0 = message.from_user.first_name
+	name = urllib.parse.quote_plus(name0)
+	async for photo in client.get_chat_photos(message.from_user.id, limit=1):
+	   img = photo 
+	   pic = await client.download_media(img.file_id)
+	kk = upload_file(pic)
+	imglink = f"https://telegra.ph{kk[0]}"
+	lol = f"https://some-random-api.com/canvas/youtube-comment?avatar={imglink}&username={name}&comment={text}"
   # await ytc.edit(lol)
-   await client.send_photo(message.chat.id, lol, caption=f"__**Made using @Mr_StarkBot**__")
-   os.remove(pic)
-   await ytc.delete()
+	await client.send_photo(
+		message.chat.id, lol, caption="__**Made using @Mr_StarkBot**__"
+	)
+	os.remove(pic)
+	await ytc.delete()
 
 @Client.on_message(filters.command(["rytc"]))
 @error_handler
 async def ryt_comment(client, message):
-     ytc = await message.reply_text("`Making Comment`")
-     try:
-          input_str = message.text.split(None, 1)[1]
-     except IndexError:
-          await ytc.edit("`Gib Some text to Make yt comment, U Dumb!`")
-          return
-     text = urllib.parse.quote_plus(input_str)
-     name0 = message.from_user.first_name
-     name = urllib.parse.quote_plus(name0)
-     link = random.choice(AVATARS)    
-     lol = f"https://some-random-api.com/canvas/youtube-comment?avatar={link}&username={name}&comment={text}"
+	ytc = await message.reply_text("`Making Comment`")
+	try:
+	     input_str = message.text.split(None, 1)[1]
+	except IndexError:
+	     await ytc.edit("`Gib Some text to Make yt comment, U Dumb!`")
+	     return
+	text = urllib.parse.quote_plus(input_str)
+	name0 = message.from_user.first_name
+	name = urllib.parse.quote_plus(name0)
+	link = random.choice(AVATARS)
+	lol = f"https://some-random-api.com/canvas/youtube-comment?avatar={link}&username={name}&comment={text}"
    #  await ytc.edit(lol)
-     await client.send_photo(message.chat.id, lol, caption=f"__**Made using @Mr_StarkBot**__")
-     await ytc.delete()
+	await client.send_photo(
+		message.chat.id, lol, caption="__**Made using @Mr_StarkBot**__"
+	)
+	await ytc.delete()

@@ -36,7 +36,7 @@ AUTH_LIST = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
 @error_handler
 async def eval(bot, message):
     p = print
-    stark = await message.reply_text(f"`ʀᴜɴɴɪɴɢ ᴄᴏᴅᴇ... ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ!`")
+    stark = await message.reply_text("`ʀᴜɴɴɪɴɢ ᴄᴏᴅᴇ... ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ!`")
     try:
         cmd = message.text.split(None, 1)[1]
     except IndexError:

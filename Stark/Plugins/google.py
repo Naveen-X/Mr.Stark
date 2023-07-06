@@ -56,9 +56,10 @@ async def google(bot, message):
         links.append(result["link"])
         descriptions.append(result["description"])
 
-    msg = ""
-    for tt, lik, des in zip(titles, links, descriptions):
-        msg += f"[{tt}]({lik})\n`{des}`\n\n"
+    msg = "".join(
+        f"[{tt}]({lik})\n`{des}`\n\n"
+        for tt, lik, des in zip(titles, links, descriptions)
+    )
     await gs.edit("**sᴇᴀʀᴄʜ ǫᴜᴇʀʏ:**\n`" + query + "`\n\n**ʀᴇsᴜʟᴛs:**\n" + msg, disable_web_page_preview=True)
 
 

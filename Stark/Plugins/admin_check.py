@@ -13,17 +13,17 @@ async def admins_coll(client, m):
 
 
 async def immutable_col(client, m, chat_id: int):
-    chat_imm = admins.get(int(chat_id))
+    chat_imm = admins.get(chat_id)
     if not chat_imm:
         await admins_col(client, m, chat_id)
-        chat_imm = admins.get(int(chat_id))
+        chat_imm = admins.get(chat_id)
     try:
         my_ch = (await client.get_chat(chat_id)).linked_chat.id
         chat_imm.append(my_ch)
     except:
         pass
     finally:
-        immune.update({int(chat_id): chat_imm})
+        immune.update({chat_id: chat_imm})
 
 
 async def immutable(client, m, chat_id, user_id):
@@ -33,10 +33,7 @@ async def immutable(client, m, chat_id, user_id):
     if not my_chat_imm:
         await immutable_col(client, m, chat_id)
         my_chat_imm = immune.get(chat_id)
-    if user_id in my_chat_imm:
-        return True
-    else:
-        return False
+    return user_id in my_chat_imm
 
 
 # del cmd
@@ -51,7 +48,7 @@ async def admins_col(client, m, chat_id):
         return
     for a in all_admins:
         chat_admins.append(a.user.id)
-        perms.update({a.user.id: {
+        perms[a.user.id] = {
             "is_anonymous": a.is_anonymous,
             "can_delete_messages": a.can_delete_messages,
             "can_restrict_members": a.can_restrict_members,
@@ -59,9 +56,8 @@ async def admins_col(client, m, chat_id):
             "can_change_info": a.can_change_info,
             "can_pin_messages": a.can_pin_messages,
             "can_manage_voice_chats": a.can_manage_voice_chats,
-            "can_invite_users": a.can_invite_users
+            "can_invite_users": a.can_invite_users,
         }
-        })
     chat_admins.append(int(chat_id))
     admin_perms.update({int(chat_id): perms})
     admins.update({int(chat_id): chat_admins})
@@ -74,10 +70,7 @@ async def is_admin(client, m, chat_id, user_id):
     if not admins.get(chat_id):
         await admins_col(client, m, chat_id)
     my_chat_admins = admins.get(chat_id)
-    if user_id in my_chat_admins:
-        return True
-    else:
-        return False
+    return user_id in my_chat_admins
 
 
 # non async
@@ -91,7 +84,7 @@ def admins_col_sync(client, m, chat_id):
         return
     for a in all_admins:
         chat_admins.append(a.user.id)
-        perms.update({a.user.id: {
+        perms[a.user.id] = {
             "is_anonymous": a.is_anonymous,
             "can_delete_messages": a.can_delete_messages,
             "can_restrict_members": a.can_restrict_members,
@@ -99,9 +92,8 @@ def admins_col_sync(client, m, chat_id):
             "can_change_info": a.can_change_info,
             "can_pin_messages": a.can_pin_messages,
             "can_manage_voice_chats": a.can_manage_voice_chats,
-            "can_invite_users": a.can_invite_users
+            "can_invite_users": a.can_invite_users,
         }
-        })
     chat_admins.append(int(chat_id))
     admin_perms.update({int(chat_id): perms})
     admins.update({int(chat_id): chat_admins})
@@ -113,10 +105,7 @@ def is_admin_sync(client, m, chat_id, user_id):
     if not admins.get(chat_id):
         admins_col_sync(client, m, chat_id)
     my_chat_admins = admins.get(chat_id)
-    if user_id in my_chat_admins:
-        return True
-    else:
-        return False
+    return user_id in my_chat_admins
 
 
 # Other permissions
@@ -185,11 +174,7 @@ async def can_promote(client, m, chat_id, user_id):
 
 async def adminlist(client, m, chat_id):
     chat_id = int(chat_id)
-    my_admeme = []
     if not admins.get(chat_id):
         await admins_col(client, m, chat_id)
     my_chat_admins = admins.get(chat_id)
-    for ih in my_chat_admins:
-        if not str(ih).startswith('-1'):
-            my_admeme.append(ih)
-    return my_admeme
+    return [ih for ih in my_chat_admins if not str(ih).startswith('-1')]

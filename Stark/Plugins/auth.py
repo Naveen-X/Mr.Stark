@@ -27,9 +27,9 @@ async def add_auth(c, m):
                 await auth_user(m.reply_to_message.from_user.id, c)
                 await x.edit("`Authorised`")
             except Exception as e:
-                await x.edit("**Error Occurred:** " + str(e))
+                await x.edit(f"**Error Occurred:** {str(e)}")
         else:
-          await x.edit("**User Already Authorised**")
+            await x.edit("**User Already Authorised**")
     else:
         await m.reply_text("`Reply to a user to Authorise him`")
 
@@ -45,19 +45,18 @@ async def remove_auth(c, m):
                 await dis_auth_user(m.reply_to_message.from_user.id)
                 await x.edit("`UnAuthorised`")
             except Exception as e:
-                await x.edit("**Error Occurred:** " + str(e))
+                await x.edit(f"**Error Occurred:** {str(e)}")
         else:
-          await x.edit("**User is Not Authorised Yet**")
+            await x.edit("**User is Not Authorised Yet**")
     else:
         await m.reply_text("`Reply to a user to UnAuthorise him`")
 
 @Client.on_message(filters.command(["listauth", "list_auth"]) & filters.user([1246467977, 1089528685]))
 async def list_auth(c,m):
     x = await m.reply_text("`Getting Authorised Users list`")
-    if 1 == 1:
-      users = DB.auth.find({})
-      mg = "**List of Authorised Users: **\n"
-      for i in users:
-        t = i["mention"]
-        mg += f"• {t}\n"
-      await x.edit(mg)
+    users = DB.auth.find({})
+    mg = "**List of Authorised Users: **\n"
+    for i in users:
+      t = i["mention"]
+      mg += f"• {t}\n"
+    await x.edit(mg)

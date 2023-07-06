@@ -20,7 +20,7 @@ cookies = {
 
 def get_ig_download_url(url: str):
     """Get the download url for the media."""
-    url = url + "?&__a=1&__d=dis" if not url.endswith("?&__a=1&__d=dis") else url
+    url = f"{url}?&__a=1&__d=dis" if not url.endswith("?&__a=1&__d=dis") else url
     try:
         req = get(url, cookies=cookies).json()
         if req.get("items", [])[0].get("media_type") == 1:
@@ -123,26 +123,22 @@ async def instadl(c, m):
         return
     await ok.delete()
     msg = await m.reply_text("`Downloading...`")
-    caption = "<b>📷 {}</b>\n<i>{}</i>\n".format(
-        username.upper(), caption
-    )
-    caption_2 = "<b>📷 {}</b>\n<i>{}</i>\n<b>♥ Likes:</b> {}\n<b>💬 Comments:</b> {}".format(
-        username.upper(), caption, likes, comments
-    )
-    keyboard = InlineKeyboardMarkup(
-    [
+    caption = f"<b>📷 {username.upper()}</b>\n<i>{caption}</i>\n"
+    caption_2 = f"<b>📷 {username.upper()}</b>\n<i>{caption}</i>\n<b>♥ Likes:</b> {likes}\n<b>💬 Comments:</b> {comments}"
+        keyboard = InlineKeyboardMarkup(
         [
-            InlineKeyboardButton(
-                text=f"♥ {likes}",
-                callback_data="likes",
-            ),
-            InlineKeyboardButton(
-                text=f"💬 {comments}",
-                callback_data="comments",
-            ),
-        ],
-    ]
-)
+            [
+                InlineKeyboardButton(
+                    text=f"♥ {likes}",
+                    callback_data="likes",
+                ),
+                InlineKeyboardButton(
+                    text=f"💬 {comments}",
+                    callback_data="comments",
+                ),
+            ],
+        ]
+    )
     if carousel:
         dl_bytes = [(InputMediaPhoto(i, caption=caption_2) if i == dl_url[-1] else InputMediaPhoto(i)) for i in dl_url]
         await c.send_media_group(

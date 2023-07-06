@@ -51,10 +51,7 @@ async def rayso_by_pro_odi(c, m):
       query = m.text.split(None, 1)[1]
     except IndexError:
       query = None
-    if m.reply_to_message:
-      rquery = m.reply_to_message
-    else:
-      rquery = None
+    rquery = m.reply_to_message if m.reply_to_message else None
     rayso = await m.reply_text("**Processing...**")
     if not query:
       theme = "random"
@@ -74,22 +71,20 @@ async def rayso_by_pro_odi(c, m):
     if theme == "random":
         theme = random.choice(THEMES)
 
-    # Get Mode
-    if rquery:
-        if rquery.text:
-            text = rquery.text
-        elif rquery.caption:
-            text = rquery.caption
-        elif rquery.document:
-            file = await rquery.download()
-            m_list = open(file, "r").read()
-            text = m_list
-            os.remove(file)
-        else:
-            return await rayso.edit("`Unsupported.`")
-    else:
+    if not rquery:
         return await rayso.edit("`What should I do?`")
 
+    if rquery.text:
+        text = rquery.text
+    elif rquery.caption:
+        text = rquery.caption
+    elif rquery.document:
+        file = await rquery.download()
+        m_list = open(file, "r").read()
+        text = m_list
+        os.remove(file)
+    else:
+        return await rayso.edit("`Unsupported.`")
     # // Max size 30000 byte but that breaks thumb so making on 28000 byte
     text_list = text_chunk_list(text, 28000)
     user = m.from_user.first_name
@@ -124,10 +119,7 @@ async def light_mode_rayso(c, m):
       query = m.text.split(None, 1)[1]
     except IndexError:
       query = None
-    if m.reply_to_message:
-      rquery = m.reply_to_message
-    else:
-      rquery = None
+    rquery = m.reply_to_message if m.reply_to_message else None
     rayso = await m.reply_text("**Processing...**")
     if not query:
       theme = "random"
@@ -147,22 +139,20 @@ async def light_mode_rayso(c, m):
     if theme == "random":
         theme = random.choice(THEMES)
 
-    # Get Mode
-    if rquery:
-        if rquery.text:
-            text = rquery.text
-        elif rquery.caption:
-            text = rquery.caption
-        elif rquery.document:
-            file = await rquery.download()
-            m_list = open(file, "r").read()
-            text = m_list
-            os.remove(file)
-        else:
-            return await rayso.edit("`Unsupported.`")
-    else:
+    if not rquery:
         return await rayso.edit("`What should I do?`")
 
+    if rquery.text:
+        text = rquery.text
+    elif rquery.caption:
+        text = rquery.caption
+    elif rquery.document:
+        file = await rquery.download()
+        m_list = open(file, "r").read()
+        text = m_list
+        os.remove(file)
+    else:
+        return await rayso.edit("`Unsupported.`")
     # // Max size 30000 byte but that breaks thumb so making on 28000 byte
     text_list = text_chunk_list(text, 28000)
     user = m.from_user.first_name

@@ -24,19 +24,18 @@ async def bot_sys_stats():
     mem = psutil.virtual_memory().percent
     disk = psutil.disk_usage("/").percent
     process = psutil.Process(os.getpid())
-    stats = f"""
+    return f"""
 Naveen_xD@Mr.Stark
 --------------------------
 ✘ VERSION: {version}
-✘ UPTIME: {get_readable_time((time.time() - bot_start_time))}
-✘ BOT: {round(process.memory_info()[0] / 1024 ** 2)} MB
+✘ UPTIME: {get_readable_time(time.time() - bot_start_time)}
+✘ BOT: {round(process.memory_info()[0] / 1024**2)} MB
 ✘ CPU: {cpu}%
 ✘ RAM: {mem}%
 ✘ DISK: {disk}%
 ✘ USERS: {await db.get_user_count()}
 --------------------------
 """
-    return stats
 
 
 def page_data(page):

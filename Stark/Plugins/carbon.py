@@ -14,8 +14,7 @@ from Stark import error_handler
 def carbon(code):
     url = f"https://api.safone.me/carbon?code={quote(code)}"
     resp = requests.get(url)
-    js = resp.json()["image"]
-    return js
+    return resp.json()["image"]
 
 
 @Client.on_message(filters.command(["carbon"]))
@@ -37,9 +36,8 @@ async def make_carbon(bot, message):
                 return await ok.edit("`Nothing To Carbonize...`")
 
             x = carbon(code)
-            decodeit = open('carbon.jpg', 'wb')
-            decodeit.write(base64.b64decode(str(x)))
-            decodeit.close()
+            with open('carbon.jpg', 'wb') as decodeit:
+                decodeit.write(base64.b64decode(str(x)))
             if message.from_user:
                 user = message.from_user.mention
             else:
@@ -50,6 +48,7 @@ async def make_carbon(bot, message):
             os.remove("carbon.jpg")
         except Exception as e:
             raise e
+
     try:
         await asyncio.wait_for(car_(bot, message), timeout=60)
     except asyncio.TimeoutError:
@@ -72,9 +71,8 @@ async def carbonn(bot, message):
         return await ok.edit("Nothing To Carbonize...")
     x = carbon(code)
     carbon_url = x
-    decodeit = open('carbon.jpg', 'wb')
-    decodeit.write(base64.b64decode(carbon_url))
-    decodeit.close()
+    with open('carbon.jpg', 'wb') as decodeit:
+        decodeit.write(base64.b64decode(carbon_url))
     if message.from_user:
         user = message.from_user.mention
     else:

@@ -33,15 +33,14 @@ class Lexica:
             "model": "lexica-aperture-v2"
         })
 
-        prompts = [f"https://image.lexica.art/full_jpg/{ids['id']}" for ids in response.json()["images"]]
-
-        return prompts
+        return [
+            f"https://image.lexica.art/full_jpg/{ids['id']}"
+            for ids in response.json()["images"]
+        ]
 
     def _generate_random_string(self, length):
         chars = string.ascii_letters + string.digits
-        result_str = ''.join(random.choice(chars) for _ in range(length))
-
-        return result_str
+        return ''.join(random.choice(chars) for _ in range(length))
 
     def generate(self):
         response = httpx.post("https://z.lexica.art/api/generator", headers={
@@ -64,10 +63,9 @@ class Lexica:
 
 #Generate gpt response...
 def generate_response(query: str):
-  url = "http://gpt.kavya.workers.dev?message=" + str(query) +"&ssid=blah&sqk=r&stream=false"
-  response = requests.get(url).json()
-  message = response['text']
-  return message
+    url = f"http://gpt.kavya.workers.dev?message={query}&ssid=blah&sqk=r&stream=false"
+    response = requests.get(url).json()
+    return response['text']
 
 @Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
 @error_handler

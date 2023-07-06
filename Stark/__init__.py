@@ -41,13 +41,10 @@ def get_gitlab_snippet(title, content, file):
     # Send the POST request to create the snippet
     response = requests.post(url, headers=headers, data=json.dumps(snippet_data))
 
-    # Check if the request was successful
-    if response.status_code == 201:
-        print('Snippet created successfully')
-        snippet_id = response.json()['web_url']
-        return snippet_id
-    else:
+    if response.status_code != 201:
         return f'Error creating snippet: {response.text}'
+    print('Snippet created successfully')
+    return response.json()['web_url']
 
 
 logging.basicConfig(
@@ -158,8 +155,9 @@ def error_handler(func):
 async def handle_error(client: Client, message, exception: Exception, k):
     logging.error(f"Error in {message.command[0]}: {exception}")
     await message.reply_text(
-        "**An error occurred while processing your request.**\n\n**ERROR:** `{}`\n\n__If you think THis was a serious error Please forward this message to__ ** [Satya](t.me/s4tyendra) ** __or__ ** [Naveen](t.me/naveen_xd) **\n\n**Complete Error: [Click here](https://t.me/c/1491739934/{})**".format(
-            exception, k.id), disable_web_page_preview=True)
+        f"**An error occurred while processing your request.**\n\n**ERROR:** `{exception}`\n\n__If you think THis was a serious error Please forward this message to__ ** [Satya](t.me/s4tyendra) ** __or__ ** [Naveen](t.me/naveen_xd) **\n\n**Complete Error: [Click here](https://t.me/c/1491739934/{k.id})**",
+        disable_web_page_preview=True,
+    )
 
 
 logger.info("live log streaming to console.")

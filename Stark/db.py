@@ -27,8 +27,6 @@ async def add(client, message):
     if k is None:
         await client.send_message(-1001491739934, f"**__New User**__\n\n**Name:** {name}\n**UserName:**{user_name}\nID: {id_}\n\n#newuser")
         DB.users.insert_one({"_id": id_, "username": name})
-    else:
-        pass
 
 async def get_user_count():
     global DB

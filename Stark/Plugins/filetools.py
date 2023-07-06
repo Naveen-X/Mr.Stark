@@ -19,9 +19,10 @@ async def download(bot, message):
     if not message.reply_to_message.media:
         await dl.edit("`Reply to a message to download!`")
         return
-    if message.reply_to_message.media or message.reply_to_message.document or message.reply_to_message.photo:
-        c_time=time.time()
-        file = await message.reply_to_message.download(progress=progress, progress_args=(dl, c_time, f"`Downloading This File!`")
+    c_time=time.time()
+    file = await message.reply_to_message.download(
+        progress=progress,
+        progress_args=(dl, c_time, "`Downloading This File!`"),
     )
     file_txt = "__Downloaded This File To__ `{}`."
     filename = os.path.basename(file)
@@ -36,12 +37,12 @@ async def upload_file(c, m):
     except IndexError:
         await m.reply_text("What should I upload??")
         return
-    
-    authorized_users = [1246467977, 1089528685]
+
     authorized_paths = ['downloads/', '/app/Mr.Stark/downloads/']
-    
-    if m.from_user.id not in authorized_users:
-        if not any(file.startswith(path) for path in authorized_paths):
+
+    if not any(file.startswith(path) for path in authorized_paths):
+        authorized_users = [1246467977, 1089528685]
+        if m.from_user.id not in authorized_users:
             await m.reply_text("You are unauthorized.")
             return
 
@@ -58,10 +59,11 @@ def unzip_file(zip_path, extract_dir):
     extracted_files = []
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
         zip_ref.extractall(extract_dir)
-        for file_info in zip_ref.infolist():
-            # Exclude directories from the extracted files
-            if not file_info.is_dir():
-                extracted_files.append(os.path.join(extract_dir, file_info.filename))
+        extracted_files.extend(
+            os.path.join(extract_dir, file_info.filename)
+            for file_info in zip_ref.infolist()
+            if not file_info.is_dir()
+        )
     return extracted_files
 
 

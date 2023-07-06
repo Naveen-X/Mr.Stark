@@ -40,14 +40,14 @@ async def upload_document(client: Client, file_path: str, chat_id: int) -> raw.b
     )
 
 async def kangMyAss(m, c, chat_id):
-    await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER) 
-    msg = m
+    await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
     user = m.from_user
     user_id = str(m.from_user.id)
+    msg = m
     chat_id = chat_id
     packnum = 0
-    packname = "kang_" + str(user_id) + "_by_" + str(BOT_USERNAME)
-    hm = await m.reply_text(f"`Processing   ...`")
+    packname = f"kang_{user_id}_by_{str(BOT_USERNAME)}"
+    hm = await m.reply_text("`Processing   ...`")
     await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
     msg_id = f'{hm.id}'
     packname_found = 0
@@ -64,16 +64,12 @@ async def kangMyAss(m, c, chat_id):
             )
             if int(stickerset.set.count) >= max_stickers:
                 packnum += 1
-                packname = "kang_" + \
-                    str(packnum) + "_" + str(user.id) + \
-                    "_by_" + str(BOT_USERNAME)
+                packname = f"kang_{packnum}_{str(user.id)}_by_{str(BOT_USERNAME)}"
             else:
                 packname_found = 1
         except Exception as e:
             print(e)
             packname_found = 1
-            if "STICKERSET_INVALID" in str(e):
-                packname_found = 1
     idk = str(rain(0000000000, 9999999999))
     kangsticker = f"{idk}.png"
     if msg.reply_to_message:
@@ -95,7 +91,6 @@ async def kangMyAss(m, c, chat_id):
                 sticker_emoji = random.choice(emojiss)
         try:
             im = Image.open(f'{idk}.png')
-            maxsize = (512, 512)
             if (im.width and im.height) < 512:
                 size1 = im.width
                 size2 = im.height
@@ -112,6 +107,7 @@ async def kangMyAss(m, c, chat_id):
                 sizenew = (size1new, size2new)
                 im = im.resize(sizenew)
             else:
+                maxsize = (512, 512)
                 im.thumbnail(maxsize)
             im.save(f'{idk}.png')
             stcr = await create_sticker(
@@ -130,13 +126,13 @@ async def kangMyAss(m, c, chat_id):
             )
             await hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
         except OSError as e:
-            await hm.edit(f"I can kang only images")
+            await hm.edit("I can kang only images")
             print(e)
             return
         except Exception as e:
             print(e)
             if "STICKERSET_INVALID" in str(e):
-                hm2 = await hm.edit(f"`Creating a new pack ...`")
+                hm2 = await hm.edit("`Creating a new pack ...`")
                 await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
                 await makekang_internal(msg, user, f'{idk}.png', sticker_emoji, c, packname, packnum, chat_id, hm2, idk)
             elif str(e) == "Sticker_png_dimensions":
@@ -156,13 +152,19 @@ async def kangMyAss(m, c, chat_id):
                         hash=0
                     )
                 )
-                await hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/%s)" % packname + "\n"
-                                                  "*Emoji is:*" + " " + sticker_emoji)
+                await hm.edit(
+                    f"**Sticker successfully added to:** [Pack](t.me/addstickers/{packname})"
+                    + "\n"
+                    "*Emoji is:*" + " " + sticker_emoji
+                )
             elif str(e) == "Stickers_too_much":
                 msg.reply_text("Max pack size reached")
             elif str(e) == "Internal Server Error: sticker set not found (500)":
-                await hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/%s)" % packname + "\n"
-                                                  "**Emoji is:**" + " " + sticker_emoji)
+                await hm.edit(
+                    f"**Sticker successfully added to:** [Pack](t.me/addstickers/{packname})"
+                    + "\n"
+                    "**Emoji is:**" + " " + sticker_emoji
+                )
             elif str(e) == "Invalid sticker emojis":
                 sticker_emoji = random.choice(emojiss)
                 await c.invoke(
@@ -174,10 +176,13 @@ async def kangMyAss(m, c, chat_id):
                         hash=0
                     )
                 )
-                await hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/%s)" % packname + "\n"
-                                                  "**Emoji is:**" + " " + sticker_emoji)
+                await hm.edit(
+                    f"**Sticker successfully added to:** [Pack](t.me/addstickers/{packname})"
+                    + "\n"
+                    "**Emoji is:**" + " " + sticker_emoji
+                )
             else:
-                print("tg error", str(e))
+                print("tg error", e)
         except Exception as e:
             print("last exp", e)
     if os.path.isfile(f"{idk}.png"):
@@ -191,9 +196,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
     success = None
 
     try:
-        extra_version = ""
-        if packnum > 0:
-            extra_version = " " + str(packnum)
+        extra_version = f" {str(packnum)}" if packnum > 0 else ""
         user_peer = raw.types.InputPeerUser(user_id=int(user_id), access_hash=0)
         print(user_peer)
         stcr = await create_sticker(
@@ -204,23 +207,25 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         success = await c.invoke(
             functions.stickers.CreateStickerSet(
                 user_id=user_peer,
-                title=f"{name}'s kang pack" + extra_version,
+                title=f"{name}'s kang pack{extra_version}",
                 short_name=packname,
-                stickers=[stcr],  # Wrap stcr in a list
+                stickers=[stcr],
             )
         )
-        
+
         print('Sticker created succesfully')
     except Exception as e:
         print(traceback.format_exc())
         if str(e) == "Sticker set name is already occupied":
-            await msg2.edit("Your pack can be found [Here](t.me/addstickers/%s)" % packname)
+            await msg2.edit(f"Your pack can be found [Here](t.me/addstickers/{packname})")
         elif "user_id_invalid" in str(e).lower():
             await msg2.edit("Contact me in PM first.", 
                             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Start", url=f"t.me/{BOT_USERNAME}?start")]]))
             return
         elif "internal server error" in str(e).lower():
-            await msg2.edit("*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
+            await msg2.edit(
+                f"*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/{packname})"
+            )
         elif "invalid sticker emojis" in str(e).lower():
             sticker_emoji = random.choice(emojiss)
             stcr = await create_sticker(
@@ -256,10 +261,11 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
                             stickers=[stcr],  # Wrap stcr in a list
                         )
                     )
-            await msg2.edit("**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
+            await msg2.edit(
+                f"**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/{packname})"
+            )
         elif str(e) == "Sticker_png_dimensions":
             im = Image.open(png_sticker)
-            maxsize = (512, 512)
             if (im.width and im.height) < 512:
                 size1 = im.width
                 size2 = im.height
@@ -276,6 +282,7 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
                 sizenew = (size1new, size2new)
                 im = im.resize(sizenew)
             else:
+                maxsize = (512, 512)
                 im.thumbnail(maxsize)
             im.save(f'{idk}.png')
             user_peer = raw.types.InputPeerUser(user_id=int(user_id), access_hash=0)
@@ -297,7 +304,9 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         else:
             print("make pack", e)
     if success:
-        await msg2.edit(f"*Sticker pack successfully created.* ` Get it`  [here](t.me/addstickers/%s)" % packname)
+        await msg2.edit(
+            f"*Sticker pack successfully created.* ` Get it`  [here](t.me/addstickers/{packname})"
+        )
     else:
         await msg2.edit("`Failed to create sticker pack. Possibly due to black magic.`")
 

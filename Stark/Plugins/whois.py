@@ -42,7 +42,7 @@ async def whois(bot, message):
     elif len(message.text.split(" ", 1)) == 1 and not message.reply_to_message:
         user = message.from_user.id
         chat = message.chat.id
-        t = "Chat id: {}".format(chat)
+        t = f"Chat id: {chat}"
 
     elif len(message.text.split(" ", 1)) == 2 and not message.reply_to_message:
         user = message.text.split(" ", 1)[1]
@@ -87,10 +87,7 @@ async def whois(bot, message):
 @error_handler
 async def chat_info(c, m):
     # Check if the command has an argument (chat ID)
-    if len(m.command) > 1:
-        chat_id = m.command[1]
-    else:
-        chat_id = m.chat.id
+    chat_id = m.command[1] if len(m.command) > 1 else m.chat.id
     s = await m.reply_text("`Processing...`")
     try:
         cht = await c.get_chat(chat_id)

@@ -47,7 +47,7 @@ AUTH_LIST = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
 @Client.on_message(filters.command(["ping", "p"]))
 @error_handler
 async def ping(_, message):
-    lol = await message.reply_text(f"**Pong!**")
+    lol = await message.reply_text("**Pong!**")
     start = datetime.now()
     uptime = get_readable_time((time() - start_time))
     end = datetime.now()
@@ -60,7 +60,7 @@ async def ping(_, message):
 @Client.on_message(filters.command(["alive"]))
 @error_handler
 async def alive(_, message):
-    await message.reply_text(f"**Bᴏᴛ ɪs ᴀʟɪᴠᴇ 🔥**")
+    await message.reply_text("**Bᴏᴛ ɪs ᴀʟɪᴠᴇ 🔥**")
 
 @Client.on_message(filters.command(["restart"]) & filters.user(AUTH_LIST))
 @error_handler

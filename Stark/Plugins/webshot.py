@@ -9,10 +9,7 @@ from Stark.config import Config
 
 
 async def check_if_url_is_valid(url):
-    valid = validators.url(url)
-    if valid:
-        return True
-    return False
+    return bool(valid := validators.url(url))
 
 
 @Client.on_message(filters.command(["webshot", "ws"]))
@@ -29,7 +26,9 @@ async def webshot(bot, message):
 
     params = urlencode(dict(access_key=str(Config.WSA),
                             url=url_))
-    urlretrieve("https://api.apiflash.com/v1/urltoimage?" + params, "Stark_SS.jpeg")
+    urlretrieve(
+        f"https://api.apiflash.com/v1/urltoimage?{params}", "Stark_SS.jpeg"
+    )
     capt_ = f"<b><u>WebShot Captured</b></u> \n<b>URL :</b> <code>{url_}</code> \n\n<b>By Mr.Stark</b>"
     await message.reply_document("Stark_SS.jpeg", caption=capt_)
     os.remove("Stark_SS.jpeg")

@@ -35,9 +35,15 @@ async def search_movie(client, message):
     if len(movies) == 0:
         await mv.edit("**__No movies found with that name!__**")
         return
-    button_list = []
-    for i, movie in enumerate(movies[:10]):
-        button_list.append([InlineKeyboardButton(text=movie['title'], callback_data=f"{message.from_user.id}.more_details {movie.movieID} :{movie_name}:")])
+    button_list = [
+        [
+            InlineKeyboardButton(
+                text=movie['title'],
+                callback_data=f"{message.from_user.id}.more_details {movie.movieID} :{movie_name}:",
+            )
+        ]
+        for movie in movies[:10]
+    ]
     # button_list.append([InlineKeyboardButton(text="", callback_data=f"more_details {movie.movieID}")])
     # Add the buttons to an InlineKeyboardMarkup object
     keyboard = InlineKeyboardMarkup(button_list)

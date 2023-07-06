@@ -126,8 +126,8 @@ async def initial():
     sorted_data = sorted(loaded_dict.items())
     print("[ Mr.Stark ] | Loading plugins")
     for key, value in sorted_data:
-        print("[ Mr.Stark ] | [ Loaded ] {} - {}".format(key, value))
-        mgt += "**• [ Loaded ]** `{}` **-** `{}`".format(key, value)
+        print(f"[ Mr.Stark ] | [ Loaded ] {key} - {value}")
+        mgt += f"**• [ Loaded ]** `{key}` **-** `{value}`"
         mgt += "\n"
 
     try:
@@ -173,9 +173,7 @@ async def get_random_quote():
     data = response.json()
     quote_text = data["content"]
     quote_author = data["author"]
-    reply_text = f"__{quote_text}__\n\n- `{quote_author}`"
-
-    return reply_text
+    return f"__{quote_text}__\n\n- `{quote_author}`"
 
 
 def send_quote():

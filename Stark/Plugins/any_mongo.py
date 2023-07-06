@@ -9,9 +9,9 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 dic = {}
 
 def mongo_keyboard(id_):
-    mongo_keyboard_ = InlineKeyboardMarkup(
-        [[InlineKeyboardButton("MongoDB", callback_data="mongo_"+f"[{id_}]")]])
-    return mongo_keyboard_
+    return InlineKeyboardMarkup(
+        [[InlineKeyboardButton("MongoDB", callback_data=f"mongo_[{id_}]")]]
+    )
 
 
 @Client.on_message(filters.command("showdb"))
@@ -33,17 +33,16 @@ async def add_db(client, message):
     
 
 def mongo_keyboard(id_):
-    mongo_keyboard_ = InlineKeyboardMarkup(
-        [[InlineKeyboardButton("MongoDB", callback_data="mongo_"+f"[{id_}]")]])
-    return mongo_keyboard_
+    return InlineKeyboardMarkup(
+        [[InlineKeyboardButton("MongoDB", callback_data=f"mongo_[{id_}]")]]
+    )
   
 pattern = re.compile(r".*\[(\d+)\].*")
 @Client.on_callback_query(filters.regex(pattern))
 def button_callback(client, callback_query):
     if f"[{callback_query.from_user.id}]" in str(callback_query.data):
         try:
-            mongo_uri = dic.get(str(callback_query.from_user.id))
-            if mongo_uri:
+            if mongo_uri := dic.get(str(callback_query.from_user.id)):
                 if callback_query.data.startswith("mongo_"):
                     # sleep(2)
                     change_message_to_list_db(callback_query,mongo_uri)
@@ -63,7 +62,7 @@ def button_callback(client, callback_query):
                 print(dic.get(str(callback_query.from_user.id)))
         except Exception as e:
             print(e)
-            
+
     else:
         print(f"[{callback_query.from_user.id}]" in str(callback_query.data))
 
@@ -75,9 +74,10 @@ def change_message_to_list_db(callback_query,mongo_uri):
         # reply_markup=mongo_keyboard)
         callback_query.message.edit("Please wait!",)
         database_names = mongo_client.list_database_names()
-        k = []
-        for name in database_names:
-            k.append([InlineKeyboardButton(name, callback_data=f"db_{name}"+id)])
+        k = [
+            [InlineKeyboardButton(name, callback_data=f"db_{name}{id}")]
+            for name in database_names
+        ]
         # k.append([InlineKeyboardButton("Go Back <-", callback_data=f"mongo_")])
         kb = InlineKeyboardMarkup(k)
         sleep(2)
@@ -97,11 +97,16 @@ def show_collection(callback_query, db_name,mongo_uri):
         callback_query.message.edit(f"Loading collection: {db_name}")
         database = mongo_client[db_name]
         collection_names = database.list_collection_names()
-        k = []
-        for collection_name in collection_names:
-            k.append([InlineKeyboardButton(collection_name,
-                                           callback_data=f"{collection_name}|:|{db_name}"+id)])
-        k.append([InlineKeyboardButton("Go Back <-", callback_data=f"mongo_"+id)])
+        k = [
+            [
+                InlineKeyboardButton(
+                    collection_name,
+                    callback_data=f"{collection_name}|:|{db_name}{id}",
+                )
+            ]
+            for collection_name in collection_names
+        ]
+        k.append([InlineKeyboardButton("Go Back <-", callback_data=f"mongo_{id}")])
         kb = InlineKeyboardMarkup(k)
         sleep(2)
         callback_query.message.edit("Select db to get List:", reply_markup=kb)
@@ -122,12 +127,16 @@ def show_docs(callback_query, db, coll,mongo_uri):
         database = mongo_client[db]
         collection = database[coll]
         documents = collection.find()
-        k = []
-        for document in documents:
-            k.append([InlineKeyboardButton(document['_id'],
-                                           callback_data=f"{coll}|_|{db}|_|{document['_id']}"+id)])
-        k.append([InlineKeyboardButton(
-            "Go Back <-", callback_data=f"db_{db}"+id)])
+        k = [
+            [
+                InlineKeyboardButton(
+                    document['_id'],
+                    callback_data=f"{coll}|_|{db}|_|{document['_id']}{id}",
+                )
+            ]
+            for document in documents
+        ]
+        k.append([InlineKeyboardButton("Go Back <-", callback_data=f"db_{db}{id}")])
         kb = InlineKeyboardMarkup(k)
         sleep(2)
         callback_query.message.edit("Select db to get List:", reply_markup=kb)
@@ -144,20 +153,17 @@ def show_fukindata(callback_query, collection, db, _id,mongo_uri):
     mongo_client = pymongo.MongoClient(mongo_uri)
     database = mongo_client[db]
     col = database[collection]
-    document = col.find_one({"_id": _id})
-    if document:
+    if document := col.find_one({"_id": _id}):
         callback_query.message.reply_text(f"Document details:\n\n{document}")
     else:
-       try:
+        try:
             doc_id = ObjectId(_id)
-            document = col.find_one({"_id": doc_id})
-            if document:
+            if document := col.find_one({"_id": doc_id}):
                 callback_query.message.reply_text(f"Document details:\n\n{document}")
-       except:
-             try:
-                document = col.find_one({"_id": int(_id)})
-                if document:
+        except:
+            try:
+                if document := col.find_one({"_id": int(_id)}):
                     callback_query.message.reply_text(
                         f"Document details:\n\n{document}")
-             except:
-                    callback_query.message.reply_text("Document not found.")
+            except:
+                   callback_query.message.reply_text("Document not found.")

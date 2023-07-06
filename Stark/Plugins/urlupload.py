@@ -28,20 +28,20 @@ def humanbytes(size: float) -> str:
     while size > power:
         size /= power
         n += 1
-    return str(round(size, 2)) + " " + Dic_powerN[n] + "B"
+    return f"{str(round(size, 2))} {Dic_powerN[n]}B"
 
 def time_formatter(milliseconds: int) -> str:
     """Time Formatter"""
-    seconds, milliseconds = divmod(int(milliseconds), 1000)
+    seconds, milliseconds = divmod(milliseconds, 1000)
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     tmp = (
-        ((str(days) + " day(s), ") if days else "")
-        + ((str(hours) + " hour(s), ") if hours else "")
-        + ((str(minutes) + " minute(s), ") if minutes else "")
-        + ((str(seconds) + " second(s), ") if seconds else "")
-        + ((str(milliseconds) + " millisecond(s), ") if milliseconds else "")
+        (f"{str(days)} day(s), " if days else "")
+        + (f"{str(hours)} hour(s), " if hours else "")
+        + (f"{str(minutes)} minute(s), " if minutes else "")
+        + (f"{str(seconds)} second(s), " if seconds else "")
+        + (f"{str(milliseconds)} millisecond(s), " if milliseconds else "")
     )
     return tmp[:-2]
 
@@ -60,8 +60,8 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
         estimated_total_time = time_formatter(milliseconds=estimated_total_time)
 
         progress = "`[{0}{1}]` \n".format(
-            "".join(["#" for i in range(math.floor(percentage / 5))]),
-            "".join(["-" for i in range(20 - math.floor(percentage / 5))]),
+            "".join(["#" for _ in range(math.floor(percentage / 5))]),
+            "".join(["-" for _ in range(20 - math.floor(percentage / 5))]),
         )
 
         ok = "`{0}%` \n".format(round(percentage, 2))
@@ -77,15 +77,13 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
             )
         )
         try:
-            await message.edit(
-                text="**{}** {}".format(ud_type, tmp)
-            )
+            await message.edit(text=f"**{ud_type}** {tmp}")
         except BaseException:
             pass
 
 async def download_video(quality, url, filename):
     html = requests.get(url).content.decode("utf-8")
-    video_url = re.search(rf'{quality.lower()}_src:"(.+?)"', html).group(1)
+    video_url = re.search(rf'{quality.lower()}_src:"(.+?)"', html)[1]
     file_size_request = requests.get(video_url, stream=True)
     total_size = int(file_size_request.headers["Content-Length"])
     block_size = 1024
@@ -106,8 +104,8 @@ async def download_from_url(url, dl_loc, message):
             speed = dl.get_speed(human=True)
             estimated_total_time = dl.get_eta(human=True)
             progress = "`[{0}{1}]` \n".format(
-                "".join(["#" for i in range(math.floor(percentage / 5))]),
-                "".join(["-" for i in range(20 - math.floor(percentage / 5))]),
+                "".join(["#" for _ in range(math.floor(percentage / 5))]),
+                "".join(["-" for _ in range(20 - math.floor(percentage / 5))]),
             )
             ok = "`{0}%` \n".format(round(percentage, 2))
             tmp = (
@@ -121,16 +119,11 @@ async def download_from_url(url, dl_loc, message):
                 )
             )
             try:
-                await message.edit(
-                    text="**{}** {}".format("𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙸𝙽𝙶...", tmp),
-                )
+                await message.edit(text=f'**{"𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙸𝙽𝙶..."}** {tmp}')
             except BaseException:
                 pass
             await asyncio.sleep(5)
-        if dl.isSuccessful():
-            return True, dl.get_dest()
-        else:
-            return False, dl.get_errors()
+        return (True, dl.get_dest()) if dl.isSuccessful() else (False, dl.get_errors())
     except HTTPError as error:
         return False, error
     except Exception as error:
@@ -169,7 +162,7 @@ async def url_upload(c, m):
     else:
         link = link.strip()
         filename = unquote_plus(os.path.basename(link))
-    tmp_directory_for_each_user = DOWN_PATH + "/" + str(m.from_user.id)
+    tmp_directory_for_each_user = f"{DOWN_PATH}/{str(m.from_user.id)}"
     if not os.path.isdir(tmp_directory_for_each_user):
         os.makedirs(tmp_directory_for_each_user, exist_ok=True)
     dl_loc = os.path.join(tmp_directory_for_each_user, filename)

@@ -23,7 +23,7 @@ async def crop_and_divide(img):
     (new_width, new_height) = (0, 0)
     media = []
     for _ in range(1, rows + 1):
-        for o in range(1, columns + 1):
+        for _ in range(1, columns + 1):
             mimg = img.crop(
                 (
                     new_width,
@@ -70,7 +70,7 @@ async def make_grid(client, message):
         random.choice(list(string.ascii_lowercase + string.ascii_uppercase))
         for _ in range(16)
     )
-    name2 = name + "_by_Mr_StarkBot"
+    name2 = f"{name}_by_Mr_StarkBot"
     image = Image.open(ok)
     w, h = image.size
     www = max(w, h)
@@ -78,7 +78,7 @@ async def make_grid(client, message):
     img.paste(image, ((www - w) // 2, 0))
     newimg = img.resize((100, 100))
     new_img = io.BytesIO()
-    new_img.name = name + ".png"
+    new_img.name = f"{name}.png"
     images = await crop_and_divide(img)
     newimg.save(new_img)
     new_img.seek(0)
@@ -86,29 +86,29 @@ async def make_grid(client, message):
     i = 0
     all_stickers = []
     for im in images:
-      try:
-        img = io.BytesIO(im)
-        img.name = name + ".png"
-        img.seek(0)
-    
-        # Save the image to a file
-        f_img = f"{name}_{i}.png"  # Generate a unique filename for each image
-        with open(f_img, "wb") as f:
-            f.write(img.getvalue())
-        
-        stckr = await create_sticker(
-                await upload_document(
-                    client, f_img, message.chat.id
-                ),
-                emj
+        try:
+            img = io.BytesIO(im)
+            img.name = f"{name}.png"
+            img.seek(0)
+
+            # Save the image to a file
+            f_img = f"{name}_{i}.png"  # Generate a unique filename for each image
+            with open(f_img, "wb") as f:
+                f.write(img.getvalue())
+
+            stckr = await create_sticker(
+                    await upload_document(
+                        client, f_img, message.chat.id
+                    ),
+                    emj
+                )
+            all_stickers.append(stckr)
+            i += 1
+            await stark.edit(
+                f"__Making the pack.\nProgress: {i}/{len(images)}__"
             )
-        all_stickers.append(stckr)
-        i += 1
-        await stark.edit(
-            f"__Making the pack.\nProgress: {i}/{len(images)}__"
-        )
-      except FloodWait as e:
-        await asyncio.sleep(e.value)
+        except FloodWait as e:
+          await asyncio.sleep(e.value)
     user_peer = raw.types.InputPeerUser(user_id=message.from_user.id, access_hash=0)
     await client.invoke(
               raw.functions.stickers.CreateStickerSet(
