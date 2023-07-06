@@ -234,7 +234,7 @@ class Script(object):
             "cmds": ["rayso"],
             "usage": "/rayso [ theme / do not specify for ramdom | reply to a message or a text file ]\nUse /rayso -l to list available themes"
         },
-                {
+        {
             "desc": "Create cool code snippets [Light Mode]",
             "cmds": ["lrayso"],
             "usage": "/lrayso [ theme / do not specify for ramdom | reply to a message or a text file ]\nUse /rayso -l to list available themes"
