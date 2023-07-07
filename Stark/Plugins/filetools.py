@@ -71,7 +71,7 @@ async def unzip_files(c, m):
       await m.reply_text("`What should I Unzip?`")
       return
     if reply and reply.document:
-        document = message.reply_to_message.document
+        document = m.reply_to_message.document
         if document.mime_type == 'application/zip':
             c_time=time.time()
             target_dir = f"downloads/unzip/{m.from_user.id}"
