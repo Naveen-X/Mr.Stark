@@ -55,20 +55,23 @@ logging.basicConfig(
     format="[%(asctime)s - %(levelname)s] - %(name)s - %(message)s",
     datefmt='%d-%b-%y %H:%M:%S')
 
-# Create a file handler
 log_file = "log.txt"
 file_handler = RotatingFileHandler(log_file, maxBytes=1024 * 1024, backupCount=5)
 file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(logging.Formatter("[%(asctime)s - %(levelname)s] - %(name)s - %(message)s"))
-#file for logging errors ( may be call back errors and some others)
+
+# File for logging errors (may include callback errors and others)
 error_log = "error_log.txt"
 file_er_handler = RotatingFileHandler(error_log, maxBytes=1024 * 1024, backupCount=5)
 file_er_handler.setLevel(logging.ERROR)
-file_handler.setFormatter(logging.Formatter("[%(asctime)s - %(levelname)s] - %(name)s - %(message)s"))
-# Add the error file handler to the logger
+file_er_handler.setFormatter(logging.Formatter("[%(asctime)s - %(levelname)s] - %(name)s - %(message)s"))
+
+# Create a logger instance and add the file handlers
 logger = logging.getLogger(__name__)
-logger.addHandler(log_file)
+logger.setLevel(logging.INFO)  # Set the logging level for the logger itself
+logger.addHandler(file_handler)
 logger.addHandler(file_er_handler)
+
 
 # Set the logging level for the pyrogram module to ERROR
 logging.getLogger("pyrogram").setLevel(logging.ERROR)
