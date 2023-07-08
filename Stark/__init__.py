@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import string
 import random
@@ -76,6 +77,14 @@ logger.addHandler(file_er_handler)
 # Set the logging level for the pyrogram module to ERROR
 logging.getLogger("pyrogram").setLevel(logging.ERROR)
 
+def handle_uncaught_exception(exc_type, exc_value, exc_traceback):
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
+
+    logger.error("Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback))
+
+sys.excepthook = handle_uncaught_exception
 x = "Asia/Kolkata"
 TZ = pytz.timezone(x)
 datetime_tz = datetime.datetime.now(TZ)
