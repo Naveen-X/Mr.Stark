@@ -67,6 +67,7 @@ file_er_handler.setLevel(logging.ERROR)
 file_handler.setFormatter(logging.Formatter("[%(asctime)s - %(levelname)s] - %(name)s - %(message)s"))
 # Add the error file handler to the logger
 logger = logging.getLogger(__name__)
+logger.addHandler(log_file)
 logger.addHandler(file_er_handler)
 
 # Set the logging level for the pyrogram module to ERROR
