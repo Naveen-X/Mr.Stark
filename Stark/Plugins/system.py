@@ -50,7 +50,7 @@ AUTH_LIST = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
 async def ping(_, message):
     lol = await message.reply_text(f"**Pong!**")
     start = datetime.now()
-    uptime = get_readable_time((time.time() - start_time))
+    uptime = get_readable_time((time() - start_time))
     end = datetime.now()
     ms = (end - start).microseconds / 1000
     await lol.edit(
