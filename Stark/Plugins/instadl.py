@@ -181,6 +181,16 @@ from pyrogram.types import InputMedia, InputMediaPhoto, InputMediaVideo, InputMe
 #           )
 #         await msg.delete()
 
+async def insta_dl(url: str):
+  try:
+    x = get(f"https://igdl.annihilatorrrr.tk/dl?key=igdlbot&url={url}").json()
+    file = x["urls"]
+    cap = x["caption"]
+    return file, cap
+  except Exception as e:
+    return e
+
+
 @Client.on_message(filters.command(["instadl", "insdl", "insta", "instadownload"]))
 @error_handler
 async def idgl(c, m):
@@ -191,4 +201,7 @@ async def idgl(c, m):
     if not url:
       await m.reply_text("`Pass an url along with the command`")
       return
-    if url
+    if url:
+      file, cap = await insta_dl(url)
+      for i in file, cap:
+        await m.reply_video(i, caption=i)
