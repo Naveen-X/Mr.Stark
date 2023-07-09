@@ -8,12 +8,6 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 dic = {}
 
-def mongo_keyboard(id_):
-    mongo_keyboard_ = InlineKeyboardMarkup(
-        [[InlineKeyboardButton("MongoDB", callback_data="mongo_"+f"[{id_}]")]])
-    return mongo_keyboard_
-
-
 @Client.on_message(filters.command("showdb"))
 @error_handler
 async def show_db(client, message):
@@ -23,6 +17,7 @@ async def show_db(client, message):
     else:
         await message.reply_text(
             "use /adddb [mongo uri]")
+
 @Client.on_message(filters.command("adddb"))
 @error_handler
 async def add_db(client, message):
@@ -30,7 +25,6 @@ async def add_db(client, message):
     dic[str(message.from_user.id)] = db
     await message.reply_text("Done!")
 
-    
 
 def mongo_keyboard(id_):
     mongo_keyboard_ = InlineKeyboardMarkup(
