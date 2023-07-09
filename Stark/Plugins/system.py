@@ -1,6 +1,5 @@
 import os
 import sys
-import time
 import pyrogram
 import traceback
 from time import time 
