@@ -184,7 +184,7 @@ from pyrogram.types import InputMedia, InputMediaPhoto, InputMediaVideo, InputMe
 async def insta_dl(url: str):
   try:
     x = get(f"https://igdl.annihilatorrrr.tk/dl?key=igdlbot&url={url}").json()
-    file = x["urls"]
+    file = x["urls"][0]
     cap = x["caption"]
     return file, cap
   except Exception as e:
@@ -203,5 +203,5 @@ async def idgl(c, m):
       return
     if url:
       file, cap = await insta_dl(url)
-      for i in file, cap:
-        await m.reply_video(i, caption=i)
+      for i, x in file, cap:
+        await m.reply_video(i, caption=x)
