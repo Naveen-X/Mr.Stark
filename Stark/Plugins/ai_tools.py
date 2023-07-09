@@ -64,7 +64,7 @@ class Lexica:
 
 #Generate gpt response...
 def generate_response(query: str):
-  url = "http://gpt.kavya.workers.dev?message=" + str(query) +"&ssid=blah&sqk=r&stream=false"
+  url = "http://api.csa.codes/api/chat?message=" + str(query)
   response = requests.get(url).json()
   message = response['text']
   return message
