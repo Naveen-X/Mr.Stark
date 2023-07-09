@@ -83,12 +83,17 @@ async def start(client, message):
     await message.reply_photo("resources/images/start_img.jpg", caption='Help Menu of Stark!', reply_markup=ikb(get_help_menu(1)))
 
 
-@Client.on_callback_query()
-async def cb_handler(client, query):
+@Client.on_callback_query(filters.regex("^\d+\."))
+async def not_you(client, query):
     sent_by = query.data.split('.')[0]
     if int(query.data.split('.')[0]) != int(query.from_user.id):
         await query.answer('This is not for you!', show_alert=True)
         return
+
+
+@Client.on_callback_query()
+async def cb_handler(client, query):
+    sent_by = query.data.split('.')[0]
     def page_data(page):
         return f'{sent_by}.page_{page}'
 
