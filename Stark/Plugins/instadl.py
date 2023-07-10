@@ -183,7 +183,7 @@ from pyrogram.types import InputMedia, InputMediaPhoto, InputMediaVideo, InputMe
 
 async def insta_dl(url: str):
   try:
-    x = get(f"https://igdl.annihilatorrrr.tk/dl?key=igdlbot&url={url}").json()
+    x = get(f"https://igdownload.vercel.app/dl?key=igdlbot&url={url}").json()
     file = x["urls"][0]
     cap = x["caption"]
     return file, cap
