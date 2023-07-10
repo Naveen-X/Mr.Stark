@@ -51,10 +51,13 @@ async def going_afk(c, m):
 @Client.on_message(filters.all & filters.group, group=5)
 @error_handler
 async def no_more_afk(c, m):
-    if m.text.startswith("/afk2") or m.text == "/afk2":
-        return
-    if not m.from_user:
-        return
+    try:
+      if m.text.startswith("/afk2") or m.text == "/afk2":
+          return
+      if not m.from_user:
+          return
+    except BaseException:
+      pass
     if not await check_afk(True, m.from_user.id):
         return
     await remove_afk(True, m.from_user.id)
