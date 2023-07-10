@@ -49,6 +49,7 @@ async def going_afk(c, m):
 
 
 @Client.on_message(filters.all & filters.group, group=5)
+@error_handler
 async def no_more_afk(c, m):
     if not m.from_user:
         return
