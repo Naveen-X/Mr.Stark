@@ -183,8 +183,10 @@ from pyrogram.types import InputMedia, InputMediaPhoto, InputMediaVideo, InputMe
 
 async def insta_dl(url: str):
   try:
-    x = get(f"https://a.ztorr.me/api/insta?url={url}&magic=roseloverx_supremacy").json()
-    return x
+    x = get(f"https://igdownload.vercel.app/dl?key=igdlbot&url={url}").json()
+    file = x["urls"][0]
+    cap = x["caption"]
+    return file, cap
   except Exception as e:
     return e
 
@@ -202,7 +204,9 @@ async def idgl(c, m):
     if url:
         msg = await m.reply_text("`Downloading...`")
         result = await insta_dl(url)
-        dl_bytes = [(InputMediaVideo(i)) for i in result]
+        files = result[0]
+        captions = result[1]
+        dl_bytes = [(InputMediaVideo(file, caption=caption) if file == files[-1] else InputMediaVideo(file)) for file, caption in zip(files, captions)]
         await c.send_media_group(
             chat_id=m.chat.id,
             media=dl_bytes,
