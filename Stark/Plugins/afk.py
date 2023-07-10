@@ -10,14 +10,6 @@ afk = DB.afk
 
 
 async def add_afk(afk_status, afk_since, reason, user):
-    stark = afk.find_one({"afk", {
-        "status" : str(afk_status),
-        "since" : str(afk_since),
-        "reason" : str(reason),
-        "user" : int(user)
-    }}
-  )
-    if stark is None:
         afk.insert_one({"afk", {
         "status" : str(afk_status),
         "since" : str(afk_since),
