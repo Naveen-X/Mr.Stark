@@ -41,7 +41,7 @@ async def going_afk(c, m):
         reason = None
     else:
         reason = arg
-    await add_afk(True, afk_time, reason, id)
+    await add_afk(True, id)
     if reason:
         await m.reply_text(f"**Ok peeps AFK time**\n\nReason : __{reason}__")
     else:
