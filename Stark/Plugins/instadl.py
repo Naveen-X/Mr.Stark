@@ -181,15 +181,6 @@ from pyrogram.types import InputMedia, InputMediaPhoto, InputMediaVideo, InputMe
 #           )
 #         await msg.delete()
 
-async def insta_dl(url: str):
-  try:
-    x = get(f"https://igdownload.vercel.app/dl?key=igdlbot&url={url}").json()
-    file = x["urls"][0]
-    cap = x["caption"]
-    return file, cap
-  except Exception as e:
-    return e
-
 
 @Client.on_message(filters.command(["instadl", "insdl", "insta", "instadownload"]))
 @error_handler
@@ -203,12 +194,18 @@ async def idgl(c, m):
         return
     if url:
         msg = await m.reply_text("`Downloading...`")
-        result = await insta_dl(url)
-        files = result[0]
-        captions = result[1]
-        dl_bytes = [(InputMediaVideo(file, caption=caption) if file == files[-1] else InputMediaVideo(file)) for file, caption in zip(files, captions)]
-        await c.send_media_group(
-            chat_id=m.chat.id,
-            media=dl_bytes,
-        )
+        rdata = get("https://igdl.annihilatorrrr.tk/dl?key=igdlbot&url=https://www.instagram.com/reel/CtvBv81I2ef/").json()
+        data = rdata["urls"]
+        ismediagroup = bool(len(data) > 1)
+        if not ismediagroup:
+                await m.reply_video(data[0], caption=rdata["caption"]) if ".mp4" in data[0] else await m.reply_photo(data[0], caption=rdata["caption"])
+        else:
+              files = []
+              for ind, x in data:
+                      if ".mp4" in data[0]:
+                               files.append(InputMediaVideo(i, caption=rdata["caption"] if ind == 0 else ""))
+                      else:
+                               files.append(InputMediaPhoto(i, caption=rdata["caption"] if ind == 0 else ""))
+
+        await c.send_media_group(m.chat.id, files)
         await msg.delete()
