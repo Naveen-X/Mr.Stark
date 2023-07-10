@@ -51,9 +51,9 @@ async def going_afk(c, m):
 async def no_more_afk(c, m):
     if not m.from_user:
         return
-    if not await check_afk(m.from_user.id):
+    if not await check_afk(True, m.from_user.id):
         return
-    await remove_afk(m.from_user.id)
+    await remove_afk(True, m.from_user.id)
     try:
         await m.reply_text(
             "You Are No Longer Afk"
