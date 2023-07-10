@@ -6,7 +6,7 @@ from pyrogram.enums import ChatType
 from pyrogram import Client, filters
 
 
-async def add_afk(afk_status, afk_since, reason, user):
+async def add_afk(afk_status, user):
         DB.afk.insert_one({
         "status" : str(afk_status),
         "user" : int(user)
@@ -21,7 +21,7 @@ async def check_afk(afk_status, user):
    )
     return is_afk if is_afk else False
 
-async def remove_afk(afk_status, afk_since, reason, user):
+async def remove_afk(afk_status, user):
         DB.afk.delete_one({
         "status" : str(afk_status),
         "user" : int(user)
