@@ -47,7 +47,8 @@ async def going_afk(c, m):
     else:
         await m.reply_text("**Ok peeps AFK time**")
 
-@Client.on_message(filters.all & filters.group & ~filters.edited, group=5)
+
+@Client.on_message(filters.all & filters.group, group=5)
 async def no_more_afk(c, m):
     if not m.from_user:
         return
