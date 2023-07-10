@@ -195,21 +195,20 @@ async def insta_dl(url: str):
 @error_handler
 async def idgl(c, m):
     try:
-     url = m.text.split(None, 1)[1]
+        url = m.text.split(None, 1)[1]
     except IndexError:
-      url = None
+        url = None
     if not url:
-      await m.reply_text("`Pass an url along with the command`")
-      return
+        await m.reply_text("`Pass a URL along with the command`")
+        return
     if url:
-      msg = await m.reply_text("`Downloading...`")
-      result = await insta_dl(url)
-      files = result[0]
-      captions = result
-      for file, caption in zip(files, captions):
-          dl_bytes = [(InputMediaVideo(i, caption=caption) if i == files[-1] else InputMediaVideo(i)) for i in files]
-          await c.send_media_group(
-                chat_id=m.chat.id,
-                media=dl_bytes,
-            )
-          return await msg.delete()
+        msg = await m.reply_text("`Downloading...`")
+        result = await insta_dl(url)
+        files = result[0]
+        captions = result[1]
+        dl_bytes = [(InputMediaVideo(file, caption=caption) if file == files[-1] else InputMediaVideo(file)) for file, caption in zip(files, captions)]
+        await c.send_media_group(
+            chat_id=m.chat.id,
+            media=dl_bytes,
+        )
+        await msg.delete()
