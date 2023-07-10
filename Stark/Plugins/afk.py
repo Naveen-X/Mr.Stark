@@ -36,6 +36,7 @@ async def remove_afk(afk_status, afk_since, reason, user):
    )
 
 @Client.on_message(filters.command("afk"))
+@error_handler
 async def afk(c, m):
     afk_time = int(time.time())
     id = m.from_user.id
