@@ -202,6 +202,14 @@ async def idgl(c, m):
       await m.reply_text("`Pass an url along with the command`")
       return
     if url:
-      file, cap = await insta_dl(url)
-      for i, x in file, cap:
-        await m.reply_video(i, caption=x)
+      msg = await m.reply_text("`Downloading...`")
+      result = await insta_dl(url)
+      files = result[0]
+      captions = result
+      for file, caption in zip(files, captions):
+          dl_bytes = [(InputMediaVideo(i, caption=caption) if i == files[-1] else InputMediaVideo(i)) for i in files]
+          await c.send_media_group(
+                chat_id=m.chat.id,
+                media=dl_bytes,
+            )
+          return await msg.delete()
