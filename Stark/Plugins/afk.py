@@ -12,17 +12,13 @@ afk = DB.afk
 async def add_afk(afk_status, afk_since, reason, user):
         afk.insert_one({
         "status" : str(afk_status),
-        "since" : str(afk_since),
-        "reason" : str(reason),
         "user" : int(user)
     }
-        )
+   )
 
 async def remove_afk(afk_status, afk_since, reason, user):
     afk.delete_one({
         "status" : str(afk_status),
-        "since" : str(afk_since),
-        "reason" : str(reason),
         "user" : int(user)
     }
    )
