@@ -51,6 +51,8 @@ async def going_afk(c, m):
 @Client.on_message(filters.all & filters.group, group=5)
 @error_handler
 async def no_more_afk(c, m):
+    if m.command.startswith("/afk2"):
+        return
     if not m.from_user:
         return
     if not await check_afk(True, m.from_user.id):
