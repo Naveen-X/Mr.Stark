@@ -198,11 +198,11 @@ async def idgl(c, m):
         data = rdata["urls"]
         ismediagroup = bool(len(data) > 1)
         if not ismediagroup:
-                await m.reply_video(data[0], caption=rdata["caption"]) if ".mp4" in data[0] else await m.reply_photo(data[0], caption=rdata["caption"])
+                await m.reply_video(data[0], caption=rdata["caption"]) if "mp4" in data[0] else await m.reply_photo(data[0], caption=rdata["caption"])
         else:
               files = []
               for ind, x in enumerate(data):
-                      if ".mp4" in data[ind]:
+                      if "mp4" in data[ind]:
                          files.append(InputMediaVideo(x, caption=rdata["caption"] if ind == 0 else ""))
                       else:
                          files.append(InputMediaPhoto(x, caption=rdata["caption"] if ind == 0 else ""))
