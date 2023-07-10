@@ -13,6 +13,14 @@ async def add_afk(afk_status, afk_since, reason, user):
     }
    )
 
+async def check_afk(afk_status, user):
+    is_afk = DB.afk.find_one({
+        "status" : str(afk_status),
+        "user" : int(user)
+    }
+   )
+    return is_afk if is_afk else False
+
 async def remove_afk(afk_status, afk_since, reason, user):
         DB.afk.delete_one({
         "status" : str(afk_status),
@@ -22,7 +30,7 @@ async def remove_afk(afk_status, afk_since, reason, user):
 
 @Client.on_message(filters.command("afk2"))
 @error_handler
-async def afk(c, m):
+async def going_afk(c, m):
     afk_time = int(time.time())
     id = m.from_user.id
     try:
@@ -38,3 +46,17 @@ async def afk(c, m):
         await m.reply_text(f"**Ok peeps AFK time**\n\nReason : __{reason}__")
     else:
         await m.reply_text("**Ok peeps AFK time**")
+
+@Client.on_message(filters.all & filters.group & ~filters.edited, group=5)
+async def no_more_afk(c, m):
+    if not m.from_user:
+        return
+    if not await check_afk(m.from_user.id):
+        return
+    await remove_afk(message.from_user.id)
+    try:
+        await m.reply_text(
+            "You Are No Longer Afk"
+        )
+    except BaseException:
+        pass
