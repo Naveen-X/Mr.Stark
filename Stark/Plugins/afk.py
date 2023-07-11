@@ -70,7 +70,7 @@ async def no_more_afk(c, m):
     except BaseException:
         pass
 
-@Client.on_message(filters.reply & filters.all & filters.group, group=5)
+@Client.on_message(filters.reply & filters.group, group=5)
 @error_handler
 async def reply_to_afk(c, m):
     user = m.reply_to_message.from_user
