@@ -4,26 +4,25 @@ from Stark import error_handler
 from pyrogram.types import Message
 from pyrogram.enums import ChatType
 from pyrogram import Client, filters
+from main.helper_func.basic_helpers import time_formatter
 
 
-async def add_afk(afk_status, user):
+async def add_afk(user, time):
         DB.afk.insert_one({
-        "status" : str(afk_status),
-        "user" : int(user)
+        "user" : int(user),
+        "afk_time" : time
     }
    )
 
-async def check_afk(afk_status, user):
+async def check_afk(user):
     is_afk = DB.afk.find_one({
-        "status" : str(afk_status),
         "user" : int(user)
     }
    )
     return is_afk if is_afk else False
 
-async def remove_afk(afk_status, user):
+async def remove_afk(user):
         DB.afk.delete_one({
-        "status" : str(afk_status),
         "user" : int(user)
     }
    )
@@ -41,7 +40,7 @@ async def going_afk(c, m):
         reason = None
     else:
         reason = arg
-    await add_afk(True, id)
+    await add_afk(id, afk_time)
     if reason:
         await m.reply_text(f"**Ok peeps AFK time**\n\nReason : __{reason}__")
     else:
@@ -60,10 +59,13 @@ async def no_more_afk(c, m):
       pass
     if not await check_afk(True, m.from_user.id):
         return
-    await remove_afk(True, m.from_user.id)
+    await remove_afk(m.from_user.id)
+    x = await check_afk(m.from_user.id)
+    afk_time = x.get("afk_time")
+    since_afk = time_formatter(int(time.time() - afk_time) * 1000)
     try:
         await m.reply_text(
-            "You Are No Longer Afk"
+            f"You Are No Longer Afk\nAFK Time: `{since_afk}`"
         )
     except BaseException:
         pass
