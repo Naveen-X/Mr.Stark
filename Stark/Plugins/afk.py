@@ -69,3 +69,19 @@ async def no_more_afk(c, m):
         )
     except BaseException:
         pass
+
+@Client.on_message(filters.reply & filters.all & filters.group, group=5)
+@error_handler
+async def reply_to_afk(c, m):
+    user = m.reply_to_message.from_user
+    if not await check_afk(user):
+      return
+    x = await check_afk(user.id)
+    afk_time = x.get("afk_time")
+    since_afk = time_formatter(int(time.time() - afk_time) * 1000)
+    try:
+        await m.reply_text(
+            f"{user.first_name} is Currently Afk\nAFK Since: `{since_afk}`"
+        )
+    except BaseException:
+        pass
