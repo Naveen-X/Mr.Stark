@@ -79,6 +79,9 @@ async def reply_to_afk(c, m):
     x = await check_afk(user.id)
     afk_time = x.get("afk_time")
     since_afk = time_formatter(int(time.time() - afk_time) * 1000)
-    await m.reply_text(
+    try:
+        await m.reply_text(
             f"{user.first_name} is Currently Afk\nAFK Since: `{since_afk}`"
         )
+    except BaseException:
+        pass
