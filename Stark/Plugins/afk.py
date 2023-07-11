@@ -59,10 +59,10 @@ async def no_more_afk(c, m):
       pass
     if not await check_afk(m.from_user.id):
         return
-    await remove_afk(m.from_user.id)
     x = await check_afk(m.from_user.id)
     afk_time = x.get("afk_time")
     since_afk = time_formatter(int(time.time() - afk_time) * 1000)
+    await remove_afk(m.from_user.id)
     try:
         await m.reply_text(
             f"You Are No Longer Afk\nAFK Time: `{since_afk}`"
