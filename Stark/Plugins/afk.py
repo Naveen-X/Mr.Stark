@@ -57,7 +57,7 @@ async def no_more_afk(c, m):
           return
     except BaseException:
       pass
-    if not await check_afk(True, m.from_user.id):
+    if not await check_afk(m.from_user.id):
         return
     await remove_afk(m.from_user.id)
     x = await check_afk(m.from_user.id)
