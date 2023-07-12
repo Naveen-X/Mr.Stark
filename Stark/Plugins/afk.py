@@ -30,7 +30,7 @@ async def remove_afk(user):
     }
    )
 
-@Client.on_message(filters.command("afk2"))
+@Client.on_message(filters.command("afk"))
 @error_handler
 async def going_afk(c, m):
         afk_time = int(time.time())
@@ -43,7 +43,7 @@ async def going_afk(c, m):
         reason = None if not arg else arg
         await add_afk(id, afk_time, reason)
         if reason:
-            await m.reply_text(f"**{name} is noe AFK**\n\nReason : __{reason}__")
+            await m.reply_text(f"**{name} is now AFK**\n\nReason : __{reason}__")
         else:
             await m.reply_text(f"**{name} is Now AFK**")
 
@@ -83,7 +83,7 @@ async def reply_to_afk(c, m):
         since_afk = time_formatter(int(time.time() - afk_time) * 1000)
         try:
             await m.reply_text(
-                f"**{fst_name} is Afk since `{since_afk}`\n**Reason:** `{reason}`"
+                f"**{fst_name} is Afk since** `{since_afk}`\n**Reason:** `{reason}`"
             )
         except BaseException:
             pass
