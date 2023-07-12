@@ -76,7 +76,54 @@ async def no_more_afk(c, m):
 @Client.on_message(filters.reply & filters.group, group=5)
 @error_handler
 async def reply_to_afk(c, m):
-    async def send_afk_message(user_id, fst_name):
+    if m.entities:
+        entities = m.entities
+
+        chk_users = []
+        for ent in entities:
+            if ent.type == MessageEntityType.TEXT_MENTION:
+                user_id = ent.user.id
+                fst_name = ent.user.first_name
+                if user_id in chk_users:
+                    return
+                chk_users.append(user_id)
+            elif ent.type == MessageEntityType.MENTION:
+                start_offset = ent.offset
+                end_offset = ent.offset + ent.length
+                mention_text = m.text[start_offset:end_offset]
+                user_name = mention_text[1:]
+                chat = c.get_chat(user_name)
+                user_id = chat.id
+                if not user_id:
+                    return
+                if user_id in chk_users:
+                    return
+                chk_users.append(user_id)
+
+                try:
+                    chat = c.get_chat(user_id)
+                except BadRequest:
+                    print("Error: Could not fetch userid {} for AFK module".
+                          format(user_id))
+                    return
+                fst_name = chat.first_name
+            else:
+                return
+            if not await check_afk(user_id):
+                return
+            x = await check_afk(user_id)
+            afk_time = x.get("afk_time")
+            since_afk = time_formatter(int(time.time() - afk_time) * 1000)
+            try:
+                await m.reply_text(
+                f"**{fst_name} is Currently Afk**\n**AFK Time:** `{since_afk}`"
+                )
+            except BaseException:
+                pass
+
+    elif m.reply_to_message:
+        user_id = m.reply_to_message.from_user.id
+        fst_name = m.reply_to_message.from_user.first_name
         if not await check_afk(user_id):
             return
         x = await check_afk(user_id)
@@ -88,45 +135,4 @@ async def reply_to_afk(c, m):
             )
         except BaseException:
             pass
-
-    if m.entities:
-        entities = m.entities
-        chk_users = set()
-
-        for ent in entities:
-            if ent.type == MessageEntityType.TEXT_MENTION:
-                user_id = ent.user.id
-                fst_name = ent.user.first_name
-                if user_id in chk_users:
-                    continue
-                chk_users.add(user_id)
-                await send_afk_message(user_id, fst_name)
-
-            elif ent.type == MessageEntityType.MENTION:
-                start_offset = ent.offset
-                end_offset = ent.offset + ent.length
-                mention_text = m.text[start_offset:end_offset]
-                user_name = mention_text[1:]
-                chat = c.get_chat(user_name)
-                if not chat:
-                    continue
-                user_id = chat.id
-                if user_id in chk_users:
-                    continue
-                chk_users.add(user_id)
-
-                try:
-                    chat = c.get_chat(user_id)
-                    fst_name = chat.first_name
-                except BadRequest:
-                    print("Error: Could not fetch userid {} for AFK module".format(user_id))
-                    continue
-
-                await send_afk_message(user_id, fst_name)
-
-    elif m.reply_to_message:
-        user_id = m.reply_to_message.from_user.id
-        fst_name = m.reply_to_message.from_user.first_name
-        await send_afk_message(user_id, fst_name)
-
             
