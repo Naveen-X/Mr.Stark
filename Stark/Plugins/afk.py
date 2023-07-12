@@ -32,22 +32,19 @@ async def remove_afk(user):
 @Client.on_message(filters.command("afk2"))
 @error_handler
 async def going_afk(c, m):
-    afk_time = int(time.time())
-    id = m.from_user.id
-    name = m.from_user.first_name
-    try:
-      arg = m.text.split(None, 1)[1]
-    except IndexError:
-      arg = None
-    if not arg:
-        reason = None
-    else:
-        reason = arg
-    await add_afk(id, afk_time)
-    if reason:
-        await m.reply_text(f"**{name} is noe AFK**\n\nReason : __{reason}__")
-    else:
-        await m.reply_text(f"**{name} is Now AFK**")
+        afk_time = int(time.time())
+        id = m.from_user.id
+        name = m.from_user.first_name
+        try:
+          arg = m.text.split(None, 1)[1]
+        except IndexError:
+          arg = None
+        reason = None if not arg else arg
+        await add_afk(id, afk_time)
+        if reason:
+            await m.reply_text(f"**{name} is noe AFK**\n\nReason : __{reason}__")
+        else:
+            await m.reply_text(f"**{name} is Now AFK**")
 
 
 @Client.on_message(filters.all & filters.group, group=5)
