@@ -32,6 +32,7 @@ async def remove_afk(user):
 async def going_afk(c, m):
     afk_time = int(time.time())
     id = m.from_user.id
+    name = m.from_user.first_name
     try:
       arg = m.text.split(None, 1)[1]
     except IndexError:
@@ -42,9 +43,9 @@ async def going_afk(c, m):
         reason = arg
     await add_afk(id, afk_time)
     if reason:
-        await m.reply_text(f"**Ok peeps AFK time**\n\nReason : __{reason}__")
+        await m.reply_text(f"**{name} is noe AFK**\n\nReason : __{reason}__")
     else:
-        await m.reply_text("**Ok peeps AFK time**")
+        await m.reply_text(f"**{name} is Now AFK**")
 
 
 @Client.on_message(filters.all & filters.group, group=5)
