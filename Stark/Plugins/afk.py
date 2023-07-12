@@ -83,7 +83,7 @@ async def reply_to_afk(c, m):
         since_afk = time_formatter(int(time.time() - afk_time) * 1000)
         try:
             await m.reply_text(
-                f"**{fst_name} is Currently Afk**\n**Reason:** `{reason}`\n**AFK Time:** `{since_afk} ago`"
+                f"**{fst_name} is Afk since `{since_afk}`\n**Reason:** `{reason}`"
             )
         except BaseException:
             pass
