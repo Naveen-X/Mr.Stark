@@ -16,7 +16,7 @@ repo = InlineKeyboardMarkup(
         ]
     )
 @Client.on_message(filters.command("repo"))
-async def repo(c, m): 
+async def send_repo(c, m): 
     REPO =  ("__**Hey, I'm using Mr.Stark😎🔥 **__\n")
     REPO += ("__A Bot Made From Scratch Using Pyrogram.__\n\n")
     REPO += (f"**✘ Stark version:** __{bot_version}__\n")
