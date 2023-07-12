@@ -52,7 +52,7 @@ async def going_afk(c, m):
 @error_handler
 async def no_more_afk(c, m):
     try:
-      if m.text.startswith("/afk2") or m.text == "/afk2":
+      if m.text.startswith("/afk") or m.text == "/afk":
           return
       if not m.from_user:
           return
