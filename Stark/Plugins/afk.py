@@ -88,7 +88,12 @@ async def reply_to_afk(c, m):
                     return
                 chk_users.append(user_id)
             elif ent.type == MessageEntityType.MENTION:
-                user_id = get_user_id(m.text[ent.offset:ent.offset + ent.length])
+                start_offset = ent.offset
+                end_offset = ent.offset + ent.length
+                mention_text = m.text[start_offset:end_offset]
+                user_name = mention_text[1:]
+                chat = c.get_chat(user_name)
+                user_id = chat.id
                 if not user_id:
                     return
                 if user_id in chk_users:
@@ -102,10 +107,8 @@ async def reply_to_afk(c, m):
                           format(user_id))
                     return
                 fst_name = chat.first_name
-
             else:
                 return
-
             if not await check_afk(user_id):
                 return
             x = await check_afk(user_id)
