@@ -9,10 +9,11 @@ from pyrogram.enums import MessageEntityType
 from main.helper_func.basic_helpers import time_formatter
 
 
-async def add_afk(user, time):
+async def add_afk(user, time, reason):
         DB.afk.insert_one({
         "user" : int(user),
-        "afk_time" : time
+        "afk_time" : time,
+        "reason" : reason
     }
    )
 
@@ -40,7 +41,7 @@ async def going_afk(c, m):
         except IndexError:
           arg = None
         reason = None if not arg else arg
-        await add_afk(id, afk_time)
+        await add_afk(id, afk_time, reason)
         if reason:
             await m.reply_text(f"**{name} is noe AFK**\n\nReason : __{reason}__")
         else:
@@ -78,10 +79,11 @@ async def reply_to_afk(c, m):
             return
         x = await check_afk(user_id)
         afk_time = x.get("afk_time")
+        reason = x.get("reason")
         since_afk = time_formatter(int(time.time() - afk_time) * 1000)
         try:
             await m.reply_text(
-                f"**{fst_name} is Currently Afk**\n**AFK Time:** `{since_afk}`"
+                f"**{fst_name} is Currently Afk**\n**Reason:** `{reason}`\n**AFK Time:** `{since_afk} ago`"
             )
         except BaseException:
             pass
