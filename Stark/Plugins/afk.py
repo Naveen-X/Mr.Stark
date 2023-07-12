@@ -103,22 +103,14 @@ async def reply_to_afk(c, m):
                 start_offset = ent.offset
                 end_offset = ent.offset + ent.length
                 mention_text = m.text[start_offset:end_offset]
-                user_name = mention_text[1:]
-                chat = c.get_chat(user_name)
+                chat = await c.get_users(mention_text)
                 if not chat:
                     continue
                 user_id = chat.id
                 if user_id in chk_users:
                     continue
                 chk_users.add(user_id)
-
-                try:
-                    chat = c.get_chat(user_id)
-                    fst_name = chat.first_name
-                except BadRequest:
-                    print("Error: Could not fetch userid {} for AFK module".format(user_id))
-                    continue
-
+                fst_name = chat.first_name
                 await send_afk_message(user_id, fst_name)
 
     elif m.reply_to_message:
