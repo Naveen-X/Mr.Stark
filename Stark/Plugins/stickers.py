@@ -52,44 +52,7 @@ async def kang(c, m):
             elif msg.reply_to_message.sticker or msg.reply_to_message.photo:
                 await kangMyAss(m, c, chat_id)
         else:
-            packs = "`Please reply to a sticker or image to kang it!\nBtw here are your packs:\n"
-            packname = "kang_" + str(user_id) + "_by_" + str(BOT_USERNAME)
-            try:
-                stickerset = stickerset = await c.invoke(
-                    functions.messages.GetStickerSet(
-                        stickerset=types.InputStickerSetShortName(
-                            short_name=packname
-                        ),
-                        hash=0
-                    )
-                )
-                packnum = 1
-            except:
-                packnum = 0
-                # update.message.reply_text("Please reply to a sticker, or image to kang it!")
-            if packnum > 0:
-                onlypack = 0
-                while onlypack == 0:
-                    try:
-                        stickerset = await c.invoke(
-                            functions.messages.GetStickerSet(
-                                stickerset=types.InputStickerSetShortName(
-                                    short_name=packname
-                                ),
-                                hash=0
-                            )
-                        )
-                        packs += f"[Pack{packnum}](t.me/addstickers/{packname})\n"
-
-                    except:
-                        onlypack = 1
-
-                    packnum += 1
-                    packname = "kang_" + \
-                        str(packnum - 1) + "_" + str(user_id) + \
-                        "_by_"+str(BOT_USERNAME)
-            else:
-                packs += f"[Pack](t.me/addstickers/{packname})"
+            packs = "`Please reply to a sticker or image to kang it!"
             await m.reply_text(packs)
 
 
