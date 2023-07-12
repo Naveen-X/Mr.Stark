@@ -75,7 +75,7 @@ async def no_more_afk(c, m):
 @error_handler
 async def reply_to_afk(c, m):
     user = m.reply_to_message.from_user
-    if not await check_afk(user):
+    if not await check_afk(user.id):
       return
     x = await check_afk(user.id)
     afk_time = x.get("afk_time")
