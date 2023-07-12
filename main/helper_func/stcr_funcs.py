@@ -128,7 +128,16 @@ async def kangMyAss(m, c, chat_id):
                     sticker=stcr
                 )
             )
-            await hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
+            await hm.edit(f"**Sticker successfully added**\n**Emoji is:** {sticker_emoji}", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url=f"t.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
         except OSError as e:
             await hm.edit(f"I can kang only images")
             print(e)
@@ -156,13 +165,29 @@ async def kangMyAss(m, c, chat_id):
                         hash=0
                     )
                 )
-                await hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/%s)" % packname + "\n"
-                                                  "*Emoji is:*" + " " + sticker_emoji)
+                await hm.edit(f"**Sticker successfully added**\n**Emoji is:** {sticker_emoji}", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url=f"t.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
             elif str(e) == "Stickers_too_much":
                 msg.reply_text("Max pack size reached")
             elif str(e) == "Internal Server Error: sticker set not found (500)":
-                await hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/%s)" % packname + "\n"
-                                                  "**Emoji is:**" + " " + sticker_emoji)
+                await hm.edit(f"**Sticker successfully added**\n**Emoji is:** {sticker_emoji}", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url=f"t.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
             elif str(e) == "Invalid sticker emojis":
                 sticker_emoji = random.choice(emojiss)
                 await c.invoke(
@@ -174,8 +199,16 @@ async def kangMyAss(m, c, chat_id):
                         hash=0
                     )
                 )
-                await hm.edit(f"**Sticker successfully added to:** [Pack](t.me/addstickers/%s)" % packname + "\n"
-                                                  "**Emoji is:**" + " " + sticker_emoji)
+                await hm.edit(f"**Sticker successfully added**\n**Emoji is:** {sticker_emoji}", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url=f"t.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
             else:
                 print("tg error", str(e))
         except Exception as e:
@@ -214,13 +247,31 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
     except Exception as e:
         print(traceback.format_exc())
         if str(e) == "Sticker set name is already occupied":
-            await msg2.edit("Your pack can be found [Here](t.me/addstickers/%s)" % packname)
+            await msg2.edit("**Your pack is here**", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url="ft.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
         elif "user_id_invalid" in str(e).lower():
             await msg2.edit("Contact me in PM first.", 
                             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Start", url=f"t.me/{BOT_USERNAME}?start")]]))
             return
         elif "internal server error" in str(e).lower():
-            await msg2.edit("*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
+            await msg2.edit("**Sticker pack successfully created.**", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url="ft.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
         elif "invalid sticker emojis" in str(e).lower():
             sticker_emoji = random.choice(emojiss)
             stcr = await create_sticker(
@@ -256,7 +307,16 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
                             stickers=[stcr],  # Wrap stcr in a list
                         )
                     )
-            await msg2.edit("**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
+            await msg2.edit("**Sticker pack successfully created.**", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url="ft.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
         elif str(e) == "Sticker_png_dimensions":
             im = Image.open(png_sticker)
             maxsize = (512, 512)
@@ -297,7 +357,16 @@ async def makekang_internal(msg, user, png_sticker, emoji, c, packname, packnum,
         else:
             print("make pack", e)
     if success:
-        await msg2.edit(f"*Sticker pack successfully created.* ` Get it`  [here](t.me/addstickers/%s)" % packname)
+        await msg2.edit("**Sticker pack successfully created.**", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url="ft.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
     else:
         await msg2.edit("`Failed to create sticker pack. Possibly due to black magic.`")
 
@@ -367,7 +436,16 @@ async def kangani(c, m):
                         # hash=0
                     )
                 )
-                await hm.edit(f"*Sticker successfully added to*: [Pack](t.me/addstickers/{packname}) \n*Emoji is*: {sticker_emoji}")
+                await hm.edit(f"**Sticker successfully added**\n**Emoji is:** {sticker_emoji}", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url=f"t.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
             except Exception as e:
                 print(e)
                 if "stickerset_invalid" in str(e).lower():
@@ -395,14 +473,41 @@ async def kangani(c, m):
                     except Exception as e:
                         print(e)
                         if str(e) == "Sticker set name is already occupied":
-                            msg.reply_text("Your pack can be found [Here](t.me/addstickers/%s)" % packname)
+                            msg.reply_text("**Your pack can be found Here**", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url="ft.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
                         elif str(e) == "Peer_id_invalid":
                             msg.reply_text("Contact me in PM first.", reply_markup=types.InlineKeyboardMarkup([[types.InlineKeyboardButton(
                                 text="Start", url=f"t.me/{BOT_USERNAME}")]]))
                         elif str(e) == "Internal Server Error: created sticker set not found (500)":
-                            await hm.edit(text="**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
+                            await hm.edit("**Sticker pack successfully created.**", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url="ft.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
                     if success:
-                        hm2 = await hm.edit(f"*Sticker pack successfully created.* `Get it`  [Here](t.me/addstickers/%s)" % packname)
+                        hm2 = await hm.edit("**Sticker pack successfully created.**", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url="ft.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
                     else:
                         hm2 = await hm.edit("Failed to create sticker pack. Possibly due to blek mejik.")
                 elif str(e) == "Sticker set name is already occupied":
@@ -508,22 +613,67 @@ async def kangwebm(m, c):
                 except Exception as e:
                     print(e)
                     if "ticker set name is already occupied" in str(e).lower():
-                        msg.reply_text("Your pack can be found [Here](t.me/addstickers/%s)" % packname)
+                        msg.reply_text("**Your pack can be found Here**", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url="ft.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
                     elif "peer_id_invalid" in str(e).lower():
                         msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Start", url=f"t.me/{BOT_USERNAME}")]]))
                     else:
-                        await hm.edit("**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
+                        await hm.edit("**Sticker pack successfully created.**", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url="ft.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    )))
                 if success:
-                    hm2 = await hm.edit(f"**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
+                    hm2 = await hm.edit("**Sticker pack successfully created.**", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url="ft.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
                 else:
                     hm2 = await hm.edit("Failed to create sticker pack. Possibly due to black magic.")
             elif str(e) == "Sticker_video_nowebm":
                 await hm.edit("`An unexpected error arrived, try again !`")
             elif str(e) == "Sticker set name is already occupied":
-                msg.reply_text("Your pack can be found [Here](t.me/addstickers/%s)" % packname)
+                msg.reply_text("**Your pack can be found Here**", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url="ft.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
             elif str(e) == "Peer_id_invalid":
                 msg.reply_text("Contact me in PM first.", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Start", url=f"t.me/{BOT_USERNAME}")]]))
             elif str(e) == "Internal Server Error: created sticker set not found (500)":
-                await hm.edit("**Sticker pack successfully created.** `Get it`  [Here](t.me/addstickers/%s)" % packname)
+                await hm.edit("**Sticker pack successfully created.**", reply_markup=InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="View Pack",
+                    url="ft.me/addstickers/{packname}",
+                )
+            ]
+        ]
+    ))
         if os.path.isfile(f"{idk}.webm"):
             os.remove(f"{idk}.webm")
