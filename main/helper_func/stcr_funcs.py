@@ -635,7 +635,7 @@ async def kangwebm(m, c):
                 )
             ]
         ]
-    )))
+    ))
                 if success:
                     hm2 = await hm.edit("**Sticker pack successfully created.**", reply_markup=InlineKeyboardMarkup(
         [
