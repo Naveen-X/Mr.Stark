@@ -24,7 +24,7 @@ async def check_afk(user):
     return is_afk if is_afk else False
 
 async def remove_afk(user):
-        DB.afk.delete_one({
+        DB.afk.delete_many({
         "user" : int(user)
     }
    )
