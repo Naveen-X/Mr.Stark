@@ -80,7 +80,7 @@ async def test(c, m):
         x = await c.get_users(i)
         name = x.first_name
         cb = f"auth.{id}"
-        buttons.append([InlineKeyboardButton(text=name, callback_data=str(cb))])
+        buttons.append(InlineKeyboardButton(text=name, callback_data=str(cb)))
     keyboard_rows = [buttons[i:i+2] for i in range(0, len(buttons), 2)]
     reply_markup = InlineKeyboardMarkup(keyboard_rows)
     await c.send_message(m.chat.id, msg, reply_markup=reply_markup)
