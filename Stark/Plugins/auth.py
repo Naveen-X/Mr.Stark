@@ -73,6 +73,7 @@ async def list_auth(c,m):
       await x.edit(mg)
 
 @Client.on_message(filters.command("test"))
+@error_handler
 async def test(c, m):
     msg = "List of Authorised Users:"
     for i in users:
