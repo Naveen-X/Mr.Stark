@@ -84,7 +84,7 @@ async def test(c, m):
     reply_markup = InlineKeyboardMarkup(keyboard_rows)
     await c.send_message(m.chat.id, msg, reply_markup=reply_markup)
 
-@Client.callback_query(filters.regex("auth\.\d+"))
+@Client.on_callback_query(filters.regex("auth\.\d+"))
 async def auth_cb(c, cb):
     if int(cb.from_user.id) not in [1246467977, 1089528685]:
       await cb.awnser("You Cant Do This", show_alert=True)
@@ -114,7 +114,7 @@ async def auth_cb(c, cb):
     )
     await cb.edit_message_text(text=u_info, reply_markup=back)
 
-@Client.callback_query(filters.regex("un_authorise\.\d+"))
+@Client.on_callback_query(filters.regex("un_authorise\.\d+"))
 async def un_auth_cb(c, cb):
     if int(cb.from_user.id) not in [1246467977, 1089528685]:
       await cb.awnser("You Cant Do This", show_alert=True)
@@ -124,7 +124,7 @@ async def un_auth_cb(c, cb):
     await dis_auth_user(user_id)
     await cb.edit_message_text("`Un Authorised Sucessfully`")
     
-@Client.callback_query(filters.regex("back"))
+@Client.on_callback_query(filters.regex("back"))
 async def back_to_auth_list(c, cb):
     if int(cb.from_user.id) not in [1246467977, 1089528685]:
       await cb.awnser("You Cant Do This", show_alert=True)
