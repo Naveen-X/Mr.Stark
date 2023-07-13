@@ -1,6 +1,11 @@
 from Stark.db import DB
 from Stark import error_handler
 from pyrogram import Client, filters
+from pyrogram.types import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+)
+
 
 async def auth_user(user_id, bot):
     stark = DB.auth.find_one({"_id": user_id})
@@ -15,6 +20,11 @@ async def dis_auth_user(user_id):
 
 
 ## I know This is wrong but it's OK!
+auth = DB.auth.find({})
+users = []
+for i in auth:
+    users.append(i["_id"])
+buttons = []
 
 @Client.on_message(filters.command(["auth"]) & filters.user([1246467977, 1089528685]))
 @error_handler
@@ -61,3 +71,70 @@ async def list_auth(c,m):
         t = i["mention"]
         mg += f"• {t}\n"
       await x.edit(mg)
+
+@Client.on_message(filters.command("test"))
+async def test(c, m):
+    msg = "List of Authorised Users:"
+    for i in users:
+        x = await c.get_users(i)
+        name = x.first_name
+        cb = f"auth.{id}"
+        buttons.append([InlineKeyboardButton(text=name, callback_data=str(cb))])
+    keyboard_rows = [buttons[i:i+2] for i in range(0, len(buttons), 2)]
+    reply_markup = InlineKeyboardMarkup(keyboard_rows)
+    await c.send_message(m.chat.id, msg, reply_markup=reply_markup)
+
+@Client.callback_query(filters.regex("auth\.\d+"))
+async def auth_cb(c, cb):
+    if int(cb.from_user.id) not in [1246467977, 1089528685]:
+      await cb.awnser("You Cant Do This", show_alert=True)
+      return
+    user_id = cb.data.split(".")[1]
+    uid = await c.get_users(user_id)
+    u_info = "__**USER DETAILS**__\n\n"
+    u_info += f"**Name:** `{uid.first_name}`**"
+    u_info += f"**ID:** `{uid.id}`"
+    u_info += f"**UserName:** `{uid.username}`"
+    u_info += f"**Link to Profile:** {uid.mention}"
+    back = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    text="Un Authorise",
+                    callback_data=f"un_authorise.{user_id}",
+                )
+            ],
+            [
+               InlineKeyboardButton(
+                 text="Back",
+                 callback_data="back",
+              )
+            ]
+        ]
+    )
+    await cb.edit_message_text(text=u_info, reply_markup=back)
+
+@Client.callback_query(filters.regex("un_authorise\.\d+"))
+async def un_auth_cb(c, cb):
+    if int(cb.from_user.id) not in [1246467977, 1089528685]:
+      await cb.awnser("You Cant Do This", show_alert=True)
+      return
+    user_id = cb.data.split(".")[1]
+    await cb.edit_message_text("`Un Authorising User`")
+    await dis_auth_user(user_id)
+    await cb.edit_message_text("`Un Authorised Sucessfully`")
+    
+@Client.callback_query(filters.regex("back"))
+async def back_to_auth_list(c, cb):
+    if int(cb.from_user.id) not in [1246467977, 1089528685]:
+      await cb.awnser("You Cant Do This", show_alert=True)
+      return
+    msg = "List of Authorised Users:"
+    for i in users:
+        x = await c.get_users(i)
+        name = x.first_name
+        cb = f"auth.{id}"
+        buttons.append([InlineKeyboardButton(text=name, callback_data=str(cb))])
+    keyboard_rows = [buttons[i:i+2] for i in range(0, len(buttons), 2)]
+    reply_markup = InlineKeyboardMarkup(keyboard_rows)
+    await cb.edit_message_text(msg, reply_markup=reply_markup)
