@@ -84,8 +84,7 @@ async def test(c, m):
     keyboard_rows = [buttons[i:i+2] for i in range(0, len(buttons), 2)]
     reply_markup = InlineKeyboardMarkup(keyboard_rows)
     await c.send_message(m.chat.id, msg, reply_markup=reply_markup)
-
-buttons = []
+    buttons.clear()
 
 
 @Client.on_callback_query(filters.regex("auth\.\d+"))
