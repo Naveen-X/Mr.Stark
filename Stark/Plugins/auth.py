@@ -95,10 +95,10 @@ async def auth_cb(c, cb):
     user_id = cb.data.split(".")[1]
     uid = await c.get_users(user_id)
     u_info = "__**USER DETAILS**__\n\n"
-    u_info += f"**Name:** `{uid.first_name}`**"
-    u_info += f"**ID:** `{uid.id}`"
-    u_info += f"**UserName:** `{uid.username}`"
-    u_info += f"**Link to Profile:** {uid.mention}"
+    u_info += f"**Name:** `{uid.first_name}`**\n"
+    u_info += f"**ID:** `{uid.id}`\n"
+    u_info += f"**UserName:** `{uid.username}`\n"
+    u_info += f"**Link to Profile:** {uid.mention}\n"
     back = InlineKeyboardMarkup(
         [
             [
