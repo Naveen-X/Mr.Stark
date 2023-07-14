@@ -79,7 +79,7 @@ async def chatgpt(c, m):
             "`ɪ ᴅɪᴅɴ'ᴛ ɢᴇᴛ ᴛʜᴀᴛ`"
         )
         return
-      await m.reply_text("`Chat GPT Temporarily Disabled`")
+    await m.reply_text("`Chat GPT Temporarily Disabled`")
     # query = quote(query)
     # await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
     # try:
