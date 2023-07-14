@@ -90,7 +90,7 @@ async def test(c, m):
 @Client.on_callback_query(filters.regex("auth\.\d+"))
 async def auth_cb(c, cb):
     if int(cb.from_user.id) not in [1246467977, 1089528685]:
-      await cb.awnser("You Cant Do This", show_alert=True)
+      await cb.answer("You Cant Do This", show_alert=True)
       return
     user_id = cb.data.split(".")[1]
     uid = await c.get_users(user_id)
@@ -120,7 +120,7 @@ async def auth_cb(c, cb):
 @Client.on_callback_query(filters.regex("un_authorise\.\d+"))
 async def un_auth_cb(c, cb):
     if int(cb.from_user.id) not in [1246467977, 1089528685]:
-      await cb.awnser("You Cant Do This", show_alert=True)
+      await cb.answer("You Cant Do This", show_alert=True)
       return
     user_id = cb.data.split(".")[1]
     await cb.edit_message_text("`Un Authorising User`")
