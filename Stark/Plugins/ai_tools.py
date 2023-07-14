@@ -79,14 +79,15 @@ async def chatgpt(c, m):
             "`ɪ ᴅɪᴅɴ'ᴛ ɢᴇᴛ ᴛʜᴀᴛ`"
         )
         return
-    query = quote(query)
-    await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
-    try:
-      response = generate_response(query)
-    except JSONDecodeError:
-      response = "`ChatGPT Error`"
-    await c.send_message(m.chat.id, response, reply_to_message_id=m.id)
-    await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
+      await m.reply_text("`Chat GPT Temporarily Disabled`")
+    # query = quote(query)
+    # await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
+    # try:
+    #   response = generate_response(query)
+    # except JSONDecodeError:
+    #   response = "`ChatGPT Error`"
+    # await c.send_message(m.chat.id, response, reply_to_message_id=m.id)
+    # await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
 
 @Client.on_message(filters.command(["imagine"]))
 @error_handler
