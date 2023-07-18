@@ -194,7 +194,7 @@ async def idgl(c, m):
         return
     if url:
         msg = await m.reply_text("`Downloading...`")
-        rdata = get(f"https://igdl.annihilatorrrr.tk/dl?key=igdlbot&url={url}").json()
+        rdata = get(f"https://igdownloader.onrender.com/dl?key=naveen&url={url}").json()
         data = rdata["urls"]
         try:
               ismediagroup = bool(len(data) > 1)
