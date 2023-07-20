@@ -54,6 +54,8 @@ async def no_more_afk(c, m):
     try:
       if m.text.startswith("/afk") or m.text == "/afk":
           return
+      if "#afk" in m.text:
+          return
       if not m.from_user:
           return
     except BaseException:
