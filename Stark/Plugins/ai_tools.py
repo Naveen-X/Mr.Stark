@@ -64,10 +64,17 @@ class Lexica:
 
 #Generate gpt response...
 def generate_response(query: str):
-  url = "http://api.csa.codes/api/chat?message=" + str(query)
-  response = requests.get(url).json()
-  message = response['text']
-  return message
+  url = "https://api.safone.me/chatgpt"
+  h = {
+    "message": query,
+    "version": 3,
+    "chat_mode": "assistant",
+    "dialog_messages": "[{\"bot\":\"\",\"user\":\"\"}]"
+  }
+  y = requests.post(url, h).json()
+  
+  output = y["message"]
+  return output
 
 @Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
 @error_handler
@@ -79,37 +86,14 @@ async def chatgpt(c, m):
             "`ɪ ᴅɪᴅɴ'ᴛ ɢᴇᴛ ᴛʜᴀᴛ`"
         )
         return
-    await m.reply_text("`Chat GPT Temporarily Disabled`")
-    # query = quote(query)
-    # await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
-    # try:
-    #   response = generate_response(query)
-    # except JSONDecodeError:
-    #   response = "`ChatGPT Error`"
-    # await c.send_message(m.chat.id, response, reply_to_message_id=m.id)
-    # await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
-
-@Client.on_message(filters.command(["imagine"]))
-@error_handler
-async def imagine(c,m):
-  try:
-    prompt= m.text.split(None, 1)[1]
-  except IndexError:
-    await m.reply_text("`What should i imagine??\nGive some prompt along with the command`")
-    return
-  x = await m.reply_text("`Processing...`")
-  cookie=Config.LEXICA_ART_2
-  try:
-    lex = Lexica(query=prompt, cookie=cookie).generate()
-    result = [InputMediaPhoto(image) for image in lex]
-    await c.send_media_group(
-              chat_id=m.chat.id,
-              media=result,
-              reply_to_message_id=m.id,
-          )
-    await x.delete()
-  except:
-    await x.edit("`Failed to get images`\n try /img [prompt]")
+    query = quote(query)
+    await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
+    try:
+      response = generate_response(query)
+    except JSONDecodeError:
+      response = "`ChatGPT Error`"
+    await c.send_message(m.chat.id, response, reply_to_message_id=m.id)
+    await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
 
 @Client.on_message(filters.command(["img"]))
 @error_handler
