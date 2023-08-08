@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
-# load_dotenv()
+
+load_dotenv()
 if os.path.exists("local.env"):
     load_dotenv("local.env")
 
