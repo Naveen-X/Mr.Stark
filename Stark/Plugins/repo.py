@@ -10,7 +10,7 @@ repo = InlineKeyboardMarkup(
             [
                 InlineKeyboardButton(
                     text="🛠️ Repo 🛠️",
-                    url="https://link-target.net/886681/mrstark",
+                    url="https://GitHub.com/Naveen-X/Mr.Stark",
                 )
             ]
         ]
