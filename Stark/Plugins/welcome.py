@@ -1,7 +1,23 @@
 from pyrogram import Client, filters, emoji
 from pyrogram.types import Message
 
+from Stark.db import DB
 from Stark import error_handler
+
+async def rm_wlcm(id):
+        DB.wlcm.insert_one({
+        "_id" : id,
+    }
+   )
+
+
+@Client.on_message(filters.command("diswelcome"))
+@error_handler
+async def remove_wlcm(c, m):
+  x = await m.reply_text("`Wi8`")
+  id = m.chat.id
+  await rm_wlcm(id)
+  await x.edit("`Removed from Welcome DB`")
 
 
 @Client.on_message(filters.new_chat_members)
