@@ -1,1 +1,1 @@
-Assistant: bash start_req.sh
+web: bash start_req.sh
