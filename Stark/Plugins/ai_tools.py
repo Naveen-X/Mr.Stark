@@ -116,7 +116,7 @@ async def imagine(c,m):
     )
       image_urls = response.json()["images"]
       for i in image_urls:
-          await m.reply_photo(i)
+          await m.reply_photo(i, caption=f"`{prompt}`")
           await x.delete()
   except Exception as e:
       await x.edit(f"`Some Error Occured...`\n __{e}__")
