@@ -1,0 +1,1 @@
+[2024-01-27 21:49:43,274 - INFO] - Stark - live log streaming to console.

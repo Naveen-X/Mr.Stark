@@ -64,7 +64,7 @@ async def chatgpt(c, m):
     await c.send_message(m.chat.id, response, reply_to_message_id=m.id)
     await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
 
-@Client.on_message(filters.command(["img"]))
+@Client.on_message(filters.command(["lexica"]))
 @error_handler
 async def ai_img_search(c,m):
   try:
