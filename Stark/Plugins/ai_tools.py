@@ -17,6 +17,9 @@ from Stark import error_handler
 from Stark.config import Config
 from SafoneAPI import SafoneAPI
 
+api_url = "https://visioncraft-rs24.koyeb.app"
+api_key = Config.VSN_CRAFT
+
 #Lexica Art thing ...
 class Lexica:
     def __init__(self, query, negativePrompt="", guidanceScale: int = 7, portrait: bool = True, cookie=None):
@@ -85,3 +88,35 @@ async def ai_img_search(c,m):
     await x.delete()
   except:
     await x.edit("`Failed to get images`")
+
+
+@Client.on_message(filters.command(["imagine"]))
+@error_handler
+async def imagine(c,m):
+  try:
+    prompt= m.text.split(None, 1)[1]
+  except IndexError:
+    await m.reply_text("`What should i imagine??\nGive some prompt along with the command`")
+    return
+  x = await m.reply_text("`Processing...`")
+  try:
+      data = {
+        "model": "juggernaut-xl-V5",
+        "prompt": prompt,
+        "negative_prompt": "",
+        "image_count": 1,
+        "token": api_key,
+        "width": 1024,
+        "height": 768,
+        "enhance": True,
+        "watermark": False
+    }
+      response = requests.post(
+         f"{api_url}/generate-xl", json=data, verify=True
+    )
+      image_urls = response.json()["images"]
+      for i in image_urls:
+          await m.reply_photo(i)
+          await x.delete()
+  except Exception as e:
+      await x.edit(f"`Some Error Occured...`\n __{e}__")
