@@ -12,7 +12,7 @@ from Stark import error_handler
 
 
 def carbon(code):
-    url = f"https://api.safone.me/carbon?code={quote(code)}"
+    url = f"https://api.safone.dev/carbon?code={quote(code)}"
     resp = requests.get(url)
     js = resp.json()["image"]
     return js

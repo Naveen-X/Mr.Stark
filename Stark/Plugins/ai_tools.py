@@ -104,7 +104,7 @@ async def imagine(c,m):
         "model": "juggernaut-xl-V5",
         "prompt": prompt,
         "negative_prompt": "",
-        "image_count": 1,
+        "image_count": 2,
         "token": api_key,
         "width": 1024,
         "height": 768,
@@ -113,10 +113,22 @@ async def imagine(c,m):
     }
       response = requests.post(
          f"{api_url}/generate-xl", json=data, verify=True
-    )
+     )
+      print(response.json())
       image_urls = response.json()["images"]
-      for i in image_urls:
-          await m.reply_photo(i, caption=f"`{prompt}`")
-          await x.delete()
+      caption=f"**Prompt: ** `{prompt}`"
+      if len(image_urls) == 2:
+            result = [InputMediaPhoto(image_urls[0], has_spoiler=True)]
+            result.append(InputMediaPhoto(image_urls[1], caption=caption, has_spoiler=True))
+            await c.send_media_group(
+                  chat_id=m.chat.id,
+                  media=result,
+                  reply_to_message_id=m.id,
+            )
+            await x.delete()
+      else:
+         for i in image_urls:
+            await m.reply_photo(i, caption=caption)
+         await x.delete()
   except Exception as e:
       await x.edit(f"`Some Error Occured...`\n __{e}__")
