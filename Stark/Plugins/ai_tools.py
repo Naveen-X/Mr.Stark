@@ -135,8 +135,8 @@ async def ai_img_search(c,m):
               reply_to_message_id=m.id,
           )
     await x.delete()
-  except:
-    await x.edit("`Failed to get images`")
+  except Exception as e:
+    await x.edit("__Failed to get image__\n`{e}`")
 
 #Clear gpt chat history
 
