@@ -103,14 +103,22 @@ async def chatgpt(c, m):
         "output: I am a bot developed by Naveen_xD",
         "input: Are you trained by google",
         "output: No, I am not trained by Google. I am trained by Naveen.",
-        f"input: {query}",
-        "output: "
     ]
+    chat = []
+    global chat
+    message_ = await m.reply(". . .")
+    chat.append(f'input: {m.text}')
+    chat.append(f'output: ')
+    response = model.generate_content(prompt_parts + chat)
+    chat.pop()
+    try:
+        text = response.text
+        chat.append(f'output: {text}')
+        await message_.edit(text)
+    except:
+        chat.pop()
+        await message_.edit("I dont have answer to your Question!")
     response = model.generate_content(prompt_parts)
-    query = quote(query)
-    await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
-    await c.send_message(m.chat.id, response.text, reply_to_message_id=m.id)
-    await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
 
 @Client.on_message(filters.command(["lexica"]))
 @error_handler
