@@ -103,7 +103,7 @@ async def chatgpt(c, m):
         "output: I am a bot developed by Naveen_xD",
         "input: Are you trained by google",
         "output: No, I am not trained by Google. I am trained by Naveen.",
-        "input: {query}",
+        f"input: {query}",
         "output: "
     ]
     response = model.generate_content(prompt_parts)
