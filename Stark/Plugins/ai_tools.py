@@ -21,46 +21,8 @@ from SafoneAPI import SafoneAPI
 api_url = "https://visioncraft-rs24.koyeb.app"
 api_key = Config.VSN_CRAFT
 
-#Lexica Art thing ...
-class Lexica:
-    def __init__(self, query, negativePrompt="", guidanceScale: int = 7, portrait: bool = True, cookie=None):
-        self.query = query
-        self.negativePrompt = negativePrompt
-        self.guidanceScale = guidanceScale
-        self.portrait = portrait
-        self.cookie = cookie
-
-    def images(self):
-        response = httpx.post("https://lexica.art/api/infinite-prompts", json={
-            "text": self.query,
-            "searchMode": "images",
-            "source": "search",
-            "model": "lexica-aperture-v2"
-        })
-
-        prompts = [f"https://image.lexica.art/full_jpg/{ids['id']}" for ids in response.json()["images"]]
-
-        return prompts
-
-    def _generate_random_string(self, length):
-        chars = string.ascii_letters + string.digits
-        result_str = ''.join(random.choice(chars) for _ in range(length))
-
-        return result_str
-
-#Generate gpt response...
-
-@Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
-@error_handler
-async def chatgpt(c, m):
-    try:
-        query = m.text.split(None, 1)[1]
-    except:
-        await m.reply_text(
-            "`ɪ ᴅɪᴅɴ'ᴛ ɢᴇᴛ ᴛʜᴀᴛ`"
-        )
-        return
-    genai.configure(api_key=Config.GOOGLE_AI_STUDIO_KEY)
+#gpt base codes
+genai.configure(api_key=Config.GOOGLE_AI_STUDIO_KEY)
 
     generation_config = {
         "temperature": 0.9,
@@ -105,6 +67,47 @@ async def chatgpt(c, m):
         "output: No, I am not trained by Google. I am trained by Naveen.",
     ]
     chat = []
+    
+#Lexica Art thing ...
+class Lexica:
+    def __init__(self, query, negativePrompt="", guidanceScale: int = 7, portrait: bool = True, cookie=None):
+        self.query = query
+        self.negativePrompt = negativePrompt
+        self.guidanceScale = guidanceScale
+        self.portrait = portrait
+        self.cookie = cookie
+
+    def images(self):
+        response = httpx.post("https://lexica.art/api/infinite-prompts", json={
+            "text": self.query,
+            "searchMode": "images",
+            "source": "search",
+            "model": "lexica-aperture-v2"
+        })
+
+        prompts = [f"https://image.lexica.art/full_jpg/{ids['id']}" for ids in response.json()["images"]]
+
+        return prompts
+
+    def _generate_random_string(self, length):
+        chars = string.ascii_letters + string.digits
+        result_str = ''.join(random.choice(chars) for _ in range(length))
+
+        return result_str
+
+#Generate gpt response...
+
+@Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
+@error_handler
+async def chatgpt(c, m):
+    try:
+        query = m.text.split(None, 1)[1]
+    except:
+        await m.reply_text(
+            "`ɪ ᴅɪᴅɴ'ᴛ ɢᴇᴛ ᴛʜᴀᴛ`"
+        )
+        return
+    text = ""
     global chat
     message_ = await m.reply(". . .")
     chat.append(f'input: {m.text}')
