@@ -100,13 +100,6 @@ class Lexica:
 @Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
 @error_handler
 async def chatgpt(c, m):
-    try:
-        query = m.text.split(None, 1)[1]
-    except:
-        await m.reply_text(
-            "`ɪ ᴅɪᴅɴ'ᴛ ɢᴇᴛ ᴛʜᴀᴛ`"
-        )
-        return
     text = ""
     global chat
     message_ = await m.reply(". . .")
@@ -145,7 +138,17 @@ async def ai_img_search(c,m):
   except:
     await x.edit("`Failed to get images`")
 
+#Clear gpt chat history
 
+@Client.on_message(filters.command(['cleargpt']))
+@error_handler
+async def clear_chatgpt(c, m):
+    global chat
+    chat = []
+    await m .reply("`Cleared...`")
+  
+  
+  
 @Client.on_message(filters.command(["imagine"]))
 @error_handler
 async def imagine(c,m):
