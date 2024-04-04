@@ -19,3 +19,4 @@ class Config(object):
     ARQ_API = os.environ.get("ARQ_API", None)
     VSN_CRAFT = os.environ.get("VSN_CRAFT", None)
     CHROME_BIN = os.environ.get("CHROME_BIN",  "/usr/bin/google-chrome-stable")
+    GOOGLE_AI_STUDIO_KEY = os.environ.get("GOOGLE_AI_STUDIO_KEY", None)
