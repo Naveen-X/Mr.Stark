@@ -107,7 +107,6 @@ async def chatgpt(c, m):
         "output: "
     ]
     response = model.generate_content(prompt_parts)
-    await m.reply() 
     query = quote(query)
     await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
     await c.send_message(m.chat.id, response.text, reply_to_message_id=m.id)
