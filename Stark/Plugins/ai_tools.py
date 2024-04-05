@@ -101,9 +101,16 @@ class Lexica:
 @error_handler
 async def chatgpt(c, m):
     text = ""
+    try:
+        text = m.text.split(None, 1)[1]
+    except IndexError:
+        await m.reply(
+            "`I didn't get that!`"
+        )
+        return
     global chat
     message_ = await m.reply(". . .")
-    chat.append(f'input: {m.text}')
+    chat.append(f'input: {text}')
     chat.append(f'output: ')
     response = model.generate_content(prompt_parts + chat)
     chat.pop()
