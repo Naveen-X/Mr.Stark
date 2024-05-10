@@ -21,6 +21,53 @@ from SafoneAPI import SafoneAPI
 api_url = "https://visioncraft-rs24.koyeb.app"
 api_key = Config.VSN_CRAFT
 
+#gpt base codes
+genai.configure(api_key=Config.GOOGLE_AI_STUDIO_KEY)
+
+generation_config = {
+    "temperature": 0.9,
+    "top_p": 1,
+    "top_k": 1,
+    "max_output_tokens": 2048,
+}
+
+safety_settings = [
+    {
+        "category": "HARM_CATEGORY_HARASSMENT",
+        "threshold": "BLOCK_NONE"
+    },
+    {
+        "category": "HARM_CATEGORY_HATE_SPEECH",
+        "threshold": "BLOCK_NONE"
+    },
+    {
+        "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        "threshold": "BLOCK_NONE"
+    },
+    {
+        "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+        "threshold": "BLOCK_NONE"
+    },
+]
+
+model = genai.GenerativeModel(model_name="gemini-1.0-pro",
+                              generation_config=generation_config,
+                              safety_settings=safety_settings)
+
+prompt_parts = [
+    "input: Who is your owner?",
+    "output: My owner is Naveen_xD",
+    "input: Are you lying?",
+    "output: No!",
+    "input: Are you trained by google",
+    "output: No",
+    "input: Who are you?",
+    "output: I am a bot developed by Naveen_xD",
+    "input: Are you trained by google",
+    "output: No, I am not trained by Google. I am trained by Naveen.",
+]
+chat = []
+    
 #Lexica Art thing ...
 class Lexica:
     def __init__(self, query, negativePrompt="", guidanceScale: int = 7, portrait: bool = True, cookie=None):
@@ -53,13 +100,15 @@ class Lexica:
 @Client.on_message(filters.command(['gpt', 'askgpt', 'chatgpt']))
 @error_handler
 async def chatgpt(c, m):
+    text = ""
     try:
-        query = m.text.split(None, 1)[1]
-    except:
-        await m.reply_text(
-            "`ɪ ᴅɪᴅɴ'ᴛ ɢᴇᴛ ᴛʜᴀᴛ`"
+        text = m.text.split(None, 1)[1]
+    except IndexError:
+        await m.reply(
+            "`I didn't get that!`"
         )
         return
+<<<<<<< HEAD
     genai.configure(api_key=Config.GOOGLE_AI_STUDIO_KEY)
 
     generation_config = {
@@ -106,12 +155,22 @@ async def chatgpt(c, m):
         "input: {query}",
         "output: "
     ]
+=======
+    global chat
+    message_ = await m.reply(". . .")
+    chat.append(f'input: {text}')
+    chat.append(f'output: ')
+    response = model.generate_content(prompt_parts + chat)
+    chat.pop()
+    try:
+        text = response.text
+        chat.append(f'output: {text}')
+        await message_.edit(text)
+    except:
+        chat.pop()
+        await message_.edit("I dont have answer to your Question!")
+>>>>>>> c0aa3142a4fd45b83ac1b6ac3ae7c37d4b8e9bf8
     response = model.generate_content(prompt_parts)
-    await m.reply() 
-    query = quote(query)
-    await c.send_chat_action(m.chat.id, enums.ChatAction.TYPING)
-    await c.send_message(m.chat.id, response.text, reply_to_message_id=m.id)
-    await c.send_chat_action(m.chat.id, enums.ChatAction.CANCEL)
 
 @Client.on_message(filters.command(["lexica"]))
 @error_handler
@@ -132,10 +191,20 @@ async def ai_img_search(c,m):
               reply_to_message_id=m.id,
           )
     await x.delete()
-  except:
-    await x.edit("`Failed to get images`")
+  except Exception as e:
+    await x.edit("__Failed to get image__\n`{e}`")
 
+#Clear gpt chat history
 
+@Client.on_message(filters.command(['cleargpt']))
+@error_handler
+async def clear_chatgpt(c, m):
+    global chat
+    chat = []
+    await m .reply("`Cleared...`")
+  
+  
+  
 @Client.on_message(filters.command(["imagine"]))
 @error_handler
 async def imagine(c,m):
