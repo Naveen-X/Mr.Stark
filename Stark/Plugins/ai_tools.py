@@ -108,7 +108,6 @@ async def chatgpt(c, m):
             "`I didn't get that!`"
         )
         return
-<<<<<<< HEAD
     genai.configure(api_key=Config.GOOGLE_AI_STUDIO_KEY)
 
     generation_config = {
@@ -155,21 +154,6 @@ async def chatgpt(c, m):
         "input: {query}",
         "output: "
     ]
-=======
-    global chat
-    message_ = await m.reply(". . .")
-    chat.append(f'input: {text}')
-    chat.append(f'output: ')
-    response = model.generate_content(prompt_parts + chat)
-    chat.pop()
-    try:
-        text = response.text
-        chat.append(f'output: {text}')
-        await message_.edit(text)
-    except:
-        chat.pop()
-        await message_.edit("I dont have answer to your Question!")
->>>>>>> c0aa3142a4fd45b83ac1b6ac3ae7c37d4b8e9bf8
     response = model.generate_content(prompt_parts)
 
 @Client.on_message(filters.command(["lexica"]))
