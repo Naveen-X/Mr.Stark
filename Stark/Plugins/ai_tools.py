@@ -150,7 +150,7 @@ async def chatgpt(c, m):
         "input: Who are you?",
         "output: I am a bot developed by Satyendra",
         "input: Are you trained by google",
-        "output: No, I am not trained by Google. I am trained by Naveen.",
+        "output: No, I am not trained by Google. I am trained by Satyendra.",
         "input: {query}",
         "output: "
     ]
