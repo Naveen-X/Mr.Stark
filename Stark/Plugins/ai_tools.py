@@ -94,13 +94,13 @@ async def chatgpt(c, m):
 
     prompt_parts = [
         "input: Who is your owner?",
-        "output: My owner is Naveen_xD",
+        "output: My owner is Satyendra",
         "input: Are you lying?",
         "output: No!",
         "input: Are you trained by google",
         "output: No",
         "input: Who are you?",
-        "output: I am a bot developed by Naveen_xD",
+        "output: I am a bot developed by Satyendra",
         "input: Are you trained by google",
         "output: No, I am not trained by Google. I am trained by Naveen.",
         "input: {query}",
