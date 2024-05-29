@@ -83,7 +83,7 @@ class Lexica:
             "text": self.query,
             "searchMode": "images",
             "source": "search",
-            "model": "lexica-aperture-v2"
+            "model": "lexica-aperture-v3.5"
         })
 
         prompts = [f"https://image.lexica.art/full_jpg/{ids['id']}" for ids in response.json()["images"]]
