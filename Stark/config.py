@@ -22,5 +22,5 @@ class Config(object):
     GOOGLE_AI_STUDIO_KEY = os.environ.get("GOOGLE_AI_STUDIO_KEY", None)
     G_1 = os.environ.get("G_1", None)
     G_2 = os.environ.get("G_2", None)
-    G_4 = os.environ.get("G_3", None)
+    G_3 = os.environ.get("G_3", None)
     G_4 = os.environ.get("G_4", None)
