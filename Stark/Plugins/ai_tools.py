@@ -125,7 +125,7 @@ async def chatgpt(c, m):
     response = model.generate_content(prompt_parts)
 
 
-api_ = "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"
+api_ = " "
 g_client = Groq(
     api_key=api_
 )
@@ -167,7 +167,7 @@ async def generate_response(c, m):
        await msg.edit_text(resp)
 
 @Client.on_message(filters.command(['cleargpt2']))
-@error_handler
+@error_handler              
 async def clear_chat_groq(c,m):
     del users_messages[m.chat.id]
     await m.reply_text("Fine, I've deleted our History!")
