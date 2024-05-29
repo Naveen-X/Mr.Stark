@@ -60,3 +60,4 @@ pyquery
 opencv-python-headless
 google-play-scraper
 qrcode
+groq
