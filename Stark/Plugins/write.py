@@ -1,12 +1,14 @@
 import os
-import textwrap 
+import textwrap
+import urllib
+
 from pyrogram import Client, filters
 from urllib.parse import quote as qt
 from PIL import Image, ImageDraw, ImageFont
 
 from Stark import error_handler
 def write_(text):
-   value = text
+   value = urllib.parse.unquote(text)
    wrapper = textwrap.TextWrapper(width=65)
    word_list = wrapper.wrap(text=value)
    s = []
