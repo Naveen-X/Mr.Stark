@@ -37,7 +37,7 @@ async def write(bot, message):
         return
     try:
         value = qt(text)
-        xd = wrire_(value)
+        xd = write_(value)
         await message.reply_photo(xd)
         await op.delete()
     except Exception as e:
