@@ -124,8 +124,8 @@ async def chatgpt(c, m):
         await message_.edit("I dont have answer to your Question!")
     response = model.generate_content(prompt_parts)
 
-GROQ_ = random.choice([Config.G_1, Config.G_2, Config.G_3, Config.G_4])
-api_ = GROQ_
+
+api_ = Config.G_1
 g_client = Groq(
     api_key=api_
 )
