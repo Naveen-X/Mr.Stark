@@ -17,7 +17,7 @@ def write_(text):
    s1 = textwrap.indent(txt, prefix=' ')
    img = Image.open("resources/images/write_bg.jpg")
    d1 = ImageDraw.Draw(img)
-   myFont = ImageFont.truetype("ds.otf", 130)
+   myFont = ImageFont.truetype("resources/Fonts/ds.otf", 130)
    d1.text((65, 10), s1, fill =(0, 0, 0),font=myFont)
    img.save("result.jpg")
    filename = "result.jpg"
