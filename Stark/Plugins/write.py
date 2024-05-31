@@ -1,8 +1,28 @@
 import os
+import textwrap 
 from pyrogram import Client, filters
 from urllib.parse import quote as qt
+from PIL import Image, ImageDraw, ImageFont
 
 from Stark import error_handler
+def write_(text):
+   value = text
+   wrapper = textwrap.TextWrapper(width=65)
+   word_list = wrapper.wrap(text=value)
+   s = []
+   for element in word_list:
+       s.append(element)
+   hmm = "\n"
+   txt = (hmm.join(s))
+   warning(txt)
+   s1 = textwrap.indent(txt, prefix=' ')
+   img = Image.open("resources/write_bg.jpg")
+   d1 = ImageDraw.Draw(img)
+   myFont = ImageFont.truetype("ds.otf", 130)
+   d1.text((65, 10), s1, fill =(0, 0, 0),font=myFont)
+   img.save("result.jpg")
+   filename = "result.jpg"
+   return filename
 
 @Client.on_message(filters.command(["write"]))
 @error_handler
@@ -18,8 +38,8 @@ async def write(bot, message):
         return
     try:
         value = qt(text)
-        url = f"https://api.naveenxd.wip.la/write?text={value}"
-        await message.reply_photo(url)
+        xd = wrire_(value)
+        await message.reply_photo(xd)
         await op.delete()
     except Exception as e:
         await op.edit(f"**An error occurred:**\n`{e}`")
