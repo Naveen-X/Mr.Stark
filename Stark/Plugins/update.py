@@ -1,7 +1,8 @@
 import os
-import subprocess
 import sys
+import subprocess
 from time import sleep
+from os import environ, execle
 
 from pyrogram import Client, filters
 
@@ -30,7 +31,8 @@ async def update(client, message):
                 os.execl('bash', 'update_req.sh', *sys.argv)
             else:
                 await up.edit(f'Updated to latest version.\n`{output}`\n\nNow Restarting.')
-                os.execl('bash', 'update.sh', *sys.argv)
+                args = [sys.executable, "-m", "Stark"]
+                execle(sys.executable, *args, environ)
     else:
         await up.edit('Git pull failed with error:\n{}'.format(result.stderr.decode('utf-8')))
 
