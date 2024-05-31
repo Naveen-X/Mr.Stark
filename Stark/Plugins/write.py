@@ -14,7 +14,6 @@ def write_(text):
        s.append(element)
    hmm = "\n"
    txt = (hmm.join(s))
-   warning(txt)
    s1 = textwrap.indent(txt, prefix=' ')
    img = Image.open("resources/write_bg.jpg")
    d1 = ImageDraw.Draw(img)
