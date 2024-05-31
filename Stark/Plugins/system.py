@@ -74,7 +74,6 @@ async def restart(_, message):
 @Client.on_message(filters.command("stats"))
 @error_handler
 async def server_stats(client, message):
-    await message.reply_text("ok")
     try:
         image = Image.open("resources/images/statsbg.jpg").convert("RGB")
         IronFont = ImageFont.truetype("resources/Fonts/IronFont.otf", 42)
