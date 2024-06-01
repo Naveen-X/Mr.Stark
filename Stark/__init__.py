@@ -32,23 +32,65 @@ def telegraph_url(text: str):
 
 
 def get_gitlab_snippet(title, content, file):
-    url = 'https://gitlab.com/api/v4/snippets'
-    headers = {'PRIVATE-TOKEN': GITLAB_TOKEN, 'Content-Type': 'application/json'}
+    import jwt
+    import time
 
-    # Set the snippet data
-    snippet_data = {'title': title, 'file_name': file, 'content': content,
-                    'visibility': 'public'}
+    with open("mr-stark-logs.pem", "r") as key_file:
+        private_key = key_file.read()
 
-    # Send the POST request to create the snippet
-    response = requests.post(url, headers=headers, data=json.dumps(snippet_data))
+    payload = {
+        "iat": int(time.time()),
+        "exp": int(time.time()) + 10,  
+        "iss": "910771" 
+    }
 
-    # Check if the request was successful
-    if response.status_code == 201:
-        print('Snippet created successfully')
-        snippet_id = response.json()['web_url']
-        return snippet_id
+    jwt_token = jwt.encode(payload, private_key, algorithm="RS256")
+    import requests
+
+    installation_url = "https://api.github.com/app/installations"
+
+    headers = {
+        "Authorization": f"Bearer {jwt_token}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+
+    response = requests.get(installation_url, headers=headers)
+
+    if response.status_code == 200:
+        installations = response.json()
+        installation_id = installations[0]["id"]
     else:
-        return f'Error creating snippet: {response.text}'
+        raise Exception(f"Error getting installations: {response.text}")
+
+    access_token_url = f"https://api.github.com/app/installations/{installation_id}/access_tokens"
+
+    response = requests.post(access_token_url, headers=headers)
+
+    if response.status_code == 201:
+        access_token = response.json()["token"]
+    else:
+        raise Exception(f"Error getting access token: {response.text}")
+    repo_owner = "Naveen-X"
+    repo_name = "Mr.Stark"
+    issue_number = 26
+    message = f"# {title}\n\n{content}"
+
+    url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/issues/{issue_number}/comments"
+
+    headers = {
+        "Authorization": f"token {access_token}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+
+    data = {
+        "body": message
+    }
+    response = requests.post(url, json=data, headers=headers)
+
+    if response.status_code == 201:
+        return response.json()['html_url']
+    else:
+        return ("Error posting comment:", response.text)
 
 
 logging.basicConfig(
@@ -112,9 +154,6 @@ def error_handler(func):
 **Plugin-Name:** `{func.__module__.split(".")[2]}`
 **Function-Name:** `{func.__name__}`
 """)
-            tg_error += datetime_tz.strftime(
-                "**Date :** `%Y-%m-%d` \n**Time :** `%H:%M:%S`"
-            )
             gitlab_error = (f"""
 **Error in {func.__module__.split(".")[2]} in `{func.__name__}`:** 
 
@@ -132,7 +171,7 @@ def error_handler(func):
 **USERNAME:** @{message.from_user.username}\n
 **FIRST NAME:** `{message.from_user.first_name}`\n
 **CHAT:** `{message.chat.id}`\n
-**MESSAGE LINK:** __{message.link}__ \n
+**MESSAGE LINK:** {message.link} \n
 **MESSAGE TEXT:** `{message.text}`\n
 **MESSAGE ID:** `{message.id}`\n
 **REPLIED TO MESSAGE ID:** `{message.reply_to_message.id if message.reply_to_message else None}`\n
@@ -147,21 +186,18 @@ def error_handler(func):
             try:
                 k = await client.send_message(-1001491739934, tg_error, disable_web_page_preview=True,
                                               reply_markup=types.InlineKeyboardMarkup(
-                                                  [[types.InlineKeyboardButton("View on Gitlab",
+                                                  [[types.InlineKeyboardButton("View on GITHUB",
                                                                                url=get_gitlab_snippet(str(e),
                                                                                                       str(gitlab_error),
                                                                                                       filename))]]
                                               )
                                               )
-            except:
-                url = get_gitlab_snippet(str(e), str(gitlab_error), filename)
+            except Exception as e:
+                print(traceback.format_exc())
+
                 with open(filename, "w", encoding='utf-8') as f:
                     f.write(str(f"{tg_error} \n\n {str(gitlab_error)}"))
-                k = await client.send_document(chat_id=-1001491739934, document=filename,
-                                               reply_markup=types.InlineKeyboardMarkup(
-                                                   [[types.InlineKeyboardButton("View on Gitlab", url=url)]]
-                                               )
-                                               )
+                k = await client.send_document(chat_id=-1001491739934, document=filename)
                 os.remove(filename)
             await handle_error(client, message, e, k)
 

@@ -3,6 +3,7 @@ aiohttp
 apscheduler
 beautifulsoup4
 cairosvg
+cryptography
 dnspython
 fake_useragent
 faker
