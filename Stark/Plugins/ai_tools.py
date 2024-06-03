@@ -169,9 +169,11 @@ async def generate_response(c, m):
 @Client.on_message(filters.command(['cleargpt2']))
 @error_handler              
 async def clear_chat_groq(c,m):
-    del users_messages[m.from_user.id]
-    await m.reply_text("Fine, I've deleted our History!")
-
+    try:
+      del users_messages[m.from_user.id]
+      await m.reply_text("Fine, I've deleted our History!")
+    except:
+      await m.reply_text("Nothing to clear....")
 @Client.on_message(filters.command(["lexica"]))
 @error_handler
 async def ai_img_search(c,m):
