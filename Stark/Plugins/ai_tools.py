@@ -169,7 +169,7 @@ async def generate_response(c, m):
 @Client.on_message(filters.command(['cleargpt2']))
 @error_handler              
 async def clear_chat_groq(c,m):
-    del users_messages[m.from_user.id)
+    del users_messages[m.from_user.id]
     await m.reply_text("Fine, I've deleted our History!")
 
 @Client.on_message(filters.command(["lexica"]))
