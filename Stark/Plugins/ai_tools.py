@@ -174,6 +174,7 @@ async def clear_chat_groq(c,m):
       await m.reply_text("Fine, I've deleted our History!")
     except:
       await m.reply_text("Nothing to clear....")
+
 @Client.on_message(filters.command(["lexica"]))
 @error_handler
 async def ai_img_search(c,m):
