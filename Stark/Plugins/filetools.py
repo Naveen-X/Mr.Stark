@@ -113,3 +113,45 @@ async def unzip_files(c, m):
             await m.reply_text("`The replied file is not a zip.`")
     else:
       await m.reply_text("`Reply to a Zip File to UnZip`")
+
+
+@Client.on_message(filters.command(["rename"]))
+@error_handler
+async def rename(c, m):
+    if not (m.reply_to_message.media or
+    m.reply_to_message.document or m.reply_to_message.photo or
+    m.reply_to_message.video):
+        await m.reply_text("Reply to an document to rename it")
+        return
+    else:
+        pablo = await m.reply_text("Processing...")
+        try:
+            fname = m.text.split(None, 1)[1]
+        except IndexError:
+            await m.reply_text("What should I rename to??")
+            return
+    
+        await pablo.edit("⚡️Rename and upload in progress, please wait!⚡️")
+        file_name = None
+        try:
+            file_name = m.reply_to_message.document.file_name
+        except:
+            pass
+        if file_name:
+            Kk = fname.split(".")
+            try:
+                Kk[1]
+            except:
+                fk = file_name.rpartition(".")[-1]
+                fname = fname + "." + fk
+        EsCoBaR = await m.reply_to_message.download(fname)
+        caption = m.reply_to_message.caption or ""
+        c_time = time.time()
+        await c.send_document(
+            m.chat.id,
+            EsCoBaR,
+            caption=caption,
+            progress=progress,
+            progress_args=(pablo, c_time, f"`Uploading {fname}`", EsCoBaR),
+        )
+        await pablo.delete()
