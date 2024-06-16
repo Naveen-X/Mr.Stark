@@ -160,3 +160,4 @@ async def rename(c, m):
         await m.reply_text(f"Failed to send the document: {e}")
     finally:
         await pablo.delete()
+        await file.delete()
