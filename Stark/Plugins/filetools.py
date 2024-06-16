@@ -128,7 +128,7 @@ async def rename(c, m):
             return
         c_time=time.time()
         file = await m.reply_to_message.download(file_name=fname,
-        progress=rogress, progress_args=(pablo, c_time, "⚡️Rename and upload in progress, please wait!⚡️")
+        progress=rogress, progress_args=(pablo, c_time,"⚡️Rename and upload in progress, please wait!⚡️"))
         caption = m.reply_to_message.caption or ""
         c_time = time.time()
         await c.send_document(
