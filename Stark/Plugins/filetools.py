@@ -119,25 +119,44 @@ async def unzip_files(c, m):
 @error_handler
 async def rename(c, m):
     f = m.reply_to_message
-    if f or f.video or f.document or f.media or f.photo:
-        pablo = await m.reply_text("Processing...")
-        try:
-            fname = m.text.split(None, 1)[1]
-        except IndexError:
-            await m.reply_text("What should I rename to??")
-            return
-        c_time=time.time()
-        file = await m.reply_to_message.download(file_name=fname,
-        progress=progress, progress_args=(pablo, c_time,"⚡️Rename and upload in progress, please wait!⚡️"))
-        caption = m.reply_to_message.caption or ""
+    
+    # Ensure the reply message contains media
+    if not (f and (f.video or f.document or f.photo)):
+        await m.reply_text("Reply to a video, document, or photo to rename it.")
+        return
+
+    pablo = await m.reply_text("Processing...")
+    
+    # Extract the new file name from the message
+    try:
+        fname = m.text.split(None, 1)[1]
+    except IndexError:
+        await m.reply_text("What should I rename to?")
+        await pablo.delete()
+        return
+
+    # Download the file
+    try:
+        c_time = time.time()
+        file = await f.download(file_name=fname, progress=progress, progress_args=(pablo, c_time, "⚡️Rename and upload in progress, please wait!⚡️"))
+    except Exception as e:
+        await m.reply_text(f"Failed to download the file: {e}")
+        await pablo.delete()
+        return
+    
+    caption = f.caption or ""
+
+    # Send the renamed document
+    try:
         c_time = time.time()
         await c.send_document(
             m.chat.id,
             file,
             caption=caption,
             progress=progress,
-            progress_args=(pablo, c_time, f"`Uploading {fname}`", file),
+            progress_args=(pablo, c_time, f"Uploading {fname}", file),
         )
+    except Exception as e:
+        await m.reply_text(f"Failed to send the document: {e}")
+    finally:
         await pablo.delete()
-    else:
-      await m.reply_text("Reply to an document to rename it")
