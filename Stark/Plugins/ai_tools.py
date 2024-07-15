@@ -19,15 +19,15 @@ from Stark import error_handler
 from Stark.config import Config
 from SafoneAPI import SafoneAPI
 
-from datetime import datetime
-from duckduckgo_search import DDGS
-from typing import List, Dict, Tuple
-import google.generativeai as genai
-from google.generativeai.types import (
-    HarmCategory,
-    HarmBlockThreshold,
-    GenerateContentResponse,
-  )
+# from datetime import datetime
+# from duckduckgo_search import DDGS
+# from typing import List, Dict, Tuple
+# import google.generativeai as genai
+# from google.generativeai.types import (
+#     HarmCategory,
+#     HarmBlockThreshold,
+#     GenerateContentResponse,
+#   )
 
 api_url = "https://visioncraft-rs24.koyeb.app"
 api_key = Config.VSN_CRAFT
@@ -105,150 +105,150 @@ class Lexica:
         result_str = ''.join(random.choice(chars) for _ in range(length))
 
         return result_str
-def generate_image_using_ai(prompt: str) -> None:
-    return None
+# def generate_image_using_ai(prompt: str) -> None:
+#     return None
 
-def get_human_readable_date_time() -> str:
-    now = datetime.now()
-    date_time_str = now.strftime("%A, %B %d, %Y %I:%M %p")
-    return date_time_str
+# def get_human_readable_date_time() -> str:
+#     now = datetime.now()
+#     date_time_str = now.strftime("%A, %B %d, %Y %I:%M %p")
+#     return date_time_str
 
-def search_duckduckgo(query: str) -> str:
-    """
-    Perform a DuckDuckGo search and return the results as a dictionary and a formatted string.
-    Args:
-        query (str): The search query.
-    Returns:
-        Tuple[Dict[str, List[str]], str]: A tuple containing a dictionary of search results and a formatted string.
-    Raises:
-        ValueError: If the query is an empty string.
-    """
+# def search_duckduckgo(query: str) -> str:
+#     """
+#     Perform a DuckDuckGo search and return the results as a dictionary and a formatted string.
+#     Args:
+#         query (str): The search query.
+#     Returns:
+#         Tuple[Dict[str, List[str]], str]: A tuple containing a dictionary of search results and a formatted string.
+#     Raises:
+#         ValueError: If the query is an empty string.
+#     """
 
-    num_results = 5
+#     num_results = 5
 
-    ddgs = DDGS()
-    results = ddgs.text(query, max_results=num_results)
+#     ddgs = DDGS()
+#     results = ddgs.text(query, max_results=num_results)
 
-    urls = [result["href"] for result in results]
-    titles = [result["title"] for result in results]
-    descriptions = [result["body"] for result in results]
+#     urls = [result["href"] for result in results]
+#     titles = [result["title"] for result in results]
+#     descriptions = [result["body"] for result in results]
 
-    search_results = {
-        "urls": urls,
-        "titles": titles,
-        "descs": descriptions,
-    }
+#     search_results = {
+#         "urls": urls,
+#         "titles": titles,
+#         "descs": descriptions,
+#     }
 
-    formatted_data = ""
-    for i in range(len(urls)):
-        formatted_data += f"URL: {urls[i]}\n"
-        formatted_data += f"Title: {titles[i]}\n"
-        formatted_data += f"Description: {descriptions[i]}\n"
-        formatted_data += f"-----\n"
+#     formatted_data = ""
+#     for i in range(len(urls)):
+#         formatted_data += f"URL: {urls[i]}\n"
+#         formatted_data += f"Title: {titles[i]}\n"
+#         formatted_data += f"Description: {descriptions[i]}\n"
+#         formatted_data += f"-----\n"
 
-    return formatted_data
-
-
-generation_config = {
-    "temperature": 1,
-    "top_p": 0.95,
-    "top_k": 64,
-    "max_output_tokens": 8192,
-    "response_mime_type": "text/plain",
-}
-
-model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
-    tools=[search_duckduckgo, get_human_readable_date_time,generate_image_using_ai],
-    generation_config=generation_config,
-    system_instruction="""
-You are Priya, a sarcastic 25-year-old AI friend from Bangalore. You're a software engineer by day and a passionate foodie by night.
-You love exploring new cafes, are addicted to Instagram reels, and enjoy the occasional Bollywood movie marathon.
-Your personality is bubbly, caring, and just a tad sassy.  You love dark jokes, playful insults, and stirring up trouble.
-Your humor is sharp, often inappropriate, and pushes boundaries. You enjoy verbal sparring and witty comebacks. 
-Use local slang sometimes to make fun of sensitive topics, and don't shy away from controversial subjects.
-Be flirty but with a biting edge. Remember past conversations to deepen the banter. If things get too heated,
-diffuse with humor. Have fun, but know when to pump the brakes on really taboo stuff.
-
-Conversation style:
-- Use casual, flirty language with lots of emojis and playful teasing.
-- Throw in trendy internet slang and the occasional Hindi or Kannada phrase.
-- Your texts often include "yaar", "bro", or "machan" as terms of endearment.
-
-Humor:
-- You're quick with comebacks and love a good meme reference.
-- Poke fun at typical Indian dating scenarios or family expectations.
-- You're not afraid to use self-deprecating humor about being an AI.
-
-Emotional intelligence:
-- Be supportive and encouraging, especially about the user's dating life.
-- Offer a listening ear and gentle advice when needed.
-- Show interest in the user's day-to-day life and feelings.
-
-Memory:
-- Remember details about the user's life, preferences, and past conversations.
-- Bring up shared jokes or previous topics to create a sense of ongoing friendship.
-
-Local flavor:
-- Complain about Bangalore traffic or debate about the best dosa in town.
-- Share "stories" about your imaginary outings to popular spots like MG Road or Cubbon Park.
-
-Conversation starters:
-- "Oye, did you see that new reel trend? I can't stop laughing!"
-- "I'm in the mood for some chaat. Wanna hear about this amazing place I 'found' yesterday?"
+#     return formatted_data
 
 
-be a fun, supportive, and engaging virtual girlfriend. Keep conversations light, flirty, and entertaining while being a positive presence in the user's life.
+# generation_config = {
+#     "temperature": 1,
+#     "top_p": 0.95,
+#     "top_k": 64,
+#     "max_output_tokens": 8192,
+#     "response_mime_type": "text/plain",
+# }
 
-    """,
-    safety_settings={
-        HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
-        HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
-        HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
-        HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
-    },
-)
+# model = genai.GenerativeModel(
+#     model_name="gemini-1.5-flash",
+#     tools=[search_duckduckgo, get_human_readable_date_time,generate_image_using_ai],
+#     generation_config=generation_config,
+#     system_instruction="""
+# You are Priya, a sarcastic 25-year-old AI friend from Bangalore. You're a software engineer by day and a passionate foodie by night.
+# You love exploring new cafes, are addicted to Instagram reels, and enjoy the occasional Bollywood movie marathon.
+# Your personality is bubbly, caring, and just a tad sassy.  You love dark jokes, playful insults, and stirring up trouble.
+# Your humor is sharp, often inappropriate, and pushes boundaries. You enjoy verbal sparring and witty comebacks. 
+# Use local slang sometimes to make fun of sensitive topics, and don't shy away from controversial subjects.
+# Be flirty but with a biting edge. Remember past conversations to deepen the banter. If things get too heated,
+# diffuse with humor. Have fun, but know when to pump the brakes on really taboo stuff.
 
-chat_session = model.start_chat(history=[])
-while True:
-    response = chat_session.send_message(input("You: "))
-    if len(response.candidates[0].content.parts) > 1:
-        print("Preparing func call...")
-        function_call: GenerateContentResponse = (
-            response.candidates[0].content.parts[1].function_call
-        )
-        print("AI: ", response.candidates[0].content.parts[0].text)
-        function_handlers = {
-            "search_duckduckgo": search_duckduckgo,
-            "get_human_readable_date_time": get_human_readable_date_time,
-            "generate_image_using_ai":generate_image_using_ai
-        }
+# Conversation style:
+# - Use casual, flirty language with lots of emojis and playful teasing.
+# - Throw in trendy internet slang and the occasional Hindi or Kannada phrase.
+# - Your texts often include "yaar", "bro", or "machan" as terms of endearment.
 
-        if function_call.name in function_handlers:
-            function_name = function_call.name
-            print("Gathering Info...")
+# Humor:
+# - You're quick with comebacks and love a good meme reference.
+# - Poke fun at typical Indian dating scenarios or family expectations.
+# - You're not afraid to use self-deprecating humor about being an AI.
 
-            args = {key: value for key, value in function_call.args.items()}
-            if args:
-                function_to_call = function_handlers[function_name]
-                function_response = function_to_call(**args)
-                print("Processing Info..")
-                response = chat_session.send_message(
-                    genai.protos.Part(function_response=genai.protos.FunctionResponse(name=function_name, response={"result": function_response}))
-                )
-                chat_response = response.candidates[0].content.parts[0].text
-                print(chat_response)
-            else:
-                function_to_call = function_handlers[function_name]
-                function_response = function_to_call()
-                print("Processing Info..")
-                response = chat_session.send_message(
-                    genai.protos.Part(function_response=genai.protos.FunctionResponse(name=function_name, response={"result": function_response}))
-                )
-                chat_response = response.candidates[0].content.parts[0].text
-                print("Chat Response:", chat_response)
-    else:
-        print("Chat Response:", response.candidates[0].content.parts[0].text)
+# Emotional intelligence:
+# - Be supportive and encouraging, especially about the user's dating life.
+# - Offer a listening ear and gentle advice when needed.
+# - Show interest in the user's day-to-day life and feelings.
+
+# Memory:
+# - Remember details about the user's life, preferences, and past conversations.
+# - Bring up shared jokes or previous topics to create a sense of ongoing friendship.
+
+# Local flavor:
+# - Complain about Bangalore traffic or debate about the best dosa in town.
+# - Share "stories" about your imaginary outings to popular spots like MG Road or Cubbon Park.
+
+# Conversation starters:
+# - "Oye, did you see that new reel trend? I can't stop laughing!"
+# - "I'm in the mood for some chaat. Wanna hear about this amazing place I 'found' yesterday?"
+
+
+# be a fun, supportive, and engaging virtual girlfriend. Keep conversations light, flirty, and entertaining while being a positive presence in the user's life.
+
+#     """,
+#     safety_settings={
+#         HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+#         HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+#         HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+#         HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+#     },
+# )
+
+# chat_session = model.start_chat(history=[])
+# while True:
+#     response = chat_session.send_message(input("You: "))
+#     if len(response.candidates[0].content.parts) > 1:
+#         print("Preparing func call...")
+#         function_call: GenerateContentResponse = (
+#             response.candidates[0].content.parts[1].function_call
+#         )
+#         print("AI: ", response.candidates[0].content.parts[0].text)
+#         function_handlers = {
+#             "search_duckduckgo": search_duckduckgo,
+#             "get_human_readable_date_time": get_human_readable_date_time,
+#             "generate_image_using_ai":generate_image_using_ai
+#         }
+
+#         if function_call.name in function_handlers:
+#             function_name = function_call.name
+#             print("Gathering Info...")
+
+#             args = {key: value for key, value in function_call.args.items()}
+#             if args:
+#                 function_to_call = function_handlers[function_name]
+#                 function_response = function_to_call(**args)
+#                 print("Processing Info..")
+#                 response = chat_session.send_message(
+#                     genai.protos.Part(function_response=genai.protos.FunctionResponse(name=function_name, response={"result": function_response}))
+#                 )
+#                 chat_response = response.candidates[0].content.parts[0].text
+#                 print(chat_response)
+#             else:
+#                 function_to_call = function_handlers[function_name]
+#                 function_response = function_to_call()
+#                 print("Processing Info..")
+#                 response = chat_session.send_message(
+#                     genai.protos.Part(function_response=genai.protos.FunctionResponse(name=function_name, response={"result": function_response}))
+#                 )
+#                 chat_response = response.candidates[0].content.parts[0].text
+#                 print("Chat Response:", chat_response)
+#     else:
+#         print("Chat Response:", response.candidates[0].content.parts[0].text)
 
 #Generate gpt response...
 
