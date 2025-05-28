@@ -30,18 +30,34 @@ RUN apt-get update && \
     add-apt-repository ppa:deadsnakes/ppa -y && \
     apt-get update && \
     apt-get install -y python3.11 python3.11-dev python3.11-venv && \
+    # Install uv
     curl -LsSf https://astral.sh/uv/install.sh | sh && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     mediainfo \
     ffmpeg \
     gifsicle \
-    libgl1-mesa-glx && \
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
+    libgl1-mesa-glx \
+    dbus-user-session \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends wget gnupg ca-certificates && \
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg && \
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
     apt-get update && \
-    apt-get install -y google-chrome-stable --no-install-recommends && \
-    CHROMEDRIVER_VERSION=$(wget -q -O - https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$(google-chrome-stable --version | awk '{print $3}' | awk -F. '{print $1}')) && \
-    wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip" -O /tmp/chromedriver.zip && \
+    apt-get install -y --no-install-recommends google-chrome-stable \
+    fonts-liberation libu2f-udev xvfb && \
+    CHROMEDRIVER_MAJOR_VERSION=$(google-chrome-stable --version | awk '{print $3}' | awk -F. '{print $1}') && \
+    CHROMEDRIVER_LATEST_RELEASE_URL="https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROMEDRIVER_MAJOR_VERSION}" && \
+    CHROMEDRIVER_VERSION_STRING=$(wget -q -O - "${CHROMEDRIVER_LATEST_RELEASE_URL}") && \
+    wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION_STRING}/chromedriver_linux64.zip" -O /tmp/chromedriver.zip && \
     unzip /tmp/chromedriver.zip -d /usr/bin && \
     chmod +x /usr/bin/chromedriver && \
     rm /tmp/chromedriver.zip && \
@@ -59,5 +75,12 @@ COPY . .
 #uv -p python3.11 pip ...`
 RUN uv pip install --system --no-cache -r req.txt
 RUN uv pip install --system --no-cache -r requirements.txt
+
+
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 CMD ["python3.11", "-m", "Stark"]
