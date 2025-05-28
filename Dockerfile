@@ -44,20 +44,26 @@ RUN apt-get update && \
     libgl1-mesa-glx \
     dbus-user-session
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends wget gnupg ca-certificates && \
-    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg && \
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends google-chrome-stable \
-    fonts-liberation libu2f-udev xvfb && \
-    CHROMEDRIVER_MAJOR_VERSION=$(google-chrome-stable --version | awk '{print $3}' | awk -F. '{print $1}') && \
+# Update package index and install base packages
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends wget gnupg ca-certificates
+
+# Add Google Chrome GPG key and repo
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg
+RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+
+# Update again and install Google Chrome with dependencies
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends google-chrome-stable fonts-liberation libu2f-udev xvfb
+
+# Download matching ChromeDriver version
+RUN CHROMEDRIVER_MAJOR_VERSION=$(google-chrome-stable --version | awk '{print $3}' | awk -F. '{print $1}') && \
     CHROMEDRIVER_LATEST_RELEASE_URL="https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROMEDRIVER_MAJOR_VERSION}" && \
     CHROMEDRIVER_VERSION_STRING=$(wget -q -O - "${CHROMEDRIVER_LATEST_RELEASE_URL}") && \
     wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION_STRING}/chromedriver_linux64.zip" -O /tmp/chromedriver.zip && \
     unzip /tmp/chromedriver.zip -d /usr/bin && \
-    chmod +x /usr/bin/chromedriver && \
-    rm /tmp/chromedriver.zip
+    chmod +x /usr/bin/chromedriver
+
 
 WORKDIR /app
 
