@@ -42,10 +42,7 @@ RUN apt-get update && \
     ffmpeg \
     gifsicle \
     libgl1-mesa-glx \
-    dbus-user-session \
-    apt-get autoremove -y && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    dbus-user-session
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends wget gnupg ca-certificates && \
@@ -60,10 +57,7 @@ RUN apt-get update && \
     wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION_STRING}/chromedriver_linux64.zip" -O /tmp/chromedriver.zip && \
     unzip /tmp/chromedriver.zip -d /usr/bin && \
     chmod +x /usr/bin/chromedriver && \
-    rm /tmp/chromedriver.zip && \
-    apt-get autoremove -y && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm /tmp/chromedriver.zip
 
 WORKDIR /app
 
