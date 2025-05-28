@@ -1,0 +1,9 @@
+services:
+  starkbot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mr-stark-bot
+    env_file:
+      - ./.env
+    restart: unless-stopped
