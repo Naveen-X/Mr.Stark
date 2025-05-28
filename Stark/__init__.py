@@ -184,7 +184,7 @@ def error_handler(func):
 """)
             filename = "error_" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=8)) + ".md"
             try:
-                k = await client.send_message(-1001491739934, tg_error, disable_web_page_preview=True,
+                k = await client.send_message(-1002511262497, tg_error, disable_web_page_preview=True,
                                               reply_markup=types.InlineKeyboardMarkup(
                                                   [[types.InlineKeyboardButton("View on GITHUB",
                                                                                url=get_gitlab_snippet(str(e),
@@ -197,7 +197,7 @@ def error_handler(func):
 
                 with open(filename, "w", encoding='utf-8') as f:
                     f.write(str(f"{tg_error} \n\n {str(gitlab_error)}"))
-                k = await client.send_document(chat_id=-1001491739934, document=filename)
+                k = await client.send_document(chat_id=-1002511262497, document=filename)
                 os.remove(filename)
             await handle_error(client, message, e, k)
 
