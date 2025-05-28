@@ -57,13 +57,11 @@ RUN apt-get update
 RUN apt-get install -y --no-install-recommends google-chrome-stable fonts-liberation libu2f-udev xvfb
 
 # Download matching ChromeDriver version
-RUN CHROMEDRIVER_MAJOR_VERSION=$(google-chrome-stable --version | awk '{print $3}' | awk -F. '{print $1}') && \
-    CHROMEDRIVER_LATEST_RELEASE_URL="https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROMEDRIVER_MAJOR_VERSION}" && \
-    CHROMEDRIVER_VERSION_STRING=$(wget -q -O - "${CHROMEDRIVER_LATEST_RELEASE_URL}") && \
-    wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION_STRING}/chromedriver_linux64.zip" -O /tmp/chromedriver.zip && \
+RUN wget -q "https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip" -O /tmp/chromedriver.zip && \
     unzip /tmp/chromedriver.zip -d /usr/bin && \
     chmod +x /usr/bin/chromedriver
 
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh 
 
 WORKDIR /app
 
@@ -73,8 +71,8 @@ COPY . .
 #     wget https://people.eecs.berkeley.edu/~rich.zhang/projects/2016_colorization/files/demo_v2/colorization_release_v2.caffemodel -P /app/resources/ai_helpers/
 
 #uv -p python3.11 pip ...`
-RUN uv pip install --system --no-cache -r req.txt
-RUN uv pip install --system --no-cache -r requirements.txt
+RUN /root/.local/bin/uv pip install --system --no-cache -r req.txt
+RUN /root/.local/bin/uv pip install --system --no-cache -r requirements.txt
 
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
