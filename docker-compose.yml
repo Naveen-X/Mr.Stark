@@ -4,6 +4,5 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: mr-stark-bot
-    env_file:
-      - ./.env
+    environment: {}
     restart: unless-stopped
