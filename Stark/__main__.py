@@ -82,13 +82,13 @@ async def initial():
                 try:
                     print(app)
                     print(type(app))
-                    mg = await app.send_message(-1001491739934, traceback_msg)
+                    mg = await app.send_message(-1002511262497, traceback_msg)
                     lin = mg.link
                 except Exception:
                     filename = "error_" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=8)) + ".txt"
                     with open(filename, "w", encoding='utf-8') as f:
                         f.write(str(traceback_msg))
-                    mg = await app.send_document(chat_id=-1001491739934, document=filename)
+                    mg = await app.send_document(chat_id=-1002511262497, document=filename)
                     lin = mg.link
                     os.remove(filename)
                 mgt += f"Error Importing {name}: `{e}`\n [{name.capitalize()} ERROR HERE]({lin})\n\n"
@@ -131,7 +131,7 @@ async def initial():
         mgt += "\n"
 
     try:
-        mg = await app.send_message(-1001491739934, text=mgt)
+        mg = await app.send_message(-1002511262497, text=mgt)
         url = mg.link
     except:
         filename = "PLUGINS_" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=8)) + ".md"
@@ -139,7 +139,7 @@ async def initial():
         with open(filename, "w", encoding='utf-8') as f:
             f.write(str(mgt))
 
-        mg = await app.send_document(chat_id=-1001491739934, document=filename, reply_markup=types.InlineKeyboardMarkup(
+        mg = await app.send_document(chat_id=-1002511262497, document=filename, reply_markup=types.InlineKeyboardMarkup(
             [[types.InlineKeyboardButton("View on Gitlab", url=url_)]]
         ))
         url = mg.link
