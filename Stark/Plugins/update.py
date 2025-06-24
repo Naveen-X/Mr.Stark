@@ -19,22 +19,25 @@ async def update(client, message):
         await up.edit("**You are not allowed to do this.**")
         return
     sleep(1)
-    result = subprocess.run(['git', 'pull'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    if result.returncode == 0:
-        output = (result.stdout.decode('utf-8'))
-        if output == "Already up to date.\n":
-            await up.edit('Already up to date!.')
-            return
-        else:
-            if "-r" in message.text:
-                await up.edit(f'Updated to latest version.\n`{output}`\n\nNow Restarting with installing requirements.')
-                os.execl('bash', 'update_req.sh', *sys.argv)
+    try:
+        result = subprocess.run(['git', 'pull'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if result.returncode == 0:
+            output = (result.stdout.decode('utf-8'))
+            if output == "Already up to date.\n":
+                await up.edit('Already up to date!.')
+                return
             else:
-                await up.edit(f'Updated to latest version.\n`{output}`\n\nNow Restarting.')
-                args = [sys.executable, "-m", "Stark"]
-                execle(sys.executable, *args, environ)
-    else:
-        await up.edit('Git pull failed with error:\n{}'.format(result.stderr.decode('utf-8')))
+                if "-r" in message.text:
+                    await up.edit(f'Updated to latest version.\n`{output}`\n\nNow Restarting with installing requirements.')
+                    os.execl('bash', 'update_req.sh', *sys.argv)
+                else:
+                    await up.edit(f'Updated to latest version.\n`{output}`\n\nNow Restarting.')
+                    args = [sys.executable, "-m", "Stark"]
+                    execle(sys.executable, *args, environ)
+        else:
+            await up.edit('Git pull failed with error:\n{}'.format(result.stderr.decode('utf-8')))
+    except Exception as e:
+        await up.edit(f"Update failed: {e}")
 
 
 @Client.on_message(filters.command(["d"]))
@@ -44,14 +47,12 @@ async def de_snipp(client, message):
     if message.from_user.id not in AUTH_LIST:
         await up.edit("**You are not allowed to do this.**")
         return
-    if 1 == 1:
+    try:
         import requests
 
         # Set the GitLab API endpoint and access token
         url = 'https://gitlab.com/api/v4/snippets'
         headers = {'PRIVATE-TOKEN': 'glpat-LYuzpGiZtj_FTdDAUEPp'}
-
-        import requests
 
         # Get a list of all snippets
         response = requests.get(url, headers=headers)
@@ -68,7 +69,8 @@ async def de_snipp(client, message):
                 else:
                     print(f'Error deleting snippet `{snippet_id}`: `{response.text}`')
             except Exception as e:
-                up.edit(f'Error deleting snippet `{snippet_id}`: `{e}`')
+                await up.edit(f'Error deleting snippet `{snippet_id}`: `{e}`')
                 continue
         await up.edit(f"**Deleted `{len(snippets)}` snippets!**")
-        return
+    except Exception as e:
+        await up.edit(f"Failed to delete snippets: {e}")

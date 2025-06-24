@@ -8,20 +8,26 @@ admin_perms = {}
 async def admins_coll(client, m):
     if not m.sender_chat:
         if m.from_user.id in admins:
-            await admins_col(client, m, m.chat.id)
-            await m.reply_text("Refreshed admin cache !")
+            try:
+                await admins_col(client, m, m.chat.id)
+                await m.reply_text("Refreshed admin cache !")
+            except Exception as e:
+                await m.reply_text("Failed to refresh admin cache: " + str(e))
 
 
 async def immutable_col(client, m, chat_id: int):
     chat_imm = admins.get(int(chat_id))
     if not chat_imm:
-        await admins_col(client, m, chat_id)
-        chat_imm = admins.get(int(chat_id))
+        try:
+            await admins_col(client, m, chat_id)
+            chat_imm = admins.get(int(chat_id))
+        except Exception as e:
+            print("Failed to retrieve admin permissions: " + str(e))
     try:
         my_ch = (await client.get_chat(chat_id)).linked_chat.id
         chat_imm.append(my_ch)
-    except:
-        pass
+    except Exception as e:
+        print("Failed to append linked chat: " + str(e))
     finally:
         immune.update({int(chat_id): chat_imm})
 
@@ -31,8 +37,11 @@ async def immutable(client, m, chat_id, user_id):
     user_id = int(user_id)
     my_chat_imm = immune.get(chat_id)
     if not my_chat_imm:
-        await immutable_col(client, m, chat_id)
-        my_chat_imm = immune.get(chat_id)
+        try:
+            await immutable_col(client, m, chat_id)
+            my_chat_imm = immune.get(chat_id)
+        except Exception as e:
+            print("Failed to retrieve immutable permissions: " + str(e))
     if user_id in my_chat_imm:
         return True
     else:
@@ -47,7 +56,8 @@ async def admins_col(client, m, chat_id):
     perms = {}
     try:
         all_admins = await client.get_chat_members(chat_id, filter="administrators")
-    except:
+    except Exception as e:
+        print("Failed to get chat members: " + str(e))
         return
     for a in all_admins:
         chat_admins.append(a.user.id)

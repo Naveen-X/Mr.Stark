@@ -17,6 +17,8 @@ async def translate_me(client: Client, message: Message):
         return
     
     text = reply_message.text
-    translated = await api.translate(text, target=target_lang)
-
-    await message.reply_text(f"**➥Translated successfully:**\n\n➥`{translated.translation}`")
+    try:
+        translated = await api.translate(text, target=target_lang)
+        await message.reply_text(f"**➥Translated successfully:**\n\n➥`{translated.translation}`")
+    except Exception as e:
+        await message.reply_text(f"**An error occurred during translation:**\n`{e}`")

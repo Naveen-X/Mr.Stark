@@ -36,18 +36,25 @@ async def make_carbon(bot, message):
             if not code:
                 return await ok.edit("`Nothing To Carbonize...`")
 
-            x = carbon(code)
-            decodeit = open('carbon.jpg', 'wb')
-            decodeit.write(base64.b64decode(str(x)))
-            decodeit.close()
-            if message.from_user:
-                user = message.from_user.mention
-            else:
-                user = message.sender_chat.title
-            cap = f"__Carbonized By {user}__\n\n__**By @Mr_StarkBot**"
-            await message.reply_document("carbon.jpg", caption=cap)
-            await ok.delete()
-            os.remove("carbon.jpg")
+            try:
+                x = carbon(code)
+                decodeit = open('carbon.jpg', 'wb')
+                decodeit.write(base64.b64decode(str(x)))
+                decodeit.close()
+                if message.from_user:
+                    user = message.from_user.mention
+                else:
+                    user = message.sender_chat.title
+                cap = f"__Carbonized By {user}__\n\n__**By @Mr_StarkBot**"
+                await message.reply_document("carbon.jpg", caption=cap)
+                await ok.delete()
+                os.remove("carbon.jpg")
+            except requests.exceptions.RequestException as e:
+                await ok.edit("Failed to retrieve carbon image: " + str(e))
+            except base64.binascii.Error as e:
+                await ok.edit("Failed to decode image: " + str(e))
+            except Exception as e:
+                await ok.edit("An unexpected error occurred: " + str(e))
         except Exception as e:
             raise e
     try:
@@ -60,26 +67,31 @@ async def make_carbon(bot, message):
 @error_handler
 async def carbonn(bot, message):
     ok = await message.reply_text("Making Carbon...")
-    code = None
-    if message.reply_to_message:
-        if message.reply_to_message.caption:
-            code = message.reply_to_message
-        elif message.reply_to_message.text:
-            code = message.reply_to_message.text
-    elif len(message.command) > 1:
-        code = message.text.split(" ", 1)[1]
-    if not code:
-        return await ok.edit("Nothing To Carbonize...")
-    x = carbon(code)
-    carbon_url = x
-    decodeit = open('carbon.jpg', 'wb')
-    decodeit.write(base64.b64decode(carbon_url))
-    decodeit.close()
-    if message.from_user:
-        user = message.from_user.mention
-    else:
-        user = message.sender_chat.title
-    cap = f"__Carbonized By {user}__\n\n__**By @Mr_StarkBot**"
-    await bot.send_photo(message.chat.id, "carbon.jpg", caption=cap)
-    await ok.delete()
-    os.remove("carbon.jpg")
+    try:
+        code = None
+        if message.reply_to_message:
+            if message.reply_to_message.caption:
+                code = message.reply_to_message
+            elif message.reply_to_message.text:
+                code = message.reply_to_message.text
+        elif len(message.command) > 1:
+            code = message.text.split(" ", 1)[1]
+        if not code:
+            return await ok.edit("Nothing To Carbonize...")
+        x = carbon(code)
+        carbon_url = x
+        decodeit = open('carbon.jpg', 'wb')
+        decodeit.write(base64.b64decode(carbon_url))
+        decodeit.close()
+        if message.from_user:
+            user = message.from_user.mention
+        else:
+            user = message.sender_chat.title
+        cap = f"__Carbonized By {user}__\n\n__**By @Mr_StarkBot**"
+        await bot.send_photo(message.chat.id, "carbon.jpg", caption=cap)
+        await ok.delete()
+        os.remove("carbon.jpg")
+    except Exception as e:
+        await ok.edit(f"**An error occurred:**\n`{e}`")
+        if os.path.exists("carbon.jpg"):
+            os.remove("carbon.jpg")

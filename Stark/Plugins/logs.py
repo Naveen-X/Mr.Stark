@@ -35,13 +35,11 @@ async def log_cmd(bot, message):
                 )
             )
             await processing.delete()
-        except:
-            await message.reply_document(
-                "log.txt",
-                caption="__**Logs of Mr.Stark**__",
-            )
+        except Exception as e:
+            await message.reply_text(f"Failed to process logs: {e}")
     else:
         await processing.edit("`File not found`")
+
 
 @Client.on_message(filters.command(["elog", "elogs"]))
 @error_handler
@@ -68,8 +66,8 @@ async def error_log_cmd(bot, message):
                 )
             )
             await processing.delete()
-        except:
-            await processing.edit("`The File has No data in it`")
+        except Exception as e:
+            await processing.edit(f"Failed to process error logs: {e}")
     else:
         await processing.edit("`File not found`")
         

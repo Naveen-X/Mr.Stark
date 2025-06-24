@@ -15,32 +15,36 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 @error_handler
 async def media_info(_, message: Message):
     mi = await message.reply_text("Processing...")
-    if (message.reply_to_message) and (message.reply_to_message.video) or (message.reply_to_message.audio) or (message.reply_to_message.voice) or (message.reply_to_message.document) or (message.reply_to_message.photo):
-        await mi.edit("Downloading media to get info. Please wait...")
-        c_time = time.time()
-        file_path = await message.reply_to_message.download(progress=progress, progress_args=(mi, c_time, f"`Downloading This File!`")
-    )
-        out, err, ret, pid = await runcmd(f"mediainfo '{file_path}'")
-        if not out:
-            await mi.edit("Unable to determine file info.")
+    try:
+        if (message.reply_to_message) and (message.reply_to_message.video or message.reply_to_message.audio or message.reply_to_message.voice or message.reply_to_message.document or message.reply_to_message.photo):
+            await mi.edit("Downloading media to get info. Please wait...")
+            c_time = time.time()
+            file_path = await message.reply_to_message.download(progress=progress, progress_args=(mi, c_time, f"`Downloading This File!`"))
+            out, err, ret, pid = await runcmd(f"mediainfo '{file_path}'")
+            if not out:
+                await mi.edit("Unable to determine file info.")
+                return
+            media_info = f"{out}"
+            title = "Media Info 🎬"
+            link = mediainfo_paste(text=media_info, title=title)
+            keyboard = InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            text="Mediainfo",
+                            url=link,
+                        )
+                    ]
+                ]
+            )
+            await mi.delete()
+            await message.reply_text("**MediaInfo Gathered**", reply_markup=keyboard)
+            if os.path.exists(file_path):
+                os.remove(file_path)
+        else:
+            await mi.edit("Reply to a video.")
             return
-        media_info = f"{out}"
-        title = "Media Info 🎬"
-        link = mediainfo_paste(text=media_info, title=title)
-        keyboard = InlineKeyboardMarkup(
-        [
-            [
-                InlineKeyboardButton(
-                    text="Mediainfo",
-                    url=link,
-                )
-            ]
-        ]
-    )
-        await mi.delete()
-        await message.reply_text("**MediaInfo Gathered**", reply_markup=keyboard)
-        if os.path.exists(file_path):
+    except Exception as e:
+        await mi.edit("Failed to get media info: " + str(e))
+        if 'file_path' in locals() and os.path.exists(file_path):
             os.remove(file_path)
-    else:
-        await mi.edit("Reply to a video.")
-        return

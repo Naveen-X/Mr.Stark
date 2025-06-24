@@ -31,7 +31,11 @@ async def search_movie(client, message):
         )
         return
     mv = await message.reply_photo("https://exchange4media.gumlet.io/news-photo/123661-93930-IMDbAmazon.jpg", caption=f"`Searching for {movie_name}`")
-    movies = ia.search_movie(movie_name, results=10)
+    try:
+        movies = ia.search_movie(movie_name, results=10)
+    except Exception as e:
+        await mv.edit(f"`Failed to search for movies: {e}`")
+        return
     if len(movies) == 0:
         await mv.edit("**__No movies found with that name!__**")
         return

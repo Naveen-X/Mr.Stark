@@ -17,9 +17,12 @@ async def start(bot, message):
     firstname = message.from_user.first_name
     text = f"<i>Hello, {firstname} !\nI Am Mr.Stark\nNice To Meet You, Well I Am A Powerfull bot.\nMade by </i> <a href='https://telegram.dog/Naveen_xD'>Naveen_xD</a>"
     stark = "resources/images/start_img.jpg"
-    await bot.send_photo(
-        message.chat.id,
-        stark,
-        text,
-        reply_markup=keyboard(message.from_user.id),
-    )
+    try:
+        await bot.send_photo(
+            message.chat.id,
+            stark,
+            text,
+            reply_markup=keyboard(message.from_user.id),
+        )
+    except Exception as e:
+        print("Failed to send start message: " + str(e))
