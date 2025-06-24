@@ -120,6 +120,6 @@ async def devh_user_info(client: Client, message: Message):
     devh_user_id = await get_devh_user(telegram_user_id)
     
     if devh_user_id:
-        await message.reply_text(f"ℹ️ **Your DevH Info:**\n\n**Telegram ID:** `{telegram_user_id}`\n**DevH User ID:** `{devh_user_id}`\n\n**Available Commands:**\n• `/now` - Get Spotify now playing image\n• `/devh {user_id}` - Update DevH user ID")
+        await message.reply_text(f"ℹ️ **Your DevH Info:**\n\n**Telegram ID:** `{telegram_user_id}`\n**DevH User ID:** `{devh_user_id}`\n\n**Available Commands:**\n• `/now` - Get Spotify now playing image\n• `/devh [user_id]` - Update DevH user ID")
     else:
-        await message.reply_text("❌ **No DevH user found!**\n\nUse `/devh {user_id}` to add your DevH user ID first.")
+        await message.reply_text("❌ **No DevH user found!**\n\nUse `/devh [user_id]` to add your DevH user ID first.")
