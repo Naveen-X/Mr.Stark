@@ -13,18 +13,20 @@ from Stark.Plugins.start import keyboard
 from help_mod import Script
 from main.helper_func.basic_helpers import get_readable_time
 
+
 bot_start_time = time.time()
 bot_version = "V2.0"
 
 
 async def bot_sys_stats():
-    version = bot_version
-    bot_uptime = int(time.time() - bot_start_time)
-    cpu = psutil.cpu_percent()
-    mem = psutil.virtual_memory().percent
-    disk = psutil.disk_usage("/").percent
-    process = psutil.Process(os.getpid())
-    stats = f"""
+    try:
+        version = bot_version
+        bot_uptime = int(time.time() - bot_start_time)
+        cpu = psutil.cpu_percent()
+        mem = psutil.virtual_memory().percent
+        disk = psutil.disk_usage("/").percent
+        process = psutil.Process(os.getpid())
+        stats = f"""
 Naveen_xD@Mr.Stark
 --------------------------
 ✘ VERSION: {version}
@@ -36,7 +38,10 @@ Naveen_xD@Mr.Stark
 ✘ USERS: {await db.get_user_count()}
 --------------------------
 """
-    return stats
+        return stats
+    except Exception as e:
+        print("Failed to retrieve system stats: " + str(e))
+        return "Failed to retrieve system stats."
 
 
 def page_data(page):
@@ -55,6 +60,15 @@ def item_title(item, page):
 @error_handler
 async def start(client, message):
     id = message.from_user.id
+
+    def get_help_menu(page_):
+        objects = [x.replace('_', " ") for x in dir(Script) if not x.startswith('__')]
+
+    try:
+        stats = await bot_sys_stats()
+        await message.reply_text(stats)
+    except Exception as e:
+        await message.reply_text("Failed to send help message: " + str(e))
 
     def get_help_menu(page_):
         objects = [x.replace('_', " ") for x in dir(Script) if not x.startswith('__')]
@@ -83,7 +97,7 @@ async def start(client, message):
     await message.reply_photo("resources/images/start_img.jpg", caption='Help Menu of Stark!', reply_markup=ikb(get_help_menu(1)))
 
 
-@Client.on_callback_query(filters.regex("^\d+\."))
+@Client.on_callback_query(filters.regex("^\\d+\."))
 async def help_cb_handler(client, query):
     sent_by = query.data.split('.')[0]
     if int(query.data.split('.')[0]) != int(query.from_user.id):
@@ -114,36 +128,38 @@ async def help_cb_handler(client, query):
 
     if 'help_' in query.data:
         hlp = query.data.split('help_')[1]
-        # print(hlp)
         msg = ""
-        text_ = list(getattr(Script, hlp))
-        for text__ in text_:
-            desc = text__.get('desc')
-            cmds_ = list(text__.get('cmds'))
-            try:
-                cmds = ', '.join(cmds_)
-            except:
-                cmds = None
-            usage = text__.get('usage')
-            if desc is None:
-                desc = "No Description Provided by the Developer"
-            if cmds is None:
-                cmds = "No Commands Provided by the Developer"
-            if usage is None:
-                usage = "No Usage Provided by the Developer"
+        try:
+            text_ = list(getattr(Script, hlp))
+            for text__ in text_:
+                desc = text__.get('desc')
+                cmds_ = list(text__.get('cmds'))
+                try:
+                    cmds = ', '.join(cmds_)
+                except:
+                    cmds = None
+                usage = text__.get('usage')
+                if desc is None:
+                    desc = "No Description Provided by the Developer"
+                if cmds is None:
+                    cmds = "No Commands Provided by the Developer"
+                if usage is None:
+                    usage = "No Usage Provided by the Developer"
 
-            msg = msg + """
+                msg = msg + """
 
-**Info**: `{}­`
-**Commands**: `{}­`
-**Usage**: `{}­`
-            """.format(desc, cmds, usage)
+**Info**: `{}`­
+**Commands**: `{}`­
+**Usage**: `{}`­
+                """.format(desc, cmds, usage)
 
-        await query.edit_message_text(text=msg, reply_markup=
+            await query.edit_message_text(text=msg, reply_markup=
 
-        ikb([
-            [('Back', f'{sent_by}.hlp'), ('Close', f'{sent_by}.close')]
-        ]))
+            ikb([
+                [('Back', f'{sent_by}.hlp'), ('Close', f'{sent_by}.close')]
+            ]))
+        except Exception as e:
+            await query.answer(f"An error occurred while retrieving help info: {e}", show_alert=True)
     # check if query.data is single digit integer
     elif 'page_' in query.data:
         # Define the functions that generate data for the pagination
@@ -154,12 +170,19 @@ async def help_cb_handler(client, query):
         except Exception as e:
             await query.answer('Dumbo! you are at the same no. of the list', show_alert=True)
     elif 'close' in query.data:
-        await query.message.delete()
+        try:
+            await query.message.delete()
+        except Exception as e:
+            await query.answer(f"An error occurred while deleting message: {e}", show_alert=True)
     elif "hlp" in query.data:
-        await query.message.edit_text('Help Menu of Stark!', reply_markup=ikb(get_help_menu(0)))
+        try:
+            await query.message.edit_text('Help Menu of Stark!', reply_markup=ikb(get_help_menu(0)))
+        except Exception as e:
+            await query.answer(f"An error occurred while editing message: {e}", show_alert=True)
     elif "about" in query.data:
-        await query.message.edit_text(
-            text=f"""
+        try:
+            await query.message.edit_text(
+                text=f"""
 <b>✘ My name : </b><i>Mr.Stark</i>
 <b>✘ Version : </b><i>{bot_version}</i>
 <b>✘ Made By :  </b> 
@@ -169,22 +192,28 @@ async def help_cb_handler(client, query):
 <b>✘ Language : </b><code>Python3</code>
 <b>✘ Library : </b><a href='https://docs.pyrogram.org/'>Pyrogram {__version__}</a>
 """,
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(
-                [
+                disable_web_page_preview=True,
+                reply_markup=InlineKeyboardMarkup(
                     [
-                        InlineKeyboardButton("🔙Home", callback_data=f"{sent_by}.back")
+                        [
+                            InlineKeyboardButton("🔙Home", callback_data=f"{sent_by}.back")
+                        ]
                     ]
-                ]
+                )
             )
-        )
+        except Exception as e:
+            await query.answer(f"An error occurred while editing message: {e}", show_alert=True)
     elif "back" in query.data:
-        firstname = query.from_user.first_name
-        await query.message.edit_text(
-            text=f"<i>Hello, {firstname} !\nI Am Mr.Stark\nNice To Meet You, Well I Am A Powerfull bot.\nMade by </i> <a href='https://telegram.dog/Naveen_xD'>Naveen_xD</a>",
-            reply_markup=keyboard(sent_by),
-            disable_web_page_preview=True
-        )
+        try:
+            firstname = query.from_user.first_name
+            await query.message.edit_text(
+                text=f"<i>Hello, {firstname} !\nI Am Mr.Stark\nNice To Meet You, Well I Am A Powerfull bot.\nMade by </i> <a href='https://telegram.dog/Naveen_xD'>Naveen_xD</a>",
+                reply_markup=keyboard(sent_by),
+                disable_web_page_preview=True
+            )
+        except Exception as e:
+            await query.answer(f"An error occurred while editing message: {e}", show_alert=True)
+
     elif 'sys_info' in query.data:
         text = await bot_sys_stats()
         await query.answer(text, show_alert=True)

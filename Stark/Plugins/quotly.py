@@ -162,11 +162,17 @@ async def quote(client, m):
 
     try:
         r = requests.post("https://bot.lyo.su/quote/generate", json=text)
+        r.raise_for_status()
         response_data = r.json()
         image = response_data["result"]["image"]
         im = base64.b64decode(image.encode('utf-8'))
-        open('qt.webp', 'wb').write(im)
+        with open('qt.webp', 'wb') as f:
+            f.write(im)
         await m.reply_sticker("qt.webp")
         await qse.delete()
+    except requests.exceptions.RequestException as req_err:
+        await qse.edit(f"`Request failed: {req_err}`")
     except KeyError:
         await qse.edit("`Error occurred while generating the quote. Please try again.`")
+    except Exception as e:
+        await qse.edit(f"`An unexpected error occurred: {e}`")

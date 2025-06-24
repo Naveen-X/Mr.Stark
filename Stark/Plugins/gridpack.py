@@ -46,78 +46,89 @@ async def crop_and_divide(img):
 @error_handler
 async def make_grid(client, message):
     gp = await message.reply_text("`Making gridpack 🔪`")
-    if not message.reply_to_message:
-        await gp.edit("`Reply to a Photo :(")
-        return
-    pic = message.reply_to_message.photo
-    if not pic:
-        await gp.edit("`Reply to a Photo :(")
-        return
-    ok = await client.download_media(pic)
+    temp_file = None
     try:
-      text = message.text.split(None, 1)[1]
-    except IndexError:
-      await gp.edit("__Give a Name and emoji for your gridpack!__")
-      return
-    if "|" not in text:
-      await gp.edit("__**Invalid Syntax:**__\n__**Format:**__ .gridpack pack name|emoji")
-      return
-    await gp.edit("__🔪Cropping and adjusting the image...__")
-    kk = text.split("|")
-    pack = kk[0]
-    emj = kk[1]
-    name = "GridPack_" + "".join(
-        random.choice(list(string.ascii_lowercase + string.ascii_uppercase))
-        for _ in range(16)
-    )
-    name2 = name + "_by_Mr_StarkBot"
-    image = Image.open(ok)
-    w, h = image.size
-    www = max(w, h)
-    img = Image.new("RGBA", (www, www), (0, 0, 0, 0))
-    img.paste(image, ((www - w) // 2, 0))
-    newimg = img.resize((100, 100))
-    new_img = io.BytesIO()
-    new_img.name = name + ".png"
-    images = await crop_and_divide(img)
-    newimg.save(new_img)
-    new_img.seek(0)
-    stark = await gp.edit("__Making the pack.__")
-    i = 0
-    all_stickers = []
-    for im in images:
-      try:
-        img = io.BytesIO(im)
-        img.name = name + ".png"
-        img.seek(0)
-    
-        # Save the image to a file
-        f_img = f"{name}_{i}.png"  # Generate a unique filename for each image
-        with open(f_img, "wb") as f:
-            f.write(img.getvalue())
-        
-        stckr = await create_sticker(
-                await upload_document(
-                    client, f_img, message.chat.id
-                ),
-                emj
-            )
-        all_stickers.append(stckr)
-        i += 1
-        await stark.edit(
-            f"__Making the pack.\nProgress: {i}/{len(images)}__"
+        if not message.reply_to_message:
+            await gp.edit("`Reply to a Photo :(`")
+            return
+        pic = message.reply_to_message.photo
+        if not pic:
+            await gp.edit("`Reply to a Photo :(`")
+            return
+        ok = await client.download_media(pic)
+        temp_file = ok # Store the path to the downloaded media for cleanup
+        try:
+            text = message.text.split(None, 1)[1]
+        except IndexError:
+            await gp.edit("__Give a Name and emoji for your gridpack!__")
+            return
+        if "|" not in text:
+            await gp.edit("__**Invalid Syntax:**__\n__**Format:**__ .gridpack pack name|emoji")
+            return
+        await gp.edit("__🔪Cropping and adjusting the image...__")
+        kk = text.split("|")
+        pack = kk[0]
+        emj = kk[1]
+        name = "GridPack_" + "".join(
+            random.choice(list(string.ascii_lowercase + string.ascii_uppercase))
+            for _ in range(16)
         )
-      except FloodWait as e:
-        await asyncio.sleep(e.value)
-    user_peer = raw.types.InputPeerUser(user_id=message.from_user.id, access_hash=0)
-    await client.invoke(
-              raw.functions.stickers.CreateStickerSet(
-                  user_id=user_peer,
-                  title=pack,
-                  short_name=name2,
-                  stickers=all_stickers,  # Wrap stcr in a list
+        name2 = name + "_by_Mr_StarkBot"
+        image = Image.open(ok)
+        w, h = image.size
+        www = max(w, h)
+        img = Image.new("RGBA", (www, www), (0, 0, 0, 0))
+        img.paste(image, ((www - w) // 2, 0))
+        newimg = img.resize((100, 100))
+        new_img = io.BytesIO()
+        new_img.name = name + ".png"
+        images = await crop_and_divide(img)
+        newimg.save(new_img)
+        new_img.seek(0)
+        stark = await gp.edit("__Making the pack.__")
+        i = 0
+        all_stickers = []
+        for im in images:
+            try:
+                img_io = io.BytesIO(im)
+                img_io.name = name + ".png"
+                img_io.seek(0)
+            
+                f_img = f"{name}_{i}.png"  # Generate a unique filename for each image
+                with open(f_img, "wb") as f:
+                    f.write(img_io.getvalue())
+                
+                stckr = await create_sticker(
+                        await upload_document(
+                            client, f_img, message.chat.id
+                        ),
+                        emj
+                    )
+                all_stickers.append(stckr)
+                i += 1
+                await stark.edit(
+                    f"__Making the pack.\nProgress: {i}/{len(images)}__"
+                )
+                os.remove(f_img) # Clean up temporary image file after use
+            except FloodWait as e:
+                await asyncio.sleep(e.value)
+            except Exception as e_inner:
+                await gp.edit(f"**An error occurred during sticker processing:**\n`{e_inner}`")
+                return
+        user_peer = raw.types.InputPeerUser(user_id=message.from_user.id, access_hash=0)
+        await client.invoke(
+                  raw.functions.stickers.CreateStickerSet(
+                      user_id=user_peer,
+                      title=pack,
+                      short_name=name2,
+                      stickers=all_stickers,  # Wrap stcr in a list
+                  )
               )
-          )
-    link = f"https://t.me/addstickers/{name2}"
-    await stark.edit(f"__Successfully Created Gridpack\nYou can found it Here :-__ [{pack}]({link})\n\n__**By @Mr_StarkBot**__")
+        link = f"https://t.me/addstickers/{name2}"
+        await stark.edit(f"__Successfully Created Gridpack\nYou can found it Here :-__ [{pack}]({link})\n\n__**By @Mr_StarkBot**__")
+    except Exception as e:
+        await gp.edit(f"**An error occurred while creating the gridpack:**\n`{e}`")
+    finally:
+        if temp_file and os.path.exists(temp_file):
+            os.remove(temp_file)
     

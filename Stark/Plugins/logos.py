@@ -1,6 +1,6 @@
-import glob
 import os
 import random
+import glob
 
 from PIL import Image, ImageDraw, ImageFont
 from pyrogram import Client, filters
@@ -13,40 +13,44 @@ from Stark import error_handler
 async def black_logo(bot, message):
     event = await message.reply_text("**Painting A Logo For You Broh...**")
     try:
-       text = message.text.split(None, 1)[1]
-    except IndexError:
-      await event.edit("**Gib Some Text Bro!**")
-      return
-    fpath = glob.glob("resources/Fonts/*")
-    font = random.choice(fpath)
-    img = Image.open("./resources/images/black_blank_image.jpg")
-    draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype(font, 220)
-    image_widthz, image_heightz = img.size
-    w, h = draw.textsize(text, font=font)
-    h += int(h * 0.21)
-    draw.text(
-        ((image_widthz - w) / 2, (image_heightz - h) / 2),
-        text,
-        font=font,
-        fill=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)),
-    )
-    file_name = "LogoBy@Mr_StarkBot.png"
-    img.save(file_name, "png")
-    if message.reply_to_message:
-        await bot.send_photo(
-            message.chat.id,
-            photo=file_name,
-            caption="Made Using @Mr_StarkBot",
-            reply_to_message_id=message.reply_to_message.id,
+        try:
+            text = message.text.split(None, 1)[1]
+        except IndexError:
+            await event.edit("**Gib Some Text Bro!**")
+            return
+        fpath = glob.glob("resources/Fonts/*")
+        font = random.choice(fpath)
+        img = Image.open("./resources/images/black_blank_image.jpg")
+        draw = ImageDraw.Draw(img)
+        font = ImageFont.truetype(font, 220)
+        image_widthz, image_heightz = img.size
+        w, h = draw.textsize(text, font=font)
+        h += int(h * 0.21)
+        draw.text(
+            ((image_widthz - w) / 2, (image_heightz - h) / 2),
+            text,
+            font=font,
+            fill=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)),
         )
-    else:
-        await bot.send_photo(
-            message.chat.id, photo=file_name, caption="**@Mr_StarkBot** created A Logo For you "
-        )
-    await event.delete()
-    if os.path.exists(file_name):
-        os.remove(file_name)
+        file_name = "LogoBy@Mr_StarkBot.png"
+        img.save(file_name, "png")
+        if message.reply_to_message:
+            await bot.send_photo(
+                message.chat.id,
+                photo=file_name,
+                caption="Made Using @Mr_StarkBot",
+                reply_to_message_id=message.reply_to_message.id,
+            )
+        else:
+            await bot.send_photo(
+                message.chat.id, photo=file_name, caption="**@Mr_StarkBot** created A Logo For you "
+            )
+        await event.delete()
+        if os.path.exists(file_name):
+            os.remove(file_name)
+    except Exception as e:
+        await event.edit(f"Failed to create logo: {e}")
+
 
 
 @Client.on_message(filters.command(["slogo"]))

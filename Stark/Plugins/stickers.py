@@ -57,6 +57,7 @@ async def kang(c, m):
 
 
 @Client.on_message(filters.command("mypacks"))
+@error_handler
 async def my_packs(c, m):
     user_id = None
     if m.from_user:
@@ -79,7 +80,8 @@ async def my_packs(c, m):
             )
         )
         packnum = 1
-    except:
+    except Exception as e:
+        print(f"Error getting sticker set: {e}")
         packnum = 0
 
     if packnum > 0:
@@ -96,7 +98,8 @@ async def my_packs(c, m):
                 )
                 packs += f"[Pack{packnum}](t.me/addstickers/{packname})\n"
 
-            except:
+            except Exception as e:
+                print(f"Error getting sticker set: {e}")
                 onlypack = 1
 
             packnum += 1
@@ -115,7 +118,8 @@ async def my_packs(c, m):
             )
         )
         packnum = 1
-    except:
+    except Exception as e:
+        print(f"Error getting sticker set: {e}")
         packnum = 0
 
     if packnum > 0:
@@ -133,7 +137,8 @@ async def my_packs(c, m):
                 )
                 packs1 += f"[Pack{packnum}](t.me/addstickers/{packname})\n"
 
-            except:
+            except Exception as e:
+                print(f"Error getting sticker set: {e}")
                 onlypack = 1
 
             packnum += 1
@@ -152,7 +157,8 @@ async def my_packs(c, m):
             )
         )
         packnum = 1
-    except:
+    except Exception as e:
+        print(f"Error getting sticker set: {e}")
         packnum = 0
 
     if packnum > 0:
@@ -170,7 +176,8 @@ async def my_packs(c, m):
                 )
                 packs2 += f"[Pack{packnum}](t.me/addstickers/{packname})\n"
 
-            except:
+            except Exception as e:
+                print(f"Error getting sticker set: {e}")
                 onlypack = 1
 
             packnum += 1
@@ -181,6 +188,7 @@ async def my_packs(c, m):
     await m.reply_text(f"\n{packs}{packs1}{packs2}")
 
 @Client.on_message(filters.command(["delsticker", "delete_sticker"]))
+@error_handler
 async def delsticker(c, m):
     user_id = None
     if m.from_user:
@@ -196,30 +204,10 @@ async def delsticker(c, m):
             await m.reply_text(
                 "`What Should i delete!`")
             return
-        if str(stickerset)[5:].startswith(str(user_id)):
-            await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
-            try:
-                C = functions.stickers.RemoveStickerFromSet(sticker=pyrogram.utils.get_input_media_from_file_id(m.reply_to_message.sticker.file_id))
-                sticker_info = C.sticker
-                
-                input_document = types.InputDocument(
-                    id=sticker_info.id.id,
-                    access_hash = sticker_info.id.access_hash,
-                    file_reference = sticker_info.id.file_reference,
-                )
-                await c.invoke(functions.stickers.RemoveStickerFromSet(sticker=input_document)) 
-                await m.reply_text(
-                    "`Successfully deleted the sticker from your pack`"
-                    )
-            except Exception as e:
-                if str(e) == "'NoneType' object has no attribute 'sticker'":
-                    await m.reply_text(
-                        "`Sticker to delete not found !`")
-                elif str(e) == "Stickerset_not_modified":
-                    await m.reply_text(
-                        "`Sticker to delete not found !`")
-                else:
-                    await m.reply_text((str(e)))
-        else:
-            await m.reply_text(
-                "`This isn't your sticker pack !`")
+        try:
+            if str(stickerset)[5:].startswith(str(user_id)):
+                await c.send_chat_action(m.chat.id, enums.ChatAction.CHOOSE_STICKER)
+            else:
+                await m.reply_text("You can only delete stickers from your own packs.")
+        except Exception as e:
+            await m.reply_text(f"Error deleting sticker: {e}")

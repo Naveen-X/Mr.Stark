@@ -6,6 +6,8 @@ from Stark import error_handler
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+pattern = re.compile(r".*\[(\d+)\].*")
+
 dic = {}
 
 @Client.on_message(filters.command("showdb"))
@@ -30,8 +32,7 @@ def mongo_keyboard(id_):
     mongo_keyboard_ = InlineKeyboardMarkup(
         [[InlineKeyboardButton("MongoDB", callback_data="mongo_"+f"[{id_}]")]])
     return mongo_keyboard_
-  
-pattern = re.compile(r".*\[(\d+)\].*")
+
 @Client.on_callback_query(filters.regex(pattern))
 def button_callback(client, callback_query):
     if f"[{callback_query.from_user.id}]" in str(callback_query.data):
