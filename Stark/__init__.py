@@ -184,7 +184,7 @@ def error_handler(func):
 """)
             filename = "error_" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=8)) + ".md"
             try:
-                k = await client.send_message(-1002511262497, tg_error, disable_web_page_preview=True,
+                k = await client.send_message(-1001426113453, tg_error, disable_web_page_preview=True,
                                               reply_markup=types.InlineKeyboardMarkup(
                                                   [[types.InlineKeyboardButton("View on GITHUB",
                                                                                url=get_gitlab_snippet(str(e),
@@ -197,7 +197,7 @@ def error_handler(func):
 
                 with open(filename, "w", encoding='utf-8') as f:
                     f.write(str(f"{tg_error} \n\n {str(gitlab_error)}"))
-                k = await client.send_document(chat_id=-1002511262497, document=filename)
+                k = await client.send_document(chat_id=-1001426113453, document=filename)
                 os.remove(filename)
             await handle_error(client, message, e, k)
 
@@ -207,7 +207,7 @@ def error_handler(func):
 async def handle_error(client: Client, message, exception: Exception, k):
     logging.error(f"Error in {message.command[0]}: {exception}")
     await message.reply_text(
-        "**An error occurred while processing your request.**\n\n**ERROR:** `{}`\n\n__If you think THis was a serious error Please forward this message to__ ** [Satya](t.me/s4tyendra) ** __or__ ** [Naveen](t.me/naveen_xd) **\n\n**Complete Error: [Click here](https://t.me/c/1491739934/{})**".format(
+        "**An error occurred while processing your request.**\n\n**ERROR:** `{}`\n\n__If you think THis was a serious error Please forward this message to__ ** [Satya](t.me/s4tyendra) ** __or__ ** [Naveen](t.me/naveen_xd) **\n\n**Complete Error: [Click here](https://t.me/c/1426113453/{})**".format(
             exception, k.id), disable_web_page_preview=True)
 
 
