@@ -118,7 +118,10 @@ async def reply_to_afk(c, m):
                 start_offset = ent.offset
                 end_offset = ent.offset + ent.length
                 mention_text = m.text[start_offset:end_offset]
-                chat = await c.get_users(mention_text)
+                try:
+                  chat = await c.get_users(mention_text)
+                except:
+                  pass
                 if not chat:
                     continue
                 user_id = chat.id
