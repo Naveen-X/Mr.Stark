@@ -27,7 +27,7 @@ async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
     )
 
 
-EVAL = "**➥ ᴄᴏᴅᴇ:** \n`{code}` \n\n**➥ ᴏᴜᴛᴍᴜᴛ:** \n`{result}`"
+EVAL = "**➥ ᴄᴏᴅᴇ:** \n`{code}` \n\n**➥ ᴏᴜᴛᴘᴜᴛ:** \n`{result}`"
 
 AUTH_LIST = [x["_id"] for x in DB.auth.find({}, {"_id": 1})]
 
@@ -62,14 +62,13 @@ async def eval(bot, message):
         evaluation = exc
     elif stderr:
         evaluation = stderr
-    else:
+    elif stdout:
         evaluation = stdout
-    try:
-        await edit_or_send_as_file(
-            message, EVAL.format(code=cmd, result=evaluation), "Eval Result"
-        )
-    except Exception as e:
-        await stark.edit("Failed to send eval result: " + str(e))
+    else:
+        evaluation = "Success!"
+    final_output = EVAL.format(code=cmd, result=evaluation)
+    capt = "Eval Result!"
+    await edit_or_send_as_file(final_output, stark, bot, capt, "Eval-result")
 
 
 async def aexec(code, bot, message):
@@ -111,7 +110,7 @@ async def terminal(bot, message):
 **➥ ᴇʀʀᴏʀ ᴛʀᴀᴄᴇʙᴀᴄᴋ (ɪꜰ ᴀɴʏ) :**
 `{err}`
 
-**➥ ᴏᴛᴜᴛᴜᴛ / ʀᴇsᴜʟᴛ (ɪꜰ ᴀɴʏ) :**
+**➥ ᴏᴜᴛᴘᴜᴛ / ʀᴇsᴜʟᴛ (ɪꜰ ᴀɴʏ) :**
 `{out}`
 
 **➥ ʀᴇᴛᴜʀɴ ᴄᴏᴅᴇ :** 
